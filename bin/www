@@ -4,7 +4,7 @@
  * Module dependencies.
  */
 var app = require('../app');
-var debug = require('debug')('zhihu-daily:server');
+var debug = require('debug')('zhihu-daily-reader:server');
 var http = require('http');
 
 /**

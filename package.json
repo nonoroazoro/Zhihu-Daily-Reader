@@ -1,6 +1,6 @@
 {
-    "name": "zhihu-daily",
-    "description": "zhihu daily reader",
+    "name": "zhihu-daily-reader",
+    "description": "Reader for Zhihu-Daily.",
     "version": "1.0.0",
     "private": true,
     "author": {
