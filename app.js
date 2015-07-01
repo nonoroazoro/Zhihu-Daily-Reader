@@ -13,7 +13,7 @@ var app = express();
 // app.set('view engine', 'jade');
 
 // favicon setup
-app.use(favicon(path.join(__dirname, 'public/images/favicon.ico')));
+app.use(favicon(path.join(__dirname, 'public/common/images/favicon.ico')));
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -28,7 +28,7 @@ var users = require('./routes/users');
 app.use('/', routes);
 app.use('/users', users);
 
-app.use(express.static(path.join(__dirname, 'public')));
+// app.use(express.static(path.join(__dirname, 'public')));
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next)
@@ -39,7 +39,8 @@ app.use(function (req, res, next)
 });
 
 // error handlers
-var resolver = require('./path-resolver')(path.join(__dirname, 'views'));
+var resolver = require('./lib/path-resolver')(path.join(__dirname,
+  'public/common/views'));
 
 // development error handler
 // will print stacktrace
