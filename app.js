@@ -40,7 +40,7 @@ app.use(function (req, res, next)
 
 // error handlers
 var resolver = require('./lib/path-resolver')(path.join(__dirname,
-  'public/common/views'));
+  'public/common'));
 
 // development error handler
 // will print stacktrace

@@ -4,7 +4,7 @@ var path = require('path');
 var router = express.Router();
 
 var resolver = require('../lib/path-resolver')(path.join(__dirname,
-  '../public/home/views'));
+  '../public/home'));
 
 /* GET home page. */
 router.get('/', function (req, res, next)
