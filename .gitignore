@@ -1,7 +1,11 @@
-# Sublime Text #
 *.sublime-project
 *.sublime-workspace
 
-# Other #
+*.dll
+*.suo
+*.user
 *.DS_Store
-node_modules/*
+/.ntvs_analysis.dat
+
+obj/
+node_modules/
