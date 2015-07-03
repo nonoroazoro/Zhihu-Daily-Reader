@@ -1,4 +1,4 @@
-var bodyParser = require("body-parser");
+﻿var bodyParser = require("body-parser");
 var cookieParser = require("cookie-parser");
 var express = require("express");
 var favicon = require("serve-favicon");
@@ -37,7 +37,7 @@ if (app.get("env") === "development")
     app.use(function (err, req, res, next)
     {
         res.status(err.status || 500);
-        res.render("error",
+        res.render("error-404",
         {
             message: err.message,
             error: err
@@ -49,7 +49,7 @@ if (app.get("env") === "development")
 app.use(function (err, req, res, next)
 {
     res.status(err.status || 500);
-    res.render("error",
+    res.render("error-404",
         {
         message: err.message,
         error: {}

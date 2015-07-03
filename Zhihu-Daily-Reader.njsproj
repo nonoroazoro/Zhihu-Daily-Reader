@@ -19,14 +19,15 @@
   <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
   <ItemGroup>
     <Content Include="package.json" />
+    <Content Include="public\assets\common\css\errors.css" />
     <Content Include="README.md" />
+    <Content Include="views\error-404.jade" />
     <Content Include="Zhihu-Daily-API.md" />
     <Compile Include="app.js" />
     <Compile Include="bin\www.js" />
     <Compile Include="routes\index.js" />
-    <Content Include="views\error.jade" />
     <Content Include="views\index.jade" />
-    <Content Include="public\assets\favicon.ico" />
+    <Content Include="public\assets\common\img\favicon.ico" />
     <Compile Include="public\assets\lib\jquery\jquery.min.js" />
     <Compile Include="public\assets\lib\less\less.min.js" />
     <Content Include="public\assets\lib\bootstrap\css\bootstrap-theme.min.css" />
@@ -42,6 +43,8 @@
     <Folder Include="bin" />
     <Folder Include="public" />
     <Folder Include="public\assets" />
+    <Folder Include="public\assets\common\css\" />
+    <Folder Include="public\assets\common\img\" />
     <Folder Include="public\assets\lib" />
     <Folder Include="public\assets\lib\bootstrap" />
     <Folder Include="public\assets\lib\bootstrap\css" />
@@ -49,6 +52,7 @@
     <Folder Include="public\assets\lib\bootstrap\js" />
     <Folder Include="public\assets\lib\jquery" />
     <Folder Include="public\assets\lib\less" />
+    <Folder Include="public\assets\common\" />
     <Folder Include="public\assets\zdr" />
     <Folder Include="public\assets\zdr\home" />
     <Folder Include="public\assets\zdr\home\css" />
