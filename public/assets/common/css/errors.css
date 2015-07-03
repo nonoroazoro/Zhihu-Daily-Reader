@@ -31,56 +31,41 @@ a:hover
 .error .header
 {
     overflow: hidden;
-    font-size: 1.8em;
-    line-height: 1.2;
-    margin: 0 0 .33em .33em;
+    margin: 1rem 0;
 }
 
 .error .header img
 {
-    vertical-align: text-bottom;
-}
-
-.error .header .mute
-{
-    color: #999;
-    font-size: .5em;
-}
-
-.error hr
-{
-    margin: 1.3em 0;
-}
-
-.error p
-{
-    margin: 0 0 1.7em;
-    color: #999;
-}
-
-.error p:last-child
-{
-    margin-bottom: 0;
+    vertical-align: middle;
 }
 
 .error strong
 {
-    font-size: 1.1em;
+    font-size: 2rem;
     color: #000;
+}
+
+.error hr
+{
+    margin: 2rem 0;
 }
 
 .error .content
 {
-    padding: 2em 1.25em;
-    border: 1px solid #babbbc;
+    padding: 2rem 1.5rem;
+    border: 1px solid #BABBBC;
     border-radius: 5px;
-    background: #f7f7f7;
+    background-color: #F7F7F7;
     text-align: center;
 }
 
-.error .content .single
+.error .content p
 {
-    margin: 3em 0;
-    font-size: 1.1em;
-    color: #666;
+    margin-bottom: 2rem;
+    color: #999;
+}
+
+.error .content p:last-child
+{
+    margin-bottom: 0;
 }
