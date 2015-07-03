@@ -10,7 +10,7 @@ app.set("views", __dirname + "/views");
 app.set("view engine", "jade");
 
 // favicon setup
-app.use(favicon(__dirname + "/public/assets/favicon.ico"));
+app.use(favicon(__dirname + "/public/assets/common/img/favicon.ico"));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
