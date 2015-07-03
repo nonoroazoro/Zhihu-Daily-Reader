@@ -20,11 +20,13 @@
   <ItemGroup>
     <Content Include="package.json" />
     <Content Include="public\assets\common\css\errors.css" />
+    <Content Include="public\assets\common\img\zhihu_daily_logo.png" />
     <Content Include="README.md" />
-    <Content Include="views\error-404.jade" />
+    <Content Include="views\error_404.jade" />
     <Content Include="Zhihu-Daily-API.md" />
     <Compile Include="app.js" />
     <Compile Include="bin\www.js" />
+    <Compile Include="public\assets\common\js\error_404.js" />
     <Compile Include="routes\index.js" />
     <Content Include="views\index.jade" />
     <Content Include="public\assets\common\img\favicon.ico" />
@@ -45,6 +47,7 @@
     <Folder Include="public\assets" />
     <Folder Include="public\assets\common\css\" />
     <Folder Include="public\assets\common\img\" />
+    <Folder Include="public\assets\common\js\" />
     <Folder Include="public\assets\lib" />
     <Folder Include="public\assets\lib\bootstrap" />
     <Folder Include="public\assets\lib\bootstrap\css" />

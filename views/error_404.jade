@@ -1,0 +1,21 @@
+﻿extends ./templates/layout
+
+append stylesheets
+    link(rel="stylesheet", href="assets/common/css/errors.css")
+
+block body
+    .error
+        h1.header
+            a.logo(href="/")
+                img(src="assets/common/img/zhihu_daily_logo.png", alt="知乎日报")
+        .content
+            p: strong 你似乎来到了没有知识存在的荒原...
+            p 请确认来源链接是否正确？日报是否存在？
+            hr
+            p
+                a(href="/") 返回首页
+                span  或者 
+                a#history-back(href="javascript:;") 返回上页
+
+append scripts
+    script(src="assets/common/js/error_404.js")
