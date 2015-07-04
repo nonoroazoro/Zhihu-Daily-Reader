@@ -4,17 +4,6 @@
     background-color: #EFF2F5;
 }
 
-a
-{
-    text-decoration: none;
-    color: #105CB6;
-}
-
-a:hover
-{
-    text-decoration: underline;
-}
-
 .error
 {
     width: 50%;
@@ -27,26 +16,10 @@ a:hover
     transform: translate(-50%, -50%);
 }
 
-.error .header
-{
-    overflow: hidden;
-    margin: 1rem 0;
-}
-
-.error .header img
-{
-    vertical-align: middle;
-}
-
 .error strong
 {
     font-size: 2rem;
     color: #000;
-}
-
-.error hr
-{
-    margin: 2rem 0;
 }
 
 .error .content
