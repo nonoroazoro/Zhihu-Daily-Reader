@@ -26,6 +26,7 @@
     <Content Include="public\assets\lib\bootstrap\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="public\assets\lib\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="public\assets\lib\bootstrap\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="public\assets\lib\jquery\jquery.min.map" />
     <Content Include="README.md" />
     <Content Include="views\error_404.jade" />
     <Content Include="Zhihu-Daily-API.md" />
@@ -33,10 +34,11 @@
     <Compile Include="bin\www.js" />
     <Compile Include="public\assets\common\js\error_404.js" />
     <Compile Include="public\assets\lib\bootstrap\js\bootstrap.js" />
+    <Compile Include="public\assets\lib\jquery\jquery.min.js" />
+    <Compile Include="public\assets\lib\jquery\jquery.js" />
     <Compile Include="routes\index.js" />
     <Content Include="views\index.jade" />
     <Content Include="public\assets\common\img\favicon.ico" />
-    <Compile Include="public\assets\lib\jquery\jquery.min.js" />
     <Compile Include="public\assets\lib\less\less.min.js" />
     <Content Include="public\assets\lib\bootstrap\css\bootstrap-theme.min.css" />
     <Content Include="public\assets\lib\bootstrap\css\bootstrap.min.css" />
