@@ -19,9 +19,9 @@
   <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
   <ItemGroup>
     <Content Include="package.json" />
-    <Content Include="public\assets\common\css\global.css" />
-    <Content Include="public\assets\common\css\errors.css" />
-    <Content Include="public\assets\common\img\zhihu_daily_logo.png" />
+    <Content Include="public\assets\zdr\common\res\global.css" />
+    <Content Include="public\assets\zdr\common\res\errors.css" />
+    <Content Include="public\assets\zdr\common\res\img\zhihu_daily_logo.png" />
     <Content Include="public\assets\lib\bootstrap\css\bootstrap-theme.css" />
     <Content Include="public\assets\lib\bootstrap\css\bootstrap.css" />
     <Content Include="public\assets\lib\bootstrap\fonts\glyphicons-halflings-regular.eot" />
@@ -33,22 +33,23 @@
     <Content Include="Zhihu-Daily-API.md" />
     <Compile Include="app.js" />
     <Compile Include="bin\www.js" />
-    <Compile Include="public\assets\common\error_404.js" />
+    <Compile Include="public\assets\zdr\common\error_404.js" />
     <Compile Include="public\assets\lib\bootstrap\js\bootstrap.js" />
     <Compile Include="public\assets\lib\jquery\jquery.min.js" />
     <Compile Include="public\assets\lib\jquery\jquery.js" />
     <Compile Include="public\assets\lib\react\JSXTransformer.js" />
     <Compile Include="public\assets\lib\react\react.js" />
     <Compile Include="public\assets\lib\react\react.min.js" />
+    <Compile Include="public\assets\zdr\index.js" />
     <Compile Include="routes\index.js" />
     <Content Include="views\index.jade" />
-    <Content Include="public\assets\common\img\favicon.ico" />
+    <Content Include="public\assets\zdr\common\res\img\favicon.ico" />
     <Compile Include="public\assets\lib\less\less.min.js" />
     <Content Include="public\assets\lib\bootstrap\css\bootstrap-theme.min.css" />
     <Content Include="public\assets\lib\bootstrap\css\bootstrap.min.css" />
     <Content Include="public\assets\lib\bootstrap\fonts\glyphicons-halflings-regular.svg" />
     <Compile Include="public\assets\lib\bootstrap\js\bootstrap.min.js" />
-    <Content Include="public\assets\zdr\home\css\index.css" />
+    <Content Include="public\assets\zdr\res\index.css" />
     <Compile Include="routes\api\0\article.js" />
     <Compile Include="routes\api\0\index.js" />
     <Content Include="views\templates\layout.jade" />
@@ -57,8 +58,8 @@
     <Folder Include="bin" />
     <Folder Include="public" />
     <Folder Include="public\assets" />
-    <Folder Include="public\assets\common\css\" />
-    <Folder Include="public\assets\common\img\" />
+    <Folder Include="public\assets\zdr\common\res\img\" />
+    <Folder Include="public\assets\zdr\common\res\" />
     <Folder Include="public\assets\lib" />
     <Folder Include="public\assets\lib\bootstrap" />
     <Folder Include="public\assets\lib\bootstrap\css" />
@@ -66,11 +67,11 @@
     <Folder Include="public\assets\lib\bootstrap\js" />
     <Folder Include="public\assets\lib\jquery" />
     <Folder Include="public\assets\lib\less" />
-    <Folder Include="public\assets\common\" />
+    <Folder Include="public\assets\zdr\common\" />
     <Folder Include="public\assets\lib\react\" />
     <Folder Include="public\assets\zdr" />
-    <Folder Include="public\assets\zdr\home" />
-    <Folder Include="public\assets\zdr\home\css" />
+    <Folder Include="public\assets\zdr\res\img\" />
+    <Folder Include="public\assets\zdr\res\" />
     <Folder Include="routes" />
     <Folder Include="routes\api" />
     <Folder Include="routes\api\0" />

@@ -1,14 +1,14 @@
 ﻿extends ./templates/layout
 
-append lib
-    link(rel="stylesheet", href="assets/common/css/errors.css")
+append res
+    link(rel="stylesheet", href="assets/zdr/common/res/errors.css")
 
 block body
     .container-fluid
         .error
             h1.header
                 a(href="/")
-                    img(src="assets/common/img/zhihu_daily_logo.png", alt="知乎日报")
+                    img(src="assets/zdr/common/res/img/zhihu_daily_logo.png", alt="知乎日报")
             .content.text-center
                 p: strong 你似乎来到了没有知识存在的荒原...
                 p 请确认来源链接是否正确？日报是否存在？
@@ -19,4 +19,4 @@ block body
                     a#history-back(href="javascript:;") 返回上页
 
 append scripts
-    script(src="assets/common/error_404.js")
+    script(src="assets/zdr/common/error_404.js")
