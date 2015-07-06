@@ -1,6 +1,7 @@
 ﻿*.sublime-project
 *.sublime-workspace
 
+*.dat
 *.dll
 *.DS_Store
 *.suo
