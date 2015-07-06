@@ -37,6 +37,9 @@
     <Compile Include="public\assets\lib\bootstrap\js\bootstrap.js" />
     <Compile Include="public\assets\lib\jquery\jquery.min.js" />
     <Compile Include="public\assets\lib\jquery\jquery.js" />
+    <Compile Include="public\assets\lib\react\JSXTransformer.js" />
+    <Compile Include="public\assets\lib\react\react.js" />
+    <Compile Include="public\assets\lib\react\react.min.js" />
     <Compile Include="routes\index.js" />
     <Content Include="views\index.jade" />
     <Content Include="public\assets\common\img\favicon.ico" />
@@ -64,6 +67,7 @@
     <Folder Include="public\assets\lib\jquery" />
     <Folder Include="public\assets\lib\less" />
     <Folder Include="public\assets\common\" />
+    <Folder Include="public\assets\lib\react\" />
     <Folder Include="public\assets\zdr" />
     <Folder Include="public\assets\zdr\home" />
     <Folder Include="public\assets\zdr\home\css" />
