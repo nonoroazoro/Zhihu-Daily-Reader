@@ -1,7 +1,13 @@
-﻿body
+﻿html
 {
-    font: 16px/1.7 "Helvetica Neue", Helvetica, Arial, Sans-serif;
+    font-family: "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, Sans-serif;
+    font-size: 62.5%;
+}
+
+body
+{
     background-color: #EFF2F5;
+    font-size: 1.6rem;
 }
 
 .error
@@ -18,21 +24,26 @@
 
 .error strong
 {
-    font-size: 2rem;
+    font-size: 1.8rem;
     color: #000;
+}
+
+.error hr
+{
+    border-color: #555;
 }
 
 .error .content
 {
-    padding: 2rem 1.5rem;
-    border: 1px solid #BABBBC;
+    padding: 3rem 2rem;
+    border: 1px solid #BBB;
     border-radius: 5px;
     background-color: #F7F7F7;
 }
 
 .error .content p
 {
-    margin-bottom: 2rem;
+    margin-bottom: 2.7rem;
     color: #999;
 }
 
