@@ -19,6 +19,7 @@
   <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
   <ItemGroup>
     <Content Include="package.json" />
+    <Content Include="public\assets\common\css\global.css" />
     <Content Include="public\assets\common\css\errors.css" />
     <Content Include="public\assets\common\img\zhihu_daily_logo.png" />
     <Content Include="public\assets\lib\bootstrap\css\bootstrap-theme.css" />
