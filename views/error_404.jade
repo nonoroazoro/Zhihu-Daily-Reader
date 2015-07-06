@@ -1,6 +1,6 @@
 ﻿extends ./templates/layout
 
-append res
+block res
     link(rel="stylesheet", href="assets/zdr/common/res/errors.css")
 
 block body
@@ -18,5 +18,5 @@ block body
                     span  或者 
                     a#history-back(href="javascript:;") 返回上页
 
-append scripts
+block scripts
     script(src="assets/zdr/common/error_404.js")
