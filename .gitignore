@@ -1,11 +1,11 @@
-*.sublime-project
+﻿*.sublime-project
 *.sublime-workspace
 
 *.dll
-*.suo
-*.user
 *.DS_Store
-/.ntvs_analysis.dat
+*.suo
+*.tmp
+*.user
 
-obj/
 node_modules/
+obj/
