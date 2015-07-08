@@ -1,5 +1,5 @@
 ﻿// Configuration of requirejs.
-require.config(
+requirejs.config(
     {
         baseUrl: "assets/zdr/",
         paths: {
