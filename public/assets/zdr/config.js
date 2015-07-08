@@ -1,7 +1,7 @@
-﻿// Configuration of require.js
+﻿// Configuration of requirejs.
 require.config(
     {
-        baseUrl: "assets/zdr",
+        baseUrl: "assets/zdr/",
         paths: {
             jquery: "../libs/jquery/jquery.min",
             react: "../libs/react/react.min",
@@ -9,8 +9,5 @@ require.config(
             jsx: "../libs/require/plugins/jsx",
             text: "../libs/require/plugins/text",
         },
-        jsx: {
-            fileExtension: ".jsx"
-        }
     }
 );
