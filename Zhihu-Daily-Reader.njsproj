@@ -33,6 +33,8 @@
     <Content Include="Zhihu-Daily-API.md" />
     <Compile Include="app.js" />
     <Compile Include="bin\www.js" />
+    <Compile Include="public\assets\libs\require\plugins\jsx.js" />
+    <Compile Include="public\assets\libs\require\plugins\text.js" />
     <Compile Include="public\assets\libs\require\require.js" />
     <Compile Include="public\assets\libs\require\require.min.js" />
     <Compile Include="public\assets\zdr\common\error_404.js" />
@@ -62,6 +64,7 @@
     <Folder Include="public" />
     <Folder Include="public\assets" />
     <Folder Include="public\assets\libs\require\" />
+    <Folder Include="public\assets\libs\require\plugins\" />
     <Folder Include="public\assets\zdr\common\res\img\" />
     <Folder Include="public\assets\zdr\common\res\" />
     <Folder Include="public\assets\libs\" />
