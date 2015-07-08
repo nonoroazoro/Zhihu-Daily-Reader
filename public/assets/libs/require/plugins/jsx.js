@@ -58,11 +58,11 @@ define(["JSXTransformer", "text"], function (JSXTransformer, text)
                     // Do not create sourcemap when loaded in Node
                     if (location.port == null || location.port == "")
                     {
-                        content += "\n//# sourceMappingURL=" + location.protocol + "//" + location.hostname + "/" + config.baseUrl + name + fileExtension + ".map";
+                        content += "\n//# sourceURL=" + location.protocol + "//" + location.hostname + "/" + config.baseUrl + name + fileExtension;
                     }
                     else
                     {
-                        content += "\n//# sourceMappingURL=" + location.protocol + "//" + location.hostname + ":" + location.port + "/" + config.baseUrl + name + fileExtension + ".map";
+                        content += "\n//# sourceURL=" + location.protocol + "//" + location.hostname + ":" + location.port + "/" + config.baseUrl + name + fileExtension;
                     }
                 }
                 
