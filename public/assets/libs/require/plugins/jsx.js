@@ -21,55 +21,71 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-define(['JSXTransformer', 'text'], function (JSXTransformer, text) {
-
-  'use strict';
-
-  var buildMap = {};
-
-  var jsx = {
-    version: '0.6.2',
-
-    load: function (name, req, onLoadNative, config) {
-      var jsxOptions = config.jsx || {};
-      var fileExtension = jsxOptions.fileExtension || '.js';
-
-      var transformOptions = {
-        harmony: !!jsxOptions.harmony,
-        stripTypes: !!jsxOptions.stripTypes
-      };
-
-      var onLoad = function(content) {
-        try {
-          content = JSXTransformer.transform(content, transformOptions).code;
-        } catch (err) {
-          onLoadNative.error(err);
+define(["JSXTransformer", "text"], function (JSXTransformer, text)
+{
+    "use strict";
+    
+    var buildMap = {};
+    
+    var jsx = {
+        version: "0.6.2",
+        
+        load: function (name, req, onLoadNative, config)
+        {
+            var jsxOptions = config.jsx || {};
+            var fileExtension = jsxOptions.fileExtension || ".jsx";
+            var transformOptions = {
+                harmony: !!jsxOptions.harmony,
+                stripTypes: !!jsxOptions.stripTypes
+            };
+            
+            var onLoad = function (content)
+            {
+                try
+                {
+                    content = JSXTransformer.transform(content, transformOptions).code;
+                } catch (err)
+                {
+                    onLoadNative.error(err);
+                }
+                
+                if (config.isBuild)
+                {
+                    buildMap[name] = content;
+                }
+                else if (typeof location !== "undefined")
+                {
+                    // Do not create sourcemap when loaded in Node
+                    if (location.port == null || location.port == "")
+                    {
+                        content += "\n//# sourceMappingURL=" + location.protocol + "//" + location.hostname + "/" + config.baseUrl + name + fileExtension + ".map";
+                    }
+                    else
+                    {
+                        content += "\n//# sourceMappingURL=" + location.protocol + "//" + location.hostname + ":" + location.port + "/" + config.baseUrl + name + fileExtension + ".map";
+                    }
+                }
+                
+                onLoadNative.fromText(content);
+            };
+            
+            onLoad.error = function (err)
+            {
+                onLoadNative.error(err);
+            };
+            
+            text.load(name + fileExtension, req, onLoad, config);
+        },
+        
+        write: function (pluginName, moduleName, write)
+        {
+            if (buildMap.hasOwnProperty(moduleName))
+            {
+                var content = buildMap[moduleName];
+                write.asModule(pluginName + "!" + moduleName, content);
+            }
         }
-
-        if (config.isBuild) {
-          buildMap[name] = content;
-        } else if (typeof location !== 'undefined') { // Do not create sourcemap when loaded in Node
-          content += '\n//# sourceURL=' + location.protocol + '//' + location.hostname +
-            config.baseUrl + name + fileExtension;
-        }
-
-        onLoadNative.fromText(content);
-      };
-
-      onLoad.error = function(err) {
-        onLoadNative.error(err);
-      };
-
-      text.load(name + fileExtension, req, onLoad, config);
-    },
-
-    write: function (pluginName, moduleName, write) {
-      if (buildMap.hasOwnProperty(moduleName)) {
-        var content = buildMap[moduleName];
-        write.asModule(pluginName + '!' + moduleName, content);
-      }
-    }
-  };
-
-  return jsx;
+    };
+    
+    return jsx;
 });
