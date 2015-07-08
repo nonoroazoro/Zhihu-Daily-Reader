@@ -2,17 +2,10 @@
 {
     var React = require("react");
     var $ = require("jquery");
-    var Header = React.createClass(
-        {
-            render: function ()
-            {
-                return (<header><h1>Hello</h1></header>);
-            }
-        }
-    );
-    
+
+    var Hello = require("jsx!HelloComponent");
     React.render(
-        <Header />,
+        <Hello />,
         $(".container-fluid")[0]
     );
 });

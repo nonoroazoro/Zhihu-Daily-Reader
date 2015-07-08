@@ -47,6 +47,7 @@
     <Compile Include="public\assets\zdr\config.js" />
     <Compile Include="public\assets\zdr\index.jsx" />
     <Compile Include="public\assets\zdr\main.js" />
+    <Compile Include="public\assets\zdr\HelloComponent.jsx" />
     <Compile Include="routes\index.js" />
     <Content Include="views\index.jade" />
     <Content Include="public\assets\zdr\common\res\img\favicon.ico" />
