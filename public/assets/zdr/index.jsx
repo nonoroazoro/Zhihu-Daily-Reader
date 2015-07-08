@@ -1,11 +1,7 @@
-﻿define(function (require)
+﻿define(["jquery", "react", "jsx!HelloComponent"], function ($, React, HelloComponent)
 {
-    var React = require("react");
-    var $ = require("jquery");
-
-    var Hello = require("jsx!HelloComponent");
     React.render(
-        <Hello />,
+        <HelloComponent />,
         $(".container-fluid")[0]
     );
 });
