@@ -1,8 +1,4 @@
 ﻿extends ./templates/layout
 
-append res
-    script(src="assets/lib/react/react.js")
-    script(src="assets/lib/react/JSXTransformer.js")
-
-append scripts
-    script(src="assets/zdr/index.js", type="text/jsx")
+block res
+    script(src="assets/libs/require/require.min.js", data-main="assets/zdr/index")
