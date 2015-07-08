@@ -1,4 +1,4 @@
-﻿require(["config"], function (config)
+﻿require(["config"], function ()
 {
     require(["react", "jsx!index"]);
 });
