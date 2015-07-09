@@ -33,10 +33,7 @@
     <Content Include="Zhihu-Daily-API.md" />
     <Compile Include="app.js" />
     <Compile Include="bin\www.js" />
-    <Compile Include="public\assets\libs\require\plugins\jsx.js" />
-    <Compile Include="public\assets\libs\require\plugins\text.js" />
-    <Compile Include="public\assets\libs\require\require.js" />
-    <Compile Include="public\assets\libs\require\require.min.js" />
+    <Compile Include="public\assets\zdr\webpack.config.js" />
     <Compile Include="public\assets\zdr\common\error_404.js" />
     <Compile Include="public\assets\libs\bootstrap\js\bootstrap.js" />
     <Compile Include="public\assets\libs\jquery\jquery.min.js" />
@@ -44,10 +41,8 @@
     <Compile Include="public\assets\libs\react\JSXTransformer.js" />
     <Compile Include="public\assets\libs\react\react.js" />
     <Compile Include="public\assets\libs\react\react.min.js" />
-    <Compile Include="public\assets\zdr\config.js" />
     <Compile Include="public\assets\zdr\index.jsx" />
-    <Compile Include="public\assets\zdr\main.js" />
-    <Compile Include="public\assets\zdr\HelloComponent.jsx" />
+    <Compile Include="public\assets\zdr\Hello.jsx" />
     <Compile Include="routes\index.js" />
     <Content Include="views\index.jade" />
     <Content Include="public\assets\zdr\common\res\img\favicon.ico" />
@@ -65,8 +60,6 @@
     <Folder Include="bin" />
     <Folder Include="public" />
     <Folder Include="public\assets" />
-    <Folder Include="public\assets\libs\require\" />
-    <Folder Include="public\assets\libs\require\plugins\" />
     <Folder Include="public\assets\zdr\common\res\img\" />
     <Folder Include="public\assets\zdr\common\res\" />
     <Folder Include="public\assets\libs\" />

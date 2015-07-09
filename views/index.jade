@@ -1,7 +1,9 @@
 ﻿extends ./templates/layout
 
 block res
-    script(src="assets/libs/require/require.min.js", data-main="assets/zdr/main")
+    script(src="assets/libs/jquery/jquery.min.js")
+    script(src="assets/libs/react/react.min.js")
 
 block body
     .container-fluid
+    script(src="assets/zdr/bundle.js")
