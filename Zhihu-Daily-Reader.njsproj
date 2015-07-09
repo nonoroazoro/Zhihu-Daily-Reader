@@ -38,7 +38,6 @@
     <Compile Include="public\assets\libs\bootstrap\js\bootstrap.js" />
     <Compile Include="public\assets\libs\jquery\jquery.min.js" />
     <Compile Include="public\assets\libs\jquery\jquery.js" />
-    <Compile Include="public\assets\libs\react\JSXTransformer.js" />
     <Compile Include="public\assets\libs\react\react.js" />
     <Compile Include="public\assets\libs\react\react.min.js" />
     <Compile Include="public\assets\zdr\index.jsx" />
