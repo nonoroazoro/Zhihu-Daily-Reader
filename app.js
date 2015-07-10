@@ -20,8 +20,14 @@ app.use(cookieParser());
 app.use("/", require("./routes"));
 
 // static file setup
-app.use("/assets", express.static(__dirname + "/public/assets", { maxAge: 2592000000 }));
-app.use(express.static(__dirname + "/public"));
+if (app.get("env") === "development")
+{
+    app.use("/assets", express.static(__dirname + "/public/assets"));
+}
+else
+{
+    app.use("/assets", express.static(__dirname + "/public/assets", { maxAge: 2592000000 }));
+}
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next)
