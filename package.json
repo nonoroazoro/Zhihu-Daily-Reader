@@ -34,7 +34,6 @@
     "jsx-loader": "^0.13.2",
     "node-libs-browser": "^0.5.2",
     "style-loader": "^0.12.3",
-    "url-loader": "^0.5.6",
-    "webpack": "^1.10.1"
+    "url-loader": "^0.5.6"
   }
 }
