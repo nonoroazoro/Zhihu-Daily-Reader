@@ -1,4 +1,6 @@
-﻿var $ = require("jquery");
+﻿require("./res/index");
+
+var $ = require("jquery");
 var React = require("react");
 var Hello = require("./Hello");
 
