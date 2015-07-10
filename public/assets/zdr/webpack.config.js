@@ -1,11 +1,13 @@
-﻿module.exports = {
+﻿var ExtractTextPlugin = require("extract-text-webpack-plugin");
+
+module.exports = {
     entry: "./index",
     output: {
         path: __dirname,
         filename: "bundle.js"
     },
     resolve: {
-        extensions: ["", ".js", ".jsx"]
+        extensions: ["", ".js", ".jsx", ".css"]
     },
     externals: {
         "jquery" : "jQuery",
@@ -13,7 +15,12 @@
     },
     module: {
         loaders: [
-            { test: /\.jsx$/, loader: "jsx" }
+            { test: /\.jsx?$/, loader: "jsx" },
+            { test: /\.css$/, loader: ExtractTextPlugin.extract("style", "css") },
+            { test: /\.(png|jpg)$/, loader: "url?limit=8192" }
         ]
-    }
+    },
+    plugins: [
+        new ExtractTextPlugin("bundle.css")
+    ]
 };
