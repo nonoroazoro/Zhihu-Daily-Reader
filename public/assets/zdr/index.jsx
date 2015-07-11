@@ -1,10 +1,10 @@
-﻿require("./res/index");
+﻿require("./res/index.css");
 
 var $ = require("jquery");
 var React = require("react");
-var Hello = require("./Hello");
 
+var Navbar = require("./components/Navbar");
 React.render(
-    <Hello />,
-    $(".container-fluid")[0]
+    <Navbar />,
+    $("#container")[0]
 );
