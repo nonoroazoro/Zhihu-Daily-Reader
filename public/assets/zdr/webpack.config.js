@@ -1,4 +1,5 @@
 ﻿var ExtractTextPlugin = require("extract-text-webpack-plugin");
+var path = require("path");
 
 module.exports = {
     entry: "./index",
@@ -7,7 +8,10 @@ module.exports = {
         filename: "bundle.js"
     },
     resolve: {
-        extensions: ["", ".js", ".jsx", ".css"]
+        extensions: ["", ".js", ".jsx"],
+        alias: {
+            common: path.resolve(__dirname, "common")
+        }
     },
     externals: {
         "jquery" : "jQuery",
