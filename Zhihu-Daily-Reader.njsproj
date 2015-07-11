@@ -33,6 +33,7 @@
     <Content Include="Zhihu-Daily-API.md" />
     <Compile Include="app.js" />
     <Compile Include="bin\www.js" />
+    <None Include="public\assets\libs\_references.js" />
     <Compile Include="public\assets\zdr\webpack.config.js" />
     <Compile Include="public\assets\zdr\common\error_404.js" />
     <Compile Include="public\assets\libs\bootstrap\js\bootstrap.js" />
