@@ -1,10 +1,11 @@
 ﻿var React = require("react");
-module.exports = React.createClass(
+var Hello = React.createClass(
     {
-        displayName: "Hello",
         render: function ()
         {
             return (<header><h1>Hello</h1></header>);
         }
     }
 );
+
+module.exports = Hello;
