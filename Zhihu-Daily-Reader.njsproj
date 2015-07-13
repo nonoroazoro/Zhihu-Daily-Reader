@@ -29,6 +29,7 @@
     <Content Include="public\assets\libs\bootstrap\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="public\assets\libs\jquery\jquery.min.map" />
     <Content Include="public\assets\zdr\components\Navbar.jsx" />
+    <Content Include="public\assets\zdr\components\res\Navbar.less" />
     <Content Include="README.md" />
     <Content Include="views\error_404.jade" />
     <Content Include="Zhihu-Daily-API.md" />
@@ -71,6 +72,7 @@
     <Folder Include="public\assets\libs\react\" />
     <Folder Include="public\assets\zdr" />
     <Folder Include="public\assets\zdr\components\" />
+    <Folder Include="public\assets\zdr\components\res\" />
     <Folder Include="public\assets\zdr\res\img\" />
     <Folder Include="public\assets\zdr\res\" />
     <Folder Include="routes" />
