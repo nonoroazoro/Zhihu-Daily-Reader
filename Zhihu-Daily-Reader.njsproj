@@ -46,7 +46,6 @@
     <Compile Include="routes\index.js" />
     <Content Include="views\index.jade" />
     <Content Include="public\assets\zdr\common\res\img\favicon.ico" />
-    <Compile Include="public\assets\libs\less\less.min.js" />
     <Content Include="public\assets\libs\bootstrap\css\bootstrap-theme.min.css" />
     <Content Include="public\assets\libs\bootstrap\css\bootstrap.min.css" />
     <Content Include="public\assets\libs\bootstrap\fonts\glyphicons-halflings-regular.svg" />
@@ -68,7 +67,6 @@
     <Folder Include="public\assets\libs\bootstrap\fonts\" />
     <Folder Include="public\assets\libs\bootstrap\js\" />
     <Folder Include="public\assets\libs\jquery\" />
-    <Folder Include="public\assets\libs\less\" />
     <Folder Include="public\assets\zdr\common\" />
     <Folder Include="public\assets\libs\react\" />
     <Folder Include="public\assets\zdr" />
