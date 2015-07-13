@@ -51,7 +51,7 @@
     <Content Include="public\assets\libs\bootstrap\css\bootstrap.min.css" />
     <Content Include="public\assets\libs\bootstrap\fonts\glyphicons-halflings-regular.svg" />
     <Compile Include="public\assets\libs\bootstrap\js\bootstrap.min.js" />
-    <Content Include="public\assets\zdr\res\index.css" />
+    <Content Include="public\assets\zdr\res\index.less" />
     <Compile Include="routes\api\0\article.js" />
     <Compile Include="routes\api\0\index.js" />
     <Content Include="views\templates\layout.jade" />
