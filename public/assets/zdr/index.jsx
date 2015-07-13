@@ -1,4 +1,4 @@
-﻿require("./res/index.css");
+﻿require("./res/index.less");
 
 var $ = require("jquery");
 var React = require("react");
