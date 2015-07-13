@@ -1,11 +1,14 @@
-﻿var ExtractTextPlugin = require("extract-text-webpack-plugin");
-var path = require("path");
+﻿var path = require("path");
+var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 module.exports = {
-    entry: "./index",
+    entry: {
+        index : "./index",
+        error_404 : "./common/error_404"
+    },
     output: {
         path: __dirname,
-        filename: "bundle.js"
+        filename: "[name].bundle.js"
     },
     resolve: {
         extensions: ["", ".js", ".jsx"],
@@ -14,7 +17,6 @@ module.exports = {
         }
     },
     externals: {
-        "jquery" : "jQuery",
         "react" : "React"
     },
     module: {
@@ -26,6 +28,6 @@ module.exports = {
         ]
     },
     plugins: [
-        new ExtractTextPlugin("bundle.css")
+        new ExtractTextPlugin("[name].bundle.css")
     ]
 };
