@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{a045bf79-9a21-4354-8f85-5fb0d9df5c1b}</ProjectGuid>
     <ProjectHome />
-    <ProjectView>ProjectFiles</ProjectView>
+    <ProjectView>ShowAllFiles</ProjectView>
     <StartupFile>bin\www.js</StartupFile>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
@@ -19,6 +19,10 @@
   <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
   <ItemGroup>
     <Content Include="package.json" />
+    <Content Include="public\assets\libs\bootstrap\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="public\assets\libs\bootstrap\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="public\assets\libs\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="public\assets\libs\bootstrap\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="public\assets\libs\bootstrap\less\alerts.less" />
     <Content Include="public\assets\libs\bootstrap\less\badges.less" />
     <Content Include="public\assets\libs\bootstrap\less\bootstrap.less" />
@@ -90,14 +94,11 @@
     <Content Include="public\assets\libs\bootstrap\less\utilities.less" />
     <Content Include="public\assets\libs\bootstrap\less\variables.less" />
     <Content Include="public\assets\libs\bootstrap\less\wells.less" />
-    <Content Include="public\assets\zdr\common\res\errors.css" />
+    <Content Include="public\assets\zdr\common\res\errors.less" />
     <Content Include="public\assets\zdr\common\res\global.css" />
     <Content Include="public\assets\zdr\common\res\img\zhihu_daily_logo.png" />
     <Content Include="public\assets\libs\bootstrap\css\bootstrap-theme.css" />
     <Content Include="public\assets\libs\bootstrap\css\bootstrap.css" />
-    <Content Include="public\assets\libs\bootstrap\fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="public\assets\libs\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="public\assets\libs\bootstrap\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="public\assets\libs\jquery\jquery.min.map" />
     <Content Include="public\assets\zdr\components\Navbar.jsx" />
     <Content Include="public\assets\zdr\components\res\Navbar.less" />
@@ -108,7 +109,7 @@
     <Compile Include="bin\www.js" />
     <None Include="public\assets\libs\_references.js" />
     <Compile Include="public\assets\zdr\webpack.config.js" />
-    <Compile Include="public\assets\zdr\common\error_404.js" />
+    <Compile Include="public\assets\zdr\common\error_404.jsx" />
     <Compile Include="public\assets\libs\bootstrap\js\bootstrap.js" />
     <Compile Include="public\assets\libs\jquery\jquery.min.js" />
     <Compile Include="public\assets\libs\jquery\jquery.js" />
@@ -120,7 +121,6 @@
     <Content Include="public\assets\zdr\common\res\img\favicon.ico" />
     <Content Include="public\assets\libs\bootstrap\css\bootstrap-theme.min.css" />
     <Content Include="public\assets\libs\bootstrap\css\bootstrap.min.css" />
-    <Content Include="public\assets\libs\bootstrap\fonts\glyphicons-halflings-regular.svg" />
     <Compile Include="public\assets\libs\bootstrap\js\bootstrap.min.js" />
     <Content Include="public\assets\zdr\res\index.less" />
     <Compile Include="routes\api\0\article.js" />
@@ -131,6 +131,7 @@
     <Folder Include="bin" />
     <Folder Include="public" />
     <Folder Include="public\assets" />
+    <Folder Include="public\assets\libs\bootstrap\fonts\" />
     <Folder Include="public\assets\libs\bootstrap\less\" />
     <Folder Include="public\assets\libs\bootstrap\less\mixins\" />
     <Folder Include="public\assets\zdr\common\res\img\" />
@@ -138,7 +139,6 @@
     <Folder Include="public\assets\libs\" />
     <Folder Include="public\assets\libs\bootstrap\" />
     <Folder Include="public\assets\libs\bootstrap\css\" />
-    <Folder Include="public\assets\libs\bootstrap\fonts\" />
     <Folder Include="public\assets\libs\bootstrap\js\" />
     <Folder Include="public\assets\libs\jquery\" />
     <Folder Include="public\assets\zdr\common\" />
