@@ -1,6 +1,13 @@
-﻿body
+﻿html
+{
+    font-family: "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, Sans-serif;
+    font-size: 62.5%;
+}
+
+body
 {
     background-color: #EFF2F5;
+    font-size: 1.6rem;
 }
 
 .error
