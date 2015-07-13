@@ -18,7 +18,8 @@
     "reader"
   ],
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "watch":  "cd public/assets/zdr && webpack -d --watch"
   },
   "dependencies": {
     "body-parser": "^1.13.2",
