@@ -1,16 +1,14 @@
-﻿var React = require("react");
+﻿require("./res/Navbar.less");
+
+var React = require("react");
 var Navbar = React.createClass(
     {
         render: function ()
         {
-            var navBrandStyle = {
-                "padding-top": "6px",
-                "padding-bottom": "6px"
-            };
             var navBrandImg = require("common/res/img/zhihu_daily_logo.png");
 
             var nav =
-                <nav className="navbar navbar-default navbar-fixed-top" >
+                <nav className="Navbar navbar navbar-default navbar-fixed-top" >
                     <div className="container">
                         <div className="navbar-header">
                             <button type="button"
@@ -22,7 +20,7 @@ var Navbar = React.createClass(
                                 <span className="icon-bar"></span>
                                 <span className="icon-bar"></span>
                             </button>
-                            <a className="navbar-brand" href="/" style={navBrandStyle}>
+                            <a className="navbar-brand" href="/">
                                 <img alt="知乎日报" src={navBrandImg} />
                             </a>
                         </div>
