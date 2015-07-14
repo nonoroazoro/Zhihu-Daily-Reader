@@ -14,7 +14,7 @@ var Navbar = React.createClass(
                             <button type="button"
                                 className="navbar-toggle collapsed"
                                 data-toggle="collapse"
-                                data-target="#navbarContent">
+                                data-target=".Navbar .NavbarCollapse">
                                 <span className="sr-only">导航</span>
                                 <span className="icon-bar"></span>
                                 <span className="icon-bar"></span>
@@ -25,7 +25,7 @@ var Navbar = React.createClass(
                             </a>
                         </div>
 
-                        <div className="NavbarContent navbar-collapse collapse" >
+                        <div className="NavbarCollapse navbar-collapse collapse" >
                             <ul className="nav navbar-nav navbar-right">
                                 <li className="active"><a href="#">日报</a></li>
                                 <li><a href="#">专栏</a></li>
