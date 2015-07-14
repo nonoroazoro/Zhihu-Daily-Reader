@@ -94,6 +94,12 @@
     <Content Include="public\assets\libs\bootstrap\less\utilities.less" />
     <Content Include="public\assets\libs\bootstrap\less\variables.less" />
     <Content Include="public\assets\libs\bootstrap\less\wells.less" />
+    <Content Include="public\assets\zdr\build\error_404.bundle.css" />
+    <Content Include="public\assets\zdr\build\error_404.bundle.css.map" />
+    <Content Include="public\assets\zdr\build\error_404.bundle.js.map" />
+    <Content Include="public\assets\zdr\build\index.bundle.css" />
+    <Content Include="public\assets\zdr\build\index.bundle.css.map" />
+    <Content Include="public\assets\zdr\build\index.bundle.js.map" />
     <Content Include="public\assets\zdr\common\res\errors.less" />
     <Content Include="public\assets\zdr\common\res\global.css" />
     <Content Include="public\assets\zdr\common\res\img\zhihu_daily_logo.png" />
@@ -108,6 +114,8 @@
     <Compile Include="app.js" />
     <Compile Include="bin\www.js" />
     <None Include="public\assets\libs\_references.js" />
+    <Compile Include="public\assets\zdr\build\error_404.bundle.js" />
+    <Compile Include="public\assets\zdr\build\index.bundle.js" />
     <Compile Include="public\assets\zdr\webpack.config.js" />
     <Compile Include="public\assets\zdr\common\error_404.jsx" />
     <Compile Include="public\assets\libs\bootstrap\js\bootstrap.js" />
@@ -146,6 +154,7 @@
     <Folder Include="public\assets\zdr" />
     <Folder Include="public\assets\zdr\components\" />
     <Folder Include="public\assets\zdr\components\res\" />
+    <Folder Include="public\assets\zdr\build\" />
     <Folder Include="public\assets\zdr\res\img\" />
     <Folder Include="public\assets\zdr\res\" />
     <Folder Include="routes" />
