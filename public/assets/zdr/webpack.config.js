@@ -8,23 +8,28 @@ module.exports = {
     },
     output: {
         path: path.resolve(__dirname, "build"),
-        filename: "[name].bundle.js"
+        filename: "[name].bundle.js",
+        chunkFilename: "[id].bundle.js",
     },
     resolve: {
         extensions: ["", ".js", ".jsx"],
         alias: {
-            common: path.resolve(__dirname, "common")
+            common: path.resolve(__dirname, "common"),
+            bootstrap: path.resolve(__dirname, "../libs/bootstrap")
         }
     },
     externals: {
-        "react" : "React"
+        "react" : "React",
+        "jquery" : "jQuery",
     },
     module: {
         loaders: [
             { test: /\.jsx?$/, loader: "jsx" },
             { test: /\.css$/, loader: ExtractTextPlugin.extract("style", "css") },
             { test: /\.less$/, loader: ExtractTextPlugin.extract("style", "css!less") },
-            { test: /\.(png|jpg)$/, loader: "url?limit=8192" }
+            { test: /\.(png|jpg)$/, loader: "url?limit=8192" },
+
+            { test: /\.woff$/, loader: "url?limit=100000&mimetype=application/font-woff" }
         ]
     },
     plugins: [
