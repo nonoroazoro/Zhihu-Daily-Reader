@@ -7,7 +7,7 @@ module.exports = {
         error_404 : "./common/error_404"
     },
     output: {
-        path: __dirname,
+        path: path.resolve(__dirname, "build"),
         filename: "[name].bundle.js"
     },
     resolve: {
