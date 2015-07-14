@@ -5,7 +5,7 @@ var Navbar = React.createClass(
     {
         render: function ()
         {
-            var navBrandImg = require("common/res/img/zhihu_daily_logo.png");
+            const logo = require("common/res/img/zhihu_daily_logo.png");
 
             var nav =
                 <nav className="Navbar navbar navbar-default navbar-fixed-top" >
@@ -21,11 +21,11 @@ var Navbar = React.createClass(
                                 <span className="icon-bar"></span>
                             </button>
                             <a className="navbar-brand" href="/">
-                                <img alt="知乎日报" src={navBrandImg} />
+                                <img alt="知乎日报" src={logo} />
                             </a>
                         </div>
 
-                        <div id="navbarContent" className="navbar-collapse collapse" >
+                        <div className="NavbarContent navbar-collapse collapse" >
                             <ul className="nav navbar-nav navbar-right">
                                 <li className="active"><a href="#">日报</a></li>
                                 <li><a href="#">专栏</a></li>
