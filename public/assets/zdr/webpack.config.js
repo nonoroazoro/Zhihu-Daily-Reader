@@ -21,6 +21,7 @@ module.exports = {
     externals: {
         "react" : "React",
         "jquery" : "jQuery",
+        "lodash": "_",
     },
     module: {
         loaders: [
