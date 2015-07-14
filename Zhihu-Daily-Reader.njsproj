@@ -38,6 +38,8 @@
     <Compile Include="app.js" />
     <Compile Include="bin\www.js" />
     <None Include="public\assets\libs\_references.js" />
+    <Compile Include="public\assets\libs\lodash\lodash.js" />
+    <Compile Include="public\assets\libs\lodash\lodash.min.js" />
     <Compile Include="public\assets\zdr\webpack.config.js" />
     <Compile Include="public\assets\zdr\common\error_404.jsx" />
     <Compile Include="public\assets\libs\bootstrap\js\bootstrap.js" />
@@ -61,6 +63,7 @@
     <Folder Include="public\assets" />
     <Folder Include="public\assets\libs\bootstrap\fonts\" />
     <Folder Include="public\assets\libs\bootstrap\css\" />
+    <Folder Include="public\assets\libs\lodash\" />
     <Folder Include="public\assets\zdr\common\res\img\" />
     <Folder Include="public\assets\zdr\common\res\" />
     <Folder Include="public\assets\libs\" />
