@@ -5,42 +5,42 @@
 
 .error
 {
+    position: absolute;
+    left: 50%;
+    top: 50%;
     width: 50%;
     min-width: 400px;
     max-width: 500px;
     height: 50%;
-    position: absolute;
-    left: 50%;
-    top: 50%;
     transform: translate(-50%, -50%);
-}
 
-.error strong
-{
-    font-size: 1.8rem;
-    color: #000;
-}
+    strong
+    {
+        font-size: 1.8rem;
+        color: #000;
+    }
 
-.error hr
-{
-    border-color: #555;
-}
+    hr
+    {
+        border-color: #555;
+    }
 
-.error .content
-{
-    padding: 3rem 2rem;
-    border: 1px solid #BBB;
-    border-radius: 5px;
-    background-color: #F7F7F7;
-}
+    .content
+    {
+        background-color: #F7F7F7;
+        border: 1px solid #BBB;
+        border-radius: 5px;
+        padding: 3rem 2rem;
 
-.error .content p
-{
-    margin-bottom: 2.7rem;
-    color: #999;
-}
+        p
+        {
+            color: #999;
+            margin-bottom: 2.7rem;
 
-.error .content p:last-child
-{
-    margin-bottom: 0;
+            &:last-child
+            {
+                margin-bottom: 0;
+            }
+        }
+    }
 }
