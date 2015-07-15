@@ -1,6 +1,5 @@
-﻿require("./res/Footer.less");
+﻿var React = require("react");
 
-var React = require("react");
 var Footer = React.createClass(
 {
     render: function ()

@@ -2,8 +2,13 @@
 
 var $ = require("jquery");
 var React = require("react");
+
+var Header = require("./components/Header");
 var Navbar = require("./components/Navbar");
+
 React.render(
-    <Navbar />,
+    <Header>
+        <Navbar />
+    </Header>,
     $("#container")[0]
 );
