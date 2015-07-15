@@ -30,7 +30,9 @@
     <Content Include="public\assets\zdr\common\res\global.less" />
     <Content Include="public\assets\zdr\common\res\img\zhihu_daily_logo.png" />
     <Content Include="public\assets\libs\jquery\jquery.min.map" />
+    <Content Include="public\assets\zdr\components\Footer.jsx" />
     <Content Include="public\assets\zdr\components\Navbar.jsx" />
+    <Content Include="public\assets\zdr\components\res\Footer.less" />
     <Content Include="public\assets\zdr\components\res\Navbar.less" />
     <Content Include="README.md" />
     <Content Include="views\error_404.jade" />
