@@ -55,7 +55,6 @@ var Navbar = React.createClass(
 {
     render: function ()
     {
-
         var navbar =
             <nav id={this.props.id ? this.props.id : null}
                 className="Navbar navbar navbar-default navbar-fixed-top">
