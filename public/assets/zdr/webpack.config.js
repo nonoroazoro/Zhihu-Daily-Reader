@@ -25,7 +25,7 @@ module.exports = {
     },
     module: {
         loaders: [
-            { test: /\.jsx?$/, loader: "jsx" },
+            { test: /\.jsx?$/, loader: "jsx?harmony" },
             { test: /\.css$/, loader: ExtractTextPlugin.extract("style", "css") },
             { test: /\.less$/, loader: ExtractTextPlugin.extract("style", "css!less") },
             { test: /\.(png|jpg)$/, loader: "url?limit=8192" },
