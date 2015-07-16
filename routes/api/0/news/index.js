@@ -2,7 +2,7 @@
 var router = express.Router();
 
 var apis = [
-    "/news"
+    "/latest"
 ];
 
 apis.forEach(function (p_api)
