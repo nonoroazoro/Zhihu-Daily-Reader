@@ -2,8 +2,9 @@
 
 /**
  * 从知乎日报获取最新消息。
+ * @param  p_response express 服务端响应。
  */
-function getLatestNews(p_callback)
+function getLatestNews(p_response)
 {
     http.get("http://news-at.zhihu.com/api/4/news/latest", function (res)
     {
@@ -15,18 +16,12 @@ function getLatestNews(p_callback)
                 data += chunk;
             }).on("end", function ()
             {
-                if (p_callback)
-                {
-                    p_callback(JSON.parse(data));
-                }
+                p_response.json(JSON.parse(data));
             });
         }
         else
         {
-            if (p_callback)
-            {
-                p_callback({});
-            }
+            p_response.json({});
         }
     });
 }
