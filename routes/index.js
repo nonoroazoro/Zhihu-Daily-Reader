@@ -7,6 +7,13 @@ router.get("/", function (req, res, next)
     res.render("index");
 });
 
-router.use("/api/0", require("./api/0"));
+var apis = [
+    "/api/4"
+];
+
+apis.forEach(function (p_api)
+{
+    router.use(p_api, require("." + p_api));
+});
 
 module.exports = router;

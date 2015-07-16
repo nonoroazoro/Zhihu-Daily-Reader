@@ -5,13 +5,8 @@ var crawler = require("../../../../../libs/zhr/crawler");
 // get latest news
 router.get("/", function (req, res, next)
 {
-    //crawler.getLatestNews(res.json);
-    res.json(
-        {
-            id: "fucking no aaa",
-            desc: "body of article",
-            body: "<p>Mother fucker!</p>"
-        });
+    // 暂时先用这种方法，后面加上爬虫。读取本地缓存。
+    crawler.getLatestNews(res);
 });
 
 module.exports = router;
