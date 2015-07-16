@@ -79,7 +79,7 @@ var Carousel = React.createClass(
     {
         return {
             id: "Carousel",
-            src: "http://news-at.zhihu.com/api/4/news/latest"
+            src: "/api/4/news/latest"
         };
     },
 
@@ -88,7 +88,6 @@ var Carousel = React.createClass(
         $.get(this.props.src, function(data)
         {
             console.log("error");
-
         }.bind(this)).fail(function  ()
         {
             console.log("error");
