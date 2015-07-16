@@ -41,6 +41,10 @@
     <Compile Include="app.js" />
     <Compile Include="bin\www.js" />
     <None Include="public\assets\libs\_references.js" />
+    <Compile Include="libs\zhr\crawler.js">
+      <SubType>Code</SubType>
+      <TestFramework>ExportRunner</TestFramework>
+    </Compile>
     <Compile Include="public\assets\libs\lodash\lodash.js" />
     <Compile Include="public\assets\libs\lodash\lodash.min.js" />
     <Compile Include="public\assets\zdr\webpack.config.js" />
@@ -51,17 +55,20 @@
     <Compile Include="public\assets\libs\react\react.js" />
     <Compile Include="public\assets\libs\react\react.min.js" />
     <Compile Include="public\assets\zdr\index.jsx" />
+    <Compile Include="routes\api\0\news\index.js" />
+    <Compile Include="routes\api\0\news\latest\index.js" />
     <Compile Include="routes\index.js" />
     <Content Include="views\index.jade" />
     <Content Include="public\assets\zdr\common\res\img\favicon.ico" />
     <Compile Include="public\assets\libs\bootstrap\js\bootstrap.min.js" />
     <Content Include="public\assets\zdr\res\index.less" />
-    <Compile Include="routes\api\0\article.js" />
     <Compile Include="routes\api\0\index.js" />
     <Content Include="views\templates\layout.jade" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="bin" />
+    <Folder Include="libs\" />
+    <Folder Include="libs\zhr\" />
     <Folder Include="public" />
     <Folder Include="public\assets" />
     <Folder Include="public\assets\libs\bootstrap\fonts\" />
@@ -83,6 +90,8 @@
     <Folder Include="routes" />
     <Folder Include="routes\api" />
     <Folder Include="routes\api\0" />
+    <Folder Include="routes\api\0\news\" />
+    <Folder Include="routes\api\0\news\latest\" />
     <Folder Include="views" />
     <Folder Include="views\templates" />
   </ItemGroup>
