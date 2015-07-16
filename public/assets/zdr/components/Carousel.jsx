@@ -1,5 +1,7 @@
 ﻿require("./res/Carousel.less");
 
+var $ = require("jquery");
+var _ = require("lodash");
 var React = require("react");
 
 var CarouselIndicator = React.createClass(
@@ -41,7 +43,6 @@ var CarouselInner = React.createClass(
     }
 });
 
-
 var CarouselControls = React.createClass(
 {
     render: function()
@@ -69,11 +70,29 @@ var CarouselControls = React.createClass(
     }
 });
 
+/**
+ * 知乎日报：热门消息栏。
+ */
 var Carousel = React.createClass(
 {
     getDefaultProps: function  ()
     {
-        return { id: "Carousel" };
+        return {
+            id: "Carousel",
+            src: "http://news-at.zhihu.com/api/4/news/latest"
+        };
+    },
+
+    componentDidMount: function()
+    {
+        $.get(this.props.src, function(data)
+        {
+            console.log("error");
+
+        }.bind(this)).fail(function  ()
+        {
+            console.log("error");
+        });
     },
 
     render: function ()
