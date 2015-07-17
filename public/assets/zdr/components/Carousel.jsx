@@ -5,6 +5,9 @@ var _ = require("lodash");
 var classNames = require("classnames");
 var React = require("react");
 
+/**
+ * 幻灯片指示器。
+ */
 var CarouselIndicator = React.createClass(
 {
     render: function()
@@ -28,54 +31,59 @@ var CarouselIndicator = React.createClass(
     }
 });
 
+/**
+ * 幻灯片内容。
+ */
 var CarouselInner = React.createClass(
 {
     render: function()
     {
-        var inner =
-            <div className="carousel-inner" role="listbox">
-                <div className="item active">
-                  <div className="carousel-caption">
-                  </div>
-                </div>
+        var rows = _.map(this.props.data, function(value, key)
+        {
+            var itemId = value.id;
+            return (
                 <div className="item">
-                  <div className="carousel-caption">
-                  </div>
+                    <img src={value.image} alt={value.title} />
+                    <div className="carousel-caption">
+                        <h1>{value.title}</h1>
+                    </div>
                 </div>
-                <div className="item">
-                  <div className="carousel-caption">
-                  </div>
-                </div>
-            </div>;
+            );
+        });
 
-        return inner;
+        return (
+            <div className="carousel-inner" role="listbox">
+                {rows}
+            </div>
+        );
     }
 });
 
+/**
+ * 两侧控制器。
+ */
 var CarouselControls = React.createClass(
 {
     render: function()
     {
-        var href = "#" + this.props.id;
-        var controls =
+        return (
             <div>
                 <a className="left carousel-control"
-                    href={href}
+                    href={this.props.href}
                     role="button"
                     data-slide="prev">
                     <span className="glyphicon glyphicon-chevron-left"></span>
                     <span className="sr-only">Previous</span>
                 </a>
                 <a className="right carousel-control"
-                    href={href}
+                    href={this.props.href}
                     role="button"
                     data-slide="next">
                     <span className="glyphicon glyphicon-chevron-right"></span>
                     <span className="sr-only">Next</span>
                 </a>
-            </div>;
-
-        return controls;
+            </div>
+        );
     }
 });
 
@@ -118,23 +126,32 @@ var Carousel = React.createClass(
 
     render: function ()
     {
-        var classes = classNames(
+        var target = "#" + this.props.id;
+
+        // 无内容时隐藏。
+        var carouselClassNames = classNames(
             "Carousel", "carousel", "slide",
             {
                 "hide": (this.state.topStories.length == 0),
             }
         );
 
-        var carousel =
-            <div id={this.props.id} className={classes} data-ride="carousel">
-                <CarouselIndicator
-                    target={"#" + this.props.id}
-                    length={this.state.topStories.length} />
-                <CarouselInner {...this.props} />
-                <CarouselControls {...this.props} />
-            </div>;
+        // 1页以下时隐藏控制器。
+        var controlsClassNames = classNames(
+            {
+                "hide": (this.state.topStories.length <= 1),
+            }
+        );
 
-        return carousel;
+        return (
+            <div id={this.props.id} className={carouselClassNames} data-ride="carousel">
+                <CarouselIndicator
+                    target={target}
+                    length={this.state.topStories.length} />
+                <CarouselInner data={this.state.topStories} />
+                <CarouselControls className={controlsClassNames} href={target} />
+            </div>
+        );
     }
 });
 
