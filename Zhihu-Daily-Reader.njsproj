@@ -28,8 +28,9 @@
     <Content Include="public\assets\libs\bootstrap\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="public\assets\zdr\common\res\errors.less" />
     <Content Include="public\assets\zdr\common\res\global.less" />
-    <Content Include="public\assets\zdr\common\res\img\zhihu_daily_logo.png" />
     <Content Include="public\assets\libs\jquery\jquery.min.map" />
+    <Content Include="public\assets\zdr\common\res\img\zhihu_daily_logo_blue.png" />
+    <Content Include="public\assets\zdr\common\res\img\zhihu_daily_logo_white.png" />
     <Content Include="public\assets\zdr\components\Carousel.jsx" />
     <Content Include="public\assets\zdr\components\Footer.jsx" />
     <Content Include="public\assets\zdr\components\Navbar.jsx" />
