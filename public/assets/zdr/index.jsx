@@ -6,10 +6,15 @@ var React = require("react");
 var Navbar = require("./components/Navbar");
 var Carousel = require("./components/Carousel");
 
-React.render(
-    <div className="container">
-        <Carousel />
-    </div>
-    ,
-    $("#container")[0]
-);
+$(function ()
+{
+    React.render(
+        <div className="MainContainer container-fluid">
+            <Navbar />
+            <Carousel />
+            <div className="ContentContainer container" style={{height: 80}}/>
+        </div>
+        ,
+        document.body
+    );
+});
