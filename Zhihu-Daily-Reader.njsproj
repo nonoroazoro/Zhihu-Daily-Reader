@@ -42,10 +42,7 @@
     <Compile Include="app.js" />
     <Compile Include="bin\www.js" />
     <None Include="public\assets\libs\_references.js" />
-    <Compile Include="libs\zhr\crawler.js">
-      <SubType>Code</SubType>
-      <TestFramework>ExportRunner</TestFramework>
-    </Compile>
+    <Compile Include="libs\zdr\crawler.js" />
     <Compile Include="public\assets\libs\lodash\lodash.js" />
     <Compile Include="public\assets\libs\lodash\lodash.min.js" />
     <Compile Include="public\assets\zdr\webpack.config.js" />
@@ -58,6 +55,7 @@
     <Compile Include="public\assets\zdr\index.jsx" />
     <Compile Include="routes\api\4\news\index.js" />
     <Compile Include="routes\api\4\news\latest\index.js" />
+    <Compile Include="routes\api\4\imgs\index.js" />
     <Compile Include="routes\index.js" />
     <Content Include="views\index.jade" />
     <Content Include="public\assets\zdr\common\res\img\favicon.ico" />
@@ -69,7 +67,7 @@
   <ItemGroup>
     <Folder Include="bin" />
     <Folder Include="libs\" />
-    <Folder Include="libs\zhr\" />
+    <Folder Include="libs\zdr\" />
     <Folder Include="public" />
     <Folder Include="public\assets" />
     <Folder Include="public\assets\libs\bootstrap\fonts\" />
@@ -93,6 +91,7 @@
     <Folder Include="routes\api\4\" />
     <Folder Include="routes\api\4\news\" />
     <Folder Include="routes\api\4\news\latest\" />
+    <Folder Include="routes\api\4\imgs\" />
     <Folder Include="views" />
     <Folder Include="views\templates" />
   </ItemGroup>
