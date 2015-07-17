@@ -1,6 +1,7 @@
 ﻿var express = require("express");
 var router = express.Router();
-var crawler = require("../../../../../libs/zhr/crawler");
+
+var crawler = require(__base + "/libs/zhr/crawler");
 
 // get latest news
 router.get("/", function (req, res, next)
