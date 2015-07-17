@@ -5,6 +5,9 @@ var favicon = require("serve-favicon");
 
 var app = express();
 
+// base dir setup
+global.__base = __dirname;
+
 // view engine setup
 app.set("views", __dirname + "/views");
 app.set("view engine", "jade");
