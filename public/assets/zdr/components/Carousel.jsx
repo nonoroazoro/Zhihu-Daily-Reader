@@ -145,9 +145,7 @@ var Carousel = React.createClass(
 
         return (
             <div id={this.props.id} className={carouselClassNames} data-ride="carousel">
-                <CarouselIndicator
-                    target={target}
-                    length={this.state.topStories.length} />
+                <CarouselIndicator target={target} length={this.state.topStories.length} />
                 <CarouselInner data={this.state.topStories} />
                 <CarouselControls className={controlsClassNames} href={target} />
             </div>
