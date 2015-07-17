@@ -1,4 +1,8 @@
-﻿var http = require("http");
+﻿var options = { baseUrl : "http://news-at.zhihu.com/api/4/" };
+var request = require("request").defaults(options);
+
+// Debug
+var log = require("util").log;
 
 /**
  * 从知乎日报获取最新消息。
@@ -6,18 +10,12 @@
  */
 function getLatestNews(p_response)
 {
-    http.get("http://news-at.zhihu.com/api/4/news/latest", function (res)
+    request.get("/news/latest", function (err, res, body)
     {
-        if (res.statusCode == 200)
+        log("GET /news/latest");
+        if (!err && res.statusCode == 200)
         {
-            var data = "";
-            res.on("data", function (chunk)
-            {
-                data += chunk;
-            }).on("end", function ()
-            {
-                p_response.json(JSON.parse(data));
-            });
+            p_response.json(JSON.parse(body));
         }
         else
         {
