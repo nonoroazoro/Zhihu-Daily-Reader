@@ -2,20 +2,29 @@
 
 var $ = require("jquery");
 var _ = require("lodash");
+var classNames = require("classnames");
 var React = require("react");
 
 var CarouselIndicator = React.createClass(
 {
     render: function()
     {
-        var target = "#" + this.props.id;
-        var indicator =
+        var indicators = [];
+        var length = this.props.length;
+        if(length > 0)
+        {
+            for (var i = 0; i < length; i++)
+            {
+                indicators.push(<li data-target={this.props.target} data-slide-to={i} />);
+            }
+            indicators[0].props.className = "active";
+        }
+
+        return (
             <ol className="carousel-indicators">
-                <li data-target={target} data-slide-to="0" className="active"></li>
-                <li data-target={target} data-slide-to="1"></li>
-                <li data-target={target} data-slide-to="2"></li>
-            </ol>;
-        return indicator;
+                {indicators}
+            </ol>
+        );
     }
 });
 
@@ -75,7 +84,7 @@ var CarouselControls = React.createClass(
  */
 var Carousel = React.createClass(
 {
-    getDefaultProps: function  ()
+    getDefaultProps: function()
     {
         return {
             id: "Carousel",
@@ -83,22 +92,44 @@ var Carousel = React.createClass(
         };
     },
 
+    getInitialState: function()
+    {
+        return {
+            topStories: []
+        };
+    },
+
     componentDidMount: function()
     {
         $.get(this.props.src, function(data)
         {
-            console.log("error");
-        }.bind(this)).fail(function  ()
+            if(this.isMounted() && data)
+            {
+                this.setState(
+                {
+                    topStories: data.top_stories
+                });
+            }
+        }.bind(this)).fail(function()
         {
-            console.log("error");
+            console.log("error loading topStories");
         });
     },
 
     render: function ()
     {
+        var classes = classNames(
+            "Carousel", "carousel", "slide",
+            {
+                "hide": (this.state.topStories.length == 0),
+            }
+        );
+
         var carousel =
-            <div id={this.props.id} className="Carousel carousel slide">
-                <CarouselIndicator {...this.props} />
+            <div id={this.props.id} className={classes} data-ride="carousel">
+                <CarouselIndicator
+                    target={"#" + this.props.id}
+                    length={this.state.topStories.length} />
                 <CarouselInner {...this.props} />
                 <CarouselControls {...this.props} />
             </div>;
