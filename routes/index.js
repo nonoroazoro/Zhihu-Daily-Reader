@@ -8,7 +8,7 @@ router.get("/", function (req, res, next)
 });
 
 var apis = [
-    "/api/4"
+    "/api/4",
 ];
 
 apis.forEach(function (p_api)
