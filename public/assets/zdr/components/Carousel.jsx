@@ -23,8 +23,15 @@ var CarouselIndicator = React.createClass(
             indicators[0].props.className = "active";
         }
 
+        // 少于1页时隐藏指示器。
+        var classes = classNames(
+            "CarouselIndicator", "carousel-indicators",
+            {
+                "hide": (length <= 1),
+            }
+        );
         return (
-            <ol className="carousel-indicators">
+            <ol className={classes}>
                 {indicators}
             </ol>
         );
@@ -40,19 +47,25 @@ var CarouselInner = React.createClass(
     {
         var rows = _.map(this.props.data, function(value, key)
         {
-            var itemId = value.id;
             return (
                 <div className="item">
-                    <img src={value.image} alt={value.title} />
+                    <a href={"http://daily.zhihu.com/story/" + value.id} target="_blank" data-target={value.id}>
+                        <img src={value.image} alt={value.title} />
+                    </a>
                     <div className="carousel-caption">
-                        <h1>{value.title}</h1>
+                        <h3>{value.title}</h3>
                     </div>
                 </div>
             );
         });
 
+        if(rows.length > 0)
+        {
+            rows[0].props.className = "item active";
+        }
+
         return (
-            <div className="carousel-inner" role="listbox">
+            <div className="CarouselInner carousel-inner" role="listbox">
                 {rows}
             </div>
         );
@@ -66,8 +79,16 @@ var CarouselControls = React.createClass(
 {
     render: function()
     {
+        // 少于1页时隐藏控制器。
+        var classes = classNames(
+            "CarouselControl",
+            {
+                "hide": (this.props.length <= 1),
+            }
+        );
+
         return (
-            <div>
+            <div className={classes}>
                 <a className="left carousel-control"
                     href={this.props.href}
                     role="button"
@@ -147,7 +168,7 @@ var Carousel = React.createClass(
             <div id={this.props.id} className={carouselClassNames} data-ride="carousel">
                 <CarouselIndicator target={target} length={this.state.topStories.length} />
                 <CarouselInner data={this.state.topStories} />
-                <CarouselControls className={controlsClassNames} href={target} />
+                <CarouselControls className={controlsClassNames} href={target} length={this.state.topStories.length} />
             </div>
         );
     }

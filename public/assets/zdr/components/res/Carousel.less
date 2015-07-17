@@ -1,6 +1,37 @@
 ﻿.Carousel
 {
-    .carousel-caption
+    max-width: 480px;
+
+    .CarouselInner
     {
+        .carousel-caption
+        {
+            background: rgba(0, 0, 0, 0.65) none repeat scroll 0% 0%;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            padding-top: 1rem;
+            padding-left: 0.5rem;
+            padding-right: 0.5rem;
+
+            h3
+            {
+                font-size: 2rem;
+                margin-top: 0.8rem;
+                margin-bottom: 2rem;
+            }
+        }
+    }
+
+    .CarouselIndicator
+    {
+        bottom: 1.5rem;
+        margin-bottom: 0;
+
+        .active
+        {
+            background-color: #f2f2f2;
+            border-color: #f2f2f2;
+        }
     }
 }
