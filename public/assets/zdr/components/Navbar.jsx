@@ -7,6 +7,13 @@ var React = require("react");
  */
 var NavbarHeader = React.createClass(
 {
+    getDefaultProps: function()
+    {
+        return {
+            target: ".navbar-collapse",
+        };
+    },
+
     render: function ()
     {
         var navbarHeader =
@@ -14,14 +21,14 @@ var NavbarHeader = React.createClass(
                 <button type="button"
                     className="navbar-toggle collapsed"
                     data-toggle="collapse"
-                    data-target={this.props.collapseTarget ? this.props.collapseTarget : ".navbar-collapse"}>
+                    data-target={this.props.target}>
                     <span className="sr-only">导航</span>
                     <span className="icon-bar"></span>
                     <span className="icon-bar"></span>
                     <span className="icon-bar"></span>
                 </button>
                 <a className="navbar-brand" href="/">
-                    <img alt="知乎日报" src={require("common/res/img/zhihu_daily_logo.png")} />
+                    <img alt="知乎日报" src={require("common/res/img/zhihu_daily_logo_blue.png")} />
                 </a>
             </div>;
         return navbarHeader;
@@ -33,10 +40,17 @@ var NavbarHeader = React.createClass(
  */
 var NavbarContent = React.createClass(
 {
+    getDefaultProps: function()
+    {
+        return {
+            id: "NavbarContent",
+        };
+    },
+
     render: function ()
     {
         var navbarContent =
-            <div id={this.props.id ? this.props.id : "NavbarContent"}
+            <div id={this.props.id}
                 className="navbar-collapse collapse">
                 <ul className="nav navbar-nav navbar-right">
                     <li className="active"><a href="#">日报</a></li>
@@ -53,13 +67,20 @@ var NavbarContent = React.createClass(
  */
 var Navbar = React.createClass(
 {
+    getDefaultProps: function()
+    {
+        return {
+            id: "Navbar",
+        };
+    },
+
     render: function ()
     {
         var navbar =
-            <nav id={this.props.id ? this.props.id : null}
+            <nav id={this.props.id}
                 className="Navbar navbar navbar-default navbar-fixed-top">
                 <div className="container">
-                    <NavbarHeader collapseTarget="#NavbarContent"/>
+                    <NavbarHeader target="#NavbarContent"/>
                     <NavbarContent />
                 </div>
             </nav>;
