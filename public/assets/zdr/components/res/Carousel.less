@@ -1,37 +1,60 @@
 ﻿.Carousel
 {
-    max-width: 480px;
+    /* 最大、最小宽度 */
+    max-width: 800px;
+    min-width: 300px;
+    /* 居中 */
+    margin-left: auto;
+    margin-right: auto;
 
     .CarouselInner
     {
+        > .item
+        {
+            /* 图片最大高度 */
+            max-height: 400px;
+
+            img
+            {
+                /* 图片自动缩放 */
+                width: 100%;
+            }
+        }
+
         .carousel-caption
         {
             background: rgba(0, 0, 0, 0.65) none repeat scroll 0% 0%;
             left: 0;
             right: 0;
             bottom: 0;
-            padding-top: 1rem;
-            padding-left: 0.5rem;
-            padding-right: 0.5rem;
+            padding-top: 10px;
+            padding-left: 5px;
+            padding-right: 5px;
 
             h3
             {
                 font-size: 2rem;
-                margin-top: 0.8rem;
-                margin-bottom: 2rem;
+                margin-top: 8px;
+                margin-bottom: 20px;
             }
         }
     }
 
     .CarouselIndicator
     {
-        bottom: 1.5rem;
+        bottom: 15px;
         margin-bottom: 0;
 
-        .active
+        li
         {
-            background-color: #f2f2f2;
-            border-color: #f2f2f2;
+            margin: 3px;
+
+            &.active
+            {
+                margin: 2px;
+                background-color: #f2f2f2;
+                border-color: #f2f2f2;
+            }
         }
     }
 }
