@@ -12,7 +12,6 @@ const prefix = "/api/4/imgs/";
  */
 function getLatestNews(res)
 {
-    //dailyRequest.get("/news/latest").pipe(res);
     dailyRequest.get({ url: "/news/latest", json: true }, function (error, response, body)
     {
         if (!error && response.statusCode == 200)
@@ -50,7 +49,7 @@ function getLatestNews(res)
         }
         else
         {
-            res.send({ error: "Document not found" });
+            res.status(404).send();
         }
     });
 }
@@ -62,7 +61,11 @@ function getLatestNews(res)
  */
 function getImage(url, res)
 {
-    imgRequest.get(url).pipe(res);
+    imgRequest.get(url)
+    .on("error", function (error)
+    {
+        res.status(404).send();
+    }).pipe(res);
 }
 
 exports.getLatestNews = getLatestNews;
