@@ -11,7 +11,9 @@ $(function ()
     React.render(
         <div className="MainContainer container-fluid">
             <Navbar />
-            <Carousel />
+            <div className="CarouselContainer container-fluid">
+                <Carousel />
+            </div>
             <div className="ContentContainer container" style={{height: 80}}/>
         </div>
         ,
