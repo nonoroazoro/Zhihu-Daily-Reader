@@ -4,6 +4,8 @@ var options = { baseUrl : "http://news-at.zhihu.com/api/4/" };
 var dailyRequest = require("request").defaults(options);
 var imgRequest = require("request");
 
+const prefix = "/api/4/imgs/";
+
 /**
  * 从知乎日报获取最新消息（包括当日新闻和热点新闻）。
  * @param res 服务端响应。
@@ -11,7 +13,6 @@ var imgRequest = require("request");
 function getLatestNews(res)
 {
     //dailyRequest.get("/news/latest").pipe(res);
-    const prefix = "/api/4/imgs/";
     dailyRequest.get({ url: "/news/latest", json: true }, function (error, response, body)
     {
         if (!error && response.statusCode == 200)
