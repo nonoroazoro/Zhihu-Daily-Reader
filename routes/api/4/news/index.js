@@ -3,7 +3,6 @@ var router = express.Router();
 
 var apis = [
     "/before",
-    "/latest",
     "/top",
 ];
 
