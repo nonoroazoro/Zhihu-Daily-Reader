@@ -125,6 +125,7 @@ function getImage(p_url, p_res)
     }).pipe(p_res);
 }
 
+exports.getLatestStories = getLatestStories;
 exports.getTopStories = getTopStories;
 exports.getStories = getStories;
 exports.getImage = getImage;
