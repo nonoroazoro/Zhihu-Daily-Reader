@@ -38,7 +38,6 @@ function getLatestStories(p_res)
     });
 }
 
-
 /**
  * 获取最新热门日报。
  */
@@ -117,9 +116,30 @@ function getStories(p_date, p_res)
  * @param String p_id 指定的唯一标识。
  */
 function getStory(p_id, p_res)
-{ 
+{
+    dailyRequest.get({ url: "/news/" + p_id, json: true }, function (error, response, body)
+    {
+        if (!error && response.statusCode == 200)
+        {
+            var result = {};
+            result.id = body.id;
+            result.title = body.title;
+            result.image = PREFIX + querystring.escape(body.image);
+            result.imageSource = body.image_source;
+            result.shareUrl = body.share_url;
+            result.js = body.js;
+            result.css = body.css;
+            result.body = body.body;
+            
+            p_res.set(response.headers);
+            p_res.json(result);
+        }
+        else
+        {
+            p_res.status(404).render("error_404");
+        }
+    });
 }
-
 
 /**
  * 获取指定图片。
