@@ -58,7 +58,6 @@
     <Compile Include="routes\api\4\news\before.js" />
     <Compile Include="routes\api\4\news\index.js" />
     <Compile Include="routes\api\4\news\top.js" />
-    <Compile Include="routes\api\4\news\latest.js" />
     <Compile Include="routes\api\4\imgs.js" />
     <Compile Include="routes\index.js" />
     <Content Include="views\index.jade" />
