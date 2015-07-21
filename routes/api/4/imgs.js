@@ -8,7 +8,7 @@ var crawler = require(__base + "/libs/zdr/crawler");
 router.get("/:url", function (req, res, next)
 {
     //TODO: 暂时先用这种方法，后面加上爬虫。读取本地缓存。
-    crawler.getImage(querystring.unescape(req.params.url), res);
+    crawler.getImage(querystring.unescape(req.params.url), res, next);
 });
 
 module.exports = router;
