@@ -1,6 +1,8 @@
 ﻿var express = require("express");
 var router = express.Router();
 
+var crawler = require(__base + "/libs/zdr/crawler");
+
 var apis = [
     "/before",
     "/top",
@@ -14,12 +16,8 @@ apis.forEach(function (p_api)
 // get specified story.
 router.get("/:id", function (req, res, next)
 {
-    // TODO: 获取指定 id 的日报。
-    res.send(
-        {
-            haha: "这是你妹:" + req.params.id
-        }
-    );
+    //TODO: 暂时先用这种方法，后面加上爬虫。读取本地缓存。
+    crawler.getStory(req.params.id, res);
 });
 
 module.exports = router;
