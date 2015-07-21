@@ -7,7 +7,37 @@ var imgRequest = require("request");
 
 const PREFIX = "/api/4/imgs/";
 
-var today = null;
+/**
+ * 获取最新日报（即今天截止目前为止的日报）。
+ */
+function getLatestStories(p_res)
+{
+    dailyRequest.get({ url: "/news/latest", json: true }, function (error, response, body)
+    {
+        if (!error && response.statusCode == 200)
+        {
+            // 因知乎日报的 API 返回的图片太小，这里直接丢弃，后面再通过其他途径获取图片。
+            var stories = body.stories.map(function (item)
+            {
+                return {
+                    id: item.id,
+                    title: item.title,
+                };
+            });
+            
+            p_res.set(response.headers);
+            p_res.json({
+                date: body.date,
+                stories: stories
+            });
+        }
+        else
+        {
+            p_res.status(404).render("error_404");
+        }
+    });
+}
+
 
 /**
  * 获取最新热门日报。
@@ -27,7 +57,6 @@ function getTopStories(p_res)
                 };
             });
             
-            today = body.date;
             p_res.set(response.headers);
             p_res.json({
                 date: body.date,
@@ -47,7 +76,7 @@ function getTopStories(p_res)
  */
 function getStories(p_date, p_res)
 {
-    var m = moment(p_date || today, "YYYYMMDD", true);
+    var m = moment(p_date, "YYYYMMDD", true);
     if (m.isValid())
     {
         // 因知乎日报 API 返回的是指定日期的前一天的日报，所以要加一天才能获取指定日期的日报。
@@ -96,7 +125,6 @@ function getImage(p_url, p_res)
     }).pipe(p_res);
 }
 
-exports.today = today;
 exports.getTopStories = getTopStories;
 exports.getStories = getStories;
 exports.getImage = getImage;
