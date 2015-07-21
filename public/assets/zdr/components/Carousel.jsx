@@ -117,14 +117,14 @@ var Carousel = React.createClass(
     {
         return {
             id: "Carousel",
-            src: "/api/4/news/latest"
+            src: "/api/4/news/top"
         };
     },
 
     getInitialState: function()
     {
         return {
-            topStories: []
+            stories: []
         };
     },
 
@@ -136,39 +136,40 @@ var Carousel = React.createClass(
             {
                 this.setState(
                 {
-                    topStories: data.top_stories
+                    stories: data.stories
                 });
             }
         }.bind(this)).fail(function()
         {
-            console.log("error loading topStories");
+            console.log("error loading top stories");
         });
     },
 
     render: function ()
     {
         var target = "#" + this.props.id;
+        var length = this.state.stories.length;
 
         // 无内容时隐藏。
         var carouselClassNames = classNames(
             "Carousel", "carousel", "slide",
             {
-                "hide": (this.state.topStories.length == 0),
+                "hide": (length == 0),
             }
         );
 
         // 1页以下时隐藏控制器。
         var controlsClassNames = classNames(
             {
-                "hide": (this.state.topStories.length <= 1),
+                "hide": (length <= 1),
             }
         );
 
         return (
             <div id={this.props.id} className={carouselClassNames} data-ride="carousel">
-                <CarouselIndicator target={target} length={this.state.topStories.length} />
-                <CarouselInner data={this.state.topStories} />
-                <CarouselControls className={controlsClassNames} href={target} length={this.state.topStories.length} />
+                <CarouselIndicator target={target} length={length} />
+                <CarouselInner data={this.state.stories} />
+                <CarouselControls className={controlsClassNames} href={target} length={length} />
             </div>
         );
     }
