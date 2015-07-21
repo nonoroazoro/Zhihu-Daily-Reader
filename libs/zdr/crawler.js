@@ -72,7 +72,7 @@ function getTopStories(p_res)
 
 /**
  * 获取指定日期的日报。
- * @param String p_date 指定的日期。如果小于 20130519，返回值为 {}；如果未指定，则返回最新日报。
+ * @param String p_date 指定的日期。如果小于 20130519，返回值为 {}。
  */
 function getStories(p_date, p_res)
 {
