@@ -113,6 +113,15 @@ function getStories(p_date, p_res)
 }
 
 /**
+ * 获取指定唯一标识的日报。
+ * @param String p_id 指定的唯一标识。
+ */
+function getStory(p_id, p_res)
+{ 
+}
+
+
+/**
  * 获取指定图片。
  * @param p_url 图片地址。
  */
@@ -128,4 +137,5 @@ function getImage(p_url, p_res)
 exports.getLatestStories = getLatestStories;
 exports.getTopStories = getTopStories;
 exports.getStories = getStories;
+exports.getStory = getStory;
 exports.getImage = getImage;
