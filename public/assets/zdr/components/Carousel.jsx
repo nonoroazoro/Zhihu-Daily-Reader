@@ -117,7 +117,7 @@ var Carousel = React.createClass(
     {
         return {
             id: "Carousel",
-            src: "/api/4/news/top"
+            api: "/api/4/news/top"
         };
     },
 
@@ -130,7 +130,7 @@ var Carousel = React.createClass(
 
     componentDidMount: function()
     {
-        $.get(this.props.src, function(data)
+        $.get(this.props.api, function(data)
         {
             if(this.isMounted() && data)
             {
