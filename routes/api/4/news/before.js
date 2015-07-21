@@ -13,7 +13,8 @@ router.get("/:date?", function (req, res, next)
     }
     else
     {
-        p_res.status(404).render("error_404");
+        // 如果未指定，则返回最新日报。
+        crawler.getLatestStories(res);
     }
 });
 
