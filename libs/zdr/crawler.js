@@ -121,15 +121,10 @@ function getStory(p_id, p_res)
     {
         if (!error && response.statusCode == 200)
         {
-            var result = {};
-            result.id = body.id;
-            result.title = body.title;
-            result.image = PREFIX + querystring.escape(body.image);
-            result.imageSource = body.image_source;
-            result.shareUrl = body.share_url;
-            result.js = body.js;
-            result.css = body.css;
-            result.body = body.body;
+            var result = body;
+            delete result.ga_prefix;
+            delete result.type;
+            result.image = PREFIX + querystring.escape(result.image);
             
             p_res.set(response.headers);
             p_res.json(result);
