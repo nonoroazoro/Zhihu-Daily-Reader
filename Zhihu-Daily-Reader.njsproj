@@ -32,9 +32,11 @@
     <Content Include="public\assets\zdr\common\res\img\zhihu_daily_logo_blue.png" />
     <Content Include="public\assets\zdr\common\res\img\zhihu_daily_logo_white.png" />
     <Content Include="public\assets\zdr\components\Carousel.jsx" />
+    <Content Include="public\assets\zdr\components\FlexView.jsx" />
     <Content Include="public\assets\zdr\components\Footer.jsx" />
     <Content Include="public\assets\zdr\components\Navbar.jsx" />
     <Content Include="public\assets\zdr\components\res\Carousel.less" />
+    <Content Include="public\assets\zdr\components\res\FlexView.less" />
     <Content Include="public\assets\zdr\components\res\Navbar.less" />
     <Content Include="README.md" />
     <Content Include="views\error_404.jade" />
@@ -53,9 +55,11 @@
     <Compile Include="public\assets\libs\react\react.js" />
     <Compile Include="public\assets\libs\react\react.min.js" />
     <Compile Include="public\assets\zdr\index.jsx" />
+    <Compile Include="routes\api\4\news\before.js" />
     <Compile Include="routes\api\4\news\index.js" />
-    <Compile Include="routes\api\4\news\latest\index.js" />
-    <Compile Include="routes\api\4\imgs\index.js" />
+    <Compile Include="routes\api\4\news\top.js" />
+    <Compile Include="routes\api\4\news\latest.js" />
+    <Compile Include="routes\api\4\imgs.js" />
     <Compile Include="routes\index.js" />
     <Content Include="views\index.jade" />
     <Content Include="public\assets\zdr\common\res\img\favicon.ico" />
@@ -90,8 +94,6 @@
     <Folder Include="routes\api" />
     <Folder Include="routes\api\4\" />
     <Folder Include="routes\api\4\news\" />
-    <Folder Include="routes\api\4\news\latest\" />
-    <Folder Include="routes\api\4\imgs\" />
     <Folder Include="views" />
     <Folder Include="views\templates" />
   </ItemGroup>
