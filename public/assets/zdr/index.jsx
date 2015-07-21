@@ -5,6 +5,7 @@ var React = require("react");
 
 var Navbar = require("./components/Navbar");
 var Carousel = require("./components/Carousel");
+var FlexView = require("./components/FlexView");
 
 $(function ()
 {
@@ -14,7 +15,7 @@ $(function ()
             <div className="CarouselContainer container-fluid">
                 <Carousel />
             </div>
-            <div className="ContentContainer container" style={{height: 80}}/>
+            <FlexView />
         </div>
         ,
         document.body
