@@ -56,4 +56,21 @@
             }
         }
     }
+
+    .CarouselControl
+    {
+        /* 修正 focus 引起的高亮问题 */
+        .carousel-control
+        {
+            &:focus
+            {
+                opacity: 0.5;
+            }
+
+            &:hover, &:focus:hover
+            {
+                opacity: 0.9;
+            }
+        }
+    }
 }
