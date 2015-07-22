@@ -47,10 +47,17 @@ var CarouselInner = React.createClass(
     {
         var rows = _.map(this.props.data, function(value, key)
         {
+            var style = {
+                backgroundImage: "url(" + value.image + ")"
+            };
+
             return (
                 <div className="item">
-                    <a href={"http://daily.zhihu.com/story/" + value.id} target="_blank" data-target={value.id}>
-                        <img src={value.image} alt={value.title} />
+                    <a
+                        href={"http://daily.zhihu.com/story/" + value.id}
+                        target="_blank"
+                        data-target={value.id}>
+                        <div className="carousel-picture" style={style}/>
                     </a>
                     <div className="carousel-caption">
                         <h3>{value.title}</h3>
