@@ -1,18 +1,28 @@
 ﻿@import "../common/res/global.less";
 
+.clear-side-padding
+{
+    padding-left: 0;
+    padding-right: 0;
+}
+
 body
 {
     padding-top: 51px;
 
     .MainContainer
     {
+        .clear-side-padding;
+
         .CarouselContainer
         {
             background-color: #EEE;
-            margin-left: -15px;
-            margin-right: -15px;
-            padding-left: 0;
-            padding-right: 0;
+            .clear-side-padding;
+        }
+
+        .ContentContainer
+        {
+            .clear-side-padding;
         }
     }
 }
