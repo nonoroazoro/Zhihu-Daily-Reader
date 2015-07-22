@@ -41,14 +41,31 @@ var FlexTile = React.createClass(
         var story = this.state.story;
         if(story)
         {
+            var style = {
+                backgroundImage: "url(" + story.image + ")"
+            };
+
             // 如果没有 img 要作处理，否则不好看。
             item =
-                <div className="flex-tile thumbnail" data-target={story.id}>
-                    <a href={"http://daily.zhihu.com/story/" + story.id} target="_blank" data-target={story.id}>
-                        <img src={story.image} alt={story.title} />
-                    </a>
-                    <div className="caption">
-                        <p>{story.title}</p>
+                <div className="flex-tile" data-target={story.id}>
+                    <div className="flex-tile-content">
+                        <div className="flex-tile-picture" style={style}/>
+                        <div className="flex-tile-title">
+                            <a
+                                className="flex-tile-link"
+                                href={story.share_url}
+                                target="_blank">
+                                {story.title}
+                            </a>
+                        </div>
+                    </div>
+                    <div className="flex-tile-stripe"/>
+                    <div className="flex-tile-footer">
+                        <div className="flex-tile-footer-right-buttons">
+                            <a href={story.share_url} target="_blank">
+                                <span className="glyphicon glyphicon-new-window" title="在新标签页中打开"/>
+                            </a>
+                        </div>
                     </div>
                 </div>;
         }
