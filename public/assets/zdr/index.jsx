@@ -15,7 +15,9 @@ $(function ()
             <div className="CarouselContainer container-fluid">
                 <Carousel />
             </div>
-            <FlexView />
+            <div className="ContentContainer container-fluid">
+                <FlexView />
+            </div>
         </div>
         ,
         document.body
