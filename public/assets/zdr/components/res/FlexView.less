@@ -1,5 +1,16 @@
-﻿.FlexView
+﻿.link-hover
 {
+    color: #2E415C;
+
+    &:hover
+    {
+        color: #000;
+    }
+}
+
+.FlexView
+{
+    background-color: #C0C9D7;
     /* 最大、最小宽度 */
     min-width: 300px;
     /* 水平居中 */
@@ -11,8 +22,75 @@
 
     .flex-tile
     {
+        position: relative;
         width: 300px;
-        height: 348px;
+        height: 355px;
         margin: 20px 8px 0;
+        background-color: #FEFEFE;
+        border-radius: 2px;
+        box-shadow: 0 0 6px 1px #2E415C;
+        transition: border, box-shadow 0.15s ease-in-out 0s;
+
+        &:hover
+        {
+            box-shadow: 0 0 6px 1px #0175DF;
+        }
+
+        .flex-tile-content
+        {
+            .flex-tile-picture
+            {
+                cursor: pointer;
+                height: 260px;
+                width: 100%;
+                border-radius: 2px 2px 0 0;
+                background-size: cover;
+                background-repeat: no-repeat;
+                background-position: 50% 50%;
+            }
+
+            .flex-tile-title
+            {
+                padding: 15px 10px 0px;
+                text-align: center;
+
+                .flex-tile-link
+                {
+                    .link-hover;
+                    font-size: 1.8rem;
+                    font-weight: bold;
+                    text-decoration: none;
+                }
+            }
+        }
+
+        .flex-tile-stripe
+        {
+            position: absolute;
+            width: 4px;
+            top: 262px;
+            bottom: 2px;
+            left: 2px;
+            background-color: #82A8FF;
+        }
+
+        .flex-tile-footer
+        {
+            position: absolute;
+            width: 100%;
+            bottom: 0;
+
+            .flex-tile-footer-right-buttons
+            {
+                float: right;
+                padding-right: 10px;
+                padding-bottom: 5px;
+
+                a
+                {
+                    .link-hover;
+                }
+            }
+        }
     }
 }
