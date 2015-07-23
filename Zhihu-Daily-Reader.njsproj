@@ -114,7 +114,7 @@
     <Content Include="Zhihu-Daily-API.md" />
     <Compile Include="app.js" />
     <Compile Include="bin\www.js" />
-    <None Include="public\assets\libs\_references.js" />
+    <Compile Include="public\assets\libs\_references.js" />
     <Compile Include="libs\zdr\crawler.js" />
     <Compile Include="public\assets\libs\lodash\lodash.js" />
     <Compile Include="public\assets\libs\lodash\lodash.min.js" />
