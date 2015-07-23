@@ -19,9 +19,9 @@ var NavbarHeader = React.createClass(
         var navbarHeader =
             <div className="navbar-header">
                 <button type="button"
-                    className="navbar-toggle collapsed"
-                    data-toggle="collapse"
-                    data-target={this.props.target}>
+                        className="navbar-toggle collapsed"
+                        data-toggle="collapse"
+                        data-target={this.props.target}>
                     <span className="sr-only">导航</span>
                     <span className="icon-bar"></span>
                     <span className="icon-bar"></span>
@@ -51,7 +51,7 @@ var NavbarContent = React.createClass(
     {
         var navbarContent =
             <div id={this.props.id}
-                className="navbar-collapse collapse">
+                 className="navbar-collapse collapse">
                 <ul className="nav navbar-nav navbar-right">
                     <li className="active"><a href="#">日报</a></li>
                     <li><a href="#">专栏</a></li>
@@ -78,9 +78,9 @@ var Navbar = React.createClass(
     {
         var navbar =
             <nav id={this.props.id}
-                className="Navbar navbar navbar-default navbar-fixed-top">
+                 className="Navbar navbar navbar-default navbar-fixed-top">
                 <div className="container">
-                    <NavbarHeader target="#NavbarContent"/>
+                    <NavbarHeader target="#NavbarContent" />
                     <NavbarContent />
                 </div>
             </nav>;

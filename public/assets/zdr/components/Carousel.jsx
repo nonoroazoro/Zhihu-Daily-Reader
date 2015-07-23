@@ -53,11 +53,10 @@ var CarouselInner = React.createClass(
 
             return (
                 <div className="item">
-                    <a
-                        href={"http://daily.zhihu.com/story/" + value.id}
-                        target="_blank"
-                        data-target={value.id}>
-                        <div className="carousel-picture" style={style}/>
+                    <a href={"http://daily.zhihu.com/story/" + value.id}
+                       target="_blank"
+                       data-target={value.id}>
+                        <div className="carousel-picture" style={style} />
                     </a>
                     <div className="carousel-caption">
                         <h3>{value.title}</h3>
@@ -97,16 +96,16 @@ var CarouselControls = React.createClass(
         return (
             <div className={classes}>
                 <a className="left carousel-control"
-                    href={this.props.href}
-                    role="button"
-                    data-slide="prev">
+                   href={this.props.href}
+                   role="button"
+                   data-slide="prev">
                     <span className="glyphicon glyphicon-chevron-left"></span>
                     <span className="sr-only">Previous</span>
                 </a>
                 <a className="right carousel-control"
-                    href={this.props.href}
-                    role="button"
-                    data-slide="next">
+                   href={this.props.href}
+                   role="button"
+                   data-slide="next">
                     <span className="glyphicon glyphicon-chevron-right"></span>
                     <span className="sr-only">Next</span>
                 </a>

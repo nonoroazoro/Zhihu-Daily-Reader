@@ -49,21 +49,20 @@ var FlexTile = React.createClass(
             item =
                 <div className="flex-tile" data-target={story.id}>
                     <div className="flex-tile-content">
-                        <div className="flex-tile-picture" style={style}/>
+                        <div className="flex-tile-picture" style={style} />
                         <div className="flex-tile-title">
-                            <a
-                                className="flex-tile-link"
-                                href={story.share_url}
-                                target="_blank">
+                            <a className="flex-tile-link"
+                               href={story.share_url}
+                               target="_blank">
                                 {story.title}
                             </a>
                         </div>
                     </div>
-                    <div className="flex-tile-stripe"/>
+                    <div className="flex-tile-stripe" />
                     <div className="flex-tile-footer">
                         <div className="flex-tile-footer-right-buttons">
                             <a href={story.share_url} target="_blank">
-                                <span className="glyphicon glyphicon-new-window" title="在新标签页中打开"/>
+                                <span className="glyphicon glyphicon-new-window" title="在新标签页中打开" />
                             </a>
                         </div>
                     </div>
