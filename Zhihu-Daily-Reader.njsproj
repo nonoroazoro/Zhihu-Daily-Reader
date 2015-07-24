@@ -116,8 +116,6 @@
     <Content Include="Zhihu-Daily-API.md" />
     <Compile Include="app.js" />
     <Compile Include="bin\www.js" />
-    <Compile Include="public\assets\libs\signals\signals.js" />
-    <Compile Include="public\assets\libs\signals\signals.min.js" />
     <Compile Include="libs\zdr\crawler.js" />
     <Compile Include="public\assets\libs\lodash\lodash.js" />
     <Compile Include="public\assets\libs\lodash\lodash.min.js" />
@@ -152,7 +150,6 @@
     <Folder Include="public\assets\libs\bootstrap\less\" />
     <Folder Include="public\assets\libs\bootstrap\less\mixins\" />
     <Folder Include="public\assets\libs\lodash\" />
-    <Folder Include="public\assets\libs\signals\" />
     <Folder Include="public\assets\zdr\common\res\img\" />
     <Folder Include="public\assets\zdr\common\res\" />
     <Folder Include="public\assets\libs\" />
