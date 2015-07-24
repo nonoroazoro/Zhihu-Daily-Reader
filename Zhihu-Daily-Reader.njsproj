@@ -102,10 +102,12 @@
     <Content Include="public\assets\libs\jquery\jquery.min.map" />
     <Content Include="public\assets\zdr\common\res\img\zhihu_daily_logo_blue.png" />
     <Content Include="public\assets\zdr\common\res\img\zhihu_daily_logo_white.png" />
+    <Content Include="public\assets\zdr\components\ArticleView.jsx" />
     <Content Include="public\assets\zdr\components\Carousel.jsx" />
     <Content Include="public\assets\zdr\components\FlexView.jsx" />
     <Content Include="public\assets\zdr\components\Footer.jsx" />
     <Content Include="public\assets\zdr\components\Navbar.jsx" />
+    <Content Include="public\assets\zdr\components\res\ArticleView.less" />
     <Content Include="public\assets\zdr\components\res\Carousel.less" />
     <Content Include="public\assets\zdr\components\res\FlexView.less" />
     <Content Include="public\assets\zdr\components\res\Navbar.less" />
