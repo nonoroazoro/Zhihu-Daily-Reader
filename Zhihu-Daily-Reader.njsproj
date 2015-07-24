@@ -116,7 +116,6 @@
     <Compile Include="bin\www.js" />
     <Compile Include="public\assets\libs\signals\signals.js" />
     <Compile Include="public\assets\libs\signals\signals.min.js" />
-    <Compile Include="public\assets\libs\_references.js" />
     <Compile Include="libs\zdr\crawler.js" />
     <Compile Include="public\assets\libs\lodash\lodash.js" />
     <Compile Include="public\assets\libs\lodash\lodash.min.js" />
