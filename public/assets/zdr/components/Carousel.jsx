@@ -10,11 +10,11 @@ var React = require("react");
  */
 var CarouselIndicator = React.createClass(
 {
-    render: function()
+    render: function ()
     {
         var indicators = [];
         var length = this.props.length;
-        if(length > 0)
+        if (length > 0)
         {
             for (var i = 0; i < length; i++)
             {
@@ -43,9 +43,9 @@ var CarouselIndicator = React.createClass(
  */
 var CarouselInner = React.createClass(
 {
-    render: function()
+    render: function ()
     {
-        var rows = _.map(this.props.data, function(value, key)
+        var rows = _.map(this.props.data, function (value, key)
         {
             var style = {
                 backgroundImage: "url(" + value.image + ")"
@@ -65,7 +65,7 @@ var CarouselInner = React.createClass(
             );
         });
 
-        if(rows.length > 0)
+        if (rows.length > 0)
         {
             rows[0].props.className = "item active";
         }
@@ -83,7 +83,7 @@ var CarouselInner = React.createClass(
  */
 var CarouselControls = React.createClass(
 {
-    render: function()
+    render: function ()
     {
         // 少于1页时隐藏控制器。
         var classes = classNames(
@@ -119,7 +119,7 @@ var CarouselControls = React.createClass(
  */
 var Carousel = React.createClass(
 {
-    getDefaultProps: function()
+    getDefaultProps: function ()
     {
         return {
             id: "Carousel",
@@ -127,25 +127,25 @@ var Carousel = React.createClass(
         };
     },
 
-    getInitialState: function()
+    getInitialState: function ()
     {
         return {
             stories: []
         };
     },
 
-    componentDidMount: function()
+    componentDidMount: function ()
     {
-        $.get(this.props.api, function(data)
+        $.get(this.props.api, function (data)
         {
-            if(this.isMounted() && data)
+            if (this.isMounted() && data)
             {
                 this.setState(
                 {
                     stories: data.stories
                 });
             }
-        }.bind(this)).fail(function()
+        }.bind(this)).fail(function ()
         {
             console.log("error loading top stories");
         });
