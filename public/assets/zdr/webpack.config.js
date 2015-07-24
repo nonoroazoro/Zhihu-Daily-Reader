@@ -21,6 +21,7 @@ module.exports = {
     externals: {
         "react" : "React",
         "jquery" : "jQuery",
+        "signal": "signals.Signal",
         "lodash": "_",
     },
     module: {
