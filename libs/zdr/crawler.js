@@ -1,4 +1,5 @@
 ﻿var moment = require("moment");
+var cheerio = require("cheerio");
 var querystring = require("querystring");
 
 var options = { baseUrl : "http://news-at.zhihu.com/api/4/" };
@@ -121,10 +122,53 @@ function getStory(p_id, p_res)
     {
         if (!error && response.statusCode == 200)
         {
-            var result = body;
-            delete result.ga_prefix;
-            delete result.type;
-            result.image = PREFIX + querystring.escape(result.image);
+            var result = {};
+            result.id = body.id;
+            result.title = body.title;
+            result.image = PREFIX + querystring.escape(body.image);
+            result.imageSource = body.image_source;
+            result.shareURL = body.share_url;
+            
+            if (body.body)
+            {
+                var $ = cheerio.load(body.body, { decodeEntities: false });
+                result.backgrounds = $(".headline>.headline-background .headline-background-link").map(function (i, e)
+                {
+                    return {
+                        href: $(e).attr("href"),
+                        title : $(e).children(".heading").text(),
+                        text : $(e).children(".heading-content").text()
+                    };
+                }).get();
+                
+                result.contents = $(".content-inner>.question").map(function (i, e)
+                {
+                    var question = {};
+                    question.title = $(e).children(".question-title").text();
+                    question.answers = $(e).children(".answer").map(function (i, e)
+                    {
+                        var src = $(e).attr("src");
+                        $(e).find(".content img.content-image").each(function (i, e)
+                        {
+                            $(e).attr("src", PREFIX + querystring.escape(src));
+                        });
+                        return {
+                            avatar : PREFIX + querystring.escape($(e).find(".meta>.avatar").attr("src")),
+                            name: $(e).find(".meta>.author").text(),
+                            bio : $(e).find(".meta>.bio").text(),
+                            content : $(e).children(".content").html()
+                        };
+                    }).get();
+                    
+                    var a = $(e).find(".view-more>a");
+                    question.link = {
+                        href : a.attr("href"),
+                        text : a.text(),
+                    };
+                    
+                    return question;
+                }).get();
+            }
             
             p_res.set(response.headers);
             p_res.json(result);
