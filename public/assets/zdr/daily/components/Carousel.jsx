@@ -123,38 +123,14 @@ var Carousel = React.createClass(
     {
         return {
             id: "Carousel",
-            api: "/api/4/news/top"
         };
-    },
-
-    getInitialState: function ()
-    {
-        return {
-            stories: []
-        };
-    },
-
-    componentDidMount: function ()
-    {
-        $.get(this.props.api, function (data)
-        {
-            if (this.isMounted() && data)
-            {
-                this.setState(
-                {
-                    stories: data.stories
-                });
-            }
-        }.bind(this)).fail(function ()
-        {
-            console.log("error loading top stories");
-        });
     },
 
     render: function ()
     {
+        var data = this.props.data || [];
+        var length = data.length;
         var target = "#" + this.props.id;
-        var length = this.state.stories.length;
 
         // 无内容时隐藏。
         var carouselClassNames = classNames(
@@ -174,7 +150,7 @@ var Carousel = React.createClass(
         return (
             <div id={this.props.id} className={carouselClassNames} data-ride="carousel">
                 <CarouselIndicator target={target} length={length} />
-                <CarouselInner data={this.state.stories} />
+                <CarouselInner data={data} />
                 <CarouselControls className={controlsClassNames} href={target} length={length} />
             </div>
         );
