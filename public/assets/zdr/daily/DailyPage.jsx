@@ -1,18 +1,17 @@
 ﻿require("./res/DailyPage.less");
 
-var $ = require("jquery");
 var React = require("react");
 
-var Carousel = require("./Carousel");
-var FlexView = require("./FlexView");
-var ArticleView = require("./ArticleView");
+var Carousel = require("./components/Carousel");
+var FlexView = require("./components/FlexView");
+var ArticleView = require("./components/ArticleView");
 
 var DailyPage = React.createClass(
 {
     render : function()
     {
         var page =
-            <div className="DailyPage">
+            <div className="DailyPage container-fluid">
                 <div className="CarouselContainer container-fluid">
                 <Carousel />
                 </div>

@@ -4,7 +4,7 @@ var $ = require("jquery");
 var React = require("react");
 
 var Navbar = require("./components/Navbar");
-var DailyPage = require("./daily/components/DailyPage");
+var DailyPage = require("./daily/DailyPage");
 // Other Pages...
 
 $(function ()
