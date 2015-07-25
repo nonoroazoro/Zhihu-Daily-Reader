@@ -3,9 +3,11 @@
 var $ = require("jquery");
 var React = require("react");
 
-var Navbar = require("./components/Navbar");
-var Carousel = require("./components/Carousel");
-var FlexView = require("./components/FlexView");
+var Navbar = require("./daily/components/Navbar");
+var Carousel = require("./daily/components/Carousel");
+var FlexView = require("./daily/components/FlexView");
+var ArticleView = require("./daily/components/ArticleView");
+var DailyPage = require("./daily/components/DailyPage");
 
 $(function ()
 {
