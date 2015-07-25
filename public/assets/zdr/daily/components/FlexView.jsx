@@ -41,15 +41,11 @@ var FlexTile = React.createClass(
         var story = this.state.story;
         if(story)
         {
-            var style = {
-                backgroundImage: "url(" + story.image + ")"
-            };
-
             // 如果没有 img 要作处理，否则不好看。
             item =
                 <div className="flex-tile" data-target={story.id}>
                     <div className="flex-tile-content">
-                        <div className="flex-tile-picture" style={style} />
+                        <div className="flex-tile-picture" style={{backgroundImage: "url(" + story.image + ")"}} />
                         <div className="flex-tile-title">
                             <a className="flex-tile-link"
                                href={story.shareURL}
