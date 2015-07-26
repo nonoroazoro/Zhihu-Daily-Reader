@@ -43,15 +43,25 @@ var CarouselIndicator = React.createClass(
  */
 var CarouselInner = React.createClass(
 {
+    handleClick: function (e)
+    {
+        if (_.isFunction(this.props.onClick))
+        {
+            this.props.onClick(this.props.data);
+        }
+    },
+
     render: function ()
     {
+        var that = this;
         var rows = _.map(this.props.data, function (value, key)
         {
             return (
                 <div className={key == 0 ? "item active" : "item"}>
                     <a href={"http://daily.zhihu.com/story/" + value.id}
                        target="_blank"
-                       data-target={value.id}>
+                       data-target={value.id}
+                       onClick={that.handleClick}>
                         <div className="carousel-picture" style={{backgroundImage: "url(" + value.image + ")"}} />
                     </a>
                     <div className="carousel-caption">
@@ -141,7 +151,7 @@ var Carousel = React.createClass(
         return (
             <div id={this.props.id} className={carouselClassNames} data-ride="carousel">
                 <CarouselIndicator target={target} length={length} />
-                <CarouselInner data={data} />
+                <CarouselInner onClick={this.props.onClick} data={data} />
                 <CarouselControls className={controlsClassNames} href={target} length={length} />
             </div>
         );
