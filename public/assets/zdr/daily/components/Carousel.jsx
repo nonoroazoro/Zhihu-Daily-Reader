@@ -43,11 +43,11 @@ var CarouselIndicator = React.createClass(
  */
 var CarouselInner = React.createClass(
 {
-    handleClick: function (e)
+    handleClick: function (p_storyId, e)
     {
         if (_.isFunction(this.props.onClick))
         {
-            this.props.onClick(this.props.data);
+            this.props.onClick(p_storyId);
         }
     },
 
@@ -61,7 +61,7 @@ var CarouselInner = React.createClass(
                     <a href={"http://daily.zhihu.com/story/" + value.id}
                        target="_blank"
                        data-target={value.id}
-                       onClick={that.handleClick}>
+                       onClick={that.handleClick.bind(this, value.id)}>
                         <div className="carousel-picture" style={{backgroundImage: "url(" + value.image + ")"}} />
                     </a>
                     <div className="carousel-caption">
