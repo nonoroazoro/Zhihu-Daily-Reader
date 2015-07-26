@@ -30,6 +30,14 @@ var FlexTile = React.createClass(
         }
     },
 
+    handleClick: function (e)
+    {
+        if (_.isFunction(this.props.onClick))
+        {
+            this.props.onClick(this.state.story);
+        }
+    },
+
     render: function ()
     {
         var item = null;
@@ -40,9 +48,9 @@ var FlexTile = React.createClass(
             item =
                 <div className="flex-tile" data-target={story.id}>
                     <div className="flex-tile-content">
-                        <div className="flex-tile-picture" style={{backgroundImage: "url(" + story.image + ")"}} onClick={this.props.onClick} />
+                        <div className="flex-tile-picture" style={{backgroundImage: "url(" + story.image + ")"}} onClick={this.handleClick} />
                         <div className="flex-tile-title">
-                            <a className="flex-tile-link" href={story.shareURL} target="_blank" onClick={this.props.onClick}>
+                            <a className="flex-tile-link" href={story.shareURL} target="_blank" onClick={this.handleClick}>
                                 {story.title}
                             </a>
                         </div>
