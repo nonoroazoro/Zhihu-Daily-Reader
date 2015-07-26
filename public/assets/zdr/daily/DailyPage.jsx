@@ -38,7 +38,7 @@ var DailyPage = React.createClass(
         var page =
             <div className="DailyPage container-fluid">
                 <div className="CarouselContainer container-fluid">
-                <Carousel data={this.state.topStories}/>
+                    <Carousel data={this.state.topStories}/>
                 </div>
                 <div className="FlexContainer container-fluid">
                     <FlexView />
