@@ -16,11 +16,11 @@ var CarouselIndicator = React.createClass(
         var length = this.props.length;
         if (length > 0)
         {
-            for (var i = 0; i < length; i++)
+            indicators.push(<li className="active" data-target={this.props.target} data-slide-to={0} />);
+            for (var i = 1; i < length; i++)
             {
                 indicators.push(<li data-target={this.props.target} data-slide-to={i} />);
             }
-            indicators[0].props.className = "active";
         }
 
         // 少于1页时隐藏指示器。
@@ -48,7 +48,7 @@ var CarouselInner = React.createClass(
         var rows = _.map(this.props.data, function (value, key)
         {
             return (
-                <div className="item">
+                <div className={key == 0 ? "item active" : "item"}>
                     <a href={"http://daily.zhihu.com/story/" + value.id}
                        target="_blank"
                        data-target={value.id}>
@@ -60,11 +60,6 @@ var CarouselInner = React.createClass(
                 </div>
             );
         });
-
-        if (rows.length > 0)
-        {
-            rows[0].props.className = "item active";
-        }
 
         return (
             <div className="CarouselInner carousel-inner" role="listbox">
