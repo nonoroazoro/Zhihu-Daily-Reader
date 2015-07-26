@@ -33,15 +33,25 @@ var DailyPage = React.createClass(
         }.bind(this));
     },
 
-    render : function()
+    handleCarouselClick: function (p_story)
+    {
+        console.log(p_story);
+    },
+    
+    handleTileClick: function (p_story)
+    {
+        console.log(p_story);
+    },
+
+    render: function ()
     {
         var page =
             <div className="DailyPage container-fluid">
                 <div className="CarouselContainer container-fluid">
-                    <Carousel data={this.state.topStories}/>
+                    <Carousel onClick={this.handleCarouselClick} data={this.state.topStories} />
                 </div>
                 <div className="FlexContainer container-fluid">
-                    <FlexView />
+                    <FlexView onTileClick={this.handleTileClick} />
                 </div>
             </div>;
         return page;
