@@ -1,55 +1,48 @@
 ﻿require("./res/FlexView.less");
 
+var _ = require("lodash");
 var React = require("react");
+var DailyManager = require("../controllers/DailyManager");
 
 var FlexTile = React.createClass(
 {
-    getDefaultProps: function()
-    {
-        return {
-            api: "/api/4/news/",
-        };
-    },
-
-    getInitialState: function()
+    getInitialState: function ()
     {
         return {
             story: null
         };
     },
 
-    componentDidMount: function()
+    componentDidMount: function ()
     {
-        $.get(this.props.api + this.props.data, function(data)
+        if (this.props.id)
         {
-            if(this.isMounted() && data)
+            DailyManager.getStory(function (data)
             {
-                this.setState(
+                if (this.isMounted() && data)
                 {
-                    story : data
-                });
-            }
-        }.bind(this)).fail(function()
-        {
-            console.log("error loading story");
-        });
+                    this.setState(
+                    {
+                        story: data
+                    });
+                }
+            }.bind(this), this.props.id);
+        }
     },
 
     render: function ()
     {
         var item = null;
         var story = this.state.story;
-        if(story)
+        if (story)
         {
             // 如果没有 img 要作处理，否则不好看。
             item =
                 <div className="flex-tile" data-target={story.id}>
                     <div className="flex-tile-content">
-                        <div className="flex-tile-picture" style={{backgroundImage: "url(" + story.image + ")"}} />
+                        <div className="flex-tile-picture" style={{backgroundImage: "url(" + story.image + ")"}} onClick={this.props.onClick} />
                         <div className="flex-tile-title">
-                            <a className="flex-tile-link"
-                               href={story.shareURL}
-                               target="_blank">
+                            <a className="flex-tile-link" href={story.shareURL} target="_blank" onClick={this.props.onClick}>
                                 {story.title}
                             </a>
                         </div>
@@ -70,46 +63,36 @@ var FlexTile = React.createClass(
 
 var FlexView = React.createClass(
 {
-    getDefaultProps: function()
-    {
-        return {
-            api: "/api/4/news/before"
-        };
-    },
-
-    getInitialState: function()
+    getInitialState: function ()
     {
         return {
             stories: []
         };
     },
 
-    componentDidMount: function()
+    componentDidMount: function ()
     {
-        $.get(this.props.api, function(data)
+        DailyManager.getStories(function (data)
         {
-            if(this.isMounted() && data)
+            if (this.isMounted() && data)
             {
                 this.setState(
                 {
-                    stories : [data]
+                    stories: [data]
                 });
             }
-        }.bind(this)).fail(function()
-        {
-            console.log("error loading stories");
-        });
+        }.bind(this));
     },
 
     render: function ()
     {
-        var item = null;
-        var items =[];
-        _.each(this.state.stories, function(value)
+        var items = [];
+        var that = this;
+        _.each(that.state.stories, function (value)
         {
-            _.each(value.stories, function(story)
+            _.each(value.stories, function (value)
             {
-                items.push(<FlexTile data={story.id} />);
+                items.push(<FlexTile onClick={that.props.onTileClick} id={value.id} />);
             });
         });
 
