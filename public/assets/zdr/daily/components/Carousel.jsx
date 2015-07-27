@@ -57,10 +57,10 @@ var CarouselInner = React.createClass(
     render: function ()
     {
         var that = this;
-        var rows = _.map(this.props.data, function (value, key)
+        var rows = _.map(this.props.indexes, function (value, i)
         {
             return (
-                <div className={key == 0 ? "item active" : "item"}>
+                <div className={i == 0 ? "item active" : "item"}>
                     <a href={"http://daily.zhihu.com/story/" + value.id}
                        target="_blank"
                        data-target={value.id}
@@ -132,8 +132,8 @@ var Carousel = React.createClass(
 
     render: function ()
     {
-        var data = this.props.data || [];
-        var length = data.length;
+        var indexes = this.props.indexes || [];
+        var length = indexes.length;
         var target = "#" + this.props.id;
 
         // 无内容时隐藏。
@@ -154,7 +154,7 @@ var Carousel = React.createClass(
         return (
             <div id={this.props.id} className={carouselClassNames} data-ride="carousel">
                 <CarouselIndicator target={target} length={length} />
-                <CarouselInner onClick={this.props.onClick} data={data} />
+                <CarouselInner onClick={this.props.onClick} indexes={indexes} />
                 <CarouselControls className={controlsClassNames} href={target} length={length} />
             </div>
         );
