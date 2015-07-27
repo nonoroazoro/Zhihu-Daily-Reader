@@ -15,19 +15,20 @@ var DailyPage = React.createClass(
     getInitialState()
     {
         return {
-            topStories: []
+            topStoryIndexes: [],
+            storyIndexes: [],
         };
     },
 
     componentDidMount: function ()
     {
-        DailyManager.getTopStories(function (data)
+        DailyManager.getTopStoryIndexes(function (data)
         {
             if (data && this.isMounted())
             {
                 this.setState(
                 {
-                    topStories: data.stories
+                    topStoryIndexes: data.indexes
                 });
             }
         }.bind(this));
@@ -48,7 +49,7 @@ var DailyPage = React.createClass(
         var page =
             <div className="DailyPage container-fluid">
                 <div className="CarouselContainer container-fluid">
-                    <Carousel onClick={this.handleCarouselClick} data={this.state.topStories} />
+                    <Carousel onClick={this.handleCarouselClick} data={this.state.topStoryIndexes} />
                 </div>
                 <div className="FlexContainer container-fluid">
                     <FlexView onTileClick={this.handleTileClick} />
