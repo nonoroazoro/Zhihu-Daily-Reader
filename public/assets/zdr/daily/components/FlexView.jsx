@@ -102,7 +102,7 @@ var FlexView = React.createClass(
         {
             _.each(value.indexes, function (value)
             {
-                items.push(<FlexTile onClick={that.props.onTileClick} id={value.id} />);
+                items.push(<FlexTile onClick={that.props.onTileClick} key={value} id={value} />);
             });
         });
 
