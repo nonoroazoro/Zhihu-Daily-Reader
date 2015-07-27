@@ -47,7 +47,10 @@ var CarouselInner = React.createClass(
     {
         if (_.isFunction(this.props.onClick))
         {
-            this.props.onClick(p_storyId);
+            this.props.onClick(
+            {
+                id: p_storyId
+            });
         }
     },
 
