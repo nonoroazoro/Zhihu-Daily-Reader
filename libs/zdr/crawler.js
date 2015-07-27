@@ -118,66 +118,74 @@ function getStoryIndexes(p_date, p_res)
  */
 function getStory(p_id, p_res)
 {
-    dailyRequest.get({ url: "/news/" + p_id, json: true }, function (error, response, body)
+    // 首先检查 Id 是否为纯数字。
+    if (/^\d+$/.test(p_id))
     {
-        if (!error && response.statusCode == 200)
+        dailyRequest.get({ url: "/news/" + p_id, json: true }, function (error, response, body)
         {
-            var result = {};
-            result.id = body.id;
-            result.title = body.title;
-            result.image = PREFIX + querystring.escape(body.image);
-            result.imageSource = body.image_source;
-            result.shareURL = body.share_url;
-            
-            if (body.body)
+            if (!error && response.statusCode == 200)
             {
-                var $ = cheerio.load(body.body, { decodeEntities: false });
-                result.backgrounds = $(".headline>.headline-background .headline-background-link").map(function (i, e)
-                {
-                    return {
-                        href: $(e).attr("href"),
-                        title : $(e).children(".heading").text(),
-                        text : $(e).children(".heading-content").text()
-                    };
-                }).get();
+                var result = {};
+                result.id = body.id;
+                result.title = body.title;
+                result.image = PREFIX + querystring.escape(body.image);
+                result.imageSource = body.image_source;
+                result.shareURL = body.share_url;
                 
-                result.contents = $(".content-inner>.question").map(function (i, e)
+                if (body.body)
                 {
-                    var question = {};
-                    question.title = $(e).children(".question-title").text();
-                    question.answers = $(e).children(".answer").map(function (i, e)
+                    var $ = cheerio.load(body.body, { decodeEntities: false });
+                    result.backgrounds = $(".headline>.headline-background .headline-background-link").map(function (i, e)
                     {
-                        var src = $(e).attr("src");
-                        $(e).find(".content img.content-image").each(function (i, e)
-                        {
-                            $(e).attr("src", PREFIX + querystring.escape(src));
-                        });
                         return {
-                            avatar : PREFIX + querystring.escape($(e).find(".meta>.avatar").attr("src")),
-                            name: $(e).find(".meta>.author").text(),
-                            bio : $(e).find(".meta>.bio").text(),
-                            content : $(e).children(".content").html()
+                            href: $(e).attr("href"),
+                            title : $(e).children(".heading").text(),
+                            text : $(e).children(".heading-content").text()
                         };
                     }).get();
                     
-                    var a = $(e).find(".view-more>a");
-                    question.link = {
-                        href : a.attr("href"),
-                        text : a.text(),
-                    };
-                    
-                    return question;
-                }).get();
+                    result.contents = $(".content-inner>.question").map(function (i, e)
+                    {
+                        var question = {};
+                        question.title = $(e).children(".question-title").text();
+                        question.answers = $(e).children(".answer").map(function (i, e)
+                        {
+                            var src = $(e).attr("src");
+                            $(e).find(".content img.content-image").each(function (i, e)
+                            {
+                                $(e).attr("src", PREFIX + querystring.escape(src));
+                            });
+                            return {
+                                avatar : PREFIX + querystring.escape($(e).find(".meta>.avatar").attr("src")),
+                                name: $(e).find(".meta>.author").text(),
+                                bio : $(e).find(".meta>.bio").text(),
+                                content : $(e).children(".content").html()
+                            };
+                        }).get();
+                        
+                        var a = $(e).find(".view-more>a");
+                        question.link = {
+                            href : a.attr("href"),
+                            text : a.text(),
+                        };
+                        
+                        return question;
+                    }).get();
+                }
+                
+                p_res.set(response.headers);
+                p_res.json(result);
             }
-            
-            p_res.set(response.headers);
-            p_res.json(result);
-        }
-        else
-        {
-            p_res.status(404).render("error_404");
-        }
-    });
+            else
+            {
+                p_res.status(404).render("error_404");
+            }
+        });
+    }
+    else
+    {
+        p_res.status(404).render("error_404");
+    }
 }
 
 /**
