@@ -121,6 +121,8 @@
     <Compile Include="libs\zdr\crawler.js" />
     <Compile Include="public\assets\libs\lodash\lodash.js" />
     <Compile Include="public\assets\libs\lodash\lodash.min.js" />
+    <Compile Include="public\assets\libs\moment\moment.js" />
+    <Compile Include="public\assets\libs\moment\moment.min.js" />
     <Compile Include="public\assets\zdr\daily\controllers\DailyManager.js" />
     <Compile Include="public\assets\zdr\webpack.config.js" />
     <Compile Include="public\assets\zdr\common\error_404.jsx" />
@@ -153,6 +155,7 @@
     <Folder Include="public\assets\libs\bootstrap\less\" />
     <Folder Include="public\assets\libs\bootstrap\less\mixins\" />
     <Folder Include="public\assets\libs\lodash\" />
+    <Folder Include="public\assets\libs\moment\" />
     <Folder Include="public\assets\zdr\common\res\img\" />
     <Folder Include="public\assets\zdr\common\res\" />
     <Folder Include="public\assets\libs\" />
