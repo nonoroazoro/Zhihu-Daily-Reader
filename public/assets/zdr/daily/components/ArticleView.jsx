@@ -9,8 +9,18 @@ var ArticleHeader = React.createClass(
 {
     render : function()
     {
+        var rows = [];
+        if (this.props.story)
+        {
+            var row =
+                <div className="">
+
+                </div>;
+        }
+
         var header = 
             <div className="modal-header">
+                {rows}
             </div>;
         
         return header;
