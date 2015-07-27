@@ -20,10 +20,7 @@ function getLatestStoryIndexes(p_res)
             // 因知乎日报的 API 返回的图片太小，这里直接丢弃，后面再通过其他途径获取图片。
             var indexes = body.stories.map(function (item)
             {
-                return {
-                    id: item.id,
-                    title: item.title,
-                };
+                return item.id;
             });
             
             p_res.set(response.headers);
@@ -88,10 +85,7 @@ function getStoryIndexes(p_date, p_res)
                 // 因知乎日报的 API 返回的图片太小，这里直接丢弃，后面再通过其他途径获取图片。
                 var indexes = body.stories.map(function (item)
                 {
-                    return {
-                        id: item.id,
-                        title: item.title,
-                    };
+                    return item.id;
                 });
                 
                 p_res.set(response.headers);
