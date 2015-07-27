@@ -23,6 +23,7 @@ module.exports = {
         "jquery" : "jQuery",
         "signal": "signals.Signal",
         "lodash": "_",
+        "moment": "moment"
     },
     module: {
         loaders: [
