@@ -34,14 +34,14 @@ var DailyPage = React.createClass(
         }.bind(this));
     },
 
-    handleCarouselClick: function (p_story)
+    handleCarouselClick: function (e)
     {
-        console.log(p_story);
+        console.log(e);
     },
     
-    handleTileClick: function (p_story)
+    handleTileClick: function (e)
     {
-        console.log(p_story);
+        console.log(e);
     },
 
     render: function ()
