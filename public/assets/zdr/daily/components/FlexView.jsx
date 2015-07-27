@@ -34,7 +34,9 @@ var FlexTile = React.createClass(
     {
         if (_.isFunction(this.props.onClick))
         {
-            this.props.onClick(this.state.story);
+            this.props.onClick({
+                story: this.state.story
+            });
         }
     },
 
