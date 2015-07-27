@@ -49,7 +49,7 @@ var DailyPage = React.createClass(
         var page =
             <div className="DailyPage container-fluid">
                 <div className="CarouselContainer container-fluid">
-                    <Carousel onClick={this.handleCarouselClick} data={this.state.topStoryIndexes} />
+                    <Carousel onClick={this.handleCarouselClick} indexes={this.state.topStoryIndexes} />
                 </div>
                 <div className="FlexContainer container-fluid">
                     <FlexView onTileClick={this.handleTileClick} />
