@@ -73,37 +73,12 @@ var FlexTile = React.createClass(
 
 var FlexView = React.createClass(
 {
-    getInitialState: function ()
-    {
-        return {
-            indexes: []
-        };
-    },
-
-    componentDidMount: function ()
-    {
-        DailyManager.getStoryIndexes(function (data)
-        {
-            if (this.isMounted() && data)
-            {
-                this.setState(
-                {
-                    indexes: [data]
-                });
-            }
-        }.bind(this));
-    },
-
     render: function ()
     {
-        var items = [];
         var that = this;
-        _.each(that.state.indexes, function (value)
+        var items = _.map(that.props.indexes, function (value)
         {
-            _.each(value.indexes, function (value)
-            {
-                items.push(<FlexTile onClick={that.props.onTileClick} key={value} id={value} />);
-            });
+            return (<FlexTile onClick={that.props.onTileClick} key={value} id={value} />);
         });
 
         return (
