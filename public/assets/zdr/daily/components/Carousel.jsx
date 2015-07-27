@@ -16,10 +16,10 @@ var CarouselIndicator = React.createClass(
         var length = this.props.length;
         if (length > 0)
         {
-            indicators.push(<li className="active" data-target={this.props.target} data-slide-to={0} />);
+            indicators.push(<li className="active" key="indicator0" data-target={this.props.target} data-slide-to={0} />);
             for (var i = 1; i < length; i++)
             {
-                indicators.push(<li data-target={this.props.target} data-slide-to={i} />);
+                indicators.push(<li key={"indicator" + i} data-target={this.props.target} data-slide-to={i} />);
             }
         }
 
@@ -60,11 +60,10 @@ var CarouselInner = React.createClass(
         var rows = _.map(this.props.indexes, function (value, i)
         {
             return (
-                <div className={i == 0 ? "item active" : "item"}>
+                <div className={i == 0 ? "item active" : "item"} key={"slide" + i}>
                     <a href={"http://daily.zhihu.com/story/" + value.id}
                        target="_blank"
-                       data-target={value.id}
-                       onClick={that.handleClick.bind(this, value.id)}>
+                       onClick={that.handleClick.bind(that, value.id)}>
                         <div className="carousel-picture" style={{backgroundImage: "url(" + value.image + ")"}} />
                     </a>
                     <div className="carousel-caption">
