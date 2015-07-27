@@ -64,7 +64,7 @@ var DailyPage = React.createClass(
                     currentStory: data
                 });
             }
-        }, "3892357");
+        }, "4893498");
     },
 
      /**
