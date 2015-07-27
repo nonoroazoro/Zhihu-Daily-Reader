@@ -1,7 +1,9 @@
 ﻿require("./res/DailyPage.less");
 
+var moment = require("moment");
 var React = require("react");
 var DailyManager = require("./controllers/DailyManager");
+var Utils = require("./controllers/Utils");
 
 var Carousel = require("./components/Carousel");
 var FlexView = require("./components/FlexView");
@@ -22,30 +24,47 @@ var DailyPage = React.createClass(
 
     componentDidMount: function ()
     {
+        var that = this;
+
         // 1、加载热门日报。
         DailyManager.getTopStoryIndexes(function (data)
         {
-            if (this.isMounted() && data)
+            if (that.isMounted() && data)
             {
-                this.setState(
+                that.setState(
                 {
                     topStoryIndexes: data.indexes
                 });
             }
-        }.bind(this));
+        });
 
-        // 2、加载最新日报。
+        // 2、加载最新日报（初始化时仅加载今日、昨日的日报）。
         DailyManager.getStoryIndexes(function (data)
         {
-            if (this.isMounted() && data)
+            if (that.isMounted() && data)
             {
-                this.setState(function (prevState)
+                that._addStoryIndexes(that, data.indexes);
+                DailyManager.getStoryIndexes(function (data)
                 {
-                    Array.prototype.push.apply(prevState.storyIndexes, data.indexes)
-                    storyIndexes: prevState.storyIndexes
-                });
+                    if (data)
+                    {
+                        that._addStoryIndexes(that, data.indexes);
+                    }
+                }, Utils.subZhihuDay(DailyManager.getToday()));
             }
-        }.bind(this));
+        });
+    },
+
+     /**
+     * 增量加载制定的日报。
+     */
+    _addStoryIndexes: function(p_this, p_indexes)
+    {
+        p_this.setState(function (prevState)
+        {
+            Array.prototype.push.apply(prevState.storyIndexes, p_indexes)
+            storyIndexes: prevState.storyIndexes
+        });
     },
 
     handleCarouselClick: function (e)

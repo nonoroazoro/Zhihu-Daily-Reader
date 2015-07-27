@@ -1,14 +1,39 @@
-﻿var $ = require("jquery");
+﻿var _ = require("lodash");
+var $ = require("jquery");
 
-// 缓存日报内容（以 Id 检索，请勿用于检索 index）。
-var stories = {};
+var _stories = {};
+
+/**
+ * 获取目前已加载的所有日报内容的缓存（以 Id 进行检索，无序，请勿用 index 检索）。
+ */
+function getStories()
+{
+    return _stories;
+}
+
+var _today = null;
+
+/**
+ * 获取知乎日报当前日期，例如"20170727"。
+ */
+function getToday()
+{
+    return _today;
+}
 
 /**
  * 获取最新热门日报的索引。
  */
 function getTopStoryIndexes(callback)
 {
-    $.get("/api/4/news/top", callback);
+    $.get("/api/4/news/top", function (data)
+    {
+        if (!_.isEqual(_today, data.date))
+        {
+            _today = data.date;
+        }
+        callback(data);
+    });
 }
 
 /**
@@ -17,8 +42,21 @@ function getTopStoryIndexes(callback)
  */
 function getStoryIndexes(callback, p_date)
 {
-    var url = (p_date == null || p_date == "") ? "/api/4/news/before" : "/api/4/news/before/" + p_date;
-    $.get(url, callback);
+    if (_.isEmpty(_today))
+    {
+        $.get("/api/4/news/before", function (data)
+        {
+            if (!_.isEqual(_today, data.date))
+            {
+                _today = data.date;
+            }
+            callback(data);
+        });
+    }
+    else
+    {
+        $.get("/api/4/news/before/" + p_date, callback);
+    }
 }
 
 /**
@@ -29,7 +67,7 @@ function getStory(callback, p_id)
 {
     $.get("/api/4/news/" + p_id, function (data)
     {
-        stories[p_id] = data;
+        _stories[p_id] = data;
         callback(data);
     });
 }
@@ -38,4 +76,5 @@ module.exports.getTopStoryIndexes = getTopStoryIndexes;
 module.exports.getStoryIndexes = getStoryIndexes;
 module.exports.getStory = getStory;
 
-module.exports.stories = stories;
+module.exports.getStories = getStories;
+module.exports.getToday = getToday;

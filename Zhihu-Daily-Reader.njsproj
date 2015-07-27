@@ -124,6 +124,7 @@
     <Compile Include="public\assets\libs\moment\moment.js" />
     <Compile Include="public\assets\libs\moment\moment.min.js" />
     <Compile Include="public\assets\zdr\daily\controllers\DailyManager.js" />
+    <Compile Include="public\assets\zdr\daily\controllers\Utils.js" />
     <Compile Include="public\assets\zdr\webpack.config.js" />
     <Compile Include="public\assets\zdr\common\error_404.jsx" />
     <Compile Include="public\assets\libs\bootstrap\js\bootstrap.js" />
