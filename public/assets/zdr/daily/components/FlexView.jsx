@@ -74,19 +74,19 @@ var FlexView = React.createClass(
     getInitialState: function ()
     {
         return {
-            stories: []
+            indexes: []
         };
     },
 
     componentDidMount: function ()
     {
-        DailyManager.getStories(function (data)
+        DailyManager.getStoryIndexes(function (data)
         {
             if (this.isMounted() && data)
             {
                 this.setState(
                 {
-                    stories: [data]
+                    indexes: [data]
                 });
             }
         }.bind(this));
@@ -96,9 +96,9 @@ var FlexView = React.createClass(
     {
         var items = [];
         var that = this;
-        _.each(that.state.stories, function (value)
+        _.each(that.state.indexes, function (value)
         {
-            _.each(value.stories, function (value)
+            _.each(value.indexes, function (value)
             {
                 items.push(<FlexTile onClick={that.props.onTileClick} id={value.id} />);
             });
