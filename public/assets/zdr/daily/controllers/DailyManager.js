@@ -1,5 +1,8 @@
 ﻿var $ = require("jquery");
 
+// 缓存日报内容（以 Id 检索，请勿用于检索 index）。
+var stories = {};
+
 /**
  * 获取最新热门日报的索引。
  */
@@ -24,9 +27,15 @@ function getStoryIndexes(callback, p_date)
  */
 function getStory(callback, p_id)
 {
-    $.get("/api/4/news/" + p_id, callback);
+    $.get("/api/4/news/" + p_id, function (data)
+    {
+        stories[p_id] = data;
+        callback(data);
+    });
 }
 
 module.exports.getTopStoryIndexes = getTopStoryIndexes;
 module.exports.getStoryIndexes = getStoryIndexes;
 module.exports.getStory = getStory;
+
+module.exports.stories = stories;
