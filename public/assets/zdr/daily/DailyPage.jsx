@@ -19,6 +19,7 @@ var DailyPage = React.createClass(
         return {
             topStoryIndexes: [],
             storyIndexes: [],
+            currentStory: null
         };
     },
 
@@ -53,6 +54,17 @@ var DailyPage = React.createClass(
                 }, Utils.subZhihuDay(DailyManager.getToday()));
             }
         });
+
+        // DEBUG：ArticleView，用完后删除。
+        DailyManager.getStory(function (data)
+        {
+            if (that.isMounted() && data)
+            {
+                that.setState({
+                    currentStory: data
+                });
+            }
+        }, "3892357");
     },
 
      /**
@@ -87,6 +99,7 @@ var DailyPage = React.createClass(
                 <div className="FlexContainer container-fluid">
                     <FlexView onTileClick={this.handleTileClick} indexes={this.state.storyIndexes} />
                 </div>
+                <ArticleView story={this.state.currentStory}/>
             </div>;
         return page;
     }
