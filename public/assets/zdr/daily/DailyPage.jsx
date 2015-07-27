@@ -22,13 +22,27 @@ var DailyPage = React.createClass(
 
     componentDidMount: function ()
     {
+        // 1、加载热门日报。
         DailyManager.getTopStoryIndexes(function (data)
         {
-            if (data && this.isMounted())
+            if (this.isMounted() && data)
             {
                 this.setState(
                 {
                     topStoryIndexes: data.indexes
+                });
+            }
+        }.bind(this));
+
+        // 2、加载最新日报。
+        DailyManager.getStoryIndexes(function (data)
+        {
+            if (this.isMounted() && data)
+            {
+                this.setState(function (prevState)
+                {
+                    Array.prototype.push.apply(prevState.storyIndexes, data.indexes)
+                    storyIndexes: prevState.storyIndexes
                 });
             }
         }.bind(this));
@@ -52,7 +66,7 @@ var DailyPage = React.createClass(
                     <Carousel onClick={this.handleCarouselClick} indexes={this.state.topStoryIndexes} />
                 </div>
                 <div className="FlexContainer container-fluid">
-                    <FlexView onTileClick={this.handleTileClick} />
+                    <FlexView onTileClick={this.handleTileClick} indexes={this.state.storyIndexes} />
                 </div>
             </div>;
         return page;
