@@ -62,11 +62,9 @@ var CarouselInner = React.createClass(
         {
             return (
                 <div className={i == 0 ? "item active" : "item"} key={"slide" + i}>
-                    <a href={"http://daily.zhihu.com/story/" + value.id}
-                       target="_blank"
-                       onClick={that.handleClick.bind(that, value.id)}>
-                        <div className="carousel-picture" style={{backgroundImage: "url(" + value.image + ")"}} />
-                    </a>
+                    <div className="carousel-picture"
+                        onClick={that.handleClick.bind(that, value.id)}
+                        style={{backgroundImage: "url(" + value.image + ")"}} />
                     <div className="carousel-caption">
                         <h3>{value.title}</h3>
                     </div>

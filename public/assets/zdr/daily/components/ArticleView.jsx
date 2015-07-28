@@ -36,6 +36,9 @@ var ArticleHeader = React.createClass(
         var rows = [];
         var titileRow =
             <div className="article-header-title" key="article-header">
+                <button type="button" className="close" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
                 <div className={classesHeaderPicture} style={{backgroundImage: "url(" + this.props.story.image + ")"}}>
                     <div className={classesHeaderCaption}>
                         <a href={this.props.story.shareURL} target="_blank">
@@ -166,7 +169,7 @@ var ArticleView = React.createClass(
         }
 
         return (
-            <div id={this.props.id} className="ArticleView modal fade in">
+            <div id={this.props.id} className="ArticleView modal fade">
                 <div className="modal-dialog modal-lg">
                     <div className="modal-content">
                         {rows}

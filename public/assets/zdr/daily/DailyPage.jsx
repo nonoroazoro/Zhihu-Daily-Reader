@@ -1,5 +1,6 @@
 ﻿require("./res/DailyPage.less");
 
+var $ = require("jquery");
 var moment = require("moment");
 var React = require("react");
 var ReactUpdate = React.addons.update;
@@ -87,18 +88,25 @@ var DailyPage = React.createClass(
 
     handleCarouselClick: function (e)
     {
-        console.log(e.id);
         if(e.id)
         {
             this.setState({
                 currentStory: DailyManager.getStories()[e.id]
+            }, function()
+            {
+                $("#ArticleView").modal();
             });
         }
     },
     
     handleTileClick: function (e)
     {
-        console.log(e.story);
+        this.setState({
+            currentStory: e.story
+        }, function()
+        {
+            $("#ArticleView").modal();
+        });
     },
 
     render: function ()
