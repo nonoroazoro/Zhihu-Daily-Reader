@@ -8,8 +8,6 @@ var PureRenderMixin = React.addons.PureRenderMixin;
 
 var ArticleHeader = React.createClass(
 {
-    mixins: [PureRenderMixin],
-
     render : function()
     {
         var hasBackgrounds = this.props.story.backgrounds.length > 0;
