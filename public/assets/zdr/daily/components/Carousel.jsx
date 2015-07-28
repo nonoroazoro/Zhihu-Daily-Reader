@@ -103,14 +103,14 @@ var CarouselControls = React.createClass(
                    href={this.props.href}
                    role="button"
                    data-slide="prev">
-                    <span className="glyphicon glyphicon-chevron-left"></span>
+                    <span className="glyphicon glyphicon-chevron-left" />
                     <span className="sr-only">Previous</span>
                 </a>
                 <a className="right carousel-control"
                    href={this.props.href}
                    role="button"
                    data-slide="next">
-                    <span className="glyphicon glyphicon-chevron-right"></span>
+                    <span className="glyphicon glyphicon-chevron-right" />
                     <span className="sr-only">Next</span>
                 </a>
             </div>
