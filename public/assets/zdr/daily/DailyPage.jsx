@@ -87,12 +87,18 @@ var DailyPage = React.createClass(
 
     handleCarouselClick: function (e)
     {
-        console.log(e);
+        console.log(e.id);
+        if(e.id)
+        {
+            this.setState({
+                currentStory: DailyManager.getStories()[e.id]
+            });
+        }
     },
     
     handleTileClick: function (e)
     {
-        console.log(e);
+        console.log(e.story);
     },
 
     render: function ()
