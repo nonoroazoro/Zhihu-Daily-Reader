@@ -2,6 +2,7 @@
 
 var moment = require("moment");
 var React = require("react");
+var ReactUpdate = React.addons.update;
 var DailyManager = require("./controllers/DailyManager");
 var Utils = require("./controllers/Utils");
 
@@ -72,10 +73,12 @@ var DailyPage = React.createClass(
      */
     _addStoryIndexes: function(p_this, p_indexes)
     {
-        p_this.setState(function (prevState)
+        p_this.setState(
         {
-            Array.prototype.push.apply(prevState.storyIndexes, p_indexes)
-            storyIndexes: prevState.storyIndexes
+            storyIndexes: ReactUpdate(p_this.state.storyIndexes,
+            {
+                $push: p_indexes
+            })
         });
     },
 
