@@ -27,14 +27,23 @@ var ArticleHeader = React.createClass(
                 "radius-bottom": !hasBackgrounds,
             }
         );
+        
+        // 没有图片版权信息时隐藏。
+        var classesImageSource = classNames(
+            {
+                "hide": !this.props.story.imageSource,
+            }
+        );
 
         var rows = [];
         var titileRow =
-            <div className="article-header-title">
+            <div className="article-header-title" key="article-header">
                 <div className={classesHeaderPicture} style={{backgroundImage: "url(" + this.props.story.image + ")"}}>
                     <div className={classesHeaderCaption}>
-                        <h3>{this.props.story.title}</h3>
-                        <a href={"https://www.google.com/search?q=" + this.props.story.imageSource}
+                        <a href={this.props.story.shareURL} target="_blank">
+                            <h3>{this.props.story.title}</h3>
+                        </a>
+                        <a classNames={classesImageSource} href={"https://www.google.com/search?q=" + this.props.story.imageSource}
                            target="_blank">
                             <span className="glyphicon glyphicon-copyright-mark" />
                             {this.props.story.imageSource}
@@ -59,7 +68,7 @@ var ArticleHeader = React.createClass(
             });
 
             var backgroundsRow =
-                         <div className="article-backgrounds">
+                         <div className="article-backgrounds" key="article-backgrounds">
                              {backgroundRows}
                              <span className="article-backgrounds-arrow glyphicon glyphicon-chevron-right" />
                          </div>;
@@ -116,7 +125,7 @@ var ArticleView = React.createClass(
         {
             rows = [
                 <ArticleHeader key="header" story={this.props.story} />,
-                <ArticleBody key="body" story={this.props.story} />,
+                <ArticleBody key="body" story={this.props.story.contents} />,
                 <ArticleFooter key="footer" story={this.props.story} />
             ];
         }
