@@ -1,4 +1,7 @@
 ﻿@viewBorderColor: #D5D5D5;
+@contentFontSize: 2rem;
+@contentIndent: 2*@contentFontSize;
+@contentLineHeight: 1.6;
 
 .ArticleView
 {
@@ -21,7 +24,7 @@
 
     .modal-content
     {
-        background: none repeat scroll 0% 0% #F6F6F1;
+        background: #F6F6F1 repeat scroll 0% 0%;
     }
 
     .ArticleHeader
@@ -143,14 +146,14 @@
             {
                 font-weight: bold;
                 margin-top: 10px;
-                margin-bottom: 10px;
+                margin-bottom: 20px;
             }
 
             .question-answer
             {
                 .question-answer-meta
                 {
-                    margin-bottom: 5px;
+                    margin-bottom: 10px;
 
                     span
                     {
@@ -167,6 +170,34 @@
                         margin-right: 5px;
                     }
                 }
+
+                .question-answer-content
+                {
+                    font-size: @contentFontSize;
+                    line-height: @contentLineHeight;
+                    word-wrap: break-word;
+
+                    p
+                    {
+
+                        &:first-letter
+                        {
+                            margin-left: @contentIndent;
+                        }
+                    }
+
+                    img
+                    {
+                        display: block;
+                        margin-left: auto;
+                        margin-right: auto;
+                    }
+                }
+            }
+
+            .view-more
+            {
+                text-align: right;
             }
         }
 
@@ -176,11 +207,5 @@
             margin-top: 10px;
             margin-bottom: 10px;
         }
-    }
-
-    .ArticleFooter
-    {
-        border-color: @viewBorderColor;
-        padding: 10px;
     }
 }

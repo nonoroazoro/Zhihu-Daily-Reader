@@ -119,7 +119,7 @@ var ArticleBody = React.createClass(
             // 3、外链。
             innerRows.push(
                 <div className="view-more">
-                    <a href={item.link.href} target="_blank">{item.link.text}</a>
+                    <a href={item.link.href} target="_blank"><b>{item.link.text}</b></a>
                 </div>
             );
 
@@ -143,17 +143,6 @@ var ArticleBody = React.createClass(
     }
 });
 
-var ArticleFooter = React.createClass(
-{
-    render : function()
-    {
-        var footer = 
-            <div className="ArticleFooter modal-footer">
-            </div>;
-        return footer;
-    }
-});
-
 var ArticleView = React.createClass(
 {
     mixins: [PureRenderMixin],
@@ -173,7 +162,6 @@ var ArticleView = React.createClass(
             rows = [
                 <ArticleHeader key="header" story={this.props.story} />,
                 <ArticleBody key="body" contents={this.props.story.contents} />,
-                <ArticleFooter key="footer" story={this.props.story} />
             ];
         }
 
