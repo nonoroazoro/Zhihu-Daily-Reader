@@ -4,6 +4,7 @@ var $ = require("jquery");
 var _ = require("lodash");
 var classNames = require("classnames");
 var React = require("react");
+var PureRenderMixin = React.addons.PureRenderMixin;
 
 var ArticleHeader = React.createClass(
 {
@@ -53,6 +54,8 @@ var ArticleFooter = React.createClass(
 
 var ArticleView = React.createClass(
 {
+    mixins: [PureRenderMixin],
+
     getDefaultProps: function ()
     {
         return {
