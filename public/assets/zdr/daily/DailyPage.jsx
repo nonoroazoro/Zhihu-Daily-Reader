@@ -3,6 +3,7 @@
 var moment = require("moment");
 var React = require("react");
 var ReactUpdate = React.addons.update;
+var PureRenderMixin = React.addons.PureRenderMixin;
 var DailyManager = require("./controllers/DailyManager");
 var Utils = require("./controllers/Utils");
 
@@ -15,6 +16,8 @@ var ArticleView = require("./components/ArticleView");
  */
 var DailyPage = React.createClass(
 {
+    mixins: [PureRenderMixin],
+
     getInitialState()
     {
         return {
