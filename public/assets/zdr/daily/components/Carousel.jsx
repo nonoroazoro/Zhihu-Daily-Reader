@@ -4,6 +4,7 @@ var $ = require("jquery");
 var _ = require("lodash");
 var classNames = require("classnames");
 var React = require("react");
+var PureRenderMixin = React.addons.PureRenderMixin;
 
 /**
  * 幻灯片指示器。
@@ -122,6 +123,8 @@ var CarouselControls = React.createClass(
  */
 var Carousel = React.createClass(
 {
+    mixins: [PureRenderMixin],
+
     getDefaultProps: function ()
     {
         return {
