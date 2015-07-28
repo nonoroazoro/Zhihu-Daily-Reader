@@ -2,10 +2,13 @@
 
 var _ = require("lodash");
 var React = require("react");
+var PureRenderMixin = React.addons.PureRenderMixin;
 var DailyManager = require("../controllers/DailyManager");
 
 var FlexTile = React.createClass(
 {
+    mixins: [PureRenderMixin],
+
     getInitialState: function ()
     {
         return {
@@ -73,6 +76,8 @@ var FlexTile = React.createClass(
 
 var FlexView = React.createClass(
 {
+    mixins: [PureRenderMixin],
+
     render: function ()
     {
         var that = this;
