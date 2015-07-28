@@ -19,19 +19,35 @@
 
     .ArticleHeader
     {
+        padding: 10px;
+
+        .maxWidth
+        {
+            max-width: 640px;
+        }
+
         .article-header-picture
         {
+            .maxWidth;
             position: relative;
             height: 400px;
-            max-width: 640px;
             width: 100%;
-            border-radius: 6px;
             background-size: cover;
             background-repeat: no-repeat;
             background-position: 50% 50%;
             /* 水平居中 */
             margin-left: auto;
             margin-right: auto;
+
+            &.radius-all
+            {
+                border-radius: 6px;
+            }
+
+            &.radius-top
+            {
+                border-radius: 6px 6px 0 0;
+            }
         }
 
         .article-header-caption
@@ -39,12 +55,16 @@
             padding: 20px;
             text-align: center;
             text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.6);
-            border-radius: 0 0 6px 6px;
             background: transparent linear-gradient(to bottom, transparent 5%, rgba(0, 0, 0, 0.6) 100%) repeat scroll 0% 0%;
             position: absolute;
             left: 0;
             right: 0;
             bottom: 0;
+
+            &.radius-bottom
+            {
+                border-radius: 0 0 6px 6px;
+            }
 
             h3
             {
@@ -61,6 +81,50 @@
                 {
                     top: 2px;
                     margin-right: 2px;
+                }
+            }
+        }
+
+        .article-backgrounds
+        {
+            .maxWidth;
+            /* 水平居中 */
+            margin-left: auto;
+            margin-right: auto;
+            padding: 10px;
+            border-radius: 0 0 6px 6px;
+            background: rgba(0, 0, 0, 0.6) repeat scroll 0% 0%;
+            position: relative;
+
+            .article-backgrounds-content
+            {
+                color: #CBCBCB;
+                text-decoration: none;
+
+                h4
+                {
+                    margin: 0;
+                    padding: 5px;
+                }
+
+                &:hover, &:hover ~ .article-backgrounds-arrow
+                {
+                    color: #F2F2F2;
+                }
+            }
+
+            .article-backgrounds-arrow
+            {
+                color: #CBCBCB;
+                cursor: pointer;
+                position: absolute;
+                right: 5px;
+                top: 50%;
+                transform: translate(0, -50%);
+
+                &:hover
+                {
+                    color: #F2F2F2;
                 }
             }
         }

@@ -2,18 +2,37 @@
 
 var $ = require("jquery");
 var _ = require("lodash");
+var classNames = require("classnames");
 var React = require("react");
 var PureRenderMixin = React.addons.PureRenderMixin;
 
 var ArticleHeader = React.createClass(
 {
+    mixins: [PureRenderMixin],
+
     render : function()
     {
+        var hasBackgrounds = this.props.story.backgrounds.length > 0;
+        var classesHeaderPicture = classNames(
+            "article-header-picture",
+            {
+                "radius-all": !hasBackgrounds,
+                "radius-top": hasBackgrounds,
+            }
+        );
+
+        var classesHeaderCaption = classNames(
+            "article-header-caption",
+            {
+                "radius-bottom": !hasBackgrounds,
+            }
+        );
+
         var rows = [];
         var titileRow =
-            <div className="article-header-content">
-                <div className="article-header-picture" style={{backgroundImage: "url(" + this.props.story.image + ")"}}>
-                    <div className="article-header-caption">
+            <div className="article-header-title">
+                <div className={classesHeaderPicture} style={{backgroundImage: "url(" + this.props.story.image + ")"}}>
+                    <div className={classesHeaderCaption}>
                         <h3>{this.props.story.title}</h3>
                         <a href={"https://www.google.com/search?q=" + this.props.story.imageSource}
                            target="_blank">
@@ -23,15 +42,34 @@ var ArticleHeader = React.createClass(
                     </div>
                 </div>
             </div>;
-
-
         rows.push(titileRow);
+    
+        if(hasBackgrounds)
+        {
+            var backgroundRows = _.map(this.props.story.backgrounds, function(value, i)
+            {
+                return (
+                    <a className="article-backgrounds-content"
+                        href={value.href}
+                        target="_blank"
+                        key={"background" + i}>
+                        <h4>{value.title + "：" + value.text}</h4>
+                    </a>
+                );
+            });
+
+            var backgroundsRow =
+                         <div className="article-backgrounds">
+                             {backgroundRows}
+                             <span className="article-backgrounds-arrow glyphicon glyphicon-chevron-right" />
+                         </div>;
+            rows.push(backgroundsRow);
+        }
 
         var header = 
             <div className="ArticleHeader modal-header">
                 {rows}
             </div>;
-        
         return header;
     }
 });
