@@ -65,19 +65,19 @@ var ArticleHeader = React.createClass(
                 );
             });
 
-            var backgroundsRow =
-                         <div className="article-backgrounds" key="article-backgrounds">
-                             {backgroundRows}
-                             <span className="article-backgrounds-arrow glyphicon glyphicon-chevron-right" />
-                         </div>;
-            rows.push(backgroundsRow);
+            rows.push(
+                <div className="article-backgrounds" key="article-backgrounds">
+                    {backgroundRows}
+                    <span className="article-backgrounds-arrow glyphicon glyphicon-chevron-right" />
+                </div>
+            );
         }
 
-        var header = 
+        return (
             <div className="ArticleHeader modal-header">
                 {rows}
-            </div>;
-        return header;
+            </div>
+        );
     }
 });
 
@@ -85,11 +85,61 @@ var ArticleBody = React.createClass(
 {
     render : function()
     {
-        var body = 
+        var questions = [];
+        var item = null;
+        var length = this.props.contents.length;
+        for (var i = 0; i < length; i++)
+        {
+            // innerRows 包含：标题、答案、外链。
+            var innerRows = [];
+            item = this.props.contents[i];
+
+            // 1、标题。
+            if(!_.isEmpty(item.title))
+            {
+                innerRows.push(<h3 className="question-title">{item.title}</h3>);
+            }
+
+            // 2、答案。
+            var answers = _.map(item.answers, function(value, i)
+            {
+                return (
+                    <div className="question-answer">
+                        <div className="question-answer-meta">
+                            <img className="avatar" src={value.avatar} />
+                            <span className="author">{value.name}</span>
+                            <span className="bio">{value.bio}</span>
+                        </div>
+                        <div className="question-answer-content" dangerouslySetInnerHTML={{__html: value.content}} />
+                    </div>
+                );
+            });
+            Array.prototype.push.apply(innerRows, answers);
+
+            // 3、外链。
+            innerRows.push(
+                <div className="view-more">
+                    <a href={item.link.href} target="_blank">{item.link.text}</a>
+                </div>
+            );
+
+            questions.push(
+                <div className="question">
+                    {innerRows}
+                </div>
+            );
+
+            if (i < length -1)
+            {
+                questions.push(<hr className="question-separator"/>);
+            }
+        }
+
+        return (
             <div className="ArticleBody modal-body">
-            </div>;
-        
-        return body;
+                {questions}
+            </div>
+        );
     }
 });
 
@@ -100,7 +150,6 @@ var ArticleFooter = React.createClass(
         var footer = 
             <div className="ArticleFooter modal-footer">
             </div>;
-        
         return footer;
     }
 });
@@ -123,20 +172,20 @@ var ArticleView = React.createClass(
         {
             rows = [
                 <ArticleHeader key="header" story={this.props.story} />,
-                <ArticleBody key="body" story={this.props.story.contents} />,
+                <ArticleBody key="body" contents={this.props.story.contents} />,
                 <ArticleFooter key="footer" story={this.props.story} />
             ];
         }
 
-        var articleView =
+        return (
             <div id={this.props.id} className="ArticleView modal fade in">
                 <div className="modal-dialog modal-lg">
                     <div className="modal-content">
                         {rows}
                     </div>
                 </div>
-            </div>;
-        return articleView;
+            </div>
+        );
     }
 });
 

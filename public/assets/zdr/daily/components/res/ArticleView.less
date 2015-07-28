@@ -1,4 +1,6 @@
-﻿.ArticleView
+﻿@viewBorderColor: #D5D5D5;
+
+.ArticleView
 {
     /* DEBUG */
     display: block;
@@ -24,6 +26,7 @@
 
     .ArticleHeader
     {
+        border-color: @viewBorderColor;
         padding: 10px;
 
         .maxWidth
@@ -131,9 +134,53 @@
 
     .ArticleBody
     {
+        border-color: @viewBorderColor;
+        padding: 10px 50px;
+
+        .question
+        {
+            .question-title
+            {
+                font-weight: bold;
+                margin-top: 10px;
+                margin-bottom: 10px;
+            }
+
+            .question-answer
+            {
+                .question-answer-meta
+                {
+                    margin-bottom: 5px;
+
+                    span
+                    {
+                        vertical-align: middle;
+
+                        &.bio
+                        {
+                            color: #999;
+                        }
+                    }
+
+                    .avatar
+                    {
+                        margin-right: 5px;
+                    }
+                }
+            }
+        }
+
+        .question-separator
+        {
+            border-color: #9F9F9F;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
     }
 
     .ArticleFooter
     {
+        border-color: @viewBorderColor;
+        padding: 10px;
     }
 }
