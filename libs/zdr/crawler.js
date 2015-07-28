@@ -144,10 +144,13 @@ function getStory(p_id, p_res)
                         question.title = $(e).children(".question-title").text();
                         question.answers = $(e).children(".answer").map(function (i, e)
                         {
-                            var src = $(e).attr("src");
                             $(e).find(".content img.content-image").each(function (i, e)
                             {
-                                $(e).attr("src", PREFIX + querystring.escape(src));
+                                var src = $(e).attr("src");
+                                if (src != null && src != "")
+                                {
+                                    $(e).attr("src", PREFIX + querystring.escape(src));
+                                }
                             });
                             return {
                                 avatar : PREFIX + querystring.escape($(e).find(".meta>.avatar").attr("src")),
