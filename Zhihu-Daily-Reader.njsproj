@@ -123,6 +123,8 @@
     <Compile Include="public\assets\libs\lodash\lodash.min.js" />
     <Compile Include="public\assets\libs\moment\moment.js" />
     <Compile Include="public\assets\libs\moment\moment.min.js" />
+    <Compile Include="public\assets\libs\react\react-with-addons.js" />
+    <Compile Include="public\assets\libs\react\react-with-addons.min.js" />
     <Compile Include="public\assets\zdr\daily\controllers\DailyManager.js" />
     <Compile Include="public\assets\zdr\daily\controllers\Utils.js" />
     <Compile Include="public\assets\zdr\webpack.config.js" />
