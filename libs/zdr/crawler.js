@@ -152,8 +152,19 @@ function getStory(p_id, p_res)
                                     $(e).attr("src", PREFIX + querystring.escape(src));
                                 }
                             });
+                            
+                            var avatar = $(e).find(".meta>.avatar").attr("src");
+                            if (avatar != null && avatar != "")
+                            {
+                                avatar = PREFIX + querystring.escape(avatar);
+                            }
+                            else
+                            {
+                                avatar = "";
+                            }
+                            
                             return {
-                                avatar : PREFIX + querystring.escape($(e).find(".meta>.avatar").attr("src")),
+                                avatar : avatar,
                                 name: $(e).find(".meta>.author").text(),
                                 bio : $(e).find(".meta>.bio").text(),
                                 content : $(e).children(".content").html()
