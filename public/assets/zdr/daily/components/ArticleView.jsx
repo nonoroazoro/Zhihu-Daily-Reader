@@ -106,10 +106,18 @@ var ArticleBody = React.createClass(
             // 2、答案。
             var answers = _.map(item.answers, function(value, i)
             {
+                // 没有作者图片时隐藏。
+                var classesAvatar = classNames(
+                    "avatar",
+                    {
+                        "hide": _.isEmpty(value.avatar),
+                    }
+                );
+
                 return (
                     <div className="question-answer">
                         <div className="question-answer-meta">
-                            <img className="avatar" src={value.avatar} />
+                            <img className={classesAvatar} src={value.avatar} />
                             <span className="author">{value.name}</span>
                             <span className="bio">{value.bio}</span>
                         </div>
