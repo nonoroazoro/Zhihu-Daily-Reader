@@ -59,17 +59,6 @@ var DailyPage = React.createClass(
                 }, Utils.subZhihuDay(DailyManager.getToday()));
             }
         });
-
-        // DEBUG：ArticleView，用完后删除。
-        DailyManager.getStory(function (data)
-        {
-            if (that.isMounted() && data)
-            {
-                that.setState({
-                    currentStory: data
-                });
-            }
-        }, "4893498");
     },
 
      /**
