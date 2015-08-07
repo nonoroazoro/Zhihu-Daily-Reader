@@ -59,12 +59,32 @@ var DailyPage = React.createClass(
                 }, Utils.subZhihuDay(DailyManager.getToday()));
             }
         });
+
+        // 3、事件处理。
+        $("#ArticleView").on("hide.bs.modal", function (e)
+        {
+            that._resetArticleViewScroll();
+        });
     },
 
-     /**
-     * 增量加载制定的日报。
-     */
-    _addStoryIndexes: function(p_this, p_indexes)
+    componentWillUnmount: function ()
+    {
+        // 1、事件处理。
+        $("#ArticleView").off("hide.bs.modal");
+    },
+
+    /**
+    * 重设 ArticleView 的垂直滚动条位置。
+    */
+    _resetArticleViewScroll: function ()
+    {
+        $("#ArticleView .modal-content").scrollTop(0);
+    },
+
+    /**
+    * 增量加载制定的日报。
+    */
+    _addStoryIndexes: function (p_this, p_indexes)
     {
         p_this.setState(
         {
