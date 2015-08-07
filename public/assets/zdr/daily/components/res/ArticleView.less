@@ -5,9 +5,13 @@
 
 .ArticleView
 {
+    overflow: hidden !important;
+
     .modal-dialog
     {
         min-width: 300px;
+        margin: 10px auto;
+        height: 100%;
     }
 
     @media (min-width: 992px)
@@ -21,6 +25,9 @@
     .modal-content
     {
         background: #F6F6F1 repeat scroll 0% 0%;
+        height: 97%;
+        overflow-x: hidden;
+        overflow-y: auto;
     }
 
     .ArticleHeader
