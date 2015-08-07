@@ -12,6 +12,9 @@ var Carousel = require("./components/Carousel");
 var FlexView = require("./components/FlexView");
 var ArticleView = require("./components/ArticleView");
 
+var $ArticleView = null;
+var $ArticleViewContent = null;
+
 /**
  * 知乎日报页面。
  */
@@ -31,6 +34,8 @@ var DailyPage = React.createClass(
     componentDidMount: function ()
     {
         var that = this;
+        $ArticleView = $("#ArticleView");
+        $ArticleViewContent = $("#ArticleView .modal-content");
 
         // 1、加载热门日报。
         DailyManager.getTopStoryIndexes(function (data)
@@ -56,21 +61,73 @@ var DailyPage = React.createClass(
                     {
                         that._addStoryIndexes(that, data.indexes);
                     }
-                }, Utils.subZhihuDay(DailyManager.getToday()));
+                }, Utils.prevZhihuDay(DailyManager.getToday()));
             }
         });
 
         // 3、事件处理。
-        $("#ArticleView").on("hide.bs.modal", function (e)
+        $ArticleView.on("hide.bs.modal", function (e)
         {
             that._resetArticleViewScroll();
         });
+        $(document).on("keydown", that._globalKeydownHandler);
     },
 
     componentWillUnmount: function ()
     {
         // 1、事件处理。
-        $("#ArticleView").off("hide.bs.modal");
+        $ArticleView.off("hide.bs.modal");
+        $(document).off("keydown");
+    },
+    
+    /**
+    * 处理全局按键事件。
+    */
+    _globalKeydownHandler: function (e)
+    {
+        var code = e.which;
+        if(code == 27)
+        {
+            // ESC：关闭 ArticleView。
+            if($ArticleView.is(":visible"))
+            {
+                $ArticleView.modal("hide");
+            }
+        }
+        else if(code == 74)
+        {
+            // J：切换 ArticleView 到下一个日报。
+            if($ArticleView.is(":visible"))
+            {
+                var index = _.indexOf(this.state.storyIndexes, this.state.currentStory.id) + 1;
+                if(index < this.state.storyIndexes.length)
+                {
+                    this.setState({
+                        currentStory: DailyManager.getStories()[this.state.storyIndexes[index]]
+                    }, function()
+                    {
+                        this._resetArticleViewScroll();
+                    });
+                }
+            }
+        }
+        else if(code == 75)
+        {
+            // K：切换 ArticleView 到上一个日报。
+            if($ArticleView.is(":visible"))
+            {
+                var index = _.indexOf(this.state.storyIndexes, this.state.currentStory.id) - 1;
+                if(index >= 0)
+                {
+                    this.setState({
+                        currentStory: DailyManager.getStories()[this.state.storyIndexes[index]]
+                    }, function()
+                    {
+                        this._resetArticleViewScroll();
+                    });
+                }
+            }
+        }
     },
 
     /**
@@ -78,7 +135,7 @@ var DailyPage = React.createClass(
     */
     _resetArticleViewScroll: function ()
     {
-        $("#ArticleView .modal-content").scrollTop(0);
+        $ArticleViewContent.scrollTop(0);
     },
 
     /**
@@ -103,7 +160,7 @@ var DailyPage = React.createClass(
                 currentStory: DailyManager.getStories()[e.id]
             }, function()
             {
-                $("#ArticleView").modal();
+                $ArticleView.modal();
             });
         }
     },
@@ -114,7 +171,7 @@ var DailyPage = React.createClass(
             currentStory: e.story
         }, function()
         {
-            $("#ArticleView").modal();
+            $ArticleView.modal();
         });
     },
 
