@@ -309,11 +309,13 @@ var DailyPage = React.createClass(
 
     render: function ()
     {
+        // 幻灯片（不好看。。。隐藏了吧-_-）。
+        //<div className="CarouselContainer container-fluid">
+        //    <Carousel onClick={this._handleCarouselClick} indexes={this.state.topStoryIndexes} />
+        //</div>
+
         var page =
             <div className="DailyPage container-fluid">
-                <div className="CarouselContainer container-fluid">
-                    <Carousel onClick={this._handleCarouselClick} indexes={this.state.topStoryIndexes} />
-                </div>
                 <div className="FlexContainer container-fluid">
                     <FlexView onTileClick={this._handleTileClick} indexes={this.state.storyIndexes} />
                 </div>
