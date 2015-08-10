@@ -12,17 +12,20 @@ var Carousel = require("./components/Carousel");
 var FlexView = require("./components/FlexView");
 var ArticleView = require("./components/ArticleView");
 
-var $ArticleView = null;
-var $ArticleViewContent = null;
-
 /**
  * 知乎日报页面。
  */
 var DailyPage = React.createClass(
 {
-    mixins: [PureRenderMixin],
+    _currentLoadedDate: null,
+    _currentIndex: -1,
+    _isLoading: false,
+    _isArticleViewVisible: false,
 
-    _earliestDate: null,
+    _$ArticleView: null,
+    _$ArticleViewContent: null,
+
+    mixins: [PureRenderMixin],
 
     getInitialState()
     {
@@ -35,127 +38,185 @@ var DailyPage = React.createClass(
 
     componentDidMount: function ()
     {
-        var that = this;
-        $ArticleView = $("#ArticleView");
-        $ArticleViewContent = $("#ArticleView .modal-content");
+        // 1、初始化。
+        this._$ArticleView = $("#ArticleView");
+        this._$ArticleViewContent = $("#ArticleView .modal-content");
 
-        // 1、加载热门日报。
-        DailyManager.getTopStoryIndexes(function (data)
-        {
-            if (that.isMounted() && data)
-            {
-                that.setState(
-                {
-                    topStoryIndexes: data.indexes
-                });
-            }
-        });
+        // 2、加载热门日报。
+        this._loadTopStories();
 
-        // 2、加载最新日报（初始化时仅加载今日、昨日的日报）。
-        DailyManager.getStoryIndexes(function (data)
-        {
-            if (that.isMounted() && data)
-            {
-                that._addStoryIndexes(that, data.indexes);
-                that._earliestDate = data.date;
-                DailyManager.getStoryIndexes(function (data)
-                {
-                    if (data)
-                    {
-                        that._addStoryIndexes(that, data.indexes);
-                        that._earliestDate = data.date;
-                    }
-                }, Utils.prevZhihuDay(DailyManager.getToday()));
-            }
-        });
+        // 3、加载最新日报。
+        this._loadOtherStories();
 
-        // 3、事件处理。
-        $ArticleView.on("hide.bs.modal", function (e)
-        {
-            that._resetArticleViewScroll();
-        });
-        $(document).on("keydown", that._globalKeydownHandler);
-        $(document).on("scroll", that._scrollHandler);
+        // 4、事件处理。
+        this._addEventHandler();
     },
 
     componentWillUnmount: function ()
     {
         // 1、事件处理。
-        $ArticleView.off("hide.bs.modal");
+        this._removeEventHandler();
+    },
+    
+    /**
+    * 加载热门日报（Carousel）。
+    */
+    _loadTopStories: function ()
+    {
+        DailyManager.getTopStoryIndexes(function (p_data)
+        {
+            if (this.isMounted() && p_data)
+            {
+                this.setState(
+                {
+                    topStoryIndexes: p_data.indexes
+                });
+            }
+        }.bind(this));
+    },
+
+    /**
+    * 加载最新日报（默认仅加载今日、昨日的日报）（FlexView）。
+    */
+    _loadOtherStories: function ()
+    {
+        DailyManager.getStoryIndexes(function (p_data)
+        {
+            if (this.isMounted() && p_data)
+            {
+                this._currentLoadedDate = p_data.date;
+                this._addStoryIndexes(p_data.indexes);
+                this._loadPrevStories();
+            }
+        }.bind(this));
+    },
+
+    /**
+    * 加载前一天的日报（相对当前已加载日报的日期）。
+    */
+    _loadPrevStories: function (p_callback)
+    {
+        DailyManager.getStoryIndexes(function (p_data)
+        {
+            if (p_data)
+            {
+                this._currentLoadedDate = p_data.date;
+                this._addStoryIndexes(p_data.indexes);
+            }
+
+            if(_.isFunction(p_callback))
+            {
+                p_callback();
+            }
+        }.bind(this), Utils.prevZhihuDay(this._currentLoadedDate));
+    },
+
+    /**
+    * 订购事件。
+    */
+    _addEventHandler: function()
+    {
+        this._$ArticleView.on("hide.bs.modal", function (e)
+        {
+            this._resetArticleViewScroll();
+        }.bind(this));
+
+        this._$ArticleView.on("hidden.bs.modal", function (e)
+        {
+            this._isArticleViewVisible = false;
+        }.bind(this));
+
+        this._$ArticleView.on("shown.bs.modal", function (e)
+        {
+            this._isArticleViewVisible = true;
+            this._$ArticleViewContent.focus();
+        }.bind(this));
+
+        $(document).on("keydown", this._globalKeydownHandler);
+        $(document).on("scroll", this._scrollHandler);
+    },
+
+    /**
+    * 退购事件。
+    */
+    _removeEventHandler: function()
+    {
+        this._$ArticleView.off("hide.bs.modal");
         $(document).off("keydown");
         $(document).off("scroll");
     },
-    
+
     /**
     * 处理全局按键事件。
     */
     _globalKeydownHandler: function (e)
     {
-        var code = e.which;
+        const code = e.which;
         if(code == 27)
         {
             // ESC：关闭 ArticleView。
-            if($ArticleView.is(":visible"))
-            {
-                $ArticleView.modal("hide");
-            }
+            this._closeArticleView();
         }
         else if(code == 74)
         {
-            // J：切换 ArticleView 到下一个日报。
-            if($ArticleView.is(":visible"))
+            // J：ArticleView 显示下一个日报。
+            if(this._isArticleViewVisible)
             {
-                var index = _.indexOf(this.state.storyIndexes, this.state.currentStory.id) + 1;
+                var index = this._currentIndex + 1;
                 if(index < this.state.storyIndexes.length)
                 {
-                    this.setState({
-                        currentStory: DailyManager.getStories()[this.state.storyIndexes[index]]
-                    }, function()
+                    if(!this._isLoading)
                     {
-                        this._resetArticleViewScroll();
-                    });
+                        this._loadArticle(DailyManager.getFetchedStories()[this.state.storyIndexes[index]], function()
+                        {
+                            this._currentIndex++;
+                            this._resetArticleViewScroll();
+                        });
+                    }
+                }
+                else
+                {
+                    if(!this._isLoading)
+                    {
+                        this._isLoading = true;
+                        this._loadPrevStories(function()
+                        {
+                            this._isLoading = false;
+                        }.bind(this));
+                    }
                 }
             }
         }
         else if(code == 75)
         {
-            // K：切换 ArticleView 到上一个日报。
-            if($ArticleView.is(":visible"))
+            // K：ArticleView 显示上一个日报。
+            if(this._isArticleViewVisible)
             {
-                var index = _.indexOf(this.state.storyIndexes, this.state.currentStory.id) - 1;
+                var index = this._currentIndex - 1;
                 if(index >= 0)
                 {
-                    this.setState({
-                        currentStory: DailyManager.getStories()[this.state.storyIndexes[index]]
-                    }, function()
+                    this._loadArticle(DailyManager.getFetchedStories()[this.state.storyIndexes[index]], function()
                     {
+                        this._currentIndex--;
                         this._resetArticleViewScroll();
                     });
                 }
             }
         }
     },
-    
-    _loading: false,
 
     /**
     * 监控垂直滚动条位置，动态加载内容。
     */
     _scrollHandler: function (e)
     {
-        var that = this;
-        if(!that._loading && ($(document).scrollTop() >= $(document).height()-$(window).height() - 375))
+        if(!this._isLoading && ($(document).scrollTop() >= $(document).height()-$(window).height() - 375))
         {
-            that._loading = true;
-            DailyManager.getStoryIndexes(function (data)
+            this._isLoading = true;
+            this._loadPrevStories(function()
             {
-                if (data)
-                {
-                    that._addStoryIndexes(that, data.indexes);
-                    that._earliestDate = data.date;
-                }
-                that._loading = false;
-            }, Utils.prevZhihuDay(that._earliestDate));
+                this._isLoading = false;
+            }.bind(this));
         }
     },
 
@@ -164,44 +225,86 @@ var DailyPage = React.createClass(
     */
     _resetArticleViewScroll: function ()
     {
-        $ArticleViewContent.scrollTop(0);
+        this._$ArticleViewContent.scrollTop(0);
     },
 
     /**
-    * 增量加载制定的日报。
+    * 增量加载指定的日报。
     */
-    _addStoryIndexes: function (p_this, p_indexes)
+    _addStoryIndexes: function (p_indexes)
     {
-        p_this.setState(
+        this.setState(
         {
-            storyIndexes: ReactUpdate(p_this.state.storyIndexes,
+            storyIndexes: ReactUpdate(this.state.storyIndexes,
             {
                 $push: p_indexes
             })
         });
     },
 
-    handleCarouselClick: function (e)
+    _handleCarouselClick: function (e)
     {
-        if(e.id)
+        this._showArticle(DailyManager.getFetchedStories()[e.id]);
+    },
+
+    _handleTileClick: function (e)
+    {
+        this._showArticle(e.story);
+    },
+
+    /**
+    * 打开 ArticleView 并加载指定的日报。
+    */
+    _showArticle: function (p_story)
+    {
+        this._loadArticle(p_story, function()
+        {
+            this._currentIndex = this._getStoryIndexById(p_story.id);
+            this._openArticleView();
+        });
+    },
+
+    /**
+    * 向 ArticleView 中加载指定的日报（仅改变内容，不改变显示状态，允许在回调中进行控制）。
+    */
+    _loadArticle: function (p_story, p_callback)
+    {
+        if(p_story)
         {
             this.setState({
-                currentStory: DailyManager.getStories()[e.id]
-            }, function()
-            {
-                $ArticleView.modal();
-            });
+                currentStory: p_story
+            }, p_callback);
         }
     },
-    
-    handleTileClick: function (e)
+
+    /**
+    * 获取指定唯一标识的日报的索引。
+    */
+    _getStoryIndexById: function (p_id)
     {
-        this.setState({
-            currentStory: e.story
-        }, function()
+        return _.indexOf(this.state.storyIndexes, p_id);
+    },
+
+    /**
+    * 打开 ArticleView。
+    */
+    _openArticleView: function ()
+    {
+        if(!this._isArticleViewVisible)
         {
-            $ArticleView.modal();
-        });
+            this._$ArticleView.modal();
+        }
+    },
+
+    /**
+    * 关闭 ArticleView。
+    */
+    _closeArticleView: function ()
+    {
+        if(this._isArticleViewVisible)
+        {
+            this._$ArticleView.modal("hide");
+        }
     },
 
     render: function ()
@@ -209,10 +312,10 @@ var DailyPage = React.createClass(
         var page =
             <div className="DailyPage container-fluid">
                 <div className="CarouselContainer container-fluid">
-                    <Carousel onClick={this.handleCarouselClick} indexes={this.state.topStoryIndexes} />
+                    <Carousel onClick={this._handleCarouselClick} indexes={this.state.topStoryIndexes} />
                 </div>
                 <div className="FlexContainer container-fluid">
-                    <FlexView onTileClick={this.handleTileClick} indexes={this.state.storyIndexes} />
+                    <FlexView onTileClick={this._handleTileClick} indexes={this.state.storyIndexes} />
                 </div>
                 <ArticleView story={this.state.currentStory}/>
             </div>;
