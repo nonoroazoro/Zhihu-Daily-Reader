@@ -100,11 +100,11 @@ var ArticleBody = React.createClass(
             // 1、标题。
             if(!_.isEmpty(item.title))
             {
-                innerRows.push(<h3 className="question-title">{item.title}</h3>);
+                innerRows.push(<h3 className="question-title" key={"question-title"+i}>{item.title}</h3>);
             }
 
             // 2、答案。
-            var answers = _.map(item.answers, function(value, i)
+            var answers = _.map(item.answers, function(value, j)
             {
                 // 没有作者图片时隐藏。
                 var classesAvatar = classNames(
@@ -115,7 +115,7 @@ var ArticleBody = React.createClass(
                 );
 
                 return (
-                    <div className="question-answer">
+                    <div className="question-answer" key={"question-answer-"+i+"-"+j}>
                         <div className="question-answer-meta">
                             <img className={classesAvatar} src={value.avatar} />
                             <span className="author">{value.name}</span>
@@ -129,20 +129,21 @@ var ArticleBody = React.createClass(
 
             // 3、外链。
             innerRows.push(
-                <div className="view-more">
+                <div className="view-more" key={"view-more"+i}>
                     <a href={item.link.href} target="_blank"><b>{item.link.text}</b></a>
                 </div>
             );
 
             questions.push(
-                <div className="question">
+                <div className="question" key={"question"+i}>
                     {innerRows}
                 </div>
             );
 
+            // 分隔符。
             if (i < length -1)
             {
-                questions.push(<hr className="question-separator"/>);
+                questions.push(<hr className="question-separator" key={"question-separator"+i}/>);
             }
         }
 
