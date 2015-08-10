@@ -22,6 +22,8 @@ var DailyPage = React.createClass(
 {
     mixins: [PureRenderMixin],
 
+    _earliestDate: null,
+
     getInitialState()
     {
         return {
@@ -55,11 +57,13 @@ var DailyPage = React.createClass(
             if (that.isMounted() && data)
             {
                 that._addStoryIndexes(that, data.indexes);
+                that._earliestDate = data.date;
                 DailyManager.getStoryIndexes(function (data)
                 {
                     if (data)
                     {
                         that._addStoryIndexes(that, data.indexes);
+                        that._earliestDate = data.date;
                     }
                 }, Utils.prevZhihuDay(DailyManager.getToday()));
             }
@@ -71,6 +75,7 @@ var DailyPage = React.createClass(
             that._resetArticleViewScroll();
         });
         $(document).on("keydown", that._globalKeydownHandler);
+        $(document).on("scroll", that._scrollHandler);
     },
 
     componentWillUnmount: function ()
@@ -78,6 +83,7 @@ var DailyPage = React.createClass(
         // 1、事件处理。
         $ArticleView.off("hide.bs.modal");
         $(document).off("keydown");
+        $(document).off("scroll");
     },
     
     /**
@@ -127,6 +133,29 @@ var DailyPage = React.createClass(
                     });
                 }
             }
+        }
+    },
+    
+    _loading: false,
+
+    /**
+    * 监控垂直滚动条位置，动态加载内容。
+    */
+    _scrollHandler: function (e)
+    {
+        var that = this;
+        if(!that._loading && ($(document).scrollTop() >= $(document).height()-$(window).height() - 375))
+        {
+            that._loading = true;
+            DailyManager.getStoryIndexes(function (data)
+            {
+                if (data)
+                {
+                    that._addStoryIndexes(that, data.indexes);
+                    that._earliestDate = data.date;
+                }
+                that._loading = false;
+            }, Utils.prevZhihuDay(that._earliestDate));
         }
     },
 
