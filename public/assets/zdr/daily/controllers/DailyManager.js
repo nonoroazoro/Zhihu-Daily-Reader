@@ -4,21 +4,11 @@ var $ = require("jquery");
 var _stories = {};
 
 /**
- * 获取目前已加载的所有日报内容的缓存（以 Id 进行检索，无序，请勿用 index 检索）。
+ * 获取目前已从服务端获取到的所有日报内容的缓存（以日报 id 进行检索，无序，请勿用 index 检索）。
  */
-function getStories()
+function getFetchedStories()
 {
     return _stories;
-}
-
-var _today = null;
-
-/**
- * 获取知乎日报当前日期，例如"20170727"。
- */
-function getToday()
-{
-    return _today;
 }
 
 /**
@@ -26,31 +16,23 @@ function getToday()
  */
 function getTopStoryIndexes(callback)
 {
-    $.get("/api/4/news/top", function (data)
+    $.get("/api/4/news/top", function (p_data)
     {
-        if (!_.isEqual(_today, data.date))
-        {
-            _today = data.date;
-        }
-        callback(data);
+        callback(p_data);
     });
 }
 
 /**
  * 获取指定日期的日报的索引。
- * @param String p_date 指定的日期。如果小于 20130519，返回值为 {}。
+ * @param String p_date 指定的日期。如果未指定，则返回最新日报的索引；如果小于 20130519，则返回 {}。
  */
 function getStoryIndexes(callback, p_date)
 {
-    if (_.isEmpty(_today))
+    if (_.isEmpty(p_date))
     {
-        $.get("/api/4/news/before", function (data)
+        $.get("/api/4/news/before", function (p_data)
         {
-            if (!_.isEqual(_today, data.date))
-            {
-                _today = data.date;
-            }
-            callback(data);
+            callback(p_data);
         });
     }
     else
@@ -65,10 +47,10 @@ function getStoryIndexes(callback, p_date)
  */
 function getStory(callback, p_id)
 {
-    $.get("/api/4/news/" + p_id, function (data)
+    $.get("/api/4/news/" + p_id, function (p_data)
     {
-        _stories[p_id] = data;
-        callback(data);
+        _stories[p_id] = p_data;
+        callback(p_data);
     });
 }
 
@@ -76,5 +58,4 @@ module.exports.getTopStoryIndexes = getTopStoryIndexes;
 module.exports.getStoryIndexes = getStoryIndexes;
 module.exports.getStory = getStory;
 
-module.exports.getStories = getStories;
-module.exports.getToday = getToday;
+module.exports.getFetchedStories = getFetchedStories;
