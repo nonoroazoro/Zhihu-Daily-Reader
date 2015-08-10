@@ -42,8 +42,8 @@ var DailyPage = React.createClass(
         this._$ArticleView = $("#ArticleView");
         this._$ArticleViewContent = $("#ArticleView .modal-content");
 
-        // 2、加载热门日报。
-        this._loadTopStories();
+        // 2、加载热门日报（不好看。。。隐藏了吧-_-）。
+        //this._loadTopStories();
 
         // 3、加载最新日报。
         this._loadOtherStories();
