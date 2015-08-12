@@ -170,7 +170,7 @@ var DailyPage = React.createClass(
                     {
                         this._loadArticle(story, function()
                         {
-                            this._currentIndex++;
+                            this._addCurrentIndex();
                             this._resetArticleViewScroll();
                         });
                     }
@@ -204,7 +204,7 @@ var DailyPage = React.createClass(
                 {
                     this._loadArticle(story, function()
                     {
-                        this._currentIndex--;
+                        this._minusCurrentIndex();
                         this._resetArticleViewScroll();
                     });
                 }
@@ -212,6 +212,30 @@ var DailyPage = React.createClass(
                 {
                     this._showArticle(story);
                 }
+            }
+        }
+        else if(code == 13 || code == 79)
+        {
+            // Enter、O：打开选中的日报。
+            if(!this._isArticleViewVisible)
+            {
+                this._showArticle(DailyManager.getFetchedStories()[this.state.storyIndexes[this._currentIndex]]);
+            }
+        }
+        else if(code == 37)
+        {
+            // 左方向：切换到上一个日报。
+            if(!this._isArticleViewVisible)
+            {
+                this._minusCurrentIndex();
+            }
+        }
+        else if(code == 39)
+        {
+            // 有方向：切换到下一个日报。
+            if(!this._isArticleViewVisible)
+            {
+                this._addCurrentIndex();
             }
         }
         else if(code == 86)
@@ -280,7 +304,7 @@ var DailyPage = React.createClass(
     {
         this._loadArticle(p_story, function()
         {
-            this._currentIndex = this._getStoryIndexById(p_story.id);
+            this._setCurrentIndex(this._getStoryIndexById(p_story.id));
             this._openArticleView();
         });
     },
@@ -326,6 +350,55 @@ var DailyPage = React.createClass(
         {
             this._$ArticleView.modal("hide");
         }
+    },
+
+    /**
+    * 当前日报索引增加1。
+    */
+    _addCurrentIndex: function ()
+    {
+        if(this._currentIndex + 1 < this.state.storyIndexes.length)
+        {
+            this._setCurrentIndex(this._currentIndex + 1);
+        }
+    },
+
+    /**
+    * 当前日报索引减少1。
+    */
+    _minusCurrentIndex: function ()
+    {
+        if(this._currentIndex > 0)
+        {
+            this._setCurrentIndex(this._currentIndex - 1);
+        }
+    },
+
+    /**
+    * 设置日报索引。
+    */
+    _setCurrentIndex: function (p_index)
+    {
+        var e = {oldIndex: this._currentIndex, newIndex: p_index};
+        this._currentIndex = p_index;
+        this._currentIndexChangedHandler(e);
+    },
+
+    _currentIndexChangedHandler: function (e)
+    {
+        this._updateCurrentTile(e.oldIndex, e.newIndex);
+    },
+
+    /**
+    * 更新当前 FlexTile 样式。
+    */
+    _updateCurrentTile: function (p_oldIndex, p_newIndex)
+    {
+        if(p_oldIndex >= 0)
+        {
+            $("#story" + this.state.storyIndexes[p_oldIndex]).removeClass("current");
+        }
+        $("#story" + this.state.storyIndexes[p_newIndex]).addClass("current");
     },
 
     render: function ()
