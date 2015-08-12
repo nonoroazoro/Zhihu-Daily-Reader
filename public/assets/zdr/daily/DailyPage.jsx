@@ -398,7 +398,20 @@ var DailyPage = React.createClass(
         {
             $("#story" + this.state.storyIndexes[p_oldIndex]).removeClass("current");
         }
-        $("#story" + this.state.storyIndexes[p_newIndex]).addClass("current");
+
+        var $newTile = $("#story" + this.state.storyIndexes[p_newIndex]);
+        $newTile.addClass("current");
+
+        // 判断是否需要移动滚动跳的位置，以使内容可见。
+        // 71 是 body 的 padding-top 与 FlexTile 的 margin-top 之和（即 51 + 20）。
+        var newTop = $newTile.offset().top - 71;
+        var moveDown = newTop + $newTile.outerHeight(true) - $(document).scrollTop() > $(window).height();
+        var moveUp = newTop < $(document).scrollTop();
+        if(moveDown || moveUp)
+        {
+            // 此处用 animate 的话，存在问题，按住按键不放会出问题。
+            $(document).scrollTop(newTop);
+        }
     },
 
     render: function ()
