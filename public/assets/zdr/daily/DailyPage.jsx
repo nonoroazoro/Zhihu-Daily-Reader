@@ -151,7 +151,7 @@ var DailyPage = React.createClass(
     */
     _globalKeydownHandler: function (e)
     {
-        const code = e.which;
+        var code = e.which;
         if(code == 27)
         {
             // ESC：关闭 ArticleView。
@@ -159,48 +159,69 @@ var DailyPage = React.createClass(
         }
         else if(code == 74)
         {
-            // J：ArticleView 显示下一个日报。
-            if(this._isArticleViewVisible)
+            // J：ArticleView 显示下一个日报（如果当前未打开 ArticleView 则自动打开）。
+            var index = this._currentIndex + 1;
+            if(index < this.state.storyIndexes.length)
             {
-                var index = this._currentIndex + 1;
-                if(index < this.state.storyIndexes.length)
+                if(!this._isLoading)
                 {
-                    if(!this._isLoading)
+                    var story = DailyManager.getFetchedStories()[this.state.storyIndexes[index]];
+                    if(this._isArticleViewVisible)
                     {
-                        this._loadArticle(DailyManager.getFetchedStories()[this.state.storyIndexes[index]], function()
+                        this._loadArticle(story, function()
                         {
                             this._currentIndex++;
                             this._resetArticleViewScroll();
                         });
                     }
-                }
-                else
-                {
-                    if(!this._isLoading)
+                    else
                     {
-                        this._isLoading = true;
-                        this._loadPrevStories(function()
-                        {
-                            this._isLoading = false;
-                        }.bind(this));
+                        this._showArticle(story);
                     }
+                }
+            }
+            else
+            {
+                // 自动加载前一天日报。
+                if(!this._isLoading)
+                {
+                    this._isLoading = true;
+                    this._loadPrevStories(function()
+                    {
+                        this._isLoading = false;
+                    }.bind(this));
                 }
             }
         }
         else if(code == 75)
         {
-            // K：ArticleView 显示上一个日报。
-            if(this._isArticleViewVisible)
+            // K：ArticleView 显示上一个日报（如果当前未打开 ArticleView 则自动打开）。
+            var index = this._currentIndex - 1;
+            if(index >= 0)
             {
-                var index = this._currentIndex - 1;
-                if(index >= 0)
+                var story = DailyManager.getFetchedStories()[this.state.storyIndexes[index]];
+                if(this._isArticleViewVisible)
                 {
-                    this._loadArticle(DailyManager.getFetchedStories()[this.state.storyIndexes[index]], function()
+                    this._loadArticle(story, function()
                     {
                         this._currentIndex--;
                         this._resetArticleViewScroll();
                     });
                 }
+                else
+                {
+                    this._showArticle(story);
+                }
+            }
+        }
+        else if(code == 86)
+        {
+            // V：打开原始链接。
+            if(this._isArticleViewVisible)
+            {
+            }
+            else
+            {
             }
         }
     },
