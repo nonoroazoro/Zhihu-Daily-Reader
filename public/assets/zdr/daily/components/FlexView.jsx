@@ -51,7 +51,7 @@ var FlexTile = React.createClass(
         {
             // 如果没有 img 要作处理，否则不好看。
             item =
-                <div className="flex-tile" data-target={story.id}>
+                <div id={"story"+story.id} className="flex-tile">
                     <div className="flex-tile-content">
                         <div className="flex-tile-picture" style={{backgroundImage: "url(" + story.image + ")"}} onClick={this.handleClick} />
                         <div className="flex-tile-title">
