@@ -423,10 +423,8 @@ var DailyPage = React.createClass(
 
         var page =
             <div className="DailyPage container-fluid">
-                <div className="FlexContainer container-fluid">
-                    <FlexView onTileClick={this._handleTileClick} indexes={this.state.storyIndexes} />
-                </div>
-                <ArticleView story={this.state.currentStory}/>
+                <FlexView onTileClick={this._handleTileClick} indexes={this.state.storyIndexes} />
+                <ArticleView story={this.state.currentStory} />
             </div>;
         return page;
     }
