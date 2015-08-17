@@ -651,9 +651,7 @@
 	
 	        var page =
 	            React.createElement("div", {className: "DailyPage container-fluid"}, 
-	                React.createElement("div", {className: "FlexContainer container-fluid"}, 
-	                    React.createElement(FlexView, {onTileClick: this._handleTileClick, indexes: this.state.storyIndexes})
-	                ), 
+	                React.createElement(FlexView, {onTileClick: this._handleTileClick, indexes: this.state.storyIndexes}), 
 	                React.createElement(ArticleView, {story: this.state.currentStory})
 	            );
 	        return page;
@@ -1062,9 +1060,11 @@
 	__webpack_require__(/*! ./res/FlexView.less */ 26);
 	
 	var _ = __webpack_require__(/*! lodash */ 19);
+	var classNames = __webpack_require__(/*! classnames */ 24);
 	var React = __webpack_require__(/*! react */ 9);
 	var PureRenderMixin = React.addons.PureRenderMixin;
 	var DailyManager = __webpack_require__(/*! ../controllers/DailyManager */ 18);
+	var Preloader = __webpack_require__(/*! ./Preloader */ 31);
 	
 	var FlexTile = React.createClass(
 	{displayName: "FlexTile",
@@ -1147,9 +1147,19 @@
 	            return (React.createElement(FlexTile, {onClick: that.props.onTileClick, key: "tile" + value, id: value}));
 	        });
 	
+	        var preloaderClasses = classNames(
+	            "flex-preloader",
+	            {
+	                "hide": !this.props.loading,
+	            }
+	        );
+	
 	        return (
 	            React.createElement("div", {className: "FlexView"}, 
-	                items
+	                React.createElement("div", {className: "flex-content"}, 
+	                    items
+	                ), 
+	                React.createElement(Preloader, {className: preloaderClasses})
 	            )
 	        );
 	    }
@@ -1372,6 +1382,60 @@
 /*!***********************************************!*\
   !*** ./daily/components/res/ArticleView.less ***!
   \***********************************************/
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+
+/***/ },
+/* 30 */,
+/* 31 */
+/*!****************************************!*\
+  !*** ./daily/components/Preloader.jsx ***!
+  \****************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(/*! ./res/Preloader.less */ 32);
+	
+	var _ = __webpack_require__(/*! lodash */ 19);
+	var React = __webpack_require__(/*! react */ 9);
+	var classNames = __webpack_require__(/*! classnames */ 24);
+	
+	var Preloader = React.createClass(
+	{displayName: "Preloader",
+	    getDefaultProps: function ()
+	    {
+	        return {
+	            className: null
+	        };
+	    },
+	
+	    render: function ()
+	    {
+	        var classes = "Preloader";
+	        if(!_.isEmpty(this.props.className))
+	        {
+	            classes = classes + " " + this.props.className
+	        }
+	        
+	        return (
+	            React.createElement("div", {className: classes}, 
+	                React.createElement("span", {className: "wave1"}), 
+	                React.createElement("span", {className: "wave2"}), 
+	                React.createElement("span", {className: "wave3"}), 
+	                React.createElement("span", {className: "wave4"}), 
+	                React.createElement("span", {className: "wave5"})
+	            )
+	        );
+	    }
+	});
+	
+	module.exports = Preloader;
+
+/***/ },
+/* 32 */
+/*!*********************************************!*\
+  !*** ./daily/components/res/Preloader.less ***!
+  \*********************************************/
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
