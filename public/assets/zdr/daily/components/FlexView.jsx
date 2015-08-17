@@ -1,9 +1,11 @@
 ﻿require("./res/FlexView.less");
 
 var _ = require("lodash");
+var classNames = require("classnames");
 var React = require("react");
 var PureRenderMixin = React.addons.PureRenderMixin;
 var DailyManager = require("../controllers/DailyManager");
+var Preloader = require("./Preloader");
 
 var FlexTile = React.createClass(
 {
@@ -86,9 +88,19 @@ var FlexView = React.createClass(
             return (<FlexTile onClick={that.props.onTileClick} key={"tile" + value} id={value} />);
         });
 
+        var preloaderClasses = classNames(
+            "flex-preloader",
+            {
+                "hide": !this.props.loading,
+            }
+        );
+
         return (
             <div className="FlexView">
-                {items}
+                <div className="flex-content">
+                    {items}
+                </div>
+                <Preloader className={preloaderClasses} />
             </div>
         );
     }
