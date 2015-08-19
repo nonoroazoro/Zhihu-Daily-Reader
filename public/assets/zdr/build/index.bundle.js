@@ -398,59 +398,12 @@
 	        else if(code == 74)
 	        {
 	            // J：ArticleView 显示下一个日报（如果当前未打开 ArticleView 则自动打开）。
-	            var index = this._currentIndex + 1;
-	            if(index < this.state.storyIndexes.length)
-	            {
-	                if(!this._isLoading)
-	                {
-	                    var story = DailyManager.getFetchedStories()[this.state.storyIndexes[index]];
-	                    if(this._isArticleViewVisible)
-	                    {
-	                        this._loadArticle(story, function()
-	                        {
-	                            this._addCurrentIndex();
-	                            this._resetArticleViewScroll();
-	                        });
-	                    }
-	                    else
-	                    {
-	                        this._showArticle(story);
-	                    }
-	                }
-	            }
-	            else
-	            {
-	                // 自动加载前一天日报。
-	                if(!this._isLoading)
-	                {
-	                    this._isLoading = true;
-	                    this._loadPrevStories(function()
-	                    {
-	                        this._isLoading = false;
-	                    }.bind(this));
-	                }
-	            }
+	            this._keydownShowNextStory();
 	        }
 	        else if(code == 75)
 	        {
 	            // K：ArticleView 显示上一个日报（如果当前未打开 ArticleView 则自动打开）。
-	            var index = this._currentIndex - 1;
-	            if(index >= 0)
-	            {
-	                var story = DailyManager.getFetchedStories()[this.state.storyIndexes[index]];
-	                if(this._isArticleViewVisible)
-	                {
-	                    this._loadArticle(story, function()
-	                    {
-	                        this._minusCurrentIndex();
-	                        this._resetArticleViewScroll();
-	                    });
-	                }
-	                else
-	                {
-	                    this._showArticle(story);
-	                }
-	            }
+	            this._keydownShowPrevStory();
 	        }
 	        else if(code == 13 || code == 79)
 	        {
@@ -463,15 +416,23 @@
 	        else if(code == 37)
 	        {
 	            // 左方向：切换到上一个日报。
-	            if(!this._isArticleViewVisible)
+	            if(this._isArticleViewVisible)
+	            {
+	                this._keydownShowPrevStory();
+	            }
+	            else
 	            {
 	                this._minusCurrentIndex();
 	            }
 	        }
 	        else if(code == 39)
 	        {
-	            // 有方向：切换到下一个日报。
-	            if(!this._isArticleViewVisible)
+	            // 右方向：切换到下一个日报。
+	            if(this._isArticleViewVisible)
+	            {
+	                this._keydownShowNextStory();
+	            }
+	            else
 	            {
 	                this._addCurrentIndex();
 	            }
@@ -484,6 +445,69 @@
 	            }
 	            else
 	            {
+	            }
+	        }
+	    },
+	
+	    /**
+	    * ArticleView 显示下一个日报（如果当前未打开 ArticleView 则自动打开）。
+	    */
+	    _keydownShowNextStory: function ()
+	    {
+	        var index = this._currentIndex + 1;
+	        if(index < this.state.storyIndexes.length)
+	        {
+	            if(!this._isLoading)
+	            {
+	                var story = DailyManager.getFetchedStories()[this.state.storyIndexes[index]];
+	                if(this._isArticleViewVisible)
+	                {
+	                    this._loadArticle(story, function()
+	                    {
+	                        this._addCurrentIndex();
+	                        this._resetArticleViewScroll();
+	                    });
+	                }
+	                else
+	                {
+	                    this._showArticle(story);
+	                }
+	            }
+	        }
+	        else
+	        {
+	            // 自动加载前一天日报。
+	            if(!this._isLoading)
+	            {
+	                this._isLoading = true;
+	                this._loadPrevStories(function()
+	                {
+	                    this._isLoading = false;
+	                }.bind(this));
+	            }
+	        }
+	    },
+	
+	    /**
+	    * ArticleView 显示上一个日报（如果当前未打开 ArticleView 则自动打开）。
+	    */
+	    _keydownShowPrevStory: function ()
+	    {
+	        var index = this._currentIndex - 1;
+	        if(index >= 0)
+	        {
+	            var story = DailyManager.getFetchedStories()[this.state.storyIndexes[index]];
+	            if(this._isArticleViewVisible)
+	            {
+	                this._loadArticle(story, function()
+	                {
+	                    this._minusCurrentIndex();
+	                    this._resetArticleViewScroll();
+	                });
+	            }
+	            else
+	            {
+	                this._showArticle(story);
 	            }
 	        }
 	    },
