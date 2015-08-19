@@ -19,6 +19,9 @@ function getTopStoryIndexes(callback)
     $.get("/api/4/news/top", function (p_data)
     {
         callback(p_data);
+    }).fail(function ()
+    {
+        callback({ error: "error" });
     });
 }
 
@@ -33,11 +36,17 @@ function getStoryIndexes(callback, p_date)
         $.get("/api/4/news/before", function (p_data)
         {
             callback(p_data);
+        }).fail(function ()
+        {
+            callback({ error: "error" });
         });
     }
     else
     {
-        $.get("/api/4/news/before/" + p_date, callback);
+        $.get("/api/4/news/before/" + p_date, callback).fail(function ()
+        {
+            callback({ error: "error" });
+        });
     }
 }
 
@@ -51,6 +60,9 @@ function getStory(callback, p_id)
     {
         _stories[p_id] = p_data;
         callback(p_data);
+    }).fail(function ()
+    {
+        callback({ error: "error" });
     });
 }
 

@@ -66,7 +66,7 @@ var DailyPage = React.createClass(
     {
         DailyManager.getTopStoryIndexes(function (p_data)
         {
-            if (this.isMounted() && p_data)
+            if (this.isMounted() && p_data && !p_data.error)
             {
                 this.setState(
                 {
@@ -83,7 +83,7 @@ var DailyPage = React.createClass(
     {
         DailyManager.getStoryIndexes(function (p_data)
         {
-            if (this.isMounted() && p_data)
+            if (this.isMounted() && p_data && !p_data.error)
             {
                 this._currentLoadedDate = p_data.date;
                 this._addStoryIndexes(p_data.indexes);
@@ -103,15 +103,15 @@ var DailyPage = React.createClass(
         {
             DailyManager.getStoryIndexes(function (p_data)
             {
-                if (p_data)
+                if (p_data && !p_data.error)
                 {
                     this._currentLoadedDate = p_data.date;
                     this._addStoryIndexes(p_data.indexes);
                 }
             
                 this.setState({
-                    loading: false}
-                );
+                    loading: false
+                });
 
                 if(_.isFunction(p_callback))
                 {
