@@ -97,6 +97,12 @@
     <Content Include="public\assets\libs\bootstrap\less\utilities.less" />
     <Content Include="public\assets\libs\bootstrap\less\variables.less" />
     <Content Include="public\assets\libs\bootstrap\less\wells.less" />
+    <Content Include="public\assets\zdr\build\error_404.bundle.css" />
+    <Content Include="public\assets\zdr\build\error_404.bundle.css.map" />
+    <Content Include="public\assets\zdr\build\error_404.bundle.js.map" />
+    <Content Include="public\assets\zdr\build\index.bundle.css" />
+    <Content Include="public\assets\zdr\build\index.bundle.css.map" />
+    <Content Include="public\assets\zdr\build\index.bundle.js.map" />
     <Content Include="public\assets\zdr\common\res\errors.less" />
     <Content Include="public\assets\zdr\common\res\global.less" />
     <Content Include="public\assets\libs\jquery\jquery.min.map" />
@@ -127,6 +133,8 @@
     <Compile Include="public\assets\libs\moment\moment.min.js" />
     <Compile Include="public\assets\libs\react\react-with-addons.js" />
     <Compile Include="public\assets\libs\react\react-with-addons.min.js" />
+    <Compile Include="public\assets\zdr\build\error_404.bundle.js" />
+    <Compile Include="public\assets\zdr\build\index.bundle.js" />
     <Compile Include="public\assets\zdr\daily\controllers\DailyManager.js" />
     <Compile Include="public\assets\zdr\daily\controllers\Utils.js" />
     <Compile Include="public\assets\zdr\webpack.config.js" />
@@ -161,6 +169,7 @@
     <Folder Include="public\assets\libs\bootstrap\less\mixins\" />
     <Folder Include="public\assets\libs\lodash\" />
     <Folder Include="public\assets\libs\moment\" />
+    <Folder Include="public\assets\zdr\build\" />
     <Folder Include="public\assets\zdr\common\res\img\" />
     <Folder Include="public\assets\zdr\common\res\" />
     <Folder Include="public\assets\libs\" />
