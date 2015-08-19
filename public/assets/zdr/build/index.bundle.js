@@ -238,7 +238,7 @@
 	
 	var Carousel = __webpack_require__(/*! ./components/Carousel */ 21);
 	var FlexView = __webpack_require__(/*! ./components/FlexView */ 25);
-	var ArticleView = __webpack_require__(/*! ./components/ArticleView */ 28);
+	var ArticleView = __webpack_require__(/*! ./components/ArticleView */ 31);
 	
 	/**
 	 * 知乎日报页面。
@@ -260,7 +260,8 @@
 	        return {
 	            topStoryIndexes: [],
 	            storyIndexes: [],
-	            currentStory: null
+	            currentStory: null,
+	            loading: false
 	        };
 	    },
 	
@@ -324,19 +325,28 @@
 	    */
 	    _loadPrevStories: function (p_callback)
 	    {
-	        DailyManager.getStoryIndexes(function (p_data)
+	        this.setState({
+	            loading: true
+	        }, function ()
 	        {
-	            if (p_data)
+	            DailyManager.getStoryIndexes(function (p_data)
 	            {
-	                this._currentLoadedDate = p_data.date;
-	                this._addStoryIndexes(p_data.indexes);
-	            }
+	                if (p_data)
+	                {
+	                    this._currentLoadedDate = p_data.date;
+	                    this._addStoryIndexes(p_data.indexes);
+	                }
+	            
+	                this.setState({
+	                    loading: false}
+	                );
 	
-	            if(_.isFunction(p_callback))
-	            {
-	                p_callback();
-	            }
-	        }.bind(this), Utils.prevZhihuDay(this._currentLoadedDate));
+	                if(_.isFunction(p_callback))
+	                {
+	                    p_callback();
+	                }
+	            }.bind(this), Utils.prevZhihuDay(this._currentLoadedDate));
+	        });
 	    },
 	
 	    /**
@@ -483,7 +493,7 @@
 	    */
 	    _scrollHandler: function (e)
 	    {
-	        if(!this._isLoading && ($(document).scrollTop() >= $(document).height()-$(window).height() - 375))
+	        if(!this._isLoading && ($(document).scrollTop() >= $(document).height()-$(window).height()))
 	        {
 	            this._isLoading = true;
 	            this._loadPrevStories(function()
@@ -651,7 +661,7 @@
 	
 	        var page =
 	            React.createElement("div", {className: "DailyPage container-fluid"}, 
-	                React.createElement(FlexView, {onTileClick: this._handleTileClick, indexes: this.state.storyIndexes}), 
+	                React.createElement(FlexView, {onTileClick: this._handleTileClick, indexes: this.state.storyIndexes, loading: this.state.loading}), 
 	                React.createElement(ArticleView, {story: this.state.currentStory})
 	            );
 	        return page;
@@ -1064,7 +1074,7 @@
 	var React = __webpack_require__(/*! react */ 9);
 	var PureRenderMixin = React.addons.PureRenderMixin;
 	var DailyManager = __webpack_require__(/*! ../controllers/DailyManager */ 18);
-	var Preloader = __webpack_require__(/*! ./Preloader */ 31);
+	var Preloader = __webpack_require__(/*! ./Preloader */ 28);
 	
 	var FlexTile = React.createClass(
 	{displayName: "FlexTile",
@@ -1150,7 +1160,7 @@
 	        var preloaderClasses = classNames(
 	            "flex-preloader",
 	            {
-	                "hide": !this.props.loading,
+	                "loading": this.props.loading,
 	            }
 	        );
 	
@@ -1179,12 +1189,66 @@
 /***/ },
 /* 27 */,
 /* 28 */
+/*!****************************************!*\
+  !*** ./daily/components/Preloader.jsx ***!
+  \****************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(/*! ./res/Preloader.less */ 29);
+	
+	var _ = __webpack_require__(/*! lodash */ 19);
+	var React = __webpack_require__(/*! react */ 9);
+	var classNames = __webpack_require__(/*! classnames */ 24);
+	
+	var Preloader = React.createClass(
+	{displayName: "Preloader",
+	    getDefaultProps: function ()
+	    {
+	        return {
+	            className: null
+	        };
+	    },
+	
+	    render: function ()
+	    {
+	        var classes = "Preloader";
+	        if(!_.isEmpty(this.props.className))
+	        {
+	            classes = classes + " " + this.props.className
+	        }
+	        
+	        return (
+	            React.createElement("div", {className: classes}, 
+	                React.createElement("span", {className: "wave1"}), 
+	                React.createElement("span", {className: "wave2"}), 
+	                React.createElement("span", {className: "wave3"}), 
+	                React.createElement("span", {className: "wave4"}), 
+	                React.createElement("span", {className: "wave5"})
+	            )
+	        );
+	    }
+	});
+	
+	module.exports = Preloader;
+
+/***/ },
+/* 29 */
+/*!*********************************************!*\
+  !*** ./daily/components/res/Preloader.less ***!
+  \*********************************************/
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+
+/***/ },
+/* 30 */,
+/* 31 */
 /*!******************************************!*\
   !*** ./daily/components/ArticleView.jsx ***!
   \******************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(/*! ./res/ArticleView.less */ 29);
+	__webpack_require__(/*! ./res/ArticleView.less */ 32);
 	
 	var $ = __webpack_require__(/*! jquery */ 6);
 	var _ = __webpack_require__(/*! lodash */ 19);
@@ -1378,64 +1442,10 @@
 	module.exports = ArticleView;
 
 /***/ },
-/* 29 */
+/* 32 */
 /*!***********************************************!*\
   !*** ./daily/components/res/ArticleView.less ***!
   \***********************************************/
-/***/ function(module, exports) {
-
-	// removed by extract-text-webpack-plugin
-
-/***/ },
-/* 30 */,
-/* 31 */
-/*!****************************************!*\
-  !*** ./daily/components/Preloader.jsx ***!
-  \****************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	__webpack_require__(/*! ./res/Preloader.less */ 32);
-	
-	var _ = __webpack_require__(/*! lodash */ 19);
-	var React = __webpack_require__(/*! react */ 9);
-	var classNames = __webpack_require__(/*! classnames */ 24);
-	
-	var Preloader = React.createClass(
-	{displayName: "Preloader",
-	    getDefaultProps: function ()
-	    {
-	        return {
-	            className: null
-	        };
-	    },
-	
-	    render: function ()
-	    {
-	        var classes = "Preloader";
-	        if(!_.isEmpty(this.props.className))
-	        {
-	            classes = classes + " " + this.props.className
-	        }
-	        
-	        return (
-	            React.createElement("div", {className: classes}, 
-	                React.createElement("span", {className: "wave1"}), 
-	                React.createElement("span", {className: "wave2"}), 
-	                React.createElement("span", {className: "wave3"}), 
-	                React.createElement("span", {className: "wave4"}), 
-	                React.createElement("span", {className: "wave5"})
-	            )
-	        );
-	    }
-	});
-	
-	module.exports = Preloader;
-
-/***/ },
-/* 32 */
-/*!*********************************************!*\
-  !*** ./daily/components/res/Preloader.less ***!
-  \*********************************************/
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
