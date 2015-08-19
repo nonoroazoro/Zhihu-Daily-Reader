@@ -321,12 +321,12 @@ var DailyPage = React.createClass(
         });
     },
 
-    _handleCarouselClick: function (e)
+    _carouselClickHandler: function (e)
     {
         this._showArticle(DailyManager.getFetchedStories()[e.id]);
     },
 
-    _handleTileClick: function (e)
+    _tileClickHandler: function (e)
     {
         this._showArticle(e.story);
     },
@@ -452,12 +452,12 @@ var DailyPage = React.createClass(
     {
         // 幻灯片（不好看。。。隐藏了吧-_-）。
         //<div className="CarouselContainer container-fluid">
-        //    <Carousel onClick={this._handleCarouselClick} indexes={this.state.topStoryIndexes} />
+        //    <Carousel onClick={this._carouselClickHandler} indexes={this.state.topStoryIndexes} />
         //</div>
 
         var page =
             <div className="DailyPage container-fluid">
-                <FlexView onTileClick={this._handleTileClick} indexes={this.state.storyIndexes} loading={this.state.loading}/>
+                <FlexView onTileClick={this._tileClickHandler} indexes={this.state.storyIndexes} loading={this.state.loading}/>
                 <ArticleView story={this.state.currentStory} />
             </div>;
         return page;
