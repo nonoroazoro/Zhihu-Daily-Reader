@@ -32,7 +32,8 @@ var DailyPage = React.createClass(
         return {
             topStoryIndexes: [],
             storyIndexes: [],
-            currentStory: null
+            currentStory: null,
+            loading: false
         };
     },
 
@@ -96,19 +97,28 @@ var DailyPage = React.createClass(
     */
     _loadPrevStories: function (p_callback)
     {
-        DailyManager.getStoryIndexes(function (p_data)
+        this.setState({
+            loading: true
+        }, function ()
         {
-            if (p_data)
+            DailyManager.getStoryIndexes(function (p_data)
             {
-                this._currentLoadedDate = p_data.date;
-                this._addStoryIndexes(p_data.indexes);
-            }
+                if (p_data)
+                {
+                    this._currentLoadedDate = p_data.date;
+                    this._addStoryIndexes(p_data.indexes);
+                }
+            
+                this.setState({
+                    loading: false}
+                );
 
-            if(_.isFunction(p_callback))
-            {
-                p_callback();
-            }
-        }.bind(this), Utils.prevZhihuDay(this._currentLoadedDate));
+                if(_.isFunction(p_callback))
+                {
+                    p_callback();
+                }
+            }.bind(this), Utils.prevZhihuDay(this._currentLoadedDate));
+        });
     },
 
     /**
@@ -255,7 +265,7 @@ var DailyPage = React.createClass(
     */
     _scrollHandler: function (e)
     {
-        if(!this._isLoading && ($(document).scrollTop() >= $(document).height()-$(window).height() - 375))
+        if(!this._isLoading && ($(document).scrollTop() >= $(document).height()-$(window).height()))
         {
             this._isLoading = true;
             this._loadPrevStories(function()
@@ -423,7 +433,7 @@ var DailyPage = React.createClass(
 
         var page =
             <div className="DailyPage container-fluid">
-                <FlexView onTileClick={this._handleTileClick} indexes={this.state.storyIndexes} />
+                <FlexView onTileClick={this._handleTileClick} indexes={this.state.storyIndexes} loading={this.state.loading}/>
                 <ArticleView story={this.state.currentStory} />
             </div>;
         return page;

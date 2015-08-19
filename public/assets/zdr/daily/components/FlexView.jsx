@@ -91,7 +91,7 @@ var FlexView = React.createClass(
         var preloaderClasses = classNames(
             "flex-preloader",
             {
-                "hide": !this.props.loading,
+                "loading": this.props.loading,
             }
         );
 
