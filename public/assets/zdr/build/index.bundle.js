@@ -294,7 +294,7 @@
 	    {
 	        DailyManager.getTopStoryIndexes(function (p_data)
 	        {
-	            if (this.isMounted() && p_data)
+	            if (this.isMounted() && p_data && !p_data.error)
 	            {
 	                this.setState(
 	                {
@@ -311,7 +311,7 @@
 	    {
 	        DailyManager.getStoryIndexes(function (p_data)
 	        {
-	            if (this.isMounted() && p_data)
+	            if (this.isMounted() && p_data && !p_data.error)
 	            {
 	                this._currentLoadedDate = p_data.date;
 	                this._addStoryIndexes(p_data.indexes);
@@ -331,15 +331,15 @@
 	        {
 	            DailyManager.getStoryIndexes(function (p_data)
 	            {
-	                if (p_data)
+	                if (p_data && !p_data.error)
 	                {
 	                    this._currentLoadedDate = p_data.date;
 	                    this._addStoryIndexes(p_data.indexes);
 	                }
 	            
 	                this.setState({
-	                    loading: false}
-	                );
+	                    loading: false
+	                });
 	
 	                if(_.isFunction(p_callback))
 	                {
@@ -717,6 +717,9 @@
 	    $.get("/api/4/news/top", function (p_data)
 	    {
 	        callback(p_data);
+	    }).fail(function ()
+	    {
+	        callback({ error: "error" });
 	    });
 	}
 	
@@ -731,11 +734,17 @@
 	        $.get("/api/4/news/before", function (p_data)
 	        {
 	            callback(p_data);
+	        }).fail(function ()
+	        {
+	            callback({ error: "error" });
 	        });
 	    }
 	    else
 	    {
-	        $.get("/api/4/news/before/" + p_date, callback);
+	        $.get("/api/4/news/before/" + p_date, callback).fail(function ()
+	        {
+	            callback({ error: "error" });
+	        });
 	    }
 	}
 	
@@ -749,6 +758,9 @@
 	    {
 	        _stories[p_id] = p_data;
 	        callback(p_data);
+	    }).fail(function ()
+	    {
+	        callback({ error: "error" });
 	    });
 	}
 	
