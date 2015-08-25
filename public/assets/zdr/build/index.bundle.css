@@ -373,13 +373,14 @@ body.modal-open .Navbar {
   line-height: 1.6;
   word-wrap: break-word;
 }
-.ArticleView .ArticleBody .question .question-answer .question-answer-content p:first-letter {
-  margin-left: 4rem;
+.ArticleView .ArticleBody .question .question-answer .question-answer-content p {
+  margin-bottom: 20px;
 }
 .ArticleView .ArticleBody .question .question-answer .question-answer-content img {
   display: block;
   margin-left: auto;
   margin-right: auto;
+  max-width: 100%;
 }
 .ArticleView .ArticleBody .question .view-more {
   text-align: right;
