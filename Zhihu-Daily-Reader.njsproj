@@ -18,6 +18,7 @@
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
   <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
   <ItemGroup>
+    <Content Include="config\mongodb.conf" />
     <Content Include="package.json" />
     <Content Include="public\assets\libs\bootstrap\css\bootstrap-theme.css" />
     <Content Include="public\assets\libs\bootstrap\css\bootstrap-theme.css.map" />
@@ -161,6 +162,8 @@
     <Folder Include="bin" />
     <Folder Include="libs\" />
     <Folder Include="libs\zdr\" />
+    <Folder Include="config\" />
+    <Folder Include="db\" />
     <Folder Include="public" />
     <Folder Include="public\assets" />
     <Folder Include="public\assets\libs\bootstrap\fonts\" />
