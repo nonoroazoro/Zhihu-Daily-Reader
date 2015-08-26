@@ -128,6 +128,7 @@
     <Compile Include="app.js" />
     <Compile Include="bin\www.js" />
     <Compile Include="libs\zdr\crawler.js" />
+    <Compile Include="libs\zdr\store.js" />
     <Compile Include="public\assets\libs\lodash\lodash.js" />
     <Compile Include="public\assets\libs\lodash\lodash.min.js" />
     <Compile Include="public\assets\libs\moment\moment.js" />
