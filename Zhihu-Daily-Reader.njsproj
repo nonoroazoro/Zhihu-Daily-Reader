@@ -163,7 +163,6 @@
     <Folder Include="libs\" />
     <Folder Include="libs\zdr\" />
     <Folder Include="config\" />
-    <Folder Include="db\" />
     <Folder Include="public" />
     <Folder Include="public\assets" />
     <Folder Include="public\assets\libs\bootstrap\fonts\" />
