@@ -7,6 +7,7 @@
 *.suo
 *.tmp
 *.user
+*.log
 
 node_modules/
 obj/
