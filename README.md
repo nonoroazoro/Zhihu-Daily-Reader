@@ -21,7 +21,7 @@
     $ cd Zhihu-Daily-Reader && npm install
 
     # start server
-    $ npm run start
+    $ npm run startapp
 
     # open zhihu-daily-reader via http://localhost:3000/ or http://127.0.0.1:3000/
 
