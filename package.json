@@ -18,10 +18,10 @@
     "reader"
   ],
   "scripts": {
-    "startapp": "node ./bin/www.js",
+    "start": "node ./bin/www.js",
     "startdb": "mongod --config ./config/mongodb.conf",
-    "watch": "cd public/assets/zdr && webpack -d --watch",
-    "build": "cd public/assets/zdr && webpack -p"
+    "watch": "webpack -d --watch",
+    "build": "webpack -p"
   },
   "dependencies": {
     "body-parser": "^1.13.2",
