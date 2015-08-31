@@ -19,7 +19,7 @@
   ],
   "scripts": {
     "start": "node ./bin/www.js",
-    "startdb": "mongod --config ./config/mongodb.conf",
+    "startdb": "mongod --dbpath ./db",
     "watch": "webpack -d --watch",
     "build": "webpack -p"
   },
