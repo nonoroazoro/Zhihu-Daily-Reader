@@ -22,7 +22,7 @@ function getLatestStoryIndexes(p_res)
             {
                 return item.id;
             });
-
+            
             p_res.set(response.headers);
             p_res.json({
                 date: body.date,
@@ -53,7 +53,7 @@ function getTopStoryIndexes(p_res)
                     image: PREFIX + querystring.escape(item.image)
                 };
             });
-
+            
             p_res.set(response.headers);
             p_res.json({
                 date: body.date,
@@ -87,7 +87,7 @@ function getStoryIndexes(p_date, p_res)
                 {
                     return item.id;
                 });
-
+                
                 p_res.set(response.headers);
                 p_res.json({
                     date: body.date,
@@ -125,7 +125,7 @@ function getStory(p_id, p_res)
                 result.image = PREFIX + querystring.escape(body.image);
                 result.imageSource = body.image_source;
                 result.shareURL = body.share_url;
-
+                
                 if (body.body)
                 {
                     var $ = cheerio.load(body.body, { decodeEntities: false });
@@ -137,7 +137,7 @@ function getStory(p_id, p_res)
                             text : $(e).children(".heading-content").text()
                         };
                     }).get();
-
+                    
                     result.contents = $(".content-inner>.question").map(function (i, e)
                     {
                         var question = {};
@@ -152,7 +152,7 @@ function getStory(p_id, p_res)
                                     $(e).attr("src", PREFIX + querystring.escape(src));
                                 }
                             });
-
+                            
                             var avatar = $(e).find(".meta>.avatar").attr("src");
                             if (avatar != null && avatar != "")
                             {
@@ -162,7 +162,7 @@ function getStory(p_id, p_res)
                             {
                                 avatar = "";
                             }
-
+                            
                             return {
                                 avatar : avatar,
                                 name: $(e).find(".meta>.author").text(),
@@ -170,17 +170,20 @@ function getStory(p_id, p_res)
                                 content : $(e).children(".content").html()
                             };
                         }).get();
-
+                        
                         var a = $(e).find(".view-more>a");
-                        question.link = {
-                            href : a.attr("href"),
-                            text : a.text(),
-                        };
-
+                        if (a.length > 0)
+                        {
+                            question.link = {
+                                href : a.attr("href"),
+                                text : a.text(),
+                            };
+                        }
+                        
                         return question;
                     }).get();
                 }
-
+                
                 p_res.set(response.headers);
                 p_res.json(result);
             }
