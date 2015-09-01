@@ -164,8 +164,8 @@
 	                 className: "navbar-collapse collapse"}, 
 	                React.createElement("ul", {className: "nav navbar-nav navbar-right"}, 
 	                    React.createElement("li", {className: "active"}, React.createElement("a", {href: "#"}, "日报")), 
-	                    React.createElement("li", null, React.createElement("a", {href: "#"}, "专栏")), 
-	                    React.createElement("li", null, React.createElement("a", {href: "#"}, "关于"))
+	                    React.createElement("li", {className: "disabled"}, React.createElement("a", {href: "#"}, "专栏")), 
+	                    React.createElement("li", {className: "disabled"}, React.createElement("a", {href: "#"}, "关于"))
 	                )
 	            );
 	        return navbarContent;

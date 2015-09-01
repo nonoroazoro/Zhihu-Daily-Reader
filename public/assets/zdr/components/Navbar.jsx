@@ -54,8 +54,8 @@ var NavbarContent = React.createClass(
                  className="navbar-collapse collapse">
                 <ul className="nav navbar-nav navbar-right">
                     <li className="active"><a href="#">日报</a></li>
-                    <li><a href="#">专栏</a></li>
-                    <li><a href="#">关于</a></li>
+                    <li className="disabled"><a href="#">专栏</a></li>
+                    <li className="disabled"><a href="#">关于</a></li>
                 </ul>
             </div>;
         return navbarContent;
