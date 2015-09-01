@@ -128,11 +128,14 @@ var ArticleBody = React.createClass(
             Array.prototype.push.apply(innerRows, answers);
 
             // 3、外链。
-            innerRows.push(
-                <div className="view-more" key={"view-more"+i}>
-                    <a href={item.link.href} target="_blank"><b>{item.link.text}</b></a>
-                </div>
-            );
+            if(item.link)
+            {
+                innerRows.push(
+                    <div className="view-more" key={"view-more"+i}>
+                        <a href={item.link.href} target="_blank"><b>{item.link.text}</b></a>
+                    </div>
+                );
+            }
 
             questions.push(
                 <div className="question" key={"question"+i}>
