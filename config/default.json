@@ -1,0 +1,4 @@
+﻿{
+    "db": "mongodb://localhost:27017/zhihu",
+    "port": 3000
+}

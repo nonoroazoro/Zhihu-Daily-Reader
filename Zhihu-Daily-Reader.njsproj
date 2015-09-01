@@ -21,7 +21,9 @@
     <Compile Include="public\assets\zdr\build\error_404.bundle.js" />
     <Compile Include="public\assets\zdr\build\index.bundle.js" />
     <Compile Include="webpack.config.js" />
-    <Content Include="config\mongodb.conf" />
+    <Content Include="config\default.json" />
+    <Content Include="config\development.json" />
+    <Content Include="config\production.json" />
     <Content Include="package.json" />
     <Content Include="public\assets\libs\bootstrap\css\bootstrap-theme.css" />
     <Content Include="public\assets\libs\bootstrap\css\bootstrap-theme.css.map" />
