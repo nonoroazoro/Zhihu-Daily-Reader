@@ -81,15 +81,24 @@ var DailyPage = React.createClass(
     */
     _loadOtherStories: function ()
     {
-        DailyManager.getStoryIndexes(function (p_data)
+        this.setState({
+            loading: true
+        }, function ()
         {
-            if (this.isMounted() && p_data && !p_data.error)
+            DailyManager.getStoryIndexes(function (p_data)
             {
-                this._currentLoadedDate = p_data.date;
-                this._addStoryIndexes(p_data.indexes);
-                this._loadPrevStories();
-            }
-        }.bind(this));
+                if (this.isMounted() && p_data && !p_data.error)
+                {
+                    this._currentLoadedDate = p_data.date;
+                    this._addStoryIndexes(p_data.indexes);
+                    this._loadPrevStories();
+                }
+
+                this.setState({
+                    loading: false
+                });
+            }.bind(this));
+        });
     },
 
     /**
