@@ -24,6 +24,9 @@
     # start server
     $ npm run start
 
+    # or (for Windows)
+    $ start.bat
+
     # open zhihu-daily-reader via http://localhost:3000/ or http://127.0.0.1:3000/
 
 ## 更新历史

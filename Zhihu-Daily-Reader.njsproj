@@ -18,6 +18,8 @@
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
   <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
   <ItemGroup>
+    <Compile Include="public\assets\zdr\build\error_404.bundle.js" />
+    <Compile Include="public\assets\zdr\build\index.bundle.js" />
     <Compile Include="webpack.config.js" />
     <Content Include="config\mongodb.conf" />
     <Content Include="package.json" />
@@ -124,6 +126,7 @@
     <Content Include="public\assets\zdr\daily\components\res\FlexView.less" />
     <Content Include="public\assets\zdr\components\res\Navbar.less" />
     <Content Include="README.md" />
+    <Content Include="start.bat" />
     <Content Include="views\error_404.jade" />
     <Content Include="Zhihu-Daily-API.md" />
     <Compile Include="app.js" />
@@ -136,8 +139,6 @@
     <Compile Include="public\assets\libs\moment\moment.min.js" />
     <Compile Include="public\assets\libs\react\react-with-addons.js" />
     <Compile Include="public\assets\libs\react\react-with-addons.min.js" />
-    <Compile Include="public\assets\zdr\build\error_404.bundle.js" />
-    <Compile Include="public\assets\zdr\build\index.bundle.js" />
     <Compile Include="public\assets\zdr\daily\controllers\DailyManager.js" />
     <Compile Include="public\assets\zdr\daily\controllers\Utils.js" />
     <Compile Include="public\assets\zdr\common\error_404.jsx" />
