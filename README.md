@@ -21,13 +21,13 @@
     # install dependencies
     $ cd Zhihu-Daily-Reader && npm install
 
+    # method 1:
     # start server
     $ npm run start
-
-    # or (for Windows)
-    $ start.bat
-
     # open zhihu-daily-reader via http://localhost:3000/ or http://127.0.0.1:3000/
+
+    # method 2 (only for windows):
+    $ start.bat
 
 ## 更新历史
 
