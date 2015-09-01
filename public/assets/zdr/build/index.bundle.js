@@ -445,6 +445,10 @@
 	                // V：打开原始链接。
 	                if(this._isArticleViewVisible)
 	                {
+	                    $(".view-more a").map(function(p_index, p_object)
+	                    {
+	                        p_object.click();
+	                    });
 	                }
 	                else
 	                {
@@ -1418,11 +1422,14 @@
 	            Array.prototype.push.apply(innerRows, answers);
 	
 	            // 3、外链。
-	            innerRows.push(
-	                React.createElement("div", {className: "view-more", key: "view-more"+i}, 
-	                    React.createElement("a", {href: item.link.href, target: "_blank"}, React.createElement("b", null, item.link.text))
-	                )
-	            );
+	            if(item.link)
+	            {
+	                innerRows.push(
+	                    React.createElement("div", {className: "view-more", key: "view-more"+i}, 
+	                        React.createElement("a", {href: item.link.href, target: "_blank"}, React.createElement("b", null, item.link.text))
+	                    )
+	                );
+	            }
 	
 	            questions.push(
 	                React.createElement("div", {className: "question", key: "question"+i}, 
