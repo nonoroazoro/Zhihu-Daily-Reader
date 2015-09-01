@@ -1,7 +1,8 @@
 # 知乎日 - 报阅读器
 
 知乎日报官方不提供 Web 版，你妹的，那就做一个吧。
-> 快捷键类似 Google Reader，`j/k/v` 什么你懂的。
+> 快捷键：类似 Google Reader，`j/k/v` 什么你懂的。
+> 支持：`Firefox/Chrome/IE11`。没测 `Opera`，应该可以。
 
 ## 申明
 
