@@ -34,7 +34,7 @@
     # method 1:
     # start server
     $ npm run start
-    # open zhihu-daily-reader via http://localhost:3000/ or http://127.0.0.1:3000/
+    # visit http://localhost
 
     # method 2 (only for windows):
     $ start.bat
