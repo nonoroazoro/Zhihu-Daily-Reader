@@ -390,61 +390,65 @@
 	    _globalKeydownHandler: function (e)
 	    {
 	        var code = e.which;
-	        if(code == 27)
+	        var extraKey = e.altKey || e.ctrlKey || e.shiftKey || e.metaKey;
+	        if(!extraKey)
 	        {
-	            // ESC：关闭 ArticleView。
-	            this._closeArticleView();
-	        }
-	        else if(code == 74)
-	        {
-	            // J：ArticleView 显示下一个日报（如果当前未打开 ArticleView 则自动打开）。
-	            this._keydownShowNextStory();
-	        }
-	        else if(code == 75)
-	        {
-	            // K：ArticleView 显示上一个日报（如果当前未打开 ArticleView 则自动打开）。
-	            this._keydownShowPrevStory();
-	        }
-	        else if(code == 13 || code == 79)
-	        {
-	            // Enter、O：打开选中的日报。
-	            if(!this._isArticleViewVisible)
+	            if(code == 27)
 	            {
-	                this._showArticle(DailyManager.getFetchedStories()[this.state.storyIndexes[this._currentIndex]]);
+	                // ESC：关闭 ArticleView。
+	                this._closeArticleView();
 	            }
-	        }
-	        else if(code == 37)
-	        {
-	            // 左方向：切换到上一个日报。
-	            if(this._isArticleViewVisible)
+	            else if(code == 74)
 	            {
-	                this._keydownShowPrevStory();
-	            }
-	            else
-	            {
-	                this._minusCurrentIndex();
-	            }
-	        }
-	        else if(code == 39)
-	        {
-	            // 右方向：切换到下一个日报。
-	            if(this._isArticleViewVisible)
-	            {
+	                // J：ArticleView 显示下一个日报（如果当前未打开 ArticleView 则自动打开）。
 	                this._keydownShowNextStory();
 	            }
-	            else
+	            else if(code == 75)
 	            {
-	                this._addCurrentIndex();
+	                // K：ArticleView 显示上一个日报（如果当前未打开 ArticleView 则自动打开）。
+	                this._keydownShowPrevStory();
 	            }
-	        }
-	        else if(code == 86)
-	        {
-	            // V：打开原始链接。
-	            if(this._isArticleViewVisible)
+	            else if(code == 13 || code == 79)
 	            {
+	                // Enter、O：打开选中的日报。
+	                if(!this._isArticleViewVisible)
+	                {
+	                    this._showArticle(DailyManager.getFetchedStories()[this.state.storyIndexes[this._currentIndex]]);
+	                }
 	            }
-	            else
+	            else if(code == 37)
 	            {
+	                // 左方向：切换到上一个日报。
+	                if(this._isArticleViewVisible)
+	                {
+	                    this._keydownShowPrevStory();
+	                }
+	                else
+	                {
+	                    this._minusCurrentIndex();
+	                }
+	            }
+	            else if(code == 39)
+	            {
+	                // 右方向：切换到下一个日报。
+	                if(this._isArticleViewVisible)
+	                {
+	                    this._keydownShowNextStory();
+	                }
+	                else
+	                {
+	                    this._addCurrentIndex();
+	                }
+	            }
+	            else if(code == 86)
+	            {
+	                // V：打开原始链接。
+	                if(this._isArticleViewVisible)
+	                {
+	                }
+	                else
+	                {
+	                }
 	            }
 	        }
 	    },
