@@ -217,6 +217,10 @@ var DailyPage = React.createClass(
                 // V：打开原始链接。
                 if(this._isArticleViewVisible)
                 {
+                    $(".view-more a").map(function(p_index, p_object)
+                    {
+                        p_object.click();
+                    });
                 }
                 else
                 {
