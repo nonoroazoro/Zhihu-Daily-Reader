@@ -17,27 +17,37 @@
 
 ## 截图
 
-- 主界面：
+- **主界面**：
 ![主界面](./screenshots/1.jpg?raw=true "主界面")
 
-- 阅读界面：
+- **阅读界面**：
 ![阅读界面](./screenshots/2.jpg?raw=true "阅读界面")
 
 ## 用法
 
-    # clone from git
-    $ git clone https://github.com/nonoroazoro/Zhihu-Daily-Reader.git
+**1.clone from git:**
 
-    # install dependencies
-    $ cd Zhihu-Daily-Reader && npm install
+	$ git clone https://github.com/nonoroazoro/Zhihu-Daily-Reader.git
 
-    # method 1:
-    # start server
-    $ npm run start
-    # visit http://localhost
+**2.install dependencies:**
 
-    # method 2 (only for windows):
-    $ start.bat
+	$ cd Zhihu-Daily-Reader && npm install
+
+**3.start app:**
+
+- *windows:*
+
+		# method 1:
+		$ npm run start
+		# visit http://localhost
+
+		# method 2:
+		$ start.bat
+
+- *linux&mac:*
+
+		$ npm run startx
+		# visit http://localhost
 
 ## 更新历史
 
