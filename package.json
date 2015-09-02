@@ -18,7 +18,8 @@
     "reader"
   ],
   "scripts": {
-    "start": "SET NODE_ENV=production&&node ./bin/www",
+    "start": "set NODE_ENV=production&&node ./bin/www",
+    "startX": "export NODE_ENV=production&&node ./bin/www",
     "startdb": "mongod --dbpath ./db",
     "watch": "webpack -d --watch",
     "build": "webpack -p"
