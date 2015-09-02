@@ -15,15 +15,9 @@
 - **前端**：`React`
 - **打包**：`Webpack`
 
-## 截图
-
-- **主界面**：
-![主界面](./screenshots/1.jpg?raw=true "主界面")
-
-- **阅读界面**：
-![阅读界面](./screenshots/2.jpg?raw=true "阅读界面")
-
 ## 用法
+
+***注：**服务器端口默认`80`，可在 `./config/production.json` 中自行修改。*
 
 **1.clone from git:**
 
@@ -56,3 +50,11 @@
 2015年8月14日
 
 - 初版，包含知乎日报基本阅读功能。
+
+## 截图
+
+- **主界面**：
+![主界面](./screenshots/1.jpg?raw=true "主界面")
+
+- **阅读界面**：
+![阅读界面](./screenshots/2.jpg?raw=true "阅读界面")
