@@ -17,7 +17,7 @@
 
 ## 用法
 
-***注：**服务器端口默认`80`，可在 `./config/production.json` 中自行修改。*
+*注：服务器端口默认`80`，可在 `./config/production.json` 中自行修改。*
 
 **1.clone from git:**
 
