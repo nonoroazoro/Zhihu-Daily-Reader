@@ -25,7 +25,7 @@
 
 **2.install dependencies:**
 
-	$ cd Zhihu-Daily-Reader && npm install
+	$ cd Zhihu-Daily-Reader && npm install --production
 
 **3.start app:**
 
