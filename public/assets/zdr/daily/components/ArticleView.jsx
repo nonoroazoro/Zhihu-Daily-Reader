@@ -1,6 +1,5 @@
 ﻿require("./res/ArticleView.less");
 
-var $ = require("jquery");
 var _ = require("lodash");
 var classNames = require("classnames");
 var React = require("react");
