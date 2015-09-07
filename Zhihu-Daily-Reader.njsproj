@@ -104,11 +104,7 @@
     <Content Include="public\assets\libs\bootstrap\less\variables.less" />
     <Content Include="public\assets\libs\bootstrap\less\wells.less" />
     <Content Include="public\assets\zdr\build\error_404.bundle.css" />
-    <Content Include="public\assets\zdr\build\error_404.bundle.css.map" />
-    <Content Include="public\assets\zdr\build\error_404.bundle.js.map" />
     <Content Include="public\assets\zdr\build\index.bundle.css" />
-    <Content Include="public\assets\zdr\build\index.bundle.css.map" />
-    <Content Include="public\assets\zdr\build\index.bundle.js.map" />
     <Content Include="public\assets\zdr\common\res\errors.less" />
     <Content Include="public\assets\zdr\common\res\global.less" />
     <Content Include="public\assets\libs\jquery\jquery.min.map" />
