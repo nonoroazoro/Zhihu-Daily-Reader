@@ -38,7 +38,7 @@
 		# method 2:
 		$ start.bat
 
-- *linux&mac (NOT TESTED):*
+- *linux&mac (Only Tested in Cygwin):*
 
 		$ npm run startx
 		# visit http://localhost
