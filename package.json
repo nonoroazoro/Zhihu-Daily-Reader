@@ -19,7 +19,7 @@
   ],
   "scripts": {
     "start": "set NODE_ENV=production&&node ./bin/www",
-    "startx": "export NODE_ENV=production&&node ./bin/www",
+    "startx": "env NODE_ENV=production&&node ./bin/www",
     "startdb": "mongod --dbpath ./db",
     "watch": "webpack -d --watch",
     "build": "webpack -p"

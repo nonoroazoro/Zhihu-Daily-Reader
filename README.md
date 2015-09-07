@@ -32,13 +32,13 @@
 - *windows:*
 
 		# method 1:
-		$ npm run start
+		$ npm start
 		# visit http://localhost
 
 		# method 2:
 		$ start.bat
 
-- *linux&mac:*
+- *linux&mac (NOT TESTED):*
 
 		$ npm run startx
 		# visit http://localhost
