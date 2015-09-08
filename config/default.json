@@ -1,7 +1,8 @@
 ﻿{
-    // mongodb 配置
-    "db": "mongodb://127.0.0.1/zhihu",
+    "port": 3000,
 
-    // 程序运行的端口
-    "port": 3000
+    // mongodb config
+    "db": "mongodb://127.0.0.1/zhihu",
+    "poolSize": 10,
+    "autoReconnect": true
 }
