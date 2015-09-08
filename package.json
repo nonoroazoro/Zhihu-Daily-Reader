@@ -44,6 +44,7 @@
     "jsx-loader": "^0.13.2",
     "less": "^2.5.1",
     "less-loader": "^2.2.0",
+    "mocha": "2.3.2",
     "node-libs-browser": "^0.5.2",
     "style-loader": "^0.12.3",
     "url-loader": "^0.5.6",
