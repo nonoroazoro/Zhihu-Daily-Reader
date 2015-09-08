@@ -199,6 +199,7 @@
     <Folder Include="routes\api" />
     <Folder Include="routes\api\4\" />
     <Folder Include="routes\api\4\news\" />
+    <Folder Include="test\" />
     <Folder Include="views" />
     <Folder Include="views\templates" />
   </ItemGroup>
