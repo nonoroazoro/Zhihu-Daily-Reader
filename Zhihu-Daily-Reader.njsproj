@@ -18,6 +18,8 @@
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
   <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
   <ItemGroup>
+    <Compile Include="models\index.js" />
+    <Compile Include="models\story.js" />
     <Compile Include="public\assets\zdr\build\error_404.bundle.js" />
     <Compile Include="public\assets\zdr\build\index.bundle.js" />
     <Compile Include="webpack.config.js" />
@@ -165,6 +167,7 @@
     <Folder Include="libs\" />
     <Folder Include="libs\zdr\" />
     <Folder Include="config\" />
+    <Folder Include="models\" />
     <Folder Include="screenshots\" />
     <Folder Include="public" />
     <Folder Include="public\assets" />
