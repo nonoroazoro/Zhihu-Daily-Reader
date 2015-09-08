@@ -12,7 +12,11 @@ mongoose.connect(config.db, options, function (err)
 {
     if (err)
     {
-        console.error("Failed connecting to %s: ", config.db, err.message);
+        console.error("Database Server not started, some features will be shut down.");
+    }
+    else
+    {
+        console.error("Database Server connected: Mongodb");
     }
 });
 
