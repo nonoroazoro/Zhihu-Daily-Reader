@@ -22,6 +22,7 @@
     <Compile Include="models\story.js" />
     <Compile Include="public\assets\zdr\build\error_404.bundle.js" />
     <Compile Include="public\assets\zdr\build\index.bundle.js" />
+    <Compile Include="test\models\index.test.js" />
     <Compile Include="webpack.config.js" />
     <Content Include="config\default.json" />
     <Content Include="config\development.json" />
@@ -129,6 +130,7 @@
     <Content Include="screenshots\1.jpg" />
     <Content Include="screenshots\2.jpg" />
     <Content Include="start.bat" />
+    <Content Include="test\mocha.opts" />
     <Content Include="views\error_404.jade" />
     <Content Include="Zhihu-Daily-API.md" />
     <Compile Include="app.js" />
@@ -200,6 +202,7 @@
     <Folder Include="routes\api\4\" />
     <Folder Include="routes\api\4\news\" />
     <Folder Include="test\" />
+    <Folder Include="test\models\" />
     <Folder Include="views" />
     <Folder Include="views\templates" />
   </ItemGroup>
