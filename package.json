@@ -21,8 +21,9 @@
     "start": "set NODE_ENV=production&&node ./bin/www",
     "startx": "env NODE_ENV=production&&node ./bin/www",
     "startdb": "mongod --dbpath ./db",
-    "watch": "webpack -d --watch",
-    "build": "webpack -p"
+    "watch": "node_modules/.bin/webpack -d --watch",
+    "build": "node_modules/.bin/webpack -p",
+    "test": "node_modules/.bin/mocha -w"
   },
   "dependencies": {
     "body-parser": "^1.13.2",
