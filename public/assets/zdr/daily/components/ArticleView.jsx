@@ -33,7 +33,7 @@ var ArticleHeader = React.createClass(
         );
 
         var rows = [];
-        var titileRow =
+        var titleRow =
             <div className="article-header-title" key="article-header">
                 <button type="button" className="close" data-dismiss="modal">
                     <span>&times;</span>
@@ -51,7 +51,7 @@ var ArticleHeader = React.createClass(
                     </div>
                 </div>
             </div>;
-        rows.push(titileRow);
+        rows.push(titleRow);
     
         if(hasBackgrounds)
         {
