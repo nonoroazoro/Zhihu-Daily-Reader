@@ -1,11 +1,11 @@
-﻿require("should");
-require("../../models");
+﻿require("../../models");
 
 var _ = require("lodash");
+var should = require("should");
 var mongoose = require("mongoose")
 var Story = require("../../models/story");
 
-describe("Models", function ()
+describe("Mongodb Models", function ()
 {
     before(function (done)
     {
@@ -50,10 +50,10 @@ describe("Models", function ()
         {
             it("should find the story: 7104770", function (done)
             {
-                Story.find({ id: "7104770" }, function (err, story)
+                Story.findOne({ id: "7104770" }, function (err, story)
                 {
                     should.not.exist(err);
-                    story.id.should.equal("7104770");
+                    story.id.should.eql("7104770");
                     done();
                 });
             });
