@@ -31,28 +31,31 @@ describe("Models", function ()
         }
     });
     
-    describe("Story#create", function ()
+    describe("Story", function ()
     {
-        it("should create a new story: 7104770", function (done)
+        describe("#create", function ()
         {
-            new Story({
-                id : "7104770",
-                date : "20150909",
-                read : false,
-                content : "神经科学/生物学",
-            }).save(done);
-        });
-    });
-    
-    describe("Story#find", function ()
-    {
-        it("should find the story: 7104770", function (done)
-        {
-            Story.find({ id: "7104770" }, function (err, story)
+            it("should create a new story: 7104770", function (done)
             {
-                should.not.exist(err);
-                story.id.should.equal("7104770");
-                done();
+                new Story({
+                    id : "7104770",
+                    date : "20150909",
+                    read : false,
+                    content : "神经科学/生物学",
+                }).save(done);
+            });
+        });
+        
+        describe("#find", function ()
+        {
+            it("should find the story: 7104770", function (done)
+            {
+                Story.find({ id: "7104770" }, function (err, story)
+                {
+                    should.not.exist(err);
+                    story.id.should.equal("7104770");
+                    done();
+                });
             });
         });
     });
