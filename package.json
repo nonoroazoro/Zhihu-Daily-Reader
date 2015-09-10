@@ -23,7 +23,7 @@
     "startdb": "mongod --dbpath ./db",
     "watch": "node_modules/.bin/webpack -d --watch",
     "build": "node_modules/.bin/webpack -p",
-    "test": "node_modules/.bin/mocha -w"
+    "test": "node_modules/.bin/mocha"
   },
   "dependencies": {
     "body-parser": "^1.13.2",
