@@ -50,10 +50,10 @@ describe("Mongodb Models", function ()
         {
             it("should find the story: 7104770", function (done)
             {
-                Story.findOne({ id: "7104770" }, function (err, story)
+                Story.findOne({ id: "7104770" }, function (err, res)
                 {
                     should.not.exist(err);
-                    story.id.should.equal("7104770");
+                    res.id.should.equal("7104770");
                     done();
                 });
             });
