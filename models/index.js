@@ -1,23 +1,22 @@
-﻿var mongoose = require("mongoose");
-var config = require("config");
+﻿var config = require("config");
+var mongoose = require("mongoose");
 
-var options = {
-    server: {
-        auto_reconnect: config.autoReconnect,
-        poolSize: config.poolSize
-    },
-};
-
-mongoose.connect(config.db, options, function (err)
+/**
+ * 连接数据库。
+ */
+function connectDB(callback)
 {
-    if (err)
-    {
-        console.error("Database Server not started, some features will be shut down.");
-    }
-    else
-    {
-        console.error("Database Server connected: Mongodb");
-    }
-});
+    mongoose.connect(
+        config.db,
+        {
+            server: {
+                auto_reconnect: config.autoReconnect,
+                poolSize: config.poolSize
+            },
+        },
+        callback
+    );
+}
 
+exports.connectDB = connectDB;
 exports.Story = require("./story");
