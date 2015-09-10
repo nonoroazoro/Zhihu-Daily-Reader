@@ -170,6 +170,7 @@
     <Folder Include="libs\zdr\" />
     <Folder Include="config\" />
     <Folder Include="models\" />
+    <Folder Include="db\" />
     <Folder Include="screenshots\" />
     <Folder Include="public" />
     <Folder Include="public\assets" />
