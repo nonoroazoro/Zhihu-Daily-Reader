@@ -1,7 +1,26 @@
-﻿var mongoose = require("mongoose");
+﻿var should = require("should");
+var mongoose = require("mongoose");
+
+var models = require("../../models");
 
 describe("Mongodb Connection", function ()
 {
+    before(function (done)
+    {
+        if (!mongoose.connection.db)
+        {
+            models.connectDB(function (err)
+            {
+                should.not.exist(err);
+                done();
+            });
+        }
+        else
+        {
+            done();
+        }
+    });
+    
     describe("Connect", function ()
     {
         it("should create a new UserSchema", function (done)

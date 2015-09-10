@@ -1,32 +1,26 @@
-﻿require("../../models");
-
-var _ = require("lodash");
+﻿var _ = require("lodash");
 var should = require("should");
-var mongoose = require("mongoose")
-var Story = require("../../models/story");
+var mongoose = require("mongoose");
+
+var models = require("../../models");
+var Story = models.Story;
 
 describe("Mongodb Models", function ()
 {
     before(function (done)
     {
-        var db = mongoose.connection;
-        if (db.readyState === 0)
+        if (!mongoose.connection.db)
         {
-            done(new Error("Mongodb not Connected"));
+            models.connectDB(function (err)
+            {
+                should.not.exist(err);
+                _clearDB(done);
+                done();
+            });
         }
         else
         {
-            _.each(db.collections, function (collection, name)
-            {
-                collection.drop(function (err)
-                {
-                    if (err)
-                    {
-                        done(err)
-                    }
-                });
-            });
-            
+            _clearDB(done);
             done();
         }
     });
@@ -60,3 +54,17 @@ describe("Mongodb Models", function ()
         });
     });
 });
+
+function _clearDB(callback)
+{
+    _.each(mongoose.connection.collections, function (collection, name)
+    {
+        collection.drop(function (err)
+        {
+            if (err && _.isFunction(callback))
+            {
+                callback(err);
+            }
+        });
+    });
+}
