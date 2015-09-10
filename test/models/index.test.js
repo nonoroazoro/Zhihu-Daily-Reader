@@ -53,7 +53,7 @@ describe("Mongodb Models", function ()
                 Story.findOne({ id: "7104770" }, function (err, story)
                 {
                     should.not.exist(err);
-                    story.id.should.eql("7104770");
+                    story.id.should.equal("7104770");
                     done();
                 });
             });
