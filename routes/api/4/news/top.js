@@ -1,7 +1,7 @@
 ﻿var express = require("express");
 var router = express.Router();
 
-var crawler = require(__base + "/libs/zdr/crawler");
+var crawler = require(__base + "/controllers/crawler");
 
 // get top stroies.
 router.get("/", function (req, res, next)

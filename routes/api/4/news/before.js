@@ -1,7 +1,7 @@
 ﻿var express = require("express");
 var router = express.Router();
 
-var crawler = require(__base + "/libs/zdr/crawler");
+var crawler = require(__base + "/controllers/crawler");
 
 // get stroies of the specified date.
 router.get("/:date?", function (req, res, next)

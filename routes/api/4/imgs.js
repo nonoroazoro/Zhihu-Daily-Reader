@@ -2,7 +2,7 @@
 var express = require("express");
 var router = express.Router();
 
-var crawler = require(__base + "/libs/zdr/crawler");
+var crawler = require(__base + "/controllers/crawler");
 
 // get zhihu daily image.
 router.get("/:url", function (req, res, next)

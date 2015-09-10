@@ -22,6 +22,7 @@
     <Compile Include="models\story.js" />
     <Compile Include="public\assets\zdr\build\error_404.bundle.js" />
     <Compile Include="public\assets\zdr\build\index.bundle.js" />
+    <Compile Include="test\models\connect.test.js" />
     <Compile Include="test\models\index.test.js" />
     <Compile Include="webpack.config.js" />
     <Content Include="config\default.json" />
@@ -135,8 +136,7 @@
     <Content Include="Zhihu-Daily-API.md" />
     <Compile Include="app.js" />
     <Compile Include="bin\www.js" />
-    <Compile Include="libs\zdr\crawler.js" />
-    <Compile Include="libs\zdr\store.js" />
+    <Compile Include="controllers\crawler.js" />
     <Compile Include="public\assets\libs\lodash\lodash.js" />
     <Compile Include="public\assets\libs\lodash\lodash.min.js" />
     <Compile Include="public\assets\libs\moment\moment.js" />
@@ -166,8 +166,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="bin" />
-    <Folder Include="libs\" />
-    <Folder Include="libs\zdr\" />
+    <Folder Include="controllers\" />
     <Folder Include="config\" />
     <Folder Include="models\" />
     <Folder Include="db\" />
