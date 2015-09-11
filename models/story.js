@@ -9,5 +9,7 @@ var StorySchema = new Schema({
 });
 
 StorySchema.index({ id: 1 }, { unique: true });
+StorySchema.index({ date: 1 });
+StorySchema.index({ read: 1 });
 
 module.exports = mongoose.model("Story", StorySchema);
