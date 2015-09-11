@@ -9,7 +9,12 @@ describe("Mongodb Models", function ()
 {
     before(function (done)
     {
-        if (!mongoose.connection.db)
+        if (models.connected())
+        {
+            _clearDB(done);
+            done();
+        }
+        else
         {
             models.connectDB(function (err)
             {
@@ -17,11 +22,6 @@ describe("Mongodb Models", function ()
                 _clearDB(done);
                 done();
             });
-        }
-        else
-        {
-            _clearDB(done);
-            done();
         }
     });
     

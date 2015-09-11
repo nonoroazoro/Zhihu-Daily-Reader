@@ -7,17 +7,17 @@ describe("Mongodb Connection", function ()
 {
     before(function (done)
     {
-        if (!mongoose.connection.db)
+        if (models.connected())
+        {
+            done();
+        }
+        else
         {
             models.connectDB(function (err)
             {
                 should.not.exist(err);
                 done();
             });
-        }
-        else
-        {
-            done();
         }
     });
     
