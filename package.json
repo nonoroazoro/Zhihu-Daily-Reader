@@ -26,6 +26,7 @@
     "test": "node_modules/.bin/mocha"
   },
   "dependencies": {
+    "async": "^1.4.2",
     "body-parser": "^1.13.2",
     "cheerio": "^0.19.0",
     "classnames": "^2.1.3",
