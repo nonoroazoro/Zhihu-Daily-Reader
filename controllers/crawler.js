@@ -11,7 +11,7 @@ const PREFIX = "/api/4/imgs/";
 /**
  * 获取最新日报（即今天截止目前为止的日报）的索引。
  */
-function getLatestStoryIndexes(p_res)
+exports.getLatestStoryIndexes = function (p_res)
 {
     dailyRequest.get({ url: "/news/latest", json: true }, function (error, response, body)
     {
@@ -39,7 +39,7 @@ function getLatestStoryIndexes(p_res)
 /**
  * 获取最新热门日报的索引。
  */
-function getTopStoryIndexes(p_res)
+exports.getTopStoryIndexes = function (p_res)
 {
     dailyRequest.get({ url: "/news/latest", json: true }, function (error, response, body)
     {
@@ -71,7 +71,7 @@ function getTopStoryIndexes(p_res)
  * 获取指定日期的日报的索引。
  * @param String p_date 指定的日期。如果小于 20130519，返回值为 {}。
  */
-function getStoryIndexes(p_date, p_res)
+ exports.getStoryIndexes = function (p_date, p_res)
 {
     var m = moment(p_date, "YYYYMMDD", true);
     if (m.isValid())
@@ -110,7 +110,7 @@ function getStoryIndexes(p_date, p_res)
  * 获取指定唯一标识的日报。
  * @param String p_id 指定的唯一标识。
  */
-function getStory(p_id, p_res)
+ exports.getStory = function (p_id, p_res)
 {
     // 首先检查 Id 是否为纯数字。
     if (/^\d+$/.test(p_id))
@@ -203,7 +203,7 @@ function getStory(p_id, p_res)
  * 获取指定图片。
  * @param p_url 图片地址。
  */
-function getImage(p_url, p_res)
+ exports.getImage = function (p_url, p_res)
 {
     imgRequest.get(p_url)
     .on("error", function ()
@@ -211,9 +211,3 @@ function getImage(p_url, p_res)
         p_res.status(404).render("error_404");
     }).pipe(p_res);
 }
-
-exports.getLatestStoryIndexes = getLatestStoryIndexes;
-exports.getTopStoryIndexes = getTopStoryIndexes;
-exports.getStoryIndexes = getStoryIndexes;
-exports.getStory = getStory;
-exports.getImage = getImage;
