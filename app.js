@@ -2,6 +2,16 @@
 var cookieParser = require("cookie-parser");
 var express = require("express");
 var favicon = require("serve-favicon");
+var models = require("./models");
+
+// init db
+models.connectDB(function (err)
+{
+    if (err)
+    {
+        console.error("Database Server not started, some features will be shut down.");
+    }
+});
 
 var app = express();
 
