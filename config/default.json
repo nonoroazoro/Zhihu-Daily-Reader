@@ -4,5 +4,8 @@
     // mongodb config
     "db": "mongodb://127.0.0.1/zhihu",
     "poolSize": 10,
-    "autoReconnect": true
+    "auto_reconnect": true,
+
+    // zhihu-daily config
+    "zhihu_daily_api": "http://news-at.zhihu.com/api/4/"
 }
