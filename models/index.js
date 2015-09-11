@@ -10,7 +10,7 @@ function connectDB(callback)
         config.db,
         {
             server: {
-                auto_reconnect: config.autoReconnect,
+                auto_reconnect: config.auto_reconnect,
                 poolSize: config.poolSize
             },
         },
