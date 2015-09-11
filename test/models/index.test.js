@@ -1,18 +1,17 @@
-﻿var _ = require("lodash");
+﻿var async = require("async");
 var should = require("should");
 var mongoose = require("mongoose");
 
 var models = require("../../models");
 var Story = models.Story;
 
-describe("Mongodb Models", function ()
+describe("models", function ()
 {
     before(function (done)
     {
         if (models.connected())
         {
             _clearDB(done);
-            done();
         }
         else
         {
@@ -20,12 +19,11 @@ describe("Mongodb Models", function ()
             {
                 should.not.exist(err);
                 _clearDB(done);
-                done();
             });
         }
     });
     
-    describe("Story", function ()
+    describe("story", function ()
     {
         describe("#create", function ()
         {
@@ -55,16 +53,11 @@ describe("Mongodb Models", function ()
     });
 });
 
-function _clearDB(callback)
+function _clearDB(p_done)
 {
-    _.each(mongoose.connection.collections, function (collection, name)
+    async.each(mongoose.connection.collections, function (collection, callback)
     {
-        collection.drop(function (err)
-        {
-            if (err && _.isFunction(callback))
-            {
-                callback(err);
-            }
-        });
-    });
+        collection.drop(callback);
+    },
+    p_done);
 }
