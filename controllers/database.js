@@ -35,9 +35,9 @@ exports.connect = function (p_callback)
  */
  exports.dropAllCollections = function (p_callback)
 {
-    async.each(mongoose.connection.collections, function (collection, callback)
+    async.each(mongoose.connection.collections, function (collection, done)
     {
-        collection.drop(callback);
+        collection.drop(done);
     },
     function (err)
     {
