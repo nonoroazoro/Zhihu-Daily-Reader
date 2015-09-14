@@ -20,7 +20,7 @@
   <ItemGroup>
     <Compile Include="controllers\database.js" />
     <Compile Include="controllers\story.js" />
-    <Compile Include="controllers\zdr_crawler.js" />
+    <Compile Include="controllers\crawler.js" />
     <Compile Include="models\status.js" />
     <Compile Include="models\story.js" />
     <Compile Include="public\assets\zdr\build\error_404.bundle.js" />
