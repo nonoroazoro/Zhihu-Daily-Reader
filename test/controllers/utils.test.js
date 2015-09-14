@@ -25,4 +25,26 @@ describe("controllers/utils", function ()
             done();
         });
     });
+    
+    describe("#nextZhihuDay", function ()
+    {
+        var origin = "20150915";
+        var target = "20150916";
+        it("should convert '" + origin + "' to: '" + target + "'", function (done)
+        {
+            utils.nextZhihuDay(origin).should.equal(target);
+            done();
+        });
+    });
+    
+    describe("#prevZhihuDay", function ()
+    {
+        var origin = "20150915";
+        var target = "20150914";
+        it("should convert '" + origin + "' to: '" + target + "'", function (done)
+        {
+            utils.prevZhihuDay(origin).should.equal(target);
+            done();
+        });
+    });
 });
