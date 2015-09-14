@@ -11,6 +11,10 @@ database.connect(function (err)
     {
         console.error("Database Server not started, some features will be shut down.");
     }
+    else
+    {
+        require("./controllers/crawler").run();
+    }
 });
 
 var app = express();
