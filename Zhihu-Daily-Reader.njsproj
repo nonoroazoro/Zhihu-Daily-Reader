@@ -20,6 +20,7 @@
   <ItemGroup>
     <Compile Include="controllers\database.js" />
     <Compile Include="controllers\story.js" />
+    <Compile Include="controllers\zdr_crawler.js" />
     <Compile Include="models\status.js" />
     <Compile Include="models\story.js" />
     <Compile Include="public\assets\zdr\build\error_404.bundle.js" />
@@ -139,7 +140,7 @@
     <Content Include="Zhihu-Daily-API.md" />
     <Compile Include="app.js" />
     <Compile Include="bin\www.js" />
-    <Compile Include="controllers\crawler.js" />
+    <Compile Include="controllers\proxy.js" />
     <Compile Include="public\assets\libs\lodash\lodash.js" />
     <Compile Include="public\assets\libs\lodash\lodash.min.js" />
     <Compile Include="public\assets\libs\moment\moment.js" />
