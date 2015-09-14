@@ -21,11 +21,13 @@
     <Compile Include="controllers\database.js" />
     <Compile Include="controllers\story.js" />
     <Compile Include="controllers\crawler.js" />
+    <Compile Include="controllers\utils.js" />
     <Compile Include="models\status.js" />
     <Compile Include="models\story.js" />
     <Compile Include="public\assets\zdr\build\error_404.bundle.js" />
     <Compile Include="public\assets\zdr\build\index.bundle.js" />
     <Compile Include="test\controllers\story.test.js" />
+    <Compile Include="test\controllers\utils.test.js" />
     <Compile Include="test\models\status.test.js" />
     <Compile Include="test\models\story.test.js" />
     <Compile Include="webpack.config.js" />
