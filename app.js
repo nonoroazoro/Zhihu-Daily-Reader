@@ -2,10 +2,10 @@
 var cookieParser = require("cookie-parser");
 var express = require("express");
 var favicon = require("serve-favicon");
-var models = require("./models");
 
 // init db
-models.connectDB(function (err)
+var database = require("./controllers/database");
+database.connect(function (err)
 {
     if (err)
     {
