@@ -7,5 +7,11 @@
     "auto_reconnect": true,
 
     // zhihu-daily config
-    "zhihu_daily_api": "http://news-at.zhihu.com/api/4/"
+    "zhihu_daily_api": "http://news-at.zhihu.com/api/4/",
+
+    // 爬虫抓取时间间隔（单位：秒）
+    "crawler_interval": 30,
+
+    // 用户名（随便填你的名字咯）
+    "username": "Zoro"
 }
