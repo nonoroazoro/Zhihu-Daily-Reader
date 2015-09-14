@@ -3,25 +3,24 @@ var async = require("async");
 var should = require("should");
 var mongoose = require("mongoose");
 
-var models = require("../../models");
-var Story = models.Story;
-
+var Story = require("../../models/story");
 var StoryController = require("../../controllers/story");
+var database = require("../../controllers/database");
 
 describe("controllers/story", function ()
 {
     before(function (done)
     {
-        if (models.connected())
+        if (database.connected())
         {
-            _clearDB(done);
+            database.dropAllCollections(done);
         }
         else
         {
-            models.connectDB(function (err)
+            database.connect(function (err)
             {
                 should.not.exist(err);
-                _clearDB(done);
+                database.dropAllCollections(done);
             });
         }
     });
@@ -113,12 +112,3 @@ describe("controllers/story", function ()
         });
     });
 });
-
-function _clearDB(p_done)
-{
-    async.each(mongoose.connection.collections, function (collection, callback)
-    {
-        collection.drop(callback);
-    },
-    p_done);
-}

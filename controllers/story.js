@@ -1,6 +1,5 @@
 ﻿var _ = require("lodash");
-var models = require("../models");
-var Story = models.Story;
+var Story = require("../models/story");
 
 /**
  * 查找指定 Id 的日报。
