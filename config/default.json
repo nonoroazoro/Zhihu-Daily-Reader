@@ -1,17 +1,22 @@
 ﻿{
+    // 端口。
     "port": 3000,
 
-    // mongodb config
+    // 数据库。
     "db": "mongodb://127.0.0.1/zhihu",
     "poolSize": 10,
     "auto_reconnect": true,
 
-    // zhihu-daily config
+    // 知乎日报官方 API。
     "zhihu_daily_api": "http://news-at.zhihu.com/api/4/",
 
-    // 爬虫抓取时间间隔（单位：秒）
-    "crawler_interval": 30,
+    // crawler config
+    "crawler":
+    {
+        // 爬虫抓取时间间隔（单位：秒）
+        "interval": 30
+    },
 
-    // 用户名（随便填你的名字咯）
+    // 用户名（随便填咯）。
     "username": "Zoro"
 }
