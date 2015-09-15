@@ -5,7 +5,7 @@ var moment = require("moment");
 var mongoose = require("mongoose");
 
 var utils = require("./utils");
-var database = require("./database");
+var dbhelper = require("./dbhelper");
 var Status = require("../models/status");
 
 exports.fetchStories = function (p_callback)
@@ -21,7 +21,7 @@ function _saveStories()
  */
 exports.run = function ()
 {
-    if (database.connected())
+    if (dbhelper.connected())
     {
         async.waterfall(
             [

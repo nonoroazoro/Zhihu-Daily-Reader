@@ -18,7 +18,7 @@
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
   <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
   <ItemGroup>
-    <Compile Include="controllers\database.js" />
+    <Compile Include="controllers\dbhelper.js" />
     <Compile Include="controllers\story.js" />
     <Compile Include="controllers\crawler.js" />
     <Compile Include="controllers\utils.js" />

@@ -4,8 +4,8 @@ var express = require("express");
 var favicon = require("serve-favicon");
 
 // init db
-var database = require("./controllers/database");
-database.connect(function (err)
+var dbhelper = require("./controllers/dbhelper");
+dbhelper.connect(function (err)
 {
     if (err)
     {

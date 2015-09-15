@@ -2,22 +2,22 @@
 var mongoose = require("mongoose");
 
 var Status = require("../../models/status");
-var database = require("../../controllers/database");
+var dbhelper = require("../../controllers/dbhelper");
 
 describe("models/status", function ()
 {
     before(function (done)
     {
-        if (database.connected())
+        if (dbhelper.connected())
         {
-            database.dropAllCollections(done);
+            dbhelper.dropAllCollections(done);
         }
         else
         {
-            database.connect(function (err)
+            dbhelper.connect(function (err)
             {
                 should.not.exist(err);
-                database.dropAllCollections(done);
+                dbhelper.dropAllCollections(done);
             });
         }
     });
