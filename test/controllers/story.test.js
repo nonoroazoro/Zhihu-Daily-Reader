@@ -24,7 +24,7 @@ describe("controllers/story", function ()
         }
     });
     
-    describe("#init", function ()
+    describe("1.init", function ()
     {
         it("should create new stories: id[0~9], date[20150909, 20150910]", function (done)
         {
@@ -57,7 +57,7 @@ describe("controllers/story", function ()
         });
     });
     
-    describe("#findStoryById", function ()
+    describe("2.findStoryById", function ()
     {
         var id = "3";
         it("should find the story: id == " + id, function (done)
@@ -72,7 +72,7 @@ describe("controllers/story", function ()
         });
     });
     
-    describe("#findStoriesByDate", function ()
+    describe("3.findStoriesByDate", function ()
     {
         var date = "20150910";
         it("should find the stories: date == " + date, function (done)
@@ -91,7 +91,7 @@ describe("controllers/story", function ()
         });
     });
     
-    describe("#findUnreadStories", function ()
+    describe("4.findUnreadStories", function ()
     {
         var date = "20150910";
         it("should find the stories: read == false, date == " + date, function (done)

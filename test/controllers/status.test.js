@@ -6,7 +6,7 @@ var Status = require("../../models/status");
 var StatusController = require("../../controllers/status");
 var dbhelper = require("../../controllers/dbhelper");
 
-describe("controllers/Status", function ()
+describe("controllers/status", function ()
 {
     before(function (done)
     {
@@ -24,7 +24,7 @@ describe("controllers/Status", function ()
         }
     });
     
-    describe("#init", function ()
+    describe("1.init", function ()
     {
         it("should create a new status: Zoro, 20150915, 20150910", function (done)
         {
@@ -36,7 +36,7 @@ describe("controllers/Status", function ()
         });
     });
     
-    describe("#findStatusByUsername", function ()
+    describe("2.findStatusByUsername", function ()
     {
         var username = "Zoro";
         it("should find the status of user: '" + username + "'", function (done)

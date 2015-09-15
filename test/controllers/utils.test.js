@@ -5,7 +5,7 @@ var utils = require("../../controllers/utils");
 
 describe("controllers/utils", function ()
 {
-    describe("#convertToZhihuDate", function ()
+    describe("1.convertToZhihuDate", function ()
     {
         var origin = "2015-09-15";
         var target = "20150915";
@@ -26,7 +26,7 @@ describe("controllers/utils", function ()
         });
     });
     
-    describe("#nextZhihuDay", function ()
+    describe("2.nextZhihuDay", function ()
     {
         var origin = "20150915";
         var target = "20150916";
@@ -37,7 +37,7 @@ describe("controllers/utils", function ()
         });
     });
     
-    describe("#prevZhihuDay", function ()
+    describe("3.prevZhihuDay", function ()
     {
         var origin = "20150915";
         var target = "20150914";
