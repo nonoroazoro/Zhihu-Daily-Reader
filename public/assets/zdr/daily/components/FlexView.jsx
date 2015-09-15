@@ -4,7 +4,7 @@ var _ = require("lodash");
 var classNames = require("classnames");
 var React = require("react");
 var PureRenderMixin = React.addons.PureRenderMixin;
-var DailyManager = require("../controllers/DailyManager");
+var DailyManager = require("../controllers/daily");
 var Preloader = require("./Preloader");
 
 var FlexTile = React.createClass(

@@ -4,8 +4,8 @@ var $ = require("jquery");
 var React = require("react");
 var ReactUpdate = React.addons.update;
 var PureRenderMixin = React.addons.PureRenderMixin;
-var DailyManager = require("./controllers/DailyManager");
-var Utils = require("./controllers/Utils");
+var DailyManager = require("./controllers/daily");
+var Utils = require("./controllers/utils");
 
 //var Carousel = require("./components/Carousel");
 var FlexView = require("./components/FlexView");
@@ -57,7 +57,7 @@ var DailyPage = React.createClass(
         // 1、事件处理。
         this._removeEventHandler();
     },
-    
+
     /**
     * 加载热门日报（Carousel）。
     */
@@ -116,7 +116,7 @@ var DailyPage = React.createClass(
                     this._currentLoadedDate = p_data.date;
                     this._addStoryIndexes(p_data.indexes);
                 }
-            
+
                 this.setState({
                     loading: false
                 });
