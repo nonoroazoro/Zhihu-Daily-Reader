@@ -45,12 +45,12 @@ function _initTask(done)
         var date = null;
         if (!err && res)
         {
-            date = res.oldest;
+            date = utils.prevZhihuDay(res.oldest);
         }
         
         if (!date)
         {
-            date = utils.convertToZhihuDate(Date.now());
+            date = utils.prevZhihuDay(utils.convertToZhihuDate(Date.now()));
         }
         
         done(null, date);
