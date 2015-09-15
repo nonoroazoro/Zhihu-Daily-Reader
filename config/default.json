@@ -10,11 +10,14 @@
     // 知乎日报官方 API。
     "zhihu_daily_api": "http://news-at.zhihu.com/api/4/",
 
-    // crawler config
+    // 爬虫。
     "crawler":
     {
-        // 爬虫抓取时间间隔（单位：秒）
-        "interval": 30
+        // 抓取时间间隔（单位：秒）。
+        "interval": 30,
+
+        // 错误重试次数。
+        "retry": 3
     },
 
     // 用户名（随便填咯）。
