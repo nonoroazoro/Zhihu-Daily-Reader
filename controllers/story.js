@@ -2,7 +2,7 @@
 var Story = require("../models/story");
 
 /**
- * 查找指定 Id 的日报。
+ * 从数据库中查找指定 Id 的日报。
  * @param  {Function} p_callback 回调函数：function(err, res)。
  * @param  {String} p_id         指定的日报 Id。
  */
@@ -22,7 +22,7 @@ exports.findStoryById = function (p_callback, p_id)
 };
 
 /**
- * 查找指定日期的日报。
+ * 从数据库中查找指定日期的日报。
  * @param  {Function} p_callback 回调函数：function(err, res)。
  * @param  {String} p_date       指定的日期。
  */
@@ -42,7 +42,7 @@ exports.findStoriesByDate = function (p_callback, p_date)
 };
 
 /**
- * 查找指定日期的未读日报。如果未指定，则查找所有未读日报。
+ * 从数据库中查找指定日期的未读日报。如果未指定，则查找所有未读日报。
  * @param  {Function} p_callback 回调函数：function(err, res)。
  * @param  {String} p_date       指定的日期。
  */
