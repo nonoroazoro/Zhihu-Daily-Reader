@@ -1,5 +1,4 @@
 ﻿var _ = require("lodash");
-var async = require("async");
 var should = require("should");
 var mongoose = require("mongoose");
 

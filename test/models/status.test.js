@@ -1,5 +1,4 @@
-﻿var async = require("async");
-var should = require("should");
+﻿var should = require("should");
 var mongoose = require("mongoose");
 
 var Status = require("../../models/status");
