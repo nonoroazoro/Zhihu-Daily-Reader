@@ -31,7 +31,7 @@ exports.getTopStoryIndexes = function (callback)
  */
 exports.getStoryIndexes = function (callback, p_date)
 {
-    if (_.isEmpty(p_date))
+    if (_.isEmpty(_.trim(p_date)))
     {
         $.get("/api/4/news/before", function (p_data)
         {

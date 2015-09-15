@@ -10,9 +10,9 @@ exports.findStoryById = function (p_callback, p_id)
 {
     if (_.isFunction(p_callback))
     {
-        if (_.isEmpty(p_id))
+        if (_.isEmpty(_.trim(p_id)))
         {
-            p_callback(new Error("p_id is Empty String."), null);
+            p_callback(new Error("p_id is an empty string."), null);
         }
         else
         {
@@ -30,9 +30,9 @@ exports.findStoriesByDate = function (p_callback, p_date)
 {
     if (_.isFunction(p_callback))
     {
-        if (_.isEmpty(p_date))
+        if (_.isEmpty(_.trim(p_date)))
         {
-            p_callback(new Error("p_date is Empty String."), null);
+            p_callback(new Error("p_date is an empty string."), null);
         }
         else
         {
@@ -50,7 +50,7 @@ exports.findUnreadStories = function (p_callback, p_date)
 {
     if (_.isFunction(p_callback))
     {
-        if (_.isEmpty(p_date))
+        if (_.isEmpty(_.trim(p_date)))
         {
             Story.find({ read: false }, p_callback);
         }
