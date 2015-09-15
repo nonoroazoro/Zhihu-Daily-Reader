@@ -30,7 +30,6 @@
     <Compile Include="test\controllers\status.test.js" />
     <Compile Include="test\controllers\story.test.js" />
     <Compile Include="test\controllers\utils.test.js" />
-    <Compile Include="test\models\story.test.js" />
     <Compile Include="webpack.config.js" />
     <Content Include="config\default.json" />
     <Content Include="config\development.json" />
@@ -210,7 +209,6 @@
     <Folder Include="routes\api\4\" />
     <Folder Include="routes\api\4\news\" />
     <Folder Include="test\" />
-    <Folder Include="test\models\" />
     <Folder Include="test\controllers\" />
     <Folder Include="views" />
     <Folder Include="views\templates" />
