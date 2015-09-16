@@ -1,6 +1,5 @@
 ﻿var _ = require("lodash");
 var should = require("should");
-var mongoose = require("mongoose");
 
 var Status = require("../../models/status");
 var StatusController = require("../../controllers/status");

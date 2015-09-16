@@ -1,6 +1,5 @@
 ﻿var _ = require("lodash");
 var should = require("should");
-var mongoose = require("mongoose");
 
 var Story = require("../../models/story");
 var StoryController = require("../../controllers/story");
