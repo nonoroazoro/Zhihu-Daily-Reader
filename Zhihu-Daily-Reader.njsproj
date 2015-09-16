@@ -18,15 +18,17 @@
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
   <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
   <ItemGroup>
+    <Compile Include="controllers\crawler\daily.js" />
     <Compile Include="controllers\dbhelper.js" />
     <Compile Include="controllers\status.js" />
     <Compile Include="controllers\story.js" />
-    <Compile Include="controllers\crawler.js" />
+    <Compile Include="controllers\crawler\index.js" />
     <Compile Include="controllers\utils.js" />
     <Compile Include="models\status.js" />
     <Compile Include="models\story.js" />
     <Compile Include="public\assets\zdr\build\error_404.bundle.js" />
     <Compile Include="public\assets\zdr\build\index.bundle.js" />
+    <Compile Include="test\controllers\crawler\daily.test.js" />
     <Compile Include="test\controllers\status.test.js" />
     <Compile Include="test\controllers\story.test.js" />
     <Compile Include="test\controllers\utils.test.js" />
@@ -174,6 +176,7 @@
     <Folder Include="bin" />
     <Folder Include="controllers\" />
     <Folder Include="config\" />
+    <Folder Include="controllers\crawler\" />
     <Folder Include="controllers\proxy\" />
     <Folder Include="models\" />
     <Folder Include="db\" />
@@ -210,6 +213,7 @@
     <Folder Include="routes\api\4\news\" />
     <Folder Include="test\" />
     <Folder Include="test\controllers\" />
+    <Folder Include="test\controllers\crawler\" />
     <Folder Include="views" />
     <Folder Include="views\templates" />
   </ItemGroup>
