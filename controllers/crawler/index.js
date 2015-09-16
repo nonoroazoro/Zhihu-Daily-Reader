@@ -1,20 +1,10 @@
 ﻿var _ = require("lodash");
 var async = require("async");
 var config = require("config");
-var moment = require("moment");
-var mongoose = require("mongoose");
 
-var utils = require("./utils");
-var dbhelper = require("./dbhelper");
-var Status = require("../models/status");
-
-exports.fetchStories = function (p_callback)
-{
-}
-
-function _saveStories()
-{
-}
+var utils = require("../utils");
+var dbhelper = require("../dbhelper");
+var Status = require("../../models/status");
 
 /**
  * 启动爬虫。
@@ -50,7 +40,7 @@ function _initTask(done)
         
         if (!date)
         {
-            date = utils.prevZhihuDay(utils.convertToZhihuDate(Date.now()));
+            date = utils.convertToZhihuDate(Date.now());
         }
         
         done(null, date);
