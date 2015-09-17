@@ -100,14 +100,14 @@ describe("controllers/crawler/daily", function ()
     
     describe("4.fetchStories", function ()
     {
-        //var date = "20130519";
-        //it("should fetch the stories of date: " + date, function (done)
-        //{
-        //    daily.cacheStories(date, function (err, res)
-        //    {
-        //        should.not.exist(err);
-        //        done();
-        //    });
-        //});
+        var date = "20130519";
+        it("should fetch the stories of date: " + date, function (done)
+        {
+            daily.cacheStories(date, function (err, res)
+            {
+                should.not.exist(err);
+                done();
+            });
+        });
     });
 });
