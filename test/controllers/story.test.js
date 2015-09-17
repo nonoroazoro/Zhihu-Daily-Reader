@@ -59,24 +59,23 @@ describe("controllers/story", function ()
     describe("2.findStoryById", function ()
     {
         var id = "3";
-        it("should find the story: id == " + id, function (done)
+        it("should find the story of id: " + id, function (done)
         {
-            StoryController.findStoryById(function (err, res)
+            StoryController.findStoryById(id, function (err, res)
             {
                 should.not.exist(err);
                 res.id.should.equal(id);
                 done();
-            },
-            id);
+            });
         });
     });
     
     describe("3.findStoriesByDate", function ()
     {
         var date = "20150910";
-        it("should find the stories: date == " + date, function (done)
+        it("should find the stories of date: " + date, function (done)
         {
-            StoryController.findStoriesByDate(function (err, res)
+            StoryController.findStoriesByDate(date, function (err, res)
             {
                 should.not.exist(err);
                 res.length.should.equal(5);
@@ -85,17 +84,16 @@ describe("controllers/story", function ()
                     value.date.should.equal(date);
                 });
                 done();
-            },
-            date);
+            });
         });
     });
     
     describe("4.findUnreadStories", function ()
     {
         var date = "20150910";
-        it("should find the stories: read == false, date == " + date, function (done)
+        it("should find the unread stories of date: " + date, function (done)
         {
-            StoryController.findUnreadStories(function (err, res)
+            StoryController.findUnreadStories(date, function (err, res)
             {
                 should.not.exist(err);
                 res.length.should.equal(2);
@@ -105,8 +103,58 @@ describe("controllers/story", function ()
                     value.read.should.be.true;
                 });
                 done();
-            },
-            date);
+            });
+        });
+    });
+    
+    describe("5.findAllUnreadStories", function ()
+    {
+        it("should find all of the unread stories", function (done)
+        {
+            StoryController.findAllUnreadStories(function (err, res)
+            {
+                should.not.exist(err);
+                res.length.should.equal(4);
+                _.each(res, function (value, index)
+                {
+                    value.read.should.be.true;
+                });
+                done();
+            });
+        });
+    });
+    
+    describe("6.saveStory", function ()
+    {
+        it("should save story", function (done)
+        {
+            var zhihuStory = {
+                id : 401,
+                date: "20150120",
+                title: "学英语才是正经事儿",
+                imageSource : "人民教育出版社",
+                contents : [
+                    {
+                        title: "神经科学/生物学3 - 修改"
+                    }
+                ]
+            };
+            
+            StoryController.saveStory(zhihuStory, function (err, res)
+            {
+                should.not.exist(err);
+                JSON.parse(res.content).should.deepEqual(zhihuStory);
+                done();
+            });
+        });
+        
+        it("should not save null story", function (done)
+        {
+            StoryController.saveStory(null, function (err, res)
+            {
+                should.exist(err);
+                done();
+            });
         });
     });
 });
