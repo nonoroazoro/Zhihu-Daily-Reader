@@ -1,30 +1,19 @@
 ﻿var _ = require("lodash");
+var async = require("async");
 var config = require("config");
 var cheerio = require("cheerio");
 var querystring = require("querystring");
+var dailyRequest = require("request").defaults({
+    baseUrl : config.zhihu_daily_api
+});
 
-var options = { baseUrl : config.zhihu_daily_api };
-var dailyRequest = require("request").defaults(options);
-var imgRequest = require("request");
-
+var story = require("../story");
 var utils = require("../utils");
-
 const PREFIX = "/api/4/imgs/";
 const MINDATE = utils.convertZhihuDateToMoment("20130520");
 
 /**
- * 从知乎日报服务器获取指定日期的日报。
- * @param  {String} p_date       指定的日期。
- * @param  {Function} p_callback 回调函数：function(err, res)。
- */
-exports.fetchStories = function (p_date, p_callback)
-{
-    if (!_.isFunction(p_callback)) return;
-};
-
-
-/**
- * 从知乎日报服务器获取指定日期的知乎日报索引。
+ * 从知乎日报服务器获取指定日期的知乎日报索引（ID）。
  * @param  {String} p_date       指定的日期。如果小于 20130519，返回值 res 为 {}。
  * @param  {Function} p_callback 回调函数：function(err, res)。
  */
@@ -73,7 +62,7 @@ exports.fetchStoryIndexes = function (p_date, p_callback)
 
 /**
  * 从知乎日报服务器获取指定 Id 的知乎日报。
- * @param  {String} p_id       指定的 Id。
+ * @param  {String} p_id         指定的 Id。
  * @param  {Function} p_callback 回调函数：function(err, res)。
  */
 exports.fetchStory = function (p_id, p_callback)
@@ -156,7 +145,6 @@ exports.fetchStory = function (p_id, p_callback)
                         return question;
                     }).get();
                 }
-                
                 p_callback(null, result);
             }
             else
@@ -171,185 +159,75 @@ exports.fetchStory = function (p_id, p_callback)
     }
 };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /**
- * 获取指定唯一标识的日报。
- * @param String p_id 指定的唯一标识。
+ * 从知乎日报服务器获取指定 Id 的日报，并存储到数据库。
+ * @param  {String} p_id         指定的 Id。
+ * @param  {Function} p_callback 回调函数：function(err, res)。
  */
- exports.getStory = function (p_id, p_res)
+exports.cacheStory = function (p_id, p_callback)
 {
-    // 首先检查 Id 是否为纯数字。
-    if (/^\d+$/.test(p_id))
+    async.retry({
+        times: config.crawler.retry,
+        interval: config.crawler.interval
+    }, this.fetchStory.bind(this, p_id), function (err, res)
     {
-        dailyRequest.get({ url: "/news/" + p_id, json: true }, function (err, res, body)
+        // 未成功抓取的日报，记录其 Id，并标记为 cached: false。
+        if (err)
         {
-            if (!err && res.statusCode == 200)
-            {
-                var result = {};
-                result.id = body.id;
-                result.title = body.title;
-                result.image = PREFIX + querystring.escape(body.image);
-                result.imageSource = body.image_source;
-                result.shareURL = body.share_url;
-                
-                if (body.body)
-                {
-                    var $ = cheerio.load(body.body, { decodeEntities: false });
-                    result.backgrounds = $(".headline>.headline-background .headline-background-link").map(function (i, e)
-                    {
-                        return {
-                            href: $(e).attr("href"),
-                            title : $(e).children(".heading").text(),
-                            text : $(e).children(".heading-content").text()
-                        };
-                    }).get();
-                    
-                    result.contents = $(".content-inner>.question").map(function (i, e)
-                    {
-                        var question = {};
-                        question.title = $(e).children(".question-title").text();
-                        question.answers = $(e).children(".answer").map(function (i, e)
-                        {
-                            $(e).find(".content img").each(function (i, e)
-                            {
-                                var src = $(e).attr("src");
-                                if (src != null && src != "")
-                                {
-                                    $(e).attr("src", PREFIX + querystring.escape(src));
-                                }
-                            });
-                            
-                            var avatar = $(e).find(".meta>.avatar").attr("src");
-                            if (avatar != null && avatar != "")
-                            {
-                                avatar = PREFIX + querystring.escape(avatar);
-                            }
-                            else
-                            {
-                                avatar = "";
-                            }
-                            
-                            return {
-                                avatar : avatar,
-                                name: $(e).find(".meta>.author").text(),
-                                bio : $(e).find(".meta>.bio").text(),
-                                content : $(e).children(".content").html()
-                            };
-                        }).get();
-                        
-                        var a = $(e).find(".view-more>a");
-                        if (a.length > 0)
-                        {
-                            question.link = {
-                                href : a.attr("href"),
-                                text : a.text(),
-                            };
-                        }
-                        
-                        return question;
-                    }).get();
-                }
-                
-                p_res.set(res.headers);
-                p_res.json(result);
-            }
-            else
-            {
-                p_res.status(404).render("err_404");
-            }
-        });
-    }
-    else
-    {
-        p_res.status(404).render("err_404");
-    }
+            story.logUncachedStory(p_id, p_callback);
+        }
+        else
+        {
+            story.saveStory(res, p_callback);
+        }
+    });
 };
 
 /**
- * 获取指定图片。
- * @param p_url 图片地址。
+ * 从知乎日报服务器获取指定日期的日报，并存储到数据库。
+ * @param  {String} p_date       指定的日期。
+ * @param  {Function} p_callback 回调函数：function(err, res)。
  */
- exports.getImage = function (p_url, p_res)
+exports.cacheStories = function (p_date, p_callback)
 {
-    imgRequest.get(p_url)
-    .on("err", function ()
+    async.waterfall(
+        [
+            this.fetchStoryIndexes.bind(this, p_date),
+            _cacheStoriesTask.bind(this)
+        ],
+        p_callback
+    );
+};
+
+/**
+ * 从知乎日报服务器获取日报并保存到数据库。
+ */
+function _cacheStoriesTask(p_indexes, p_callback)
+{
+    var errs = [];
+    async.eachSeries(p_indexes.indexes, function (id, done)
     {
-        p_res.status(404).render("err_404");
-    }).pipe(p_res);
+        this.cacheStory(id, function (err, res)
+        {
+            if (err)
+            {
+                errs.push(err);
+            }
+            done(null, res);
+        });
+    }.bind(this), function ()
+    {
+        p_callback(errs.length > 0 ? errs: null);
+    });
+}
+
+/**
+ * 从知乎日报服务器获取获取指定的图片。
+ * @param  {String} p_url        指定的图片地址。
+ * @param  {Function} p_callback 回调函数：function(err, res)。
+ */
+ exports.fetchImage = function (p_url, p_res)
+{
+    if (!_.isFunction(p_callback)) return;
+    // TODO:
 };
