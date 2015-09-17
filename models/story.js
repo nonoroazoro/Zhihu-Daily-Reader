@@ -30,7 +30,7 @@ var StorySchema = new Schema({
     content: { type: String },
     
     /**
-     * 离线状态（表示是否已离线日报内容）。
+     * 离线状态（表示日报内容是否已离线）。
      * @type {Boolean}
      */
     cached: { type: Boolean, default: false }
