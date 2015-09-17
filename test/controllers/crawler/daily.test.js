@@ -2,9 +2,26 @@
 var should = require("should");
 
 var daily = require("../../../controllers/crawler/daily");
+var dbhelper = require("../../../controllers/dbhelper");
 
 describe("controllers/crawler/daily", function ()
 {
+    before(function (done)
+    {
+        if (dbhelper.connected())
+        {
+            dbhelper.dropAllCollections(done);
+        }
+        else
+        {
+            dbhelper.connect(function (err)
+            {
+                should.not.exist(err);
+                dbhelper.dropAllCollections(done);
+            });
+        }
+    });
+    
     describe("1.fetchStoryIndexes", function ()
     {
         it("should fetch the story indexes of date: 20130519", function (done)
@@ -64,5 +81,33 @@ describe("controllers/crawler/daily", function ()
                 done();
             });
         });
+    });
+    
+    describe("3.cacheStory", function ()
+    {
+        var id = 401;
+        it("should cache the story of id: " + id, function (done)
+        {
+            daily.cacheStory(id, function (err, res)
+            {
+                should.not.exist(err);
+                res.id.should.equal(id);
+                res.cached.should.be.true();
+                done();
+            });
+        });
+    });
+    
+    describe("4.fetchStories", function ()
+    {
+        //var date = "20130519";
+        //it("should fetch the stories of date: " + date, function (done)
+        //{
+        //    daily.cacheStories(date, function (err, res)
+        //    {
+        //        should.not.exist(err);
+        //        done();
+        //    });
+        //});
     });
 });
