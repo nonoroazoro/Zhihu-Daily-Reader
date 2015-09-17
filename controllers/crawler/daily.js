@@ -204,6 +204,7 @@ exports.cacheStories = function (p_date, p_callback)
  */
 function _cacheStoriesTask(p_indexes, p_callback)
 {
+    // 记录错误和执行结果。
     var errs = [];
     var results = [];
     async.eachSeries(p_indexes.indexes, function (id, done)
