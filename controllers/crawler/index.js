@@ -2,9 +2,10 @@
 var async = require("async");
 var config = require("config");
 
+var daily = require("./daily");
+var status = require("../status");
 var utils = require("../utils");
 var dbhelper = require("../dbhelper");
-var Status = require("../../models/status");
 
 /**
  * 启动爬虫。
@@ -16,10 +17,11 @@ exports.run = function ()
         async.waterfall(
             [
                 _initTask,
-            ], function (err, result)
+            ], function (err, res)
             {
+                // TODO:
                 console.log(err);
-                console.log(result);
+                console.log(res);
             }
         );
     }
@@ -30,7 +32,7 @@ exports.run = function ()
  */
 function _initTask(done)
 {
-    Status.findOne({ username: config.username }, function (err, res)
+    status.findStatusByUsername(config.username, function (err, res)
     {
         var date = null;
         if (!err && res)
@@ -40,7 +42,7 @@ function _initTask(done)
         
         if (!date)
         {
-            date = utils.convertToZhihuDate(Date.now());
+            date = utils.convertToZhihuDate(new Date());
         }
         
         done(null, date);
@@ -52,4 +54,5 @@ function _initTask(done)
  */
 function _fetchStoriesTask(p_date, done)
 {
+    daily.cacheStories(p_date, done);
 }
