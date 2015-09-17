@@ -7,9 +7,9 @@ var Schema = mongoose.Schema;
 var StorySchema = new Schema({
     /**
      * Id。
-     * @type {String}
+     * @type {Number}
      */
-    id: { type: String },
+    id: { type: Number },
     
     /**
      * 日期。
@@ -28,6 +28,12 @@ var StorySchema = new Schema({
      * @type {String}
      */
     content: { type: String },
+    
+    /**
+     * 离线状态（表示是否已离线日报内容）。
+     * @type {Boolean}
+     */
+    cached: { type: Boolean, default: false }
 });
 
 StorySchema.index({ id: 1 }, { unique: true });
