@@ -205,6 +205,7 @@ exports.cacheStories = function (p_date, p_callback)
 function _cacheStoriesTask(p_indexes, p_callback)
 {
     var errs = [];
+    var results = [];
     async.eachSeries(p_indexes.indexes, function (id, done)
     {
         this.cacheStory(id, function (err, res)
@@ -213,11 +214,12 @@ function _cacheStoriesTask(p_indexes, p_callback)
             {
                 errs.push(err);
             }
+            results.push(res);
             done(null, res);
         });
     }.bind(this), function ()
     {
-        p_callback(errs.length > 0 ? errs: null);
+        p_callback(errs.length > 0 ? errs: null, results);
     });
 }
 
