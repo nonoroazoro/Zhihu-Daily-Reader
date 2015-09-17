@@ -100,7 +100,7 @@ describe("controllers/story", function ()
                 _.each(res, function (value, index)
                 {
                     value.date.should.equal(date);
-                    value.read.should.be.true;
+                    value.read.should.be.false();
                 });
                 done();
             });
@@ -117,7 +117,7 @@ describe("controllers/story", function ()
                 res.length.should.equal(4);
                 _.each(res, function (value, index)
                 {
-                    value.read.should.be.true;
+                    value.read.should.be.false();
                 });
                 done();
             });
