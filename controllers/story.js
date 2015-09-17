@@ -72,9 +72,9 @@ exports.findAllUnreadStories = function (p_callback)
  */
 exports.saveStory = function (p_story, p_callback)
 {
-    if (p_story)
+    if (_.isObject(p_story))
     {
-        var condition = {
+        var query = {
             id: p_story.id
         };
         
@@ -90,13 +90,32 @@ exports.saveStory = function (p_story, p_callback)
             upsert: true
         };
         
-        Story.findOneAndUpdate(condition, update, options, p_callback);
+        Story.findOneAndUpdate(query, update, options, p_callback);
     }
     else
     {
         if (_.isFunction(p_callback))
         {
-            p_callback(new Error("p_story is empty."))
+            p_callback(new Error("p_story is not an Object."))
         }
     }
+};
+
+
+/**
+ * 记录未离线或离线失败的知乎日报 Id。如果已存在，则更新。
+ * @param  {String} p_id         指定的日报 Id。
+ * @param  {Function} p_callback 回调函数：function(err, res)。
+ */
+exports.logUncachedStory = function (p_id, p_callback)
+{
+    Story.findOneAndUpdate({
+        id: p_id
+    }, {
+        id: p_id,
+        cached: false
+    }, {
+        new: true,
+        upsert: true
+    }, p_callback);
 };
