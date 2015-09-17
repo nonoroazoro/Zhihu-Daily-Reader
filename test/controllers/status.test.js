@@ -40,24 +40,22 @@ describe("controllers/status", function ()
         var username = "Zoro";
         it("should find the status of user: '" + username + "'", function (done)
         {
-            StatusController.findStatusByUsername(function (err, res)
+            StatusController.findStatusByUsername(username, function (err, res)
             {
                 should.not.exist(err);
                 res.username.should.equal(username);
                 done();
-            },
-            username);
+            });
         });
         
         var wrongUsername = " ";
         it("should not find the status of user: '" + wrongUsername + "'", function (done)
         {
-            StatusController.findStatusByUsername(function (err, res)
+            StatusController.findStatusByUsername(wrongUsername, function (err, res)
             {
-                should.exist(err);
+                should.not.exist(res);
                 done();
-            },
-            wrongUsername);
+            });
         });
     });
 });
