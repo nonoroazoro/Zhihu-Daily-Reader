@@ -58,7 +58,7 @@ describe("controllers/story", function ()
     
     describe("2.findStoryById", function ()
     {
-        var id = "3";
+        var id = 3;
         it("should find the story of id: " + id, function (done)
         {
             StoryController.findStoryById(id, function (err, res)
