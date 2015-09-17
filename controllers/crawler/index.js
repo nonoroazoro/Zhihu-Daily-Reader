@@ -17,11 +17,12 @@ exports.run = function ()
         async.waterfall(
             [
                 _initTask,
+                _cacheStoriesTask
             ], function (err, res)
             {
                 // TODO:
                 console.log(err);
-                console.log(res);
+                console.log(res.length);
             }
         );
     }
@@ -52,7 +53,7 @@ function _initTask(done)
 /**
  * 爬取指定日期的日报。
  */
-function _fetchStoriesTask(p_date, done)
+function _cacheStoriesTask(p_date, done)
 {
     daily.cacheStories(p_date, done);
 }
