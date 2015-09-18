@@ -163,8 +163,9 @@ exports.fetchStory = function (p_id, p_callback)
  * 从知乎日报服务器获取指定 Id 的日报，并存储到数据库。
  * @param  {String} p_id         指定的 Id。
  * @param  {Function} p_callback 回调函数：function(err, res)。
+ * @param  {String} p_date       日报对应的日期（可选）。
  */
-exports.cacheStory = function (p_id, p_callback)
+exports.cacheStory = function (p_id, p_callback, p_date)
 {
     async.retry({
         times: config.crawler.daily_retry,
@@ -174,10 +175,11 @@ exports.cacheStory = function (p_id, p_callback)
         // 未成功抓取的日报，记录其 Id，并标记为 cached: false。
         if (err)
         {
-            story.logUncachedStory(p_id, p_callback);
+            story.logUncachedStory({ id: p_id, date: p_date }, p_callback);
         }
         else
         {
+            res.date = p_date;
             story.saveStory(res, p_callback);
         }
     });
@@ -193,6 +195,7 @@ exports.cacheStories = function (p_date, p_callback)
     async.waterfall(
         [
             this.fetchStoryIndexes.bind(this, p_date),
+            _preProcess,
             _cacheStoriesTask.bind(this)
         ],
         p_callback
@@ -200,12 +203,41 @@ exports.cacheStories = function (p_date, p_callback)
 };
 
 /**
+ * 对从知乎日报服务器获取到的索引进行预处理。
+ */
+function _preProcess(p_res, p_callback)
+{
+    // 只离线未 Cached 的日报。
+    story.query({
+        date: p_res.date,
+        cached: true
+    }, {
+        id: 1,
+        _id: 0
+    }, function (err , res)
+    {
+        if (!err && res)
+        {
+            var cachedIDs = _.map(res, function (value, i)
+            {
+                return value.id;
+            });
+            _.remove(p_res.indexes, function (id)
+            {
+                return _.indexOf(cachedIDs, id) != -1;
+            });
+        }
+        p_callback(null, p_res)
+    });
+}
+
+/**
  * 从知乎日报服务器获取日报并保存到数据库。
  */
-function _cacheStoriesTask(p_indexes, p_callback)
+function _cacheStoriesTask(p_res, p_callback)
 {
-    var result = { cached: [] };
-    async.eachSeries(p_indexes.indexes, function (id, done)
+    var result = { date: p_res.date, cached: [] };
+    async.eachSeries(p_res.indexes, function (id, done)
     {
         this.cacheStory(id, function (err, res)
         {
@@ -214,7 +246,7 @@ function _cacheStoriesTask(p_indexes, p_callback)
                 result.cached.push(id);
             }
             done();
-        });
+        }, p_res.date);
     }.bind(this), function ()
     {
         p_callback(null, result);
