@@ -35,6 +35,7 @@ describe("controllers/story", function ()
                     date : "20150909",
                     read : (i <= 2),
                     content : "神经科学/生物学" + i,
+                    cached: (i <= 2)
                 });
             }
             
@@ -45,6 +46,7 @@ describe("controllers/story", function ()
                     date : "20150910",
                     read : (i >= 7),
                     content : "神经科学/生物学" + i,
+                    cached: (i >= 7)
                 });
             }
             
@@ -124,7 +126,20 @@ describe("controllers/story", function ()
         });
     });
     
-    describe("6.saveStory", function ()
+    describe("6.findUncachedIDs", function ()
+    {
+        it("should find all uncached id", function (done)
+        {
+            StoryController.findUncachedIDs(function (err, res)
+            {
+                should.not.exist(err);
+                res.length.should.equal(4);
+                done();
+            });
+        });
+    });
+    
+    describe("7.saveStory", function ()
     {
         it("should save story", function (done)
         {

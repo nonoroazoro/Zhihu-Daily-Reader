@@ -66,6 +66,18 @@ exports.findAllUnreadStories = function (p_callback)
 };
 
 /**
+ * 从数据库中查找所有未离线的日报 ID。
+ * @param  {Function} p_callback 回调函数：function(err, res)。
+ */
+exports.findUncachedIDs = function (p_callback)
+{
+    if (_.isFunction(p_callback))
+    {
+        Story.find({ cached: false }, { id: 1, _id: 0 }, p_callback);
+    }
+};
+
+/**
  * 保存知乎日报至数据库。如果已存在，则更新。
  * @param  {JSONObject} p_story  指定的日报（特指从服务端获取到的 JSON Object）。
  * @param  {Function} p_callback 回调函数：function(err, res)。
@@ -100,7 +112,6 @@ exports.saveStory = function (p_story, p_callback)
         }
     }
 };
-
 
 /**
  * 记录未离线或离线失败的知乎日报 Id。如果已存在，则更新。
