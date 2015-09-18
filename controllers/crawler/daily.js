@@ -167,8 +167,8 @@ exports.fetchStory = function (p_id, p_callback)
 exports.cacheStory = function (p_id, p_callback)
 {
     async.retry({
-        times: config.crawler.retry,
-        interval: config.crawler.interval
+        times: config.crawler.daily_retry,
+        interval: config.crawler.daily_interval
     }, this.fetchStory.bind(this, p_id), function (err, res)
     {
         // 未成功抓取的日报，记录其 Id，并标记为 cached: false。
