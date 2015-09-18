@@ -13,7 +13,7 @@ dbhelper.connect(function (err)
     }
     else
     {
-        require("./controllers/crawler").run();
+        require("./controllers/crawler").start();
     }
 });
 
