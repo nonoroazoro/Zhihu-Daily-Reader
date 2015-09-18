@@ -129,7 +129,7 @@ exports.saveStory = function (p_story, p_callback)
 
 /**
  * 记录未离线或离线失败的知乎日报。如果已存在，则更新。
- * @param  {JSONObject} p_story  指定的日报（特指从服务端获取到的 JSON Object）。
+ * @param  {JSONObject} p_story  指定的日报。
  * @param  {Function} p_callback 回调函数：function(err, res)。
  */
 exports.logUncachedStory = function (p_story, p_callback)
