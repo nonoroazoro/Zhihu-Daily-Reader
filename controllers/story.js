@@ -78,6 +78,20 @@ exports.findUncachedIDs = function (p_callback)
 };
 
 /**
+ * 从数据库中查找满足条件的记录。
+ * @param  {JSONObject} p_query       指定的查询条件。
+ * @param  {JSONObject} p_projection  指定的删选条件。
+ * @param  {Function} p_callback      回调函数：function(err, res)。
+ */
+exports.query = function (p_query, p_projection, p_callback)
+{
+    if (_.isFunction(p_callback))
+    {
+        Story.find(p_query, p_projection, p_callback);
+    }
+};
+
+/**
  * 保存知乎日报至数据库。如果已存在，则更新。
  * @param  {JSONObject} p_story  指定的日报（特指从服务端获取到的 JSON Object）。
  * @param  {Function} p_callback 回调函数：function(err, res)。
@@ -114,16 +128,17 @@ exports.saveStory = function (p_story, p_callback)
 };
 
 /**
- * 记录未离线或离线失败的知乎日报 Id。如果已存在，则更新。
- * @param  {String} p_id         指定的日报 Id。
+ * 记录未离线或离线失败的知乎日报。如果已存在，则更新。
+ * @param  {JSONObject} p_story  指定的日报（特指从服务端获取到的 JSON Object）。
  * @param  {Function} p_callback 回调函数：function(err, res)。
  */
-exports.logUncachedStory = function (p_id, p_callback)
+exports.logUncachedStory = function (p_story, p_callback)
 {
     Story.findOneAndUpdate({
-        id: p_id
+        id: p_story.id
     }, {
-        id: p_id,
+        id: p_story.id,
+        date: p_story.date,
         cached: false
     }, {
         new: true,
