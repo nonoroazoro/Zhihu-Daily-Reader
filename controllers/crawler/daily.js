@@ -204,23 +204,20 @@ exports.cacheStories = function (p_date, p_callback)
  */
 function _cacheStoriesTask(p_indexes, p_callback)
 {
-    // 记录错误和执行结果。
-    var errs = [];
-    var results = [];
+    var result = { cached: [] };
     async.eachSeries(p_indexes.indexes, function (id, done)
     {
         this.cacheStory(id, function (err, res)
         {
-            if (err)
+            if (!err)
             {
-                errs.push(err);
+                result.cached.push(id);
             }
-            results.push(res);
-            done(null, res);
+            done();
         });
     }.bind(this), function ()
     {
-        p_callback(errs.length > 0 ? errs: null, results);
+        p_callback(null, result);
     });
 }
 
@@ -229,7 +226,7 @@ function _cacheStoriesTask(p_indexes, p_callback)
  * @param  {String} p_url        指定的图片地址。
  * @param  {Function} p_callback 回调函数：function(err, res)。
  */
- exports.fetchImage = function (p_url, p_res)
+exports.fetchImage = function (p_url, p_res)
 {
     if (!_.isFunction(p_callback)) return;
     // TODO:
