@@ -133,6 +133,7 @@ describe("controllers/story", function ()
             StoryController.findUncachedIDs(function (err, res)
             {
                 should.not.exist(err);
+                should.exist(res);
                 res.length.should.equal(4);
                 done();
             });
