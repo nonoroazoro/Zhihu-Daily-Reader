@@ -58,4 +58,23 @@ describe("controllers/status", function ()
             });
         });
     });
+    
+    describe("3.saveStatus", function ()
+    {
+        it("should save the status of: Zoro, , 20150910", function (done)
+        {
+            var status = {
+                username: "Zoro",
+                oldest: "20150910"
+            };
+            
+            StatusController.saveStatus(status, function (err, res)
+            {
+                should.not.exist(err);
+                res.username.should.equal(status.username);
+                res.oldest.should.equal(status.oldest);
+                done();
+            });
+        });
+    });
 });
