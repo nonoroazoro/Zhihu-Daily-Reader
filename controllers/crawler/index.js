@@ -20,13 +20,13 @@ exports.run = function ()
                 _cacheStoriesTask
             ], function (err, res)
             {
-                // TODO:
+                // TODO: 重复执行。
                 console.log(err);
-                console.log(res.length);
+                console.log(res);
             }
         );
     }
-}
+};
 
 /**
  * 初始化，得到爬虫起始日期，例如："20150915"。
@@ -55,5 +55,9 @@ function _initTask(done)
  */
 function _cacheStoriesTask(p_date, done)
 {
-    daily.cacheStories(p_date, done);
+    daily.cacheStories(p_date, function (err, res)
+    {
+        res.date = p_date;
+        done(err, res);
+    });
 }
