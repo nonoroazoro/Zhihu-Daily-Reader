@@ -7,10 +7,29 @@ var status = require("../status");
 var utils = require("../utils");
 var dbhelper = require("../dbhelper");
 
+var stop = false;
+
 /**
- * 启动爬虫。
+ * 开始爬虫。
  */
-exports.run = function ()
+exports.start = function ()
+{
+    stop = false;
+    _run();
+};
+
+/**
+ * 停止爬虫。
+ */
+exports.stop = function ()
+{
+    stop = true;
+};
+
+/**
+ * 爬虫。
+ */
+function _run()
 {
     if (dbhelper.connected())
     {
@@ -20,13 +39,18 @@ exports.run = function ()
                 _cacheStoriesTask
             ], function (err, res)
             {
-                // TODO: 重复执行。
-                console.log(err);
                 console.log(res);
+                if (!stop)
+                {
+                    setTimeout(function ()
+                    {
+                        _run();
+                    }, config.crawler.day_interval);
+                }
             }
         );
     }
-};
+}
 
 /**
  * 初始化，得到爬虫起始日期，例如："20150915"。
@@ -55,9 +79,14 @@ function _initTask(done)
  */
 function _cacheStoriesTask(p_date, done)
 {
-    daily.cacheStories(p_date, function (err, res)
+    daily.cacheStories(p_date, function (error, result)
     {
-        res.date = p_date;
-        done(err, res);
+        status.saveStatus({
+            username: config.username,
+            oldest: p_date
+        }, function (err, res)
+        {
+            done(error, result);
+        });
     });
 }
