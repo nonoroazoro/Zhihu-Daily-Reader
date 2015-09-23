@@ -58,12 +58,12 @@ describe("controllers/story", function ()
         });
     });
     
-    describe("2.findStoryById", function ()
+    describe("2.findStoryByID", function ()
     {
         var id = 3;
-        it("should find the story of id: " + id, function (done)
+        it("should find the story of ID: " + id, function (done)
         {
-            StoryController.findStoryById(id, function (err, res)
+            StoryController.findStoryByID(id, function (err, res)
             {
                 should.not.exist(err);
                 res.id.should.equal(id);
