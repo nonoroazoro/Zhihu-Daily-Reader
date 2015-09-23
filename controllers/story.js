@@ -2,11 +2,11 @@
 var Story = require("../models/story");
 
 /**
- * 从数据库中查找指定 Id 的日报。
- * @param  {String} p_id         指定的日报 Id。
+ * 从数据库中查找指定 ID 的日报。
+ * @param  {String} p_id         日报 ID。
  * @param  {Function} p_callback 回调函数：function(err, res)。
  */
-exports.findStoryById = function (p_id, p_callback)
+exports.findStoryByID = function (p_id, p_callback)
 {
     if (_.isFunction(p_callback))
     {
@@ -92,7 +92,7 @@ exports.query = function (p_query, p_projection, p_callback)
 };
 
 /**
- * 保存知乎日报至数据库。如果已存在，则更新。
+ * 保存知乎日报至数据库。
  * @param  {JSONObject} p_story  指定的日报（特指从服务端获取到的 JSON Object）。
  * @param  {Function} p_callback 回调函数：function(err, res)。
  */
@@ -128,17 +128,18 @@ exports.saveStory = function (p_story, p_callback)
 };
 
 /**
- * 记录未离线或离线失败的知乎日报。如果已存在，则更新。
- * @param  {JSONObject} p_story  指定的日报。
+ * 记录未离线的知乎日报。
+ * @param  {String} p_id         知乎日报 ID。
+ * @param  {String} p_date       日期。
  * @param  {Function} p_callback 回调函数：function(err, res)。
  */
-exports.logUncachedStory = function (p_story, p_callback)
+exports.logUncachedStory = function (p_id, p_date, p_callback)
 {
     Story.findOneAndUpdate({
-        id: p_story.id
+        id: p_id
     }, {
-        id: p_story.id,
-        date: p_story.date,
+        id: p_id,
+        date: p_date,
         cached: false
     }, {
         new: true,
