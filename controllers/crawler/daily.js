@@ -13,9 +13,10 @@ const PREFIX = "/api/4/imgs/";
 const MINDATE = utils.convertZhihuDateToMoment("20130520");
 
 /**
- * 从知乎日报服务器获取最新的知乎日报索引（今天截止目前为止的所有日报）。
+ * 从知乎日报服务器获取最新的知乎日报 ID 列表。
+ * @param  {Function} p_callback 回调函数：function(err, res)。
  */
-exports.fetchLatestStoryIndexes = function (p_callback)
+exports.fetchLatestStoryIDs = function (p_callback)
 {
     if (!_.isFunction(p_callback)) return;
     
@@ -24,14 +25,12 @@ exports.fetchLatestStoryIndexes = function (p_callback)
         if (!err && res.statusCode == 200)
         {
             // 因知乎日报的 API 返回的图片太小，这里直接丢弃，后面再通过其他途径获取图片。
-            var indexes = body.stories.map(function (value)
-            {
-                return value.id;
-            });
-            
             p_callback(null, {
                 date: body.date,
-                indexes: indexes
+                ids: body.stories.map(function (value)
+                {
+                    return value.id;
+                })
             });
         }
         else
@@ -42,11 +41,11 @@ exports.fetchLatestStoryIndexes = function (p_callback)
 };
 
 /**
- * 从知乎日报服务器获取指定日期的知乎日报索引（ID）。
+ * 从知乎日报服务器获取指定日期的知乎日报 ID 列表。
  * @param  {String} p_date       指定的日期。如果小于 20130519，返回值 res 为 {}。
  * @param  {Function} p_callback 回调函数：function(err, res)。
  */
-exports.fetchStoryIndexes = function (p_date, p_callback)
+exports.fetchStoryIDs = function (p_date, p_callback)
 {
     if (!_.isFunction(p_callback)) return;
     
@@ -66,14 +65,12 @@ exports.fetchStoryIndexes = function (p_date, p_callback)
             {
                 if (!err && res.statusCode == 200)
                 {
-                    var indexes = body.stories.map(function (value)
-                    {
-                        return value.id;
-                    });
-                    
                     p_callback(null, {
                         date: body.date,
-                        indexes: indexes
+                        ids: body.stories.map(function (value)
+                        {
+                            return value.id;
+                        })
                     });
                 }
                 else
@@ -90,15 +87,15 @@ exports.fetchStoryIndexes = function (p_date, p_callback)
 };
 
 /**
- * 从知乎日报服务器获取指定 Id 的知乎日报。
- * @param  {String} p_id         指定的 Id。
+ * 从知乎日报服务器获取指定 ID 的知乎日报。
+ * @param  {String} p_id         指定的 ID。
  * @param  {Function} p_callback 回调函数：function(err, res)。
  */
 exports.fetchStory = function (p_id, p_callback)
 {
     if (!_.isFunction(p_callback)) return;
     
-    // 首先检查 Id 是否为纯数字。
+    // 首先检查 ID 是否为纯数字。
     if (/^\d+$/.test(p_id))
     {
         dailyRequest.get({ url: "/news/" + p_id, json: true }, function (err, res, body)
@@ -189,22 +186,22 @@ exports.fetchStory = function (p_id, p_callback)
 };
 
 /**
- * 从知乎日报服务器获取指定 Id 的日报，并存储到数据库。
- * @param  {String} p_id         指定的 Id。
+ * 离线指定的日报。
+ * @param  {String} p_id         知乎日报 ID。
+ * @param  {String} p_date       日报对应的日期。
  * @param  {Function} p_callback 回调函数：function(err, res)。
- * @param  {String} p_date       日报对应的日期（可选）。
  */
-exports.cacheStory = function (p_id, p_callback, p_date)
+exports.cacheStory = function (p_id, p_date, p_callback)
 {
     async.retry({
         times: config.crawler.daily_retry,
         interval: config.crawler.daily_interval
     }, this.fetchStory.bind(this, p_id), function (err, res)
     {
-        // 未成功抓取的日报，记录其 Id，并标记为 cached: false。
+        // 记录未成功抓取的日报。
         if (err)
         {
-            story.logUncachedStory({ id: p_id, date: p_date }, p_callback);
+            story.logUncachedStory(p_id, p_date, p_callback);
         }
         else
         {
@@ -215,16 +212,15 @@ exports.cacheStory = function (p_id, p_callback, p_date)
 };
 
 /**
- * 从知乎日报服务器获取指定日期的日报，并存储到数据库。
- * @param  {String} p_date       指定的日期。
+ * 离线最新的知乎日报。
  * @param  {Function} p_callback 回调函数：function(err, res)。
  */
-exports.cacheStories = function (p_date, p_callback)
+exports.cacheLatestStories = function (p_callback)
 {
     async.waterfall(
         [
-            this.fetchStoryIndexes.bind(this, p_date),
-            _preProcess,
+            _fetchLatestStoryIDsTask.bind(this),
+            _preprocessTask,
             _cacheStoriesTask.bind(this)
         ],
         p_callback
@@ -232,13 +228,46 @@ exports.cacheStories = function (p_date, p_callback)
 };
 
 /**
- * 对从知乎日报服务器获取到的索引进行预处理。
+ * 离线指定日期的知乎日报。
+ * @param  {String} p_date       指定的日期。
+ * @param  {Function} p_callback 回调函数：function(err, res)。
  */
-function _preProcess(p_res, p_callback)
+exports.cacheStoriesOfDate = function (p_date, p_callback)
 {
-    // 只离线未 Cached 的日报。
+    async.waterfall(
+        [
+            _fetchStoryIDsTask.bind(this, p_date),
+            _preprocessTask,
+            _cacheStoriesTask.bind(this)
+        ],
+        p_callback
+    );
+};
+
+/**
+ * 离线知乎日报。
+ * @param  {Array} p_ids         指定的知乎日报 ID 列表。
+ * @param  {String} p_date       指定的日期。
+ * @param  {Function} p_callback 回调函数：function(err, res)。
+ */
+exports.cacheStories = function (p_ids, p_date, p_callback)
+{
+    async.waterfall(
+        [
+            _preprocessTask.bind(this, p_ids, p_date),
+            _cacheStoriesTask.bind(this)
+        ],
+        p_callback
+    );
+};
+
+/**
+ * 预处理：排除已离线的日报。
+ */
+function _preprocessTask(p_ids, p_date, p_callback)
+{
     story.query({
-        date: p_res.date,
+        date: p_date,
         cached: true
     }, {
         id: 1,
@@ -247,35 +276,71 @@ function _preProcess(p_res, p_callback)
     {
         if (!err && res)
         {
-            var cachedIDs = _.map(res, function (value, i)
+            var cachedIDs = _.map(res, function (value)
             {
                 return value.id;
             });
-            _.remove(p_res.indexes, function (id)
+            _.remove(p_ids, function (id)
             {
                 return _.indexOf(cachedIDs, id) != -1;
             });
         }
-        p_callback(null, p_res)
+        p_callback(null, p_ids, p_date);
     });
 }
 
 /**
- * 从知乎日报服务器获取日报并保存到数据库。
+ * 获取最新的知乎日报 ID 列表。
  */
-function _cacheStoriesTask(p_res, p_callback)
+function _fetchLatestStoryIDsTask(p_callback)
 {
-    var result = { date: p_res.date, cached: [] };
-    async.eachSeries(p_res.indexes, function (id, done)
+    this.fetchLatestStoryIDs(function (err, res)
     {
-        this.cacheStory(id, function (err, res)
+        if (err)
+        {
+            p_callback(err);
+        }
+        else
+        {
+            p_callback(null, res.ids, res.date);
+        }
+    });
+}
+
+/**
+ * 获取指定日期的知乎日报 ID 列表。
+ */
+function _fetchStoryIDsTask(p_date, p_callback)
+{
+    this.fetchStoryIDs(p_date, function (err, res)
+    {
+        if (err)
+        {
+            p_callback(err);
+        }
+        else
+        {
+            p_callback(null, res.ids, res.date);
+        }
+    });
+}
+
+/**
+ * 离线知乎日报。
+ */
+function _cacheStoriesTask(p_ids, p_date, p_callback)
+{
+    var result = { date: p_date, cached: [] };
+    async.eachSeries(p_ids, function (id, done)
+    {
+        this.cacheStory(id, p_date, function (err, res)
         {
             if (!err)
             {
                 result.cached.push(id);
             }
             done();
-        }, p_res.date);
+        });
     }.bind(this), function ()
     {
         p_callback(null, result);
