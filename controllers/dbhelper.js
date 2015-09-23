@@ -19,7 +19,7 @@ exports.connect = function (p_callback)
         },
         p_callback
     );
-}
+};
 
 /**
  * 检查数据库是否已连接。
@@ -27,7 +27,7 @@ exports.connect = function (p_callback)
  exports.connected = function ()
 {
     return mongoose.connection.db != null;
-}
+};
 
 /**
  * 删除所有集合。
@@ -53,4 +53,4 @@ exports.connect = function (p_callback)
             }
         }
     });
-}
+};
