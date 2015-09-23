@@ -35,7 +35,7 @@ exports.getLatestStoryIDs = function (p_res)
             p_res.status(404).render("error_404");
         }
     });
-}
+};
 
 /**
  * 从知乎日报服务器获取热门日报的 ID 列表。
@@ -66,7 +66,7 @@ exports.getTopStoryIDs = function (p_res)
             p_res.status(404).render("error_404");
         }
     });
-}
+};
 
 /**
  * 从知乎日报服务器获取指定日期的知乎日报 ID 列表。
@@ -113,7 +113,7 @@ exports.getTopStoryIDs = function (p_res)
     {
         p_res.status(404).render("error_404");
     }
-}
+};
 
 /**
  * 从知乎日报服务器获取指定 ID 的知乎日报。
@@ -206,7 +206,7 @@ exports.getTopStoryIDs = function (p_res)
     {
         p_res.status(404).render("error_404");
     }
-}
+};
 
 /**
  * 获取指定图片。
@@ -219,4 +219,4 @@ exports.getTopStoryIDs = function (p_res)
     {
         p_res.status(404).render("error_404");
     }).pipe(p_res);
-}
+};
