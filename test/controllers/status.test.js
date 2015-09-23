@@ -29,8 +29,8 @@ describe("controllers/status", function ()
         {
             new Status({
                 username : "Zoro",
-                newest : "20150909",
-                oldest : "20150910"
+                startDate : "20150909",
+                endDate : "20150910"
             }).save(done);
         });
     });
@@ -65,14 +65,14 @@ describe("controllers/status", function ()
         {
             var status = {
                 username: "Zoro",
-                oldest: "20150910"
+                endDate: "20150910"
             };
             
             StatusController.saveStatus(status, function (err, res)
             {
                 should.not.exist(err);
                 res.username.should.equal(status.username);
-                res.oldest.should.equal(status.oldest);
+                res.endDate.should.equal(status.endDate);
                 done();
             });
         });
