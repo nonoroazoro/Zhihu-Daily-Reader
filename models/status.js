@@ -12,16 +12,16 @@ var StatusSchema = new Schema({
     username: { type: String },
     
     /**
-     * 已离线的最新的日报的日期。
+     * 已离线的日报时间范围（最新）。
      * @type {String}
      */
-    newest: { type: String },
+    startDate: { type: String },
     
     /**
-     * 已离线的最旧的日报的日期。
+     * 已离线的日报时间范围（最旧）。
      * @type {String}
      */
-    oldest: { type: String }
+    endDate: { type: String }
 });
 
 StatusSchema.index({ username: 1 }, { unique: true });
