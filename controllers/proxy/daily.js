@@ -7,27 +7,27 @@ var options = { baseUrl : config.zhihu_daily_api };
 var dailyRequest = require("request").defaults(options);
 var imgRequest = require("request");
 
+var utils = require("../utils");
 const PREFIX = "/api/4/imgs/";
+const MINDATE = utils.convertZhihuDateToMoment("20130520");
 
 /**
- * 获取最新日报（即今天截止目前为止的日报）的索引。
+ * 从知乎日报服务器获取最新的知乎日报 ID 列表。
  */
-exports.getLatestStoryIndexes = function (p_res)
+exports.getLatestStoryIDs = function (p_res)
 {
     dailyRequest.get({ url: "/news/latest", json: true }, function (error, response, body)
     {
         if (!error && response.statusCode == 200)
         {
             // 因知乎日报的 API 返回的图片太小，这里直接丢弃，后面再通过其他途径获取图片。
-            var indexes = body.stories.map(function (item)
-            {
-                return item.id;
-            });
-            
             p_res.set(response.headers);
             p_res.json({
                 date: body.date,
-                indexes: indexes
+                ids: body.stories.map(function (item)
+                {
+                    return item.id;
+                })
             });
         }
         else
@@ -38,15 +38,15 @@ exports.getLatestStoryIndexes = function (p_res)
 }
 
 /**
- * 获取最新热门日报的索引。
+ * 从知乎日报服务器获取热门日报的 ID 列表。
  */
-exports.getTopStoryIndexes = function (p_res)
+exports.getTopStoryIDs = function (p_res)
 {
     dailyRequest.get({ url: "/news/latest", json: true }, function (error, response, body)
     {
         if (!error && response.statusCode == 200)
         {
-            var indexes = body.top_stories.map(function (item)
+            var ids = body.top_stories.map(function (item)
             {
                 return {
                     id: item.id,
@@ -58,7 +58,7 @@ exports.getTopStoryIndexes = function (p_res)
             p_res.set(response.headers);
             p_res.json({
                 date: body.date,
-                indexes: indexes
+                ids: ids
             });
         }
         else
@@ -69,37 +69,45 @@ exports.getTopStoryIndexes = function (p_res)
 }
 
 /**
- * 获取指定日期的日报的索引。
+ * 从知乎日报服务器获取指定日期的知乎日报 ID 列表。
  * @param String p_date 指定的日期。如果小于 20130519，返回值为 {}。
  */
- exports.getStoryIndexes = function (p_date, p_res)
+ exports.getStoryIDs = function (p_date, p_res)
 {
-    var m = moment(p_date, "YYYYMMDD", true);
-    if (m.isValid())
+    // 因知乎日报 API 返回的是指定日期的前一天的日报，
+    // 所以要加一天才能获取指定日期的日报。
+    var date = utils.nextZhihuDay(p_date);
+    if (date)
     {
-        // 因知乎日报 API 返回的是指定日期的前一天的日报，所以要加一天才能获取指定日期的日报。
-        var date = m.add(1, "day").format("YYYYMMDD");
-        dailyRequest.get({ url: "/news/before/" + date, json: true }, function (error, response, body)
+        if (utils.convertZhihuDateToMoment(date).isBefore(MINDATE))
         {
-            if (!error && response.statusCode == 200)
+            // 20130519 之前是没有知乎日报的。
+            p_res.json({
+                date: p_date,
+                ids: {}
+            });
+        }
+        else
+        {
+            dailyRequest.get({ url: "/news/before/" + date, json: true }, function (error, response, body)
             {
-                // 因知乎日报的 API 返回的图片太小，这里直接丢弃，后面再通过其他途径获取图片。
-                var indexes = body.stories.map(function (item)
+                if (!error && response.statusCode == 200)
                 {
-                    return item.id;
-                });
-                
-                p_res.set(response.headers);
-                p_res.json({
-                    date: body.date,
-                    indexes: indexes
-                });
-            }
-            else
-            {
-                p_res.status(404).render("error_404");
-            }
-        });
+                    p_res.set(response.headers);
+                    p_res.json({
+                        date: body.date,
+                        ids: body.stories.map(function (item)
+                        {
+                            return item.id;
+                        })
+                    });
+                }
+                else
+                {
+                    p_res.status(404).render("error_404");
+                }
+            });
+        }
     }
     else
     {
@@ -108,12 +116,12 @@ exports.getTopStoryIndexes = function (p_res)
 }
 
 /**
- * 获取指定唯一标识的日报。
+ * 从知乎日报服务器获取指定 ID 的知乎日报。
  * @param String p_id 指定的唯一标识。
  */
  exports.getStory = function (p_id, p_res)
 {
-    // 首先检查 Id 是否为纯数字。
+    // 首先检查 ID 是否为纯数字。
     if (/^\d+$/.test(p_id))
     {
         dailyRequest.get({ url: "/news/" + p_id, json: true }, function (error, response, body)

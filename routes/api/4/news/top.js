@@ -7,7 +7,7 @@ var daily = require(__base + "/controllers/proxy/daily");
 router.get("/", function (req, res, next)
 {
     //TODO: 暂时先用这种方法，后面加上爬虫。读取本地缓存。
-    daily.getTopStoryIndexes(res);
+    daily.getTopStoryIDs(res);
 });
 
 module.exports = router;

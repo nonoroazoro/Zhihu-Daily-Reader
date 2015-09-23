@@ -63,13 +63,13 @@ var DailyPage = React.createClass(
     */
     _loadTopStories: function ()
     {
-        DailyManager.getTopStoryIndexes(function (p_data)
+        DailyManager.getTopStoryIDs(function (p_data)
         {
             if (this.isMounted() && p_data && !p_data.error)
             {
                 this.setState(
                 {
-                    topStoryIndexes: p_data.indexes
+                    topStoryIndexes: p_data.ids
                 });
             }
         }.bind(this));
@@ -84,12 +84,12 @@ var DailyPage = React.createClass(
             loading: true
         }, function ()
         {
-            DailyManager.getStoryIndexes(function (p_data)
+            DailyManager.getStoryIDs(function (p_data)
             {
                 if (this.isMounted() && p_data && !p_data.error)
                 {
                     this._currentLoadedDate = p_data.date;
-                    this._addStoryIndexes(p_data.indexes);
+                    this._addStoryIndexes(p_data.ids);
                     this._loadPrevStories();
                 }
 
@@ -109,12 +109,12 @@ var DailyPage = React.createClass(
             loading: true
         }, function ()
         {
-            DailyManager.getStoryIndexes(function (p_data)
+            DailyManager.getStoryIDs(function (p_data)
             {
                 if (p_data && !p_data.error)
                 {
                     this._currentLoadedDate = p_data.date;
-                    this._addStoryIndexes(p_data.indexes);
+                    this._addStoryIndexes(p_data.ids);
                 }
 
                 this.setState({

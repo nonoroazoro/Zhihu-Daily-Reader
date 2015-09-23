@@ -12,9 +12,9 @@ exports.getFetchedStories = function ()
 }
 
 /**
- * 获取最新热门日报的索引。
+ * 获取最新热门日报的 ID 列表。
  */
-exports.getTopStoryIndexes = function (callback)
+exports.getTopStoryIDs = function (callback)
 {
     $.get("/api/4/news/top", function (p_data)
     {
@@ -26,10 +26,10 @@ exports.getTopStoryIndexes = function (callback)
 }
 
 /**
- * 获取指定日期的日报的索引。
+ * 获取指定日期的日报的 ID 列表。
  * @param String p_date 指定的日期。如果未指定，则返回最新日报的索引；如果小于 20130519，则返回 {}。
  */
-exports.getStoryIndexes = function (callback, p_date)
+exports.getStoryIDs = function (callback, p_date)
 {
     if (_.isEmpty(_.trim(p_date)))
     {
