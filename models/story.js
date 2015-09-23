@@ -6,7 +6,7 @@ var Schema = mongoose.Schema;
  */
 var StorySchema = new Schema({
     /**
-     * Id。
+     * ID。
      * @type {Number}
      */
     id: { type: Number },
@@ -24,13 +24,13 @@ var StorySchema = new Schema({
     read: { type: Boolean, default: false },
     
     /**
-     * 离线日报内容。
+     * 日报内容。
      * @type {String}
      */
     content: { type: String },
     
     /**
-     * 离线状态（表示日报内容是否已离线）。
+     * 是否已离线。
      * @type {Boolean}
      */
     cached: { type: Boolean, default: false }
