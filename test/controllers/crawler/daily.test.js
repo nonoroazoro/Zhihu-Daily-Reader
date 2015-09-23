@@ -3,6 +3,7 @@ var should = require("should");
 
 var daily = require("../../../controllers/crawler/daily");
 var dbhelper = require("../../../controllers/dbhelper");
+var utils = require("../../../controllers/utils");
 
 describe("controllers/crawler/daily", function ()
 {
@@ -22,7 +23,20 @@ describe("controllers/crawler/daily", function ()
         }
     });
     
-    describe("1.fetchStoryIndexes", function ()
+    describe("1.fetchLatestStoryIndexes", function ()
+    {
+        it("should fetch the latest story indexes", function (done)
+        {
+            daily.fetchLatestStoryIndexes(function (err, res)
+            {
+                should.not.exist(err);
+                res.date.should.equal(utils.convertToZhihuDate(new Date()));
+                done();
+            });
+        });
+    });
+    
+    describe("2.fetchStoryIndexes", function ()
     {
         it("should fetch the story indexes of date: 20130519", function (done)
         {
@@ -63,7 +77,7 @@ describe("controllers/crawler/daily", function ()
         });
     });
     
-    describe("2.fetchStory", function ()
+    describe("3.fetchStory", function ()
     {
         it("should fetch the story of id: 401", function (done)
         {
@@ -83,7 +97,7 @@ describe("controllers/crawler/daily", function ()
         });
     });
     
-    describe("3.cacheStory", function ()
+    describe("4.cacheStory", function ()
     {
         var id = 401;
         it("should cache the story of id: " + id, function (done)
@@ -98,7 +112,7 @@ describe("controllers/crawler/daily", function ()
         });
     });
     
-    describe("4.fetchStories", function ()
+    describe("5.fetchStories", function ()
     {
         var date = "20130519";
         it("should fetch the stories of date: " + date, function (done)

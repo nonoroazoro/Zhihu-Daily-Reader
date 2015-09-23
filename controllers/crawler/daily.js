@@ -13,6 +13,35 @@ const PREFIX = "/api/4/imgs/";
 const MINDATE = utils.convertZhihuDateToMoment("20130520");
 
 /**
+ * 从知乎日报服务器获取最新的知乎日报索引（今天截止目前为止的所有日报）。
+ */
+exports.fetchLatestStoryIndexes = function (p_callback)
+{
+    if (!_.isFunction(p_callback)) return;
+    
+    dailyRequest.get({ url: "/news/latest", json: true }, function (err, res, body)
+    {
+        if (!err && res.statusCode == 200)
+        {
+            // 因知乎日报的 API 返回的图片太小，这里直接丢弃，后面再通过其他途径获取图片。
+            var indexes = body.stories.map(function (value)
+            {
+                return value.id;
+            });
+            
+            p_callback(null, {
+                date: body.date,
+                indexes: indexes
+            });
+        }
+        else
+        {
+            p_callback(new Error("request zhihu-daily api ('/news/latest') error:" + err.message), null);
+        }
+    });
+};
+
+/**
  * 从知乎日报服务器获取指定日期的知乎日报索引（ID）。
  * @param  {String} p_date       指定的日期。如果小于 20130519，返回值 res 为 {}。
  * @param  {Function} p_callback 回调函数：function(err, res)。
@@ -37,9 +66,9 @@ exports.fetchStoryIndexes = function (p_date, p_callback)
             {
                 if (!err && res.statusCode == 200)
                 {
-                    var indexes = body.stories.map(function (item)
+                    var indexes = body.stories.map(function (value)
                     {
-                        return item.id;
+                        return value.id;
                     });
                     
                     p_callback(null, {
