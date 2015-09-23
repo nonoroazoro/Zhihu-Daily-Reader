@@ -23,11 +23,11 @@ describe("controllers/crawler/daily", function ()
         }
     });
     
-    describe("1.fetchLatestStoryIndexes", function ()
+    describe("1.fetchLatestStoryIDs", function ()
     {
-        it("should fetch the latest story indexes", function (done)
+        it("should fetch the latest story IDs", function (done)
         {
-            daily.fetchLatestStoryIndexes(function (err, res)
+            daily.fetchLatestStoryIDs(function (err, res)
             {
                 should.not.exist(err);
                 res.date.should.equal(utils.convertToZhihuDate(new Date()));
@@ -36,16 +36,16 @@ describe("controllers/crawler/daily", function ()
         });
     });
     
-    describe("2.fetchStoryIndexes", function ()
+    describe("2.fetchStoryIDs", function ()
     {
-        it("should fetch the story indexes of date: 20130519", function (done)
+        it("should fetch the story IDs of date: 20130519", function (done)
         {
             var date = "20130519"
             var target = {
                 date: "20130519",
-                indexes: [401, 396, 395, 394, 390, 388]
+                ids: [401, 396, 395, 394, 390, 388]
             };
-            daily.fetchStoryIndexes(date, function (err, res)
+            daily.fetchStoryIDs(date, function (err, res)
             {
                 should.not.exist(err);
                 res.date.should.equal(date);
@@ -54,11 +54,11 @@ describe("controllers/crawler/daily", function ()
             });
         });
         
-        it("should not fetch the story indexes of date: 20130518", function (done)
+        it("should not fetch the story IDs of date: 20130518", function (done)
         {
             var date = "20130518"
             var target = {};
-            daily.fetchStoryIndexes(date, function (err, res)
+            daily.fetchStoryIDs(date, function (err, res)
             {
                 should.not.exist(err);
                 res.should.deepEqual(target);
@@ -66,10 +66,10 @@ describe("controllers/crawler/daily", function ()
             });
         });
         
-        it("should not fetch the story indexes of date: 20133030", function (done)
+        it("should not fetch the story IDs of date: 20133030", function (done)
         {
             var date = "20133030"
-            daily.fetchStoryIndexes(date, function (err, res)
+            daily.fetchStoryIDs(date, function (err, res)
             {
                 should.exist(err);
                 done();
@@ -100,27 +100,59 @@ describe("controllers/crawler/daily", function ()
     describe("4.cacheStory", function ()
     {
         var id = 401;
+        var date = "20130520";
         it("should cache the story of id: " + id, function (done)
         {
-            daily.cacheStory(id, function (err, res)
+            daily.cacheStory(id, date, function (err, res)
             {
                 should.not.exist(err);
                 res.id.should.equal(id);
+                res.date.should.equal(date);
                 res.cached.should.be.true();
                 done();
             });
         });
     });
     
-    describe("5.fetchStories", function ()
+    describe("5.cacheLatestStories", function ()
     {
         var date = "20130519";
-        it("should fetch the stories of date: " + date, function (done)
+        it("should cache the latest stories", function (done)
         {
-            daily.cacheStories(date, function (err, res)
+            daily.cacheLatestStories(function (err, res)
             {
                 should.not.exist(err);
                 done();
+            });
+        });
+    });
+    
+    describe("6.cacheStoriesOfDate", function ()
+    {
+        var date = "20130519";
+        it("should cache the stories of date: " + date, function (done)
+        {
+            daily.cacheStoriesOfDate(date, function (err, res)
+            {
+                should.not.exist(err);
+                done();
+            });
+        });
+    });
+    
+    describe("7.cacheStories", function ()
+    {
+        var date = "20130519";
+        it("should cache the stories of date: " + date + " and  IDs", function (done)
+        {
+            daily.fetchStoryIDs(date, function (err, res)
+            {
+                should.not.exist(err);
+                daily.cacheStories(res.ids, date, function (err, res)
+                {
+                    should.not.exist(err);
+                    done();
+                });
             });
         });
     });
