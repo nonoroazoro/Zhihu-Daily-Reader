@@ -195,7 +195,7 @@ exports.cacheStory = function (p_id, p_date, p_callback)
 {
     async.retry({
         times: config.crawler.daily_retry,
-        interval: config.crawler.daily_interval
+        interval: config.crawler.daily_interval * 1000
     }, this.fetchStory.bind(this, p_id), function (err, res)
     {
         // 记录未成功抓取的日报。
