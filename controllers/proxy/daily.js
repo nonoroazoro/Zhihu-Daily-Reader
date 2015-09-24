@@ -9,7 +9,6 @@ var imgRequest = require("request");
 
 var utils = require("../utils");
 const PREFIX = "/api/4/imgs/";
-const MINDATE = utils.convertZhihuDateToMoment("20130520");
 
 /**
  * 从知乎日报服务器获取最新的知乎日报 ID 列表。
@@ -79,7 +78,7 @@ exports.getTopStoryIDs = function (p_res)
     var date = utils.nextZhihuDay(p_date);
     if (date)
     {
-        if (utils.convertZhihuDateToMoment(date).isBefore(MINDATE))
+        if (utils.convertZhihuDateToMoment(date).isBefore(utils.MIN_DATE))
         {
             // 20130519 之前是没有知乎日报的。
             p_res.json({

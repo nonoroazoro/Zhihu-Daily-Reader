@@ -2,6 +2,12 @@
 var moment = require("moment");
 
 const FormatString = "YYYYMMDD";
+const MinDateString = "20130520";
+
+/**
+ * 知乎日报的起始日期（早于该日期还没有日报呢）。
+ */
+exports.MIN_DATE = moment(MinDateString, FormatString, true);
 
 /**
  * 转换指定的日期为知乎日期格式。
