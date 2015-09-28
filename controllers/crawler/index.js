@@ -3,6 +3,7 @@ var async = require("async");
 var config = require("config");
 
 var daily = require("./daily");
+var story = require("../story");
 var status = require("../status");
 var utils = require("../utils");
 var dbhelper = require("../dbhelper");
@@ -15,7 +16,19 @@ var stop = false;
 exports.start = function ()
 {
     stop = false;
-    _run();
+    if (dbhelper.connected())
+    {
+        async.waterfall([
+            _cacheLatestTask,
+            _cleanCacheTask,
+        ], function (err, res)
+        {
+            if (!err)
+            {
+                _cachePrev(res.date, res.max_age);
+            }
+        });
+    }
 };
 
 /**
@@ -27,66 +40,55 @@ exports.stop = function ()
 };
 
 /**
- * 爬虫。
+ * 1. 离线 Latest 日报。同时记录最大缓存日期）。
  */
-function _run()
+function _cacheLatestTask(p_callback)
 {
-    if (dbhelper.connected())
+    daily.cacheLatestStories(function (err, res)
     {
-        async.waterfall(
-            [
-                _initTask,
-                _cacheStoriesTask
-            ], function (err, res)
+        if (!err)
+        {
+            res.max_age = utils.subZhihuDate(res.date, config.crawler.max_age);
+        }
+        p_callback(err, res);
+    });
+}
+
+/**
+ * 2. 清除过期缓存。
+ */
+function _cleanCacheTask(p_res, p_callback)
+{
+    story.removeOldStories(p_res.max_age, function (err, res)
+    {
+        if (!err)
+        {
+            res.max_age = p_res.max_age;
+            res.date = p_res.date;
+        }
+        p_callback(err, res);
+    });
+}
+
+/**
+ * 爬取指定日期的前一天的日报。
+ * @param {Object} p_context 上下文信息，包含当前日期、最大日期等。
+ */
+function _cachePrev(p_date, p_maxDate)
+{
+    var prevDate = utils.prevZhihuDay(p_date);
+    if (prevDate >= p_maxDate)
+    {
+        daily.cacheStoriesOfDate(prevDate, function (err, res)
+        {
+            console.log(res);
+            if (!stop)
             {
-                console.log(res);
-                if (!stop)
+                setTimeout(function ()
                 {
-                    setTimeout(function ()
-                    {
-                        _run();
-                    }, config.crawler.day_interval);
-                }
+                    _cachePrev(prevDate, p_maxDate);
+                }, config.crawler.day_interval * 1000);
             }
-        );
-    }
-}
-
-/**
- * 初始化，得到爬虫起始日期，例如："20150915"。
- */
-function _initTask(done)
-{
-    status.findStatusByUsername(config.username, function (err, res)
-    {
-        var date = null;
-        if (!err && res)
-        {
-            date = utils.prevZhihuDay(res.oldest);
-        }
-        
-        if (!date)
-        {
-            date = utils.convertToZhihuDate(new Date());
-        }
-        
-        done(null, date);
-    });
-}
-
-/**
- * 爬取指定日期的日报。
- */
-function _cacheStoriesTask(p_date, done)
-{
-    daily.cacheStories(p_date, function (error, result)
-    {
-        status.saveStatus({
-            username: config.username,
-            oldest: p_date
-        }, function (err, res)
-        {
-            done(error, result);
         });
-    });
+    }
 }
