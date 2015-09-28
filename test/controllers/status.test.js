@@ -40,10 +40,11 @@ describe("controllers/status", function ()
         var username = "Zoro";
         it("should find the status of user: '" + username + "'", function (done)
         {
-            StatusController.findStatusByUsername(username, function (err, res)
+            StatusController.findStatusByUsername(username, function (err, doc)
             {
                 should.not.exist(err);
-                res.username.should.equal(username);
+                should.exist(doc);
+                doc.username.should.equal(username);
                 done();
             });
         });
@@ -51,9 +52,9 @@ describe("controllers/status", function ()
         var wrongUsername = " ";
         it("should not find the status of user: '" + wrongUsername + "'", function (done)
         {
-            StatusController.findStatusByUsername(wrongUsername, function (err, res)
+            StatusController.findStatusByUsername(wrongUsername, function (err, doc)
             {
-                should.not.exist(res);
+                should.not.exist(doc);
                 done();
             });
         });
@@ -68,11 +69,12 @@ describe("controllers/status", function ()
                 endDate: "20150910"
             };
             
-            StatusController.saveStatus(status, function (err, res)
+            StatusController.saveStatus(status, function (err, doc)
             {
                 should.not.exist(err);
-                res.username.should.equal(status.username);
-                res.endDate.should.equal(status.endDate);
+                should.exist(doc);
+                doc.username.should.equal(status.username);
+                doc.endDate.should.equal(status.endDate);
                 done();
             });
         });
