@@ -5,7 +5,7 @@ var mongoose = require("mongoose");
 
 /**
  * 连接数据库。
- * @param  {Function} p_callback 回调函数。
+ * @param {Function(err)} [p_callback]
  */
 exports.connect = function (p_callback)
 {
@@ -31,7 +31,7 @@ exports.connect = function (p_callback)
 
 /**
  * 删除所有集合。
- * @param  {Function} p_callback 回调函数。
+ * @param {Function(err)} [p_callback]
  */
  exports.dropAllCollections = function (p_callback)
 {
