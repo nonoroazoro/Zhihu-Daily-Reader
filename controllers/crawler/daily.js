@@ -13,7 +13,7 @@ const PREFIX = "/api/4/imgs/";
 
 /**
  * 从知乎日报服务器获取最新的知乎日报 ID 列表。
- * @param  {Function} p_callback 回调函数：function(err, res)。
+ * @param {Function(err, res)} [p_callback]
  */
 exports.fetchLatestStoryIDs = function (p_callback)
 {
@@ -41,8 +41,8 @@ exports.fetchLatestStoryIDs = function (p_callback)
 
 /**
  * 从知乎日报服务器获取指定日期的知乎日报 ID 列表。
- * @param  {String} p_date       指定的日期。如果小于 20130519，返回值 res 为 {}。
- * @param  {Function} p_callback 回调函数：function(err, res)。
+ * @param {String} p_date 日期。如果小于"20130519"，返回值 res 为 {}。
+ * @param {Function(err, res)} [p_callback]
  */
 exports.fetchStoryIDs = function (p_date, p_callback)
 {
@@ -55,7 +55,7 @@ exports.fetchStoryIDs = function (p_date, p_callback)
     {
         if (utils.convertZhihuDateToMoment(date).isBefore(utils.MIN_DATE))
         {
-            // 20130519 之前是没有知乎日报的。
+            // "20130519"之前是没有知乎日报的。
             p_callback(null, {});
         }
         else
@@ -87,14 +87,14 @@ exports.fetchStoryIDs = function (p_date, p_callback)
 
 /**
  * 从知乎日报服务器获取指定 ID 的知乎日报。
- * @param  {String} p_id         指定的 ID。
- * @param  {Function} p_callback 回调函数：function(err, res)。
+ * @param {String} p_id ID。
+ * @param {Function(err, res)} [p_callback]
  */
 exports.fetchStory = function (p_id, p_callback)
 {
     if (!_.isFunction(p_callback)) return;
     
-    // 首先检查 ID 是否为纯数字。
+    // 检查 ID 是否为纯数字。
     if (/^\d+$/.test(p_id))
     {
         dailyRequest.get({ url: "/news/" + p_id, json: true }, function (err, res, body)
@@ -186,9 +186,9 @@ exports.fetchStory = function (p_id, p_callback)
 
 /**
  * 离线指定的日报。
- * @param  {String} p_id         知乎日报 ID。
- * @param  {String} p_date       日报对应的日期。
- * @param  {Function} p_callback 回调函数：function(err, res)。
+ * @param {String} p_id ID。
+ * @param {String} p_date 日期。
+ * @param {Function(err, res)} [p_callback]
  */
 exports.cacheStory = function (p_id, p_date, p_callback)
 {
@@ -197,7 +197,7 @@ exports.cacheStory = function (p_id, p_date, p_callback)
         interval: config.crawler.daily_interval * 1000
     }, this.fetchStory.bind(this, p_id), function (err, res)
     {
-        // 记录未成功抓取的日报。
+        // 不管抓取失败与否，都将 ID 记录下来（完备）。
         if (err)
         {
             story.logUncachedStory(p_id, p_date, p_callback);
@@ -212,7 +212,7 @@ exports.cacheStory = function (p_id, p_date, p_callback)
 
 /**
  * 离线最新的知乎日报。
- * @param  {Function} p_callback 回调函数：function(err, res)。
+ * @param {Function(err, res)} [p_callback]
  */
 exports.cacheLatestStories = function (p_callback)
 {
@@ -228,8 +228,8 @@ exports.cacheLatestStories = function (p_callback)
 
 /**
  * 离线指定日期的知乎日报。
- * @param  {String} p_date       指定的日期。
- * @param  {Function} p_callback 回调函数：function(err, res)。
+ * @param {String} p_date 指定的日期。
+ * @param {Function(err, res)} [p_callback]
  */
 exports.cacheStoriesOfDate = function (p_date, p_callback)
 {
@@ -245,9 +245,9 @@ exports.cacheStoriesOfDate = function (p_date, p_callback)
 
 /**
  * 离线知乎日报。
- * @param  {Array} p_ids         指定的知乎日报 ID 列表。
- * @param  {String} p_date       指定的日期。
- * @param  {Function} p_callback 回调函数：function(err, res)。
+ * @param {Array} p_ids ID 列表。
+ * @param {String} p_date 日期。
+ * @param {Function(err, res)} [p_callback]
  */
 exports.cacheStories = function (p_ids, p_date, p_callback)
 {
@@ -262,6 +262,9 @@ exports.cacheStories = function (p_ids, p_date, p_callback)
 
 /**
  * 预处理：排除已离线的日报。
+ * @param {Array} p_ids ID 列表。
+ * @param {String} p_date 日期。
+ * @param {Function(err, ids, date)} [p_callback]
  */
 function _preprocessTask(p_ids, p_date, p_callback)
 {
@@ -290,6 +293,7 @@ function _preprocessTask(p_ids, p_date, p_callback)
 
 /**
  * 获取最新的知乎日报 ID 列表。
+ * @param {Function(err, ids, date)} [p_callback]
  */
 function _fetchLatestStoryIDsTask(p_callback)
 {
@@ -308,6 +312,8 @@ function _fetchLatestStoryIDsTask(p_callback)
 
 /**
  * 获取指定日期的知乎日报 ID 列表。
+ * @param {String} p_date 日期。
+ * @param {Function(err, ids, date)} [p_callback]
  */
 function _fetchStoryIDsTask(p_date, p_callback)
 {
@@ -326,6 +332,9 @@ function _fetchStoryIDsTask(p_date, p_callback)
 
 /**
  * 离线知乎日报。
+ * @param {Aarray} p_ids ID 列表。
+ * @param {String} p_date 日期。
+ * @param {Function(err, res)} [p_callback]
  */
 function _cacheStoriesTask(p_ids, p_date, p_callback)
 {
@@ -348,8 +357,8 @@ function _cacheStoriesTask(p_ids, p_date, p_callback)
 
 /**
  * 从知乎日报服务器获取获取指定的图片。
- * @param  {String} p_url        指定的图片地址。
- * @param  {Function} p_callback 回调函数：function(err, res)。
+ * @param {String} p_url 图片地址。
+ * @param {Function(err, res)} [p_callback]
  */
 exports.fetchImage = function (p_url, p_res)
 {
