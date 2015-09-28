@@ -11,7 +11,7 @@ exports.MIN_DATE = moment(MinDateString, FormatString, true);
 
 /**
  * 转换指定的日期为知乎日期格式。
- * @param [Date, String] p_date 指定的日期。
+ * @param {String|Date} p_date 指定的日期。
  * @return String 返回计算结果，形如"20150726"；如果 p_date 是无效的日期，则返回 null。
  */
 exports.convertToZhihuDate = function (p_date)
