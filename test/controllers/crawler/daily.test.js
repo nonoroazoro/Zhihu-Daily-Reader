@@ -79,7 +79,7 @@ describe("controllers/crawler/daily", function ()
     
     describe("3.fetchStory", function ()
     {
-        it("should fetch the story of id: 401", function (done)
+        it("should fetch the story of ID: 401", function (done)
         {
             var id = 401;
             var title = "学英语才是正经事儿";
@@ -101,7 +101,7 @@ describe("controllers/crawler/daily", function ()
     {
         var id = 401;
         var date = "20130520";
-        it("should cache the story of id: " + id, function (done)
+        it("should cache the story of ID: " + id, function (done)
         {
             daily.cacheStory(id, date, function (err, res)
             {
@@ -143,7 +143,7 @@ describe("controllers/crawler/daily", function ()
     describe("7.cacheStories", function ()
     {
         var date = "20130519";
-        it("should cache the stories of date: " + date + " and  IDs", function (done)
+        it("should cache the stories of date: " + date + " and IDs", function (done)
         {
             daily.fetchStoryIDs(date, function (err, res)
             {
