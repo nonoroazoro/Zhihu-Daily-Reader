@@ -72,7 +72,8 @@ function _cleanCacheTask(p_res, p_callback)
 
 /**
  * 爬取指定日期的前一天的日报。
- * @param {Object} p_context 上下文信息，包含当前日期、最大日期等。
+ * @param {String} p_date 日期。
+ * @param {String} p_maxDate 允许缓存的最早日期。
  */
 function _cachePrev(p_date, p_maxDate)
 {
