@@ -2,9 +2,10 @@
 var moment = require("moment");
 var cheerio = require("cheerio");
 var querystring = require("querystring");
+var dailyRequest = require("request").defaults({
+    baseUrl : config.zhihu_daily_api
+});
 
-var options = { baseUrl : config.zhihu_daily_api };
-var dailyRequest = require("request").defaults(options);
 var imgRequest = require("request");
 
 var utils = require("../utils");
@@ -15,17 +16,17 @@ const PREFIX = "/api/4/imgs/";
  */
 exports.getLatestStoryIDs = function (p_res)
 {
-    dailyRequest.get({ url: "/news/latest", json: true }, function (error, response, body)
+    dailyRequest.get({ url: "/news/latest", json: true }, function (err, res, body)
     {
-        if (!error && response.statusCode == 200)
+        if (!err && res.statusCode == 200)
         {
             // 因知乎日报的 API 返回的图片太小，这里直接丢弃，后面再通过其他途径获取图片。
-            p_res.set(response.headers);
+            p_res.set(res.headers);
             p_res.json({
                 date: body.date,
-                ids: body.stories.map(function (item)
+                ids: body.stories.map(function (value)
                 {
-                    return item.id;
+                    return value.id;
                 })
             });
         }
@@ -41,20 +42,20 @@ exports.getLatestStoryIDs = function (p_res)
  */
 exports.getTopStoryIDs = function (p_res)
 {
-    dailyRequest.get({ url: "/news/latest", json: true }, function (error, response, body)
+    dailyRequest.get({ url: "/news/latest", json: true }, function (err, response, body)
     {
-        if (!error && response.statusCode == 200)
+        if (!err && res.statusCode == 200)
         {
-            var ids = body.top_stories.map(function (item)
+            var ids = body.top_stories.map(function (value)
             {
                 return {
-                    id: item.id,
-                    title: item.title,
-                    image: PREFIX + querystring.escape(item.image)
+                    id: value.id,
+                    title: value.title,
+                    image: PREFIX + querystring.escape(value.image)
                 };
             });
             
-            p_res.set(response.headers);
+            p_res.set(res.headers);
             p_res.json({
                 date: body.date,
                 ids: ids
@@ -69,7 +70,7 @@ exports.getTopStoryIDs = function (p_res)
 
 /**
  * 从知乎日报服务器获取指定日期的知乎日报 ID 列表。
- * @param String p_date 指定的日期。如果小于 20130519，返回值为 {}。
+ * @param {String} p_date 日期。如果小于"20130519"，返回值为 {}。
  */
  exports.getStoryIDs = function (p_date, p_res)
 {
@@ -80,7 +81,7 @@ exports.getTopStoryIDs = function (p_res)
     {
         if (utils.convertZhihuDateToMoment(date).isBefore(utils.MIN_DATE))
         {
-            // 20130519 之前是没有知乎日报的。
+            // "20130519"之前是没有知乎日报的。
             p_res.json({
                 date: p_date,
                 ids: {}
@@ -88,16 +89,16 @@ exports.getTopStoryIDs = function (p_res)
         }
         else
         {
-            dailyRequest.get({ url: "/news/before/" + date, json: true }, function (error, response, body)
+            dailyRequest.get({ url: "/news/before/" + date, json: true }, function (err, res, body)
             {
-                if (!error && response.statusCode == 200)
+                if (!err && res.statusCode == 200)
                 {
-                    p_res.set(response.headers);
+                    p_res.set(res.headers);
                     p_res.json({
                         date: body.date,
-                        ids: body.stories.map(function (item)
+                        ids: body.stories.map(function (value)
                         {
-                            return item.id;
+                            return value.id;
                         })
                     });
                 }
@@ -116,11 +117,11 @@ exports.getTopStoryIDs = function (p_res)
 
 /**
  * 从知乎日报服务器获取指定 ID 的知乎日报。
- * @param String p_id 指定的唯一标识。
+ * @param {String} p_id ID。
  */
  exports.getStory = function (p_id, p_res)
 {
-    // 首先检查 ID 是否为纯数字。
+    // 检查 ID 是否为纯数字。
     if (/^\d+$/.test(p_id))
     {
         dailyRequest.get({ url: "/news/" + p_id, json: true }, function (error, response, body)
@@ -209,7 +210,7 @@ exports.getTopStoryIDs = function (p_res)
 
 /**
  * 获取指定图片。
- * @param p_url 图片地址。
+ * @param {String} p_url 地址。
  */
  exports.getImage = function (p_url, p_res)
 {

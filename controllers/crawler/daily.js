@@ -360,7 +360,7 @@ function _cacheStoriesTask(p_ids, p_date, p_callback)
  * @param {String} p_url 图片地址。
  * @param {Function(err, res)} [p_callback]
  */
-exports.fetchImage = function (p_url, p_res)
+exports.fetchImage = function (p_url, p_callback)
 {
     if (!_.isFunction(p_callback)) return;
     // TODO:
