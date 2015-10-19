@@ -93,4 +93,8 @@ function _cachePrev(p_date, p_maxDate)
             }
         });
     }
+    else
+    {
+        console.log("Cached to max age(" + p_maxDate + "), crawler stopped.");
+    }
 }
