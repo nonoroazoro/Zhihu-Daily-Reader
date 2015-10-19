@@ -22,16 +22,19 @@ var FlexTile = React.createClass(
     {
         if (this.props.id)
         {
-            DailyManager.getStory(function (data)
-            {
-                if (this.isMounted() && data)
+            DailyManager.getStory(
+                this.props.id,
+                function (err, res)
                 {
-                    this.setState(
+                    if (this.isMounted() && !err && res)
                     {
-                        story: data
-                    });
-                }
-            }.bind(this), this.props.id);
+                        this.setState(
+                        {
+                            story: res
+                        });
+                    }
+                }.bind(this)
+            );
         }
     },
 

@@ -13,39 +13,50 @@ exports.getFetchedStories = function ()
 
 /**
  * 获取最新热门日报的 ID 列表。
+ * @param {Function(err, res)} [p_callback]
  */
-exports.getTopStoryIDs = function (callback)
+exports.getTopStoryIDs = function (p_callback)
 {
     $.get("/api/4/news/top", function (p_data)
     {
-        callback(p_data);
+        p_callback(null, p_data);
     }).fail(function ()
     {
-        callback({ error: "error" });
+        p_callback("/api/4/news/top error");
     });
 }
 
 /**
  * 获取指定日期的日报的 ID 列表。
  * @param String p_date 指定的日期。如果未指定，则返回最新日报的索引；如果小于 20130519，则返回 {}。
+ * @param {Function(err, res)} [p_callback]
  */
-exports.getStoryIDs = function (callback, p_date)
+exports.getStoryIDs = function (p_date, p_callback)
 {
+    if (_.isFunction(p_date))
+    {
+        p_callback = p_date;
+        p_date = null;
+    }
+    
     if (_.isEmpty(_.trim(p_date)))
     {
         $.get("/api/4/news/before", function (p_data)
         {
-            callback(p_data);
+            p_callback(null, p_data);
         }).fail(function ()
         {
-            callback({ error: "error" });
+            p_callback("/api/4/news/before error");
         });
     }
     else
     {
-        $.get("/api/4/news/before/" + p_date, callback).fail(function ()
+        $.get("/api/4/news/before/" + p_date, function (p_data)
         {
-            callback({ error: "error" });
+            p_callback(null, p_data);
+        }).fail(function ()
+        {
+            p_callback("/api/4/news/before/" + +p_date + " error");
         });
     }
 }
@@ -53,15 +64,29 @@ exports.getStoryIDs = function (callback, p_date)
 /**
  * 获取指定唯一标识的日报。
  * @param String p_id 指定的唯一标识。
+ * @param {Function(err, res)} [p_callback]
  */
-exports.getStory = function (callback, p_id)
+exports.getStory = function (p_id, p_callback)
 {
-    $.get("/api/4/news/" + p_id, function (p_data)
+    if (_.isFunction(p_callback))
     {
-        _stories[p_id] = p_data;
-        callback(p_data);
-    }).fail(function ()
-    {
-        callback({ error: "error" });
-    });
+        if (_.isEmpty(_.trim(p_id)))
+        {
+            if (_.isFunction(p_callback))
+            {
+                p_callback("p_id must not be null");
+            }
+        }
+        else
+        {
+            $.get("/api/4/news/" + p_id, function (p_data)
+            {
+                _stories[p_id] = p_data;
+                p_callback(null, p_data);
+            }).fail(function ()
+            {
+                p_callback("/api/4/news/ error");
+            });
+        }
+    }
 }

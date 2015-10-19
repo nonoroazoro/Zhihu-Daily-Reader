@@ -63,13 +63,13 @@ var DailyPage = React.createClass(
     */
     _loadTopStories: function ()
     {
-        DailyManager.getTopStoryIDs(function (p_data)
+        DailyManager.getTopStoryIDs(function (err, res)
         {
-            if (this.isMounted() && p_data && !p_data.error)
+            if (this.isMounted() && !err && res)
             {
                 this.setState(
                 {
-                    topStoryIndexes: p_data.ids
+                    topStoryIndexes: res.ids
                 });
             }
         }.bind(this));
@@ -84,12 +84,12 @@ var DailyPage = React.createClass(
             loading: true
         }, function ()
         {
-            DailyManager.getStoryIDs(function (p_data)
+            DailyManager.getStoryIDs(function (err, res)
             {
-                if (this.isMounted() && p_data && !p_data.error)
+                if (this.isMounted() && !err && res)
                 {
-                    this._currentLoadedDate = p_data.date;
-                    this._addStoryIndexes(p_data.ids);
+                    this._currentLoadedDate = res.date;
+                    this._addStoryIndexes(res.ids);
                     this._loadPrevStories();
                 }
 
@@ -109,23 +109,26 @@ var DailyPage = React.createClass(
             loading: true
         }, function ()
         {
-            DailyManager.getStoryIDs(function (p_data)
-            {
-                if (p_data && !p_data.error)
+            DailyManager.getStoryIDs(
+                Utils.prevZhihuDay(this._currentLoadedDate),
+                function (err, res)
                 {
-                    this._currentLoadedDate = p_data.date;
-                    this._addStoryIndexes(p_data.ids);
-                }
+                    if (!err && res)
+                    {
+                        this._currentLoadedDate = res.date;
+                        this._addStoryIndexes(res.ids);
+                    }
 
-                this.setState({
-                    loading: false
-                });
+                    this.setState({
+                        loading: false
+                    });
 
-                if(_.isFunction(p_callback))
-                {
-                    p_callback();
-                }
-            }.bind(this), Utils.prevZhihuDay(this._currentLoadedDate));
+                    if(_.isFunction(p_callback))
+                    {
+                        p_callback();
+                    }
+                }.bind(this)
+            );
         });
     },
 
