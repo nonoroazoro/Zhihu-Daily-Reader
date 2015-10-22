@@ -116,7 +116,7 @@ describe("controllers/crawler/daily", function ()
     
     describe("5.cacheLatestStories", function ()
     {
-        var date = "20130519";
+        this.timeout(5000);
         it("should cache the latest stories", function (done)
         {
             daily.cacheLatestStories(function (err, res)
@@ -129,6 +129,7 @@ describe("controllers/crawler/daily", function ()
     
     describe("6.cacheStoriesOfDate", function ()
     {
+        this.timeout(5000);
         var date = "20130519";
         it("should cache the stories of date: " + date, function (done)
         {
@@ -142,13 +143,14 @@ describe("controllers/crawler/daily", function ()
     
     describe("7.cacheStories", function ()
     {
+        this.timeout(5000);
         var date = "20130519";
         it("should cache the stories of date: " + date + " and IDs", function (done)
         {
             daily.fetchStoryIDs(date, function (err, res)
             {
                 should.not.exist(err);
-                daily.cacheStories(res.ids, date, function (err, res)
+                daily.cacheStories(date, res.ids, function (err, res)
                 {
                     should.not.exist(err);
                     done();
