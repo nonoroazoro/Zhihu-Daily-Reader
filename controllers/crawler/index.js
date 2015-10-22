@@ -60,14 +60,9 @@ function _cacheLatestTask(p_callback)
  */
 function _cleanCacheTask(p_res, p_callback)
 {
-    story.removeOldStories(p_res.max_age, function (err, res)
+    story.removeOldStories(p_res.max_age, function ()
     {
-        if (!err)
-        {
-            res.max_age = p_res.max_age;
-            res.date = p_res.date;
-        }
-        p_callback(err, res);
+        p_callback(null, p_res);
     });
 }
 
