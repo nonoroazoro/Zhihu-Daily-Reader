@@ -34,7 +34,7 @@ exports.fetchLatestStoryIDs = function (p_callback)
         }
         else
         {
-            p_callback(new Error("request zhihu-daily api ('/news/latest') error:" + err.message), null);
+            p_callback(new Error("request zhihu-daily api ('/news/latest') error."), null);
         }
     });
 };
@@ -74,7 +74,7 @@ exports.fetchStoryIDs = function (p_date, p_callback)
                 }
                 else
                 {
-                    p_callback(new Error("request zhihu-daily api ('/news/before/:date') error:" + err.message), null);
+                    p_callback(new Error("request zhihu-daily api ('/news/before/:date') error."), null);
                 }
             });
         }
@@ -174,7 +174,7 @@ exports.fetchStory = function (p_id, p_callback)
             }
             else
             {
-                p_callback(new Error("request zhihu-daily api ('/news/:id') error:" + err.message), null);
+                p_callback(new Error("request zhihu-daily api ('/news/:id') error."), null);
             }
         });
     }
@@ -218,7 +218,7 @@ exports.cacheLatestStories = function (p_callback)
 {
     async.waterfall(
         [
-            _fetchLatestStoryIDsTask.bind(this),
+            this.fetchLatestStoryIDs,
             _preprocessTask,
             _cacheStoriesTask.bind(this)
         ],
@@ -235,7 +235,7 @@ exports.cacheStoriesOfDate = function (p_date, p_callback)
 {
     async.waterfall(
         [
-            _fetchStoryIDsTask.bind(this, p_date),
+            this.fetchStoryIDs.bind(this, p_date),
             _preprocessTask,
             _cacheStoriesTask.bind(this)
         ],
@@ -245,15 +245,16 @@ exports.cacheStoriesOfDate = function (p_date, p_callback)
 
 /**
  * 离线知乎日报。
- * @param {Array} p_ids ID 列表。
  * @param {String} p_date 日期。
+ * @param {Array} p_ids ID 列表。
  * @param {Function(err, res)} [p_callback]
  */
-exports.cacheStories = function (p_ids, p_date, p_callback)
+exports.cacheStories = function (p_date, p_ids, p_callback)
 {
+    var res = { date: p_date, ids: p_ids };
     async.waterfall(
         [
-            _preprocessTask.bind(this, p_ids, p_date),
+            _preprocessTask.bind(this, res),
             _cacheStoriesTask.bind(this)
         ],
         p_callback
@@ -261,15 +262,14 @@ exports.cacheStories = function (p_ids, p_date, p_callback)
 };
 
 /**
- * 预处理：排除已离线的日报。
- * @param {Array} p_ids ID 列表。
- * @param {String} p_date 日期。
- * @param {Function(err, ids, date)} [p_callback]
+ * 对中间结果进行预处理：移除已离线的日报。
+ * @param {Object} p_res 中间结果，包含 ids 和 date。
+ * @param {Function(err, res)} [p_callback]
  */
-function _preprocessTask(p_ids, p_date, p_callback)
+function _preprocessTask(p_res, p_callback)
 {
     story.query({
-        date: p_date,
+        date: p_res.date,
         cached: true
     }, {
         id: 1,
@@ -282,66 +282,26 @@ function _preprocessTask(p_ids, p_date, p_callback)
             {
                 return value.id;
             });
-            _.remove(p_ids, function (id)
+            _.remove(p_res.ids, function (id)
             {
                 return _.indexOf(cachedIDs, id) != -1;
             });
         }
-        p_callback(null, p_ids, p_date);
-    });
-}
-
-/**
- * 获取最新的知乎日报 ID 列表。
- * @param {Function(err, ids, date)} [p_callback]
- */
-function _fetchLatestStoryIDsTask(p_callback)
-{
-    this.fetchLatestStoryIDs(function (err, res)
-    {
-        if (err)
-        {
-            p_callback(err);
-        }
-        else
-        {
-            p_callback(null, res.ids, res.date);
-        }
-    });
-}
-
-/**
- * 获取指定日期的知乎日报 ID 列表。
- * @param {String} p_date 日期。
- * @param {Function(err, ids, date)} [p_callback]
- */
-function _fetchStoryIDsTask(p_date, p_callback)
-{
-    this.fetchStoryIDs(p_date, function (err, res)
-    {
-        if (err)
-        {
-            p_callback(err);
-        }
-        else
-        {
-            p_callback(null, res.ids, res.date);
-        }
+        p_callback(null, p_res);
     });
 }
 
 /**
  * 离线知乎日报。
- * @param {Aarray} p_ids ID 列表。
- * @param {String} p_date 日期。
+ * @param {Object} p_res 中间结果，包含 ids 和 date。
  * @param {Function(err, res)} [p_callback]
  */
-function _cacheStoriesTask(p_ids, p_date, p_callback)
+function _cacheStoriesTask(p_res, p_callback)
 {
-    var result = { date: p_date, cached: [] };
-    async.eachSeries(p_ids, function (id, done)
+    var result = { date: p_res.date, cached: [] };
+    async.eachSeries(p_res.ids, function (id, done)
     {
-        this.cacheStory(id, p_date, function (err, res)
+        this.cacheStory(id, p_res.date, function (err, res)
         {
             if (!err)
             {
