@@ -42,6 +42,36 @@ exports.fetchLatestStoryIDs = function (p_callback)
 };
 
 /**
+ * 获取最新热门知乎日报 ID 列表。
+ * @param {Function(err, res)} [p_callback]
+ */
+exports.fetchTopStoryIDs = function (p_callback)
+{
+    dailyRequest.get({ url: "/news/latest", json: true }, function (err, res, body)
+    {
+        if (!err && res.statusCode == 200)
+        {
+            var ids = body.top_stories.map(function (value)
+            {
+                return {
+                    id: value.id,
+                    title: value.title,
+                    image: PREFIX + querystring.escape(value.image)
+                };
+            });
+            p_callback(null, {
+                date: body.date,
+                ids: ids
+            });
+        }
+        else
+        {
+            p_callback(new Error("request Zhihu-Daily API ('/news/latest') error."), null);
+        }
+    });
+};
+
+/**
  * 从知乎日报服务器获取指定日期的知乎日报 ID 列表。
  * @param {String} p_date 日期。如果小于"20130519"，返回值 res 为 {}。
  * @param {Function(err, res)} [p_callback]
