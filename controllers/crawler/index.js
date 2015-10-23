@@ -76,7 +76,7 @@ function _cachePrev(p_date, p_maxDate)
     var prevDate = utils.prevZhihuDay(p_date);
     if (prevDate >= p_maxDate)
     {
-        daily.cacheStoriesOfDate(prevDate, function (err, res)
+        daily.cacheStories(prevDate, function (err, res)
         {
             console.log(res);
             if (!stop)
