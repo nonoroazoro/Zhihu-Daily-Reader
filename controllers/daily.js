@@ -36,7 +36,7 @@ exports.fetchLatestStoryIDs = function (p_callback)
         }
         else
         {
-            p_callback(new Error("request Zhihu-Daily API ('/news/latest') error."), null);
+            p_callback(new Error("request Zhihu-Daily API ('/news/latest') error."));
         }
     });
 };
@@ -66,13 +66,13 @@ exports.fetchTopStoryIDs = function (p_callback)
         }
         else
         {
-            p_callback(new Error("request Zhihu-Daily API ('/news/latest') error."), null);
+            p_callback(new Error("request Zhihu-Daily API ('/news/latest') error."));
         }
     });
 };
 
 /**
- * 从知乎日报服务器获取指定日期的知乎日报 ID 列表。
+ * 获取指定日期的知乎日报 ID 列表。
  * @param {String} p_date 日期。如果小于"20130519"，返回值 res 为 {}。
  * @param {Function(err, res)} [p_callback]
  */
@@ -106,19 +106,19 @@ exports.fetchStoryIDs = function (p_date, p_callback)
                 }
                 else
                 {
-                    p_callback(new Error("request Zhihu-Daily API ('/news/before/:date') error."), null);
+                    p_callback(new Error("request Zhihu-Daily API ('/news/before/:date') error."));
                 }
             });
         }
     }
     else
     {
-        p_callback(new Error("p_date has a wrong format."), null);
+        p_callback(new Error("p_date has a wrong format."));
     }
 };
 
 /**
- * 从知乎日报服务器获取指定 ID 的知乎日报。
+ * 获取指定 ID 的知乎日报。
  * @param {String} p_id ID。
  * @param {Function(err, res)} [p_callback]
  */
@@ -206,24 +206,28 @@ exports.fetchStory = function (p_id, p_callback)
             }
             else
             {
-                p_callback(new Error("request Zhihu-Daily API ('/news/:id') error."), null);
+                p_callback(new Error("request Zhihu-Daily API ('/news/:id') error."));
             }
         });
     }
     else
     {
-        p_callback(new Error("p_id has a wrong format."), null);
+        p_callback(new Error("p_id has a wrong format."));
     }
 };
 
 /**
- * 从知乎日报服务器获取获取指定的图片。
- * @param {String} p_url 图片地址。
+ * 获取指定地址的图片。
+ * @param {String} p_url 地址。
  * @param {Function(err, res)} [p_callback]
  */
 exports.fetchImage = function (p_url, p_callback)
 {
     if (!_.isFunction(p_callback)) return;
-    // TODO:
-    p_callback();
+    
+    imgRequest.get(p_url)
+    .on("error", function ()
+    {
+        p_res.status(404).render("error_404");
+    }).pipe(p_res);
 };

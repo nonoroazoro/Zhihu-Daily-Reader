@@ -1,222 +1,107 @@
-﻿var config = require("config");
-var moment = require("moment");
-var cheerio = require("cheerio");
-var querystring = require("querystring");
-var dailyRequest = require("request").defaults({
-    baseUrl : config.zhihu_daily_api
-});
+﻿/**
+ * 负责向前端传递知乎日报内容。
+ */
 
-var imgRequest = require("request");
-
-var utils = require("../utils");
-const PREFIX = "/api/4/imgs/";
+var daily = require("../daily");
+var request = require("request");
 
 /**
- * 从知乎日报服务器获取最新的知乎日报 ID 列表。
+ * 获取最新知乎日报 ID 列表。
+ * @param {Object} p_res 服务端响应。
+ * @param {Object} p_next
  */
-exports.getLatestStoryIDs = function (p_res)
+exports.getLatestStoryIDs = function (p_res, p_next)
 {
-    dailyRequest.get({ url: "/news/latest", json: true }, function (err, res, body)
+    daily.fetchLatestStoryIDs(function (err, res)
     {
-        if (!err && res.statusCode == 200)
+        if (err)
         {
-            // 因知乎日报的 API 返回的图片太小，这里直接丢弃，后面再通过其他途径获取图片。
-            p_res.set(res.headers);
-            p_res.json({
-                date: body.date,
-                ids: body.stories.map(function (value)
-                {
-                    return value.id;
-                })
-            });
+            p_next(err);
         }
         else
         {
-            p_res.status(404).render("error_404");
+            p_res.set(res.headers);
+            p_res.json(res);
         }
     });
 };
 
 /**
  * 从知乎日报服务器获取热门日报的 ID 列表。
+ * @param {Object} p_res 服务端响应。
+ * @param {Object} p_next
  */
-exports.getTopStoryIDs = function (p_res)
+exports.getTopStoryIDs = function (p_res, p_next)
 {
-    dailyRequest.get({ url: "/news/latest", json: true }, function (err, response, body)
+    daily.fetchTopStoryIDs(function (err, res)
     {
-        if (!err && res.statusCode == 200)
+        if (err)
         {
-            var ids = body.top_stories.map(function (value)
-            {
-                return {
-                    id: value.id,
-                    title: value.title,
-                    image: PREFIX + querystring.escape(value.image)
-                };
-            });
-            
-            p_res.set(res.headers);
-            p_res.json({
-                date: body.date,
-                ids: ids
-            });
+            p_next(err);
         }
         else
         {
-            p_res.status(404).render("error_404");
+            p_res.set(res.headers);
+            p_res.json(res);
         }
     });
 };
 
 /**
- * 从知乎日报服务器获取指定日期的知乎日报 ID 列表。
+ * 获取指定日期的知乎日报 ID 列表。
  * @param {String} p_date 日期。如果小于"20130519"，返回值为 {}。
+ * @param {Object} p_res 服务端响应。
+ * @param {Object} p_next
  */
- exports.getStoryIDs = function (p_date, p_res)
+ exports.getStoryIDs = function (p_date, p_res, p_next)
 {
-    // 因知乎日报 API 返回的是指定日期的前一天的日报，
-    // 所以要加一天才能获取指定日期的日报。
-    var date = utils.nextZhihuDay(p_date);
-    if (date)
+    daily.fetchStoryIDs(p_date, function (err, res)
     {
-        if (utils.convertZhihuDateToMoment(date).isBefore(utils.MIN_DATE))
+        if (err)
         {
-            // "20130519"之前是没有知乎日报的。
-            p_res.json({
-                date: p_date,
-                ids: {}
-            });
+            p_next(err);
         }
         else
         {
-            dailyRequest.get({ url: "/news/before/" + date, json: true }, function (err, res, body)
-            {
-                if (!err && res.statusCode == 200)
-                {
-                    p_res.set(res.headers);
-                    p_res.json({
-                        date: body.date,
-                        ids: body.stories.map(function (value)
-                        {
-                            return value.id;
-                        })
-                    });
-                }
-                else
-                {
-                    p_res.status(404).render("error_404");
-                }
-            });
+            p_res.set(res.headers);
+            p_res.json(res);
         }
-    }
-    else
-    {
-        p_res.status(404).render("error_404");
-    }
+    });
 };
 
 /**
- * 从知乎日报服务器获取指定 ID 的知乎日报。
+ * 获取指定 ID 的知乎日报。
  * @param {String} p_id ID。
+ * @param {Object} p_res 服务端响应。
+ * @param {Object} p_next
  */
- exports.getStory = function (p_id, p_res)
+ exports.getStory = function (p_id, p_res, p_next)
 {
-    // 检查 ID 是否为纯数字。
-    if (/^\d+$/.test(p_id))
+    daily.fetchStory(p_id, function (err, res)
     {
-        dailyRequest.get({ url: "/news/" + p_id, json: true }, function (error, response, body)
+        if (err)
         {
-            if (!error && response.statusCode == 200)
-            {
-                var result = {};
-                result.id = body.id;
-                result.title = body.title;
-                result.image = PREFIX + querystring.escape(body.image);
-                result.imageSource = body.image_source;
-                result.shareURL = body.share_url;
-                
-                if (body.body)
-                {
-                    var $ = cheerio.load(body.body, { decodeEntities: false });
-                    result.backgrounds = $(".headline>.headline-background .headline-background-link").map(function (i, e)
-                    {
-                        return {
-                            href: $(e).attr("href"),
-                            title : $(e).children(".heading").text(),
-                            text : $(e).children(".heading-content").text()
-                        };
-                    }).get();
-                    
-                    result.contents = $(".content-inner>.question").map(function (i, e)
-                    {
-                        var question = {};
-                        question.title = $(e).children(".question-title").text();
-                        question.answers = $(e).children(".answer").map(function (i, e)
-                        {
-                            $(e).find(".content img").each(function (i, e)
-                            {
-                                var src = $(e).attr("src");
-                                if (src != null && src != "")
-                                {
-                                    $(e).attr("src", PREFIX + querystring.escape(src));
-                                }
-                            });
-                            
-                            var avatar = $(e).find(".meta>.avatar").attr("src");
-                            if (avatar != null && avatar != "")
-                            {
-                                avatar = PREFIX + querystring.escape(avatar);
-                            }
-                            else
-                            {
-                                avatar = "";
-                            }
-                            
-                            return {
-                                avatar : avatar,
-                                name: $(e).find(".meta>.author").text(),
-                                bio : $(e).find(".meta>.bio").text(),
-                                content : $(e).children(".content").html()
-                            };
-                        }).get();
-                        
-                        var a = $(e).find(".view-more>a");
-                        if (a.length > 0)
-                        {
-                            question.link = {
-                                href : a.attr("href"),
-                                text : a.text(),
-                            };
-                        }
-                        
-                        return question;
-                    }).get();
-                }
-                
-                p_res.set(response.headers);
-                p_res.json(result);
-            }
-            else
-            {
-                p_res.status(404).render("error_404");
-            }
-        });
-    }
-    else
-    {
-        p_res.status(404).render("error_404");
-    }
+            p_next(err);
+        }
+        else
+        {
+            p_res.set(res.headers);
+            p_res.json(res);
+        }
+    });
 };
 
 /**
  * 获取指定图片。
  * @param {String} p_url 地址。
+ * @param {Object} p_res 服务端响应。
+ * @param {Object} p_next
  */
- exports.getImage = function (p_url, p_res)
+ exports.getImage = function (p_url, p_res, p_next)
 {
-    imgRequest.get(p_url)
+    request.get(p_url)
     .on("error", function ()
     {
-        p_res.status(404).render("error_404");
+        p_next(new Error("request image error."));
     }).pipe(p_res);
 };
