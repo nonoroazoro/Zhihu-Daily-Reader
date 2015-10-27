@@ -27,6 +27,8 @@
     <Compile Include="controllers\utils.js" />
     <Compile Include="models\status.js" />
     <Compile Include="models\story.js" />
+    <Compile Include="public\assets\libs\mousetrap\mousetrap.js" />
+    <Compile Include="public\assets\libs\mousetrap\mousetrap.min.js" />
     <Compile Include="public\assets\zdr\build\error_404.bundle.js" />
     <Compile Include="public\assets\zdr\build\index.bundle.js" />
     <Compile Include="test\controllers\crawler\daily.test.js" />
@@ -182,6 +184,7 @@
     <Folder Include="controllers\proxy\" />
     <Folder Include="models\" />
     <Folder Include="db\" />
+    <Folder Include="public\assets\libs\mousetrap\" />
     <Folder Include="screenshots\" />
     <Folder Include="public" />
     <Folder Include="public\assets" />
