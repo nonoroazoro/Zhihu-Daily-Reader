@@ -1,6 +1,7 @@
 ﻿require("./res/DailyPage.less");
 
 var $ = require("jquery");
+var Mousetrap = require("mousetrap");
 var React = require("react");
 var ReactUpdate = React.addons.update;
 var PureRenderMixin = React.addons.PureRenderMixin;
@@ -153,7 +154,7 @@ var DailyPage = React.createClass(
             this._$ArticleViewContent.focus();
         }.bind(this));
 
-        $(document).on("keydown", this._globalKeydownHandler);
+        this._addKeyboardShortcuts();
         $(document).on("scroll", this._scrollHandler);
     },
 
@@ -163,81 +164,59 @@ var DailyPage = React.createClass(
     _removeEventHandler: function()
     {
         this._$ArticleView.off("hide.bs.modal");
-        $(document).off("keydown");
+        this._removeKeyboardShortcuts();
         $(document).off("scroll");
     },
 
     /**
-    * 处理全局按键事件。
+    * 添加键盘快捷键。
     */
-    _globalKeydownHandler: function (e)
+    _addKeyboardShortcuts: function()
     {
-        var code = e.which;
-        var extraKey = e.altKey || e.ctrlKey || e.shiftKey || e.metaKey;
-        if(!extraKey)
+        Mousetrap.bind("esc", this._closeArticleView);
+        
+        Mousetrap.bind("j", this._keydownShowNextStory);
+        Mousetrap.bind("k", this._keydownShowPrevStory);
+
+        Mousetrap.bind(["o", "enter"], function()
         {
-            if(code == 27)
+            if (!this._isArticleViewVisible)
             {
-                // ESC：关闭 ArticleView。
-                this._closeArticleView();
+                this._showArticle(DailyManager.getFetchedStories()[this.state.storyIndexes[this._currentIndex]]);
             }
-            else if(code == 74)
+        }.bind(this));
+
+        Mousetrap.bind("left", function()
+        {
+            this._isArticleViewVisible
+                ? this._keydownShowPrevStory()
+                : this._minusCurrentIndex();
+        }.bind(this));
+        Mousetrap.bind("right", function()
+        {
+            this._isArticleViewVisible
+                ? this._keydownShowNextStory()
+                : this._addCurrentIndex();
+        }.bind(this));
+
+        Mousetrap.bind("v", function()
+        {
+            if (this._isArticleViewVisible)
             {
-                // J：ArticleView 显示下一个日报（如果当前未打开 ArticleView 则自动打开）。
-                this._keydownShowNextStory();
+                $(".view-more a").map(function (i, o)
+                {
+                    o.click();
+                });
             }
-            else if(code == 75)
-            {
-                // K：ArticleView 显示上一个日报（如果当前未打开 ArticleView 则自动打开）。
-                this._keydownShowPrevStory();
-            }
-            else if(code == 13 || code == 79)
-            {
-                // Enter、O：打开选中的日报。
-                if(!this._isArticleViewVisible)
-                {
-                    this._showArticle(DailyManager.getFetchedStories()[this.state.storyIndexes[this._currentIndex]]);
-                }
-            }
-            else if(code == 37)
-            {
-                // 左方向：切换到上一个日报。
-                if(this._isArticleViewVisible)
-                {
-                    this._keydownShowPrevStory();
-                }
-                else
-                {
-                    this._minusCurrentIndex();
-                }
-            }
-            else if(code == 39)
-            {
-                // 右方向：切换到下一个日报。
-                if(this._isArticleViewVisible)
-                {
-                    this._keydownShowNextStory();
-                }
-                else
-                {
-                    this._addCurrentIndex();
-                }
-            }
-            else if(code == 86)
-            {
-                // V：打开原始链接。
-                if(this._isArticleViewVisible)
-                {
-                    $(".view-more a").map(function(p_index, p_object)
-                    {
-                        p_object.click();
-                    });
-                }
-                else
-                {
-                }
-            }
-        }
+        }.bind(this));
+    },
+
+    /**
+    * 移除键盘快捷键。
+    */
+    _removeKeyboardShortcuts: function()
+    {
+        Mousetrap.reset();
     },
 
     /**
