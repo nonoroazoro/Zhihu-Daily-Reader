@@ -20,7 +20,7 @@
   "scripts": {
     "start": "set NODE_ENV=production&&node ./bin/www",
     "startx": "env NODE_ENV=production&&node ./bin/www",
-    "startdb": "mongod --dbpath ./db",
+    "startdb": "mkdir db | mongod --dbpath ./db",
     "watch": "node_modules/.bin/webpack -d --watch",
     "build": "node_modules/.bin/webpack -p",
     "test": "node_modules/.bin/mocha"
