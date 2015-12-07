@@ -183,7 +183,6 @@
     <Folder Include="controllers\crawler\" />
     <Folder Include="controllers\proxy\" />
     <Folder Include="models\" />
-    <Folder Include="db\" />
     <Folder Include="public\assets\libs\mousetrap\" />
     <Folder Include="screenshots\" />
     <Folder Include="public" />
