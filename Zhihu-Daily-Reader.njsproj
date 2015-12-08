@@ -21,10 +21,12 @@
     <Compile Include="controllers\crawler\daily.js" />
     <Compile Include="controllers\daily.js" />
     <Compile Include="controllers\dbhelper.js" />
+    <Compile Include="controllers\resource.js" />
     <Compile Include="controllers\status.js" />
     <Compile Include="controllers\story.js" />
     <Compile Include="controllers\crawler\index.js" />
     <Compile Include="controllers\utils.js" />
+    <Compile Include="models\resource.js" />
     <Compile Include="models\status.js" />
     <Compile Include="models\story.js" />
     <Compile Include="public\assets\libs\mousetrap\mousetrap.js" />
@@ -33,6 +35,7 @@
     <Compile Include="public\assets\zdr\build\index.bundle.js" />
     <Compile Include="test\controllers\crawler\daily.test.js" />
     <Compile Include="test\controllers\daily.test.js" />
+    <Compile Include="test\controllers\resource.test.js" />
     <Compile Include="test\controllers\status.test.js" />
     <Compile Include="test\controllers\story.test.js" />
     <Compile Include="test\controllers\utils.test.js" />
