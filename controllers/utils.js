@@ -1,5 +1,6 @@
 ﻿var _ = require("lodash");
 var moment = require("moment");
+var crypto = require("crypto");
 
 const FormatString = "YYYYMMDD";
 const MinDateString = "20130520";
@@ -90,4 +91,18 @@ exports.subZhihuDate = function (p_date, p_day)
 exports.isValidZhihuDate = function (p_date)
 {
     return this.convertZhihuDateToMoment(p_date).isValid();
+};
+
+/**
+ * 计算 MD5。
+ * @param {String|Buffer} p_data 数据。
+ * @return {String}
+ */
+exports.md5 = function (p_data)
+{
+    if (_.isString(p_data))
+    {
+        p_data = new Buffer(p_data);
+    }
+    return crypto.createHash("md5").update(p_data).digest("hex");
 };
