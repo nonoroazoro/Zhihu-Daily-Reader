@@ -102,7 +102,7 @@ describe("controllers/utils", function ()
         });
     });
     
-    describe.only("6.md5", function ()
+    describe("6.md5", function ()
     {
         var dataCN = "逗逗";
         var targetCN = "f446616db9ce94a6be650365751a58a7";
