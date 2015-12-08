@@ -72,4 +72,52 @@ describe("controllers/utils", function ()
             done();
         });
     });
+    
+    describe("4.subZhihuDate", function ()
+    {
+        var delta = 2;
+        var date = "20150915";
+        var target = "20150913";
+        it("'" + date + "' - 2 days should equal: '" + target + "'", function (done)
+        {
+            utils.subZhihuDate(date, delta).should.equal(target);
+            done();
+        });
+    });
+    
+    describe("5.isValidZhihuDate", function ()
+    {
+        var date = "20150915";
+        it("'" + date + "' should be: valid", function (done)
+        {
+            utils.isValidZhihuDate(date).should.be.true();
+            done();
+        });
+        
+        var wrongDate = "20153030"
+        it("'" + wrongDate + "' should be: invalid", function (done)
+        {
+            utils.isValidZhihuDate(wrongDate).should.be.false();
+            done();
+        });
+    });
+    
+    describe.only("6.md5", function ()
+    {
+        var dataCN = "逗逗";
+        var targetCN = "f446616db9ce94a6be650365751a58a7";
+        it("md5 of '" + dataCN + "' should be: " + targetCN, function (done)
+        {
+            utils.md5(dataCN).should.equal(targetCN);
+            done();
+        });
+        
+        var dataEN = "abc";
+        var targetEN = "900150983cd24fb0d6963f7d28e17f72";
+        it("md5 of '" + dataEN + "' should be: " + targetEN, function (done)
+        {
+            utils.md5(dataEN).should.equal(targetEN);
+            done();
+        });
+    });
 });
