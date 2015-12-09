@@ -38,3 +38,15 @@ exports.findResourceByID = function (p_id, p_callback)
         Resource.findOne({ id: p_id }, p_callback);
     }
 };
+
+/**
+ * 从数据库中查找满足条件的记录。
+ * @param {Object} p_conditions 指定的查询条件。
+ * @param {Object} [p_projection]
+ * @param {Object} [p_options]
+ * @param {Function(err, docs)} [p_callback]
+ */
+exports.query = function (p_conditions, p_projection, p_options, p_callback)
+{
+    Resource.find(p_conditions, p_projection, p_options, p_callback);
+};
