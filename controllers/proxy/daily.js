@@ -85,7 +85,6 @@ exports.getTopStoryIDs = function (p_res, p_next)
         }
         else
         {
-            p_res.set(res.headers);
             p_res.json(res);
         }
     });
