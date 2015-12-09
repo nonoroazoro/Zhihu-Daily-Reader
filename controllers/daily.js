@@ -232,19 +232,26 @@ exports.fetchImage = function (p_url, p_callback)
 {
     if (!_.isFunction(p_callback)) return;
     
-    imageRequest({ url: p_url, encoding: null }, function (err, res, body)
+    if (_.isEmpty(p_url))
     {
-        if (!err && res.statusCode == 200)
+        p_callback(new Error("p_url must not be null."));
+    }
+    else
+    {
+        imageRequest({ url: p_url, encoding: null }, function (err, res, body)
         {
-            p_callback(null, {
-                id: p_url,
-                contentType: res.headers["content-type"],
-                data: body
-            });
-        }
-        else
-        {
-            p_callback(new Error("failed to request image."));
-        }
-    });
+            if (!err && res.statusCode == 200)
+            {
+                p_callback(null, {
+                    id: p_url,
+                    contentType: res.headers["content-type"],
+                    data: body
+                });
+            }
+            else
+            {
+                p_callback(new Error("failed to request image."));
+            }
+        });
+    }
 };
