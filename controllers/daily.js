@@ -6,6 +6,7 @@ var _ = require("lodash");
 var config = require("config");
 var cheerio = require("cheerio");
 var querystring = require("querystring");
+var imageRequest = require("request");
 var dailyRequest = require("request").defaults({
     baseUrl : config.zhihu_daily_api
 });
@@ -230,6 +231,22 @@ exports.fetchStory = function (p_id, p_callback)
 exports.fetchImage = function (p_url, p_callback)
 {
     if (!_.isFunction(p_callback)) return;
+    
+    imageRequest({ url: p_url, encoding: null }, function (err, res, body)
+    {
+        if (!err && res.statusCode == 200)
+        {
+            p_callback(null, {
+                contentType: res.headers["content-type"],
+                data: body
+            });
+        }
+        else
+        {
+            p_callback(new Error("failed to request image."));
+        }
+    });
 
-    // TODO: 获取 图片 文件，丢给 crawler 进行缓存。
+
+
 };

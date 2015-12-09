@@ -3,7 +3,6 @@
  */
 
 var daily = require("../daily");
-var request = require("request");
 
 /**
  * 获取最新知乎日报 ID 列表。
@@ -98,9 +97,16 @@ exports.getTopStoryIDs = function (p_res, p_next)
  */
  exports.getImage = function (p_url, p_res, p_next)
 {
-    request.get(p_url)
-    .on("error", function ()
+    daily.fetchImage(p_url, function (err, res)
     {
-        p_next(new Error("request image error."));
-    }).pipe(p_res);
+        if (err)
+        {
+            p_next(err);
+        }
+        else
+        {
+            p_res.contentType(res.contentType);
+            p_res.send(res.data);
+        }
+    });
 };
