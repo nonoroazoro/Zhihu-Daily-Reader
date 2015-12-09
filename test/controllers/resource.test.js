@@ -3,6 +3,7 @@ var should = require("should");
 var request = require("request");
 
 var utils = require("../../controllers/utils");
+var daily = require("../../controllers/daily");
 var dbhelper = require("../../controllers/dbhelper");
 var Resource = require("../../models/resource");
 var ResourceController = require("../../controllers/resource");

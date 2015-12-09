@@ -246,7 +246,4 @@ exports.fetchImage = function (p_url, p_callback)
             p_callback(new Error("failed to request image."));
         }
     });
-
-
-
 };
