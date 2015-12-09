@@ -7,7 +7,7 @@ var dbhelper = require("../../controllers/dbhelper");
 var Resource = require("../../models/resource");
 var ResourceController = require("../../controllers/resource");
 
-describe.only("controllers/resource", function ()
+describe("controllers/resource", function ()
 {
     before(function (done)
     {
