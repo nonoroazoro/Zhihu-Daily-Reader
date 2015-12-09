@@ -8,6 +8,7 @@ var config = require("config").crawler;
 
 var daily = require("../daily");
 var story = require("../story");
+var resource = require("../resource");
 
 /**
  * 离线指定的日报。
@@ -17,6 +18,7 @@ var story = require("../story");
  */
 exports.cacheStory = function (p_id, p_date, p_callback)
 {
+    var that = this;
     async.retry({
         times: config.daily_retry,
         interval: config.daily_interval * 1000
@@ -38,7 +40,13 @@ exports.cacheStory = function (p_id, p_date, p_callback)
         else
         {
             res.story.date = p_date;
-            story.saveStory(res.story, p_callback);
+            story.saveStory(res.story, function (err, doc)
+            {
+                that.cacheImages(res.images, function ()
+                {
+                    p_callback(err, doc);
+                });
+            });
         }
     });
 };
@@ -87,6 +95,56 @@ exports.cacheStories = function (p_date, p_ids, p_callback)
             }));
         }
         async.waterfall(tasks, p_callback);
+    }
+};
+
+/**
+ * 离线图片资源。
+ * @param {String|Array} p_urls 单个或多个图片地址。
+ * @param {Function(err, res)} [p_callback]
+ */
+exports.cacheImages = function (p_urls, p_callback)
+{
+    if (_.isFunction(p_urls))
+    {
+        p_urls(new Error("p_urls must not be null."));
+    }
+    else
+    {
+        if (_.isString(p_urls) && !_.isEmpty(p_urls))
+        {
+            p_urls = [p_urls];
+        }
+        
+        if (_.isArray(p_urls))
+        {
+            var errors = [];
+            async.eachSeries(p_urls, function (url, done)
+            {
+                daily.fetchImage(url, function (err, res)
+                {
+                    if (err)
+                    {
+                        errors.push(err);
+                        done();
+                    }
+                    else
+                    {
+                        resource.saveResource(res, function ()
+                        {
+                            done();
+                        });
+                    }
+                });
+            }, function ()
+            {
+                p_callback(errors.length > 0? errors: null);
+            });
+        }
+        else
+        {
+            p_callback(new Error("p_urls has a wrong format."));
+        }
     }
 };
 
