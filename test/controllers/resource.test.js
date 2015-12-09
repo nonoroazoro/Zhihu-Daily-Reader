@@ -7,7 +7,7 @@ var dbhelper = require("../../controllers/dbhelper");
 var Resource = require("../../models/resource");
 var ResourceController = require("../../controllers/resource");
 
-describe("controllers/resource", function ()
+describe.only("controllers/resource", function ()
 {
     before(function (done)
     {
@@ -26,18 +26,16 @@ describe("controllers/resource", function ()
     });
     
     var url = "http://pic4.zhimg.com/70/6974e23d1270203c2a14fc6d410dd9e7_b.jpg";
-    var id = utils.md5(url);
     describe("1.saveResource", function ()
     {
-        it("should save the resource of ID: " + id, function (done)
+        it("should save the resource of URL:\n\t" + url, function (done)
         {
             request({ url: url, encoding: null }, function (err, res, body)
             {
                 if (!err && res.statusCode == 200)
                 {
                     ResourceController.saveResource({
-                        id: id,
-                        url: url,
+                        id: url,
                         contentType: res.headers["content-type"],
                         data: body
                     }, done);
@@ -52,13 +50,12 @@ describe("controllers/resource", function ()
     
     describe("2.findResourceByID", function ()
     {
-        it("should find the resource of ID: " + id, function (done)
+        it("should find the resource of ID:\n\t" + url, function (done)
         {
-            ResourceController.findResourceByID(id, function (err, doc)
+            ResourceController.findResourceByID(url, function (err, doc)
             {
                 should.not.exist(err);
-                doc.id.should.equal(id);
-                doc.url.should.equal(url);
+                doc.id.should.equal(url);
                 done();
             });
         });

@@ -6,16 +6,10 @@ var Schema = mongoose.Schema;
  */
 var ResourceSchema = new Schema({
     /**
-     * ID（url 的 MD5，唯一）。
+     * ID（唯一标识，例如图片原始 URL）。
      * @type {String}
      */
     id: { type: String },
-    
-    /**
-     * 原始地址（特殊情况下调试用）。
-     * @type {String}
-     */
-    url: { type: String },
     
     /**
      * MIME。
