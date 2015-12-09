@@ -237,6 +237,7 @@ exports.fetchImage = function (p_url, p_callback)
         if (!err && res.statusCode == 200)
         {
             p_callback(null, {
+                id: p_url,
                 contentType: res.headers["content-type"],
                 data: body
             });

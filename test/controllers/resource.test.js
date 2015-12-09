@@ -1,8 +1,6 @@
 ﻿var _ = require("lodash");
 var should = require("should");
-var request = require("request");
 
-var utils = require("../../controllers/utils");
 var daily = require("../../controllers/daily");
 var dbhelper = require("../../controllers/dbhelper");
 var Resource = require("../../models/resource");
@@ -31,20 +29,10 @@ describe("controllers/resource", function ()
     {
         it("should save the resource of URL:\n\t" + url, function (done)
         {
-            request({ url: url, encoding: null }, function (err, res, body)
+            daily.fetchImage(url, function (err, res)
             {
-                if (!err && res.statusCode == 200)
-                {
-                    ResourceController.saveResource({
-                        id: url,
-                        contentType: res.headers["content-type"],
-                        data: body
-                    }, done);
-                }
-                else
-                {
-                    done(err);
-                }
+                should.not.exist(err);
+                ResourceController.saveResource(res, done);
             });
         });
     });
