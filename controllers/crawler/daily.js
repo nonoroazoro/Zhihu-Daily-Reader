@@ -37,8 +37,8 @@ exports.cacheStory = function (p_id, p_date, p_callback)
         }
         else
         {
-            res.date = p_date;
-            story.saveStory(res, p_callback);
+            res.story.date = p_date;
+            story.saveStory(res.story, p_callback);
         }
     });
 };

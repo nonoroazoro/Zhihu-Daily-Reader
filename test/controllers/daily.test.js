@@ -70,10 +70,10 @@ describe("controllers/daily", function ()
             daily.fetchStory(id, function (err, res)
             {
                 should.not.exist(err);
-                res.id.should.equal(id);
-                res.title.should.equal(title);
-                res.imageSource.should.equal(imageSource);
-                res.shareURL.should.equal(shareURL);
+                res.story.id.should.equal(id);
+                res.story.title.should.equal(title);
+                res.story.imageSource.should.equal(imageSource);
+                res.story.shareURL.should.equal(shareURL);
                 done();
             });
         });

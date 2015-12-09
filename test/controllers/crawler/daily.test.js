@@ -67,7 +67,7 @@ describe("controllers/crawler/daily", function ()
         });
         
         ids = [418, 417, 414, 413, 410, 409, 408, 407, 404];
-        it("should cache the stories of date: 20130520" + " and IDs: " + ids, function (done)
+        it("should cache the stories of date: 20130520" + " and IDs:\n\t" + ids, function (done)
         {
             daily.cacheStories("20130520", ids, function (err, res)
             {

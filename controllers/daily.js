@@ -133,20 +133,21 @@ exports.fetchStory = function (p_id, p_callback)
         {
             if (!err && res.statusCode == 200)
             {
-                var result = {};
-                result.id = body.id;
-                result.title = body.title;
+                var images = [];
+                var story = {};
+                story.id = body.id;
+                story.title = body.title;
                 
-                // TODO: 图片暂时不入库，后面再说。
-                result.image = PREFIX + querystring.escape(body.image);
+                images.push(body.image);
+                story.image = PREFIX + querystring.escape(body.image);
                 
-                result.imageSource = body.image_source;
-                result.shareURL = body.share_url;
+                story.imageSource = body.image_source;
+                story.shareURL = body.share_url;
                 
                 if (body.body)
                 {
                     var $ = cheerio.load(body.body, { decodeEntities: false });
-                    result.backgrounds = $(".headline>.headline-background .headline-background-link").map(function (i, e)
+                    story.backgrounds = $(".headline>.headline-background .headline-background-link").map(function (i, e)
                     {
                         return {
                             href: $(e).attr("href"),
@@ -155,31 +156,32 @@ exports.fetchStory = function (p_id, p_callback)
                         };
                     }).get();
                     
-                    result.contents = $(".content-inner>.question").map(function (i, e)
+                    story.contents = $(".content-inner>.question").map(function (i, e)
                     {
                         var question = {};
                         question.title = $(e).children(".question-title").text();
                         question.answers = $(e).children(".answer").map(function (i, e)
                         {
-                            // TODO: 图片暂时不入库，后面再说。
                             $(e).find(".content img").each(function (i, e)
                             {
                                 var src = $(e).attr("src");
-                                if (src != null && src != "")
+                                if (!_.isEmpty(src))
                                 {
+                                    images.push(src);
                                     $(e).attr("src", PREFIX + querystring.escape(src));
                                 }
                             });
                             
                             // TODO: 图片暂时不入库，后面再说。
                             var avatar = $(e).find(".meta>.avatar").attr("src");
-                            if (avatar != null && avatar != "")
+                            if (_.isEmpty(avatar))
                             {
-                                avatar = PREFIX + querystring.escape(avatar);
+                                avatar = "";
                             }
                             else
                             {
-                                avatar = "";
+                                images.push(avatar);
+                                avatar = PREFIX + querystring.escape(avatar);
                             }
                             
                             return {
@@ -202,7 +204,11 @@ exports.fetchStory = function (p_id, p_callback)
                         return question;
                     }).get();
                 }
-                p_callback(null, result);
+                
+                p_callback(null, {
+                    story: story,
+                    images: images
+                });
             }
             else
             {
@@ -224,10 +230,6 @@ exports.fetchStory = function (p_id, p_callback)
 exports.fetchImage = function (p_url, p_callback)
 {
     if (!_.isFunction(p_callback)) return;
-    
-    imgRequest.get(p_url)
-    .on("error", function ()
-    {
-        p_res.status(404).render("error_404");
-    }).pipe(p_res);
+
+    // TODO: 获取 图片 文件，丢给 crawler 进行缓存。
 };
