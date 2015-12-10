@@ -26,7 +26,11 @@ exports.connect = function (p_callback)
  */
  exports.connected = function ()
 {
-    return mongoose.connection.db != null;
+    // 0 = disconnected
+    // 1 = connected
+    // 2 = connecting
+    // 3 = disconnecting
+    return mongoose.connection.readyState == 1;
 };
 
 /**
