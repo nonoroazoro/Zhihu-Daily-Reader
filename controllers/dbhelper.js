@@ -17,20 +17,25 @@ exports.connect = function (p_callback)
                 poolSize: config.poolSize
             },
         },
-        p_callback
+        function (err)
+        {
+            _connected = !err;
+            _monitor();
+            if (_.isFunction(p_callback))
+            {
+                p_callback(err);
+            }
+        }
     );
 };
 
+var _connected = false;
 /**
  * 检查数据库是否已连接。
  */
  exports.connected = function ()
 {
-    // 0 = disconnected
-    // 1 = connected
-    // 2 = connecting
-    // 3 = disconnecting
-    return mongoose.connection.readyState == 1;
+    return _connected;
 };
 
 /**
@@ -56,5 +61,27 @@ exports.connect = function (p_callback)
                 p_callback(err);
             }
         }
+    });
+};
+
+/**
+ * 监控数据库状态。
+ */
+var _monitor = function ()
+{
+    var db = mongoose.connection.db;
+    db.on("reconnect", function ()
+    {
+        _connected = true;
+    });
+    
+    db.on("close", function ()
+    {
+        _connected = false;
+    });
+    
+    db.on("error", function ()
+    {
+        _connected = false;
     });
 };
