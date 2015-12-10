@@ -287,7 +287,8 @@ var DailyPage = React.createClass(
     */
     _scrollHandler: function (e)
     {
-        if(!this._isLoading && ($(document).scrollTop() >= $(document).height()-$(window).height()))
+        // 185 是 Flex-Tile 的一半高度。
+        if(!this._isLoading && ($(document).scrollTop() >= $(document).height()-$(window).height() - 185))
         {
             this._isLoading = true;
             this._loadPrevStories(function()
@@ -434,7 +435,7 @@ var DailyPage = React.createClass(
         var $newTile = $("#story" + this.state.storyIndexes[p_newIndex]);
         $newTile.addClass("current");
 
-        // 判断是否需要移动滚动跳的位置，以使内容可见。
+        // 判断是否需要移动滚动条的位置，以使内容可见。
         // 71 是 body 的 padding-top 与 FlexTile 的 margin-top 之和（即 51 + 20）。
         var newTop = $newTile.offset().top - 71;
         var moveDown = newTop + $newTile.outerHeight(true) - $(document).scrollTop() > $(window).height();
