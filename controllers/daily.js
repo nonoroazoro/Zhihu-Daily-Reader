@@ -52,8 +52,11 @@ exports.fetchTopStoryIDs = function (p_callback)
     {
         if (!err && res.statusCode == 200)
         {
-            var ids = body.top_stories.map(function (value)
+            var images = [];
+            var stories = { date: body.date };
+            stories.ids = body.top_stories.map(function (value)
             {
+                images.push(value.image);
                 return {
                     id: value.id,
                     title: value.title,
@@ -61,8 +64,8 @@ exports.fetchTopStoryIDs = function (p_callback)
                 };
             });
             p_callback(null, {
-                date: body.date,
-                ids: ids
+                stories: stories,
+                images: images
             });
         }
         else

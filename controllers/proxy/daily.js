@@ -19,7 +19,6 @@ exports.getLatestStoryIDs = function (p_res, p_next)
         }
         else
         {
-            p_res.set(res.headers);
             p_res.json(res);
         }
     });
@@ -40,8 +39,7 @@ exports.getTopStoryIDs = function (p_res, p_next)
         }
         else
         {
-            p_res.set(res.headers);
-            p_res.json(res);
+            p_res.json(res.stories);
         }
     });
 };
@@ -62,7 +60,6 @@ exports.getTopStoryIDs = function (p_res, p_next)
         }
         else
         {
-            p_res.set(res.headers);
             p_res.json(res);
         }
     });
