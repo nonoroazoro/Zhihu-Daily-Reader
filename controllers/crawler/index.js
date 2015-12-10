@@ -16,20 +16,17 @@ var stop = false;
 exports.start = function ()
 {
     stop = false;
-    if (dbhelper.connected())
+    async.waterfall([
+        _cacheLatestTask,
+        _cleanCacheTask,
+    ], function (err, res)
     {
-        async.waterfall([
-            _cacheLatestTask,
-            _cleanCacheTask,
-        ], function (err, res)
+        console.log(res);
+        if (!err)
         {
-            console.log(res);
-            if (!err)
-            {
-                _cachePrev(res.date, res.max_age);
-            }
-        });
-    }
+            _cachePrev(res.date, res.max_age);
+        }
+    });
 };
 
 /**
