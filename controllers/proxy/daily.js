@@ -3,6 +3,9 @@
  */
 
 var daily = require("../daily");
+var story = require("../story");
+var resource = require("../resource");
+var dbhelper = require("../dbhelper");
 
 /**
  * 获取最新知乎日报 ID 列表。
@@ -73,6 +76,57 @@ exports.getTopStoryIDs = function (p_res, p_next)
  */
  exports.getStory = function (p_id, p_res, p_next)
 {
+    if (dbhelper.connected())
+    {
+        story.findStoryByID(p_id, function (err, doc)
+        {
+            if (err || !doc || !doc.cached)
+            {
+                _fetchStory(p_id, p_res, p_next);
+            }
+            else
+            {
+                p_res.json(doc.content);
+            }
+        });
+    }
+    else
+    {
+        _fetchStory(p_id, p_res, p_next);
+    }
+};
+
+/**
+ * 获取指定图片。
+ * @param {String} p_url 地址。
+ * @param {Object} p_res 服务端响应。
+ * @param {Object} p_next
+ */
+ exports.getImage = function (p_url, p_res, p_next)
+{
+    if (dbhelper.connected())
+    {
+        resource.findResourceByID(p_url, function (err, doc)
+        {
+            if (err || !doc)
+            {
+                _fetchImage(p_url, p_res, p_next);
+            }
+            else
+            {
+                p_res.contentType(doc.contentType);
+                p_res.send(doc.data);
+            }
+        });
+    }
+    else
+    {
+        _fetchImage(p_url, p_res, p_next);
+    }
+};
+
+var _fetchStory = function (p_id, p_res, p_next)
+{
     daily.fetchStory(p_id, function (err, res)
     {
         if (err)
@@ -86,13 +140,7 @@ exports.getTopStoryIDs = function (p_res, p_next)
     });
 };
 
-/**
- * 获取指定图片。
- * @param {String} p_url 地址。
- * @param {Object} p_res 服务端响应。
- * @param {Object} p_next
- */
- exports.getImage = function (p_url, p_res, p_next)
+var _fetchImage = function (p_url, p_res, p_next)
 {
     daily.fetchImage(p_url, function (err, res)
     {
