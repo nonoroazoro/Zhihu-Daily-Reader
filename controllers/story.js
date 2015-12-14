@@ -97,7 +97,7 @@ exports.saveStory = function (p_story, p_callback)
         var update = {
             id: p_story.id,
             date: p_story.date,
-            content: JSON.stringify(p_story),
+            content: p_story,
             cached: true
         };
         

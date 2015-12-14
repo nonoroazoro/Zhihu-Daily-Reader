@@ -161,7 +161,7 @@ describe("controllers/story", function ()
             {
                 should.not.exist(err);
                 should.exist(doc);
-                JSON.parse(doc.content).should.deepEqual(zhihuStory);
+                doc.content.should.deepEqual(zhihuStory);
                 done();
             });
         });

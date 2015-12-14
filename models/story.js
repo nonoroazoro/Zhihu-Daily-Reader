@@ -24,10 +24,10 @@ var StorySchema = new Schema({
     read: { type: Boolean, default: false },
     
     /**
-     * 日报内容。
-     * @type {String}
+     * 日报内容。对终端来说即真正的 Story。
+     * @type {Object}
      */
-    content: { type: String },
+    content: { type: Object },
     
     /**
      * 是否已离线。
