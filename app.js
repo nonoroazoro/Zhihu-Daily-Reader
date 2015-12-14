@@ -4,18 +4,22 @@ var favicon = require("serve-favicon");
 
 // init db.
 var dbhelper = require("./controllers/dbhelper");
-dbhelper.connect(function (err)
+dbhelper.start(function ()
 {
-    if (err)
+    dbhelper.connect(function (err)
     {
-        console.error("Database Server not started, some features will be shut down.");
-    }
-    else
-    {
-        require("./controllers/crawler").start();
-    }
+        if (err)
+        {
+            console.error("Database Server not started, some features will be shut down.");
+        }
+        else
+        {
+            require("./controllers/crawler").start();
+        }
+    });
 });
 
+// init express.
 var app = express();
 
 // base dir setup.
