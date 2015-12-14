@@ -1,7 +1,33 @@
-﻿var _ = require("lodash");
+﻿var fs = require("fs");
+var _ = require("lodash");
+var path = require("path");
 var async = require("async");
 var config = require("config");
+var cp = require("child_process");
 var mongoose = require("mongoose");
+
+/**
+ * 启动数据库（Server）。
+ * @param {Function(err)} [p_callback]
+ */
+exports.start = function (p_callback)
+{
+    var dbpath = path.resolve(__dirname, "../db");
+    if (!fs.existsSync(dbpath))
+    {
+        fs.mkdirSync(dbpath);
+    }
+    
+    if (fs.existsSync(dbpath))
+    {
+        cp.execFile("mongod", ["--dbpath", dbpath]);
+        setTimeout(p_callback, 1000);
+    }
+    else
+    {
+        p_callback(new Error("Can not find/create database dir: " + dbpath));
+    }
+};
 
 /**
  * 连接数据库。
