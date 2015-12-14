@@ -28,7 +28,7 @@ exports.saveResource = function (p_resource, p_callback)
 
 /**
  * 从数据库中查找指定 ID 的资源。
- * @param {String} p_id ID。
+ * @param {String} p_id ID（例如图片资源，即其 URL）。
  * @param {Function(err, doc)} [p_callback]
  */
 exports.findResourceByID = function (p_id, p_callback)
