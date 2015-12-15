@@ -1,33 +1,31 @@
 ﻿var _ = require("lodash");
-var async = require("async");
 var should = require("should");
-var mongoose = require("mongoose");
 
 var Story = require("../../models/story");
 var StoryController = require("../../controllers/story");
-var database = require("../../controllers/database");
+var dbhelper = require("../../controllers/dbhelper");
 
 describe("controllers/story", function ()
 {
     before(function (done)
     {
-        if (database.connected())
+        if (dbhelper.connected())
         {
-            database.dropAllCollections(done);
+            dbhelper.dropAllCollections(done);
         }
         else
         {
-            database.connect(function (err)
+            dbhelper.connect(function (err)
             {
                 should.not.exist(err);
-                database.dropAllCollections(done);
+                dbhelper.dropAllCollections(done);
             });
         }
     });
     
-    describe("#init", function ()
+    describe("1.init", function ()
     {
-        it("should create new stories: id[0~9], date[20150909, 20150910]", function (done)
+        it("should create new stories: id[0~9], date[20140909, 20150910]", function (done)
         {
             var stories = [];
             for (var i = 0; i < 5; i++)
@@ -37,6 +35,7 @@ describe("controllers/story", function ()
                     date : "20150909",
                     read : (i <= 2),
                     content : "神经科学/生物学" + i,
+                    cached: (i <= 2)
                 });
             }
             
@@ -47,6 +46,7 @@ describe("controllers/story", function ()
                     date : "20150910",
                     read : (i >= 7),
                     content : "神经科学/生物学" + i,
+                    cached: (i >= 7)
                 });
             }
             
@@ -58,57 +58,138 @@ describe("controllers/story", function ()
         });
     });
     
-    describe("#findStoryById", function ()
+    describe("2.findStoryByID", function ()
     {
-        var id = "3";
-        it("should find the story: id == " + id, function (done)
+        var id = 3;
+        it("should find the story of ID: " + id, function (done)
         {
-            StoryController.findStoryById(function (err, res)
+            StoryController.findStoryByID(id, function (err, doc)
             {
                 should.not.exist(err);
-                res.id.should.equal(id);
+                should.exist(doc);
+                doc.id.should.equal(id);
                 done();
-            },
-            id);
+            });
         });
     });
     
-    describe("#findStoriesByDate", function ()
+    describe("3.findStoriesByDate", function ()
     {
         var date = "20150910";
-        it("should find the stories: date == " + date, function (done)
+        it("should find the stories of date: " + date, function (done)
         {
-            StoryController.findStoriesByDate(function (err, res)
+            StoryController.findStoriesByDate(date, function (err, docs)
             {
                 should.not.exist(err);
-                res.length.should.equal(5);
-                _.each(res, function (value, index)
+                should.exist(docs);
+                docs.length.should.equal(5);
+                _.each(docs, function (value, index)
                 {
                     value.date.should.equal(date);
                 });
                 done();
-            },
-            date);
+            });
         });
     });
     
-    describe("#findUnreadStories", function ()
+    describe("4.findUnreadStories", function ()
     {
         var date = "20150910";
-        it("should find the stories: read == false, date == " + date, function (done)
+        it("should find the unread stories of date: " + date, function (done)
         {
-            StoryController.findUnreadStories(function (err, res)
+            StoryController.findUnreadStories(date, function (err, docs)
             {
                 should.not.exist(err);
-                res.length.should.equal(2);
-                _.each(res, function (value, index)
+                should.exist(docs);
+                docs.length.should.equal(2);
+                _.each(docs, function (value, index)
                 {
                     value.date.should.equal(date);
-                    value.read.should.be.true;
+                    value.read.should.be.false();
                 });
                 done();
-            },
-            date);
+            });
+        });
+        
+        it("should find all of the unread stories", function (done)
+        {
+            StoryController.findUnreadStories(function (err, docs)
+            {
+                should.not.exist(err);
+                should.exist(docs);
+                docs.length.should.equal(4);
+                _.each(docs, function (value, index)
+                {
+                    value.read.should.be.false();
+                });
+                done();
+            });
+        });
+    });
+    
+    describe("5.findUncachedIDs", function ()
+    {
+        it("should find all uncached id", function (done)
+        {
+            StoryController.findUncachedIDs(function (err, docs)
+            {
+                should.not.exist(err);
+                should.exist(docs);
+                docs.length.should.equal(4);
+                done();
+            });
+        });
+    });
+    
+    describe("6.saveStory", function ()
+    {
+        it("should save story", function (done)
+        {
+            var zhihuStory = {
+                id : 401,
+                date: "20150911",
+                title: "学英语才是正经事儿",
+                imageSource : "人民教育出版社",
+                contents : [
+                    {
+                        title: "神经科学/生物学3 - 修改"
+                    }
+                ]
+            };
+            
+            StoryController.saveStory(zhihuStory, function (err, doc)
+            {
+                should.not.exist(err);
+                should.exist(doc);
+                doc.content.should.deepEqual(zhihuStory);
+                done();
+            });
+        });
+        
+        it("should not save null story", function (done)
+        {
+            StoryController.saveStory(null, function (err, doc)
+            {
+                should.exist(err);
+                should.not.exist(doc);
+                done();
+            });
+        });
+    });
+    
+    describe("7.removeOldStories", function ()
+    {
+        var date = "20150910";
+        it("should remove stories older than: " + date, function (done)
+        {
+            StoryController.removeOldStories(date, function (err, res)
+            {
+                should.not.exist(err);
+                should.exist(res);
+                res.success.should.be.true();
+                res.count.should.equal(5);
+                done();
+            });
         });
     });
 });

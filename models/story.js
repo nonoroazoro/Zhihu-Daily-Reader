@@ -6,16 +6,16 @@ var Schema = mongoose.Schema;
  */
 var StorySchema = new Schema({
     /**
-     * Id。
-     * @type {String}
+     * ID。
+     * @type {Number}
      */
-    id: { type: String },
+    id: Number,
     
     /**
-     * 日期。
+     * 日期（知乎格式，例如："20130519"）。
      * @type {String}
      */
-    date: { type: String },
+    date: String,
     
     /**
      * 已读状态。
@@ -24,10 +24,16 @@ var StorySchema = new Schema({
     read: { type: Boolean, default: false },
     
     /**
-     * 离线日报内容。
-     * @type {String}
+     * 日报内容。对终端来说即真正的 Story。
+     * @type {Object}
      */
-    content: { type: String },
+    content: Object,
+    
+    /**
+     * 是否已离线。
+     * @type {Boolean}
+     */
+    cached: { type: Boolean, default: false }
 });
 
 StorySchema.index({ id: 1 }, { unique: true });

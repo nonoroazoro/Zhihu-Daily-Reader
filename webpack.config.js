@@ -23,7 +23,8 @@ module.exports = {
         "react": "React",
         "jquery": "jQuery",
         "lodash": "_",
-        "moment": "moment"
+        "moment": "moment",
+        "mousetrap": "Mousetrap"
     },
     module: {
         loaders: [

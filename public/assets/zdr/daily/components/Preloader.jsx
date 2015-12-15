@@ -15,7 +15,7 @@ var Preloader = React.createClass(
     render: function ()
     {
         var classes = "Preloader";
-        if(!_.isEmpty(this.props.className))
+        if(!_.isEmpty(_.trim(this.props.className)))
         {
             classes = classes + " " + this.props.className
         }

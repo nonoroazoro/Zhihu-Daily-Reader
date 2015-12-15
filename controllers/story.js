@@ -2,67 +2,164 @@
 var Story = require("../models/story");
 
 /**
- * 查找指定 Id 的日报。
- * @param  {Function} p_callback 回调函数：function(err, res)。
- * @param  {String} p_id         指定的日报 Id。
+ * 从数据库中查找指定 ID 的日报。
+ * @param {String} p_id ID。
+ * @param {Function(err, doc)} [p_callback]
  */
-exports.findStoryById = function (p_callback, p_id)
+exports.findStoryByID = function (p_id, p_callback)
 {
     if (_.isFunction(p_callback))
     {
-        if (_.isEmpty(p_id))
-        {
-            p_callback(new Error("p_id is Empty String."), null);
-        }
-        else
-        {
-            Story.findOne({ id: p_id }, p_callback);
-        }
+        Story.findOne({ id: p_id }, p_callback);
     }
 };
 
 /**
- * 查找指定日期的日报。
- * @param  {Function} p_callback 回调函数：function(err, res)。
- * @param  {String} p_date       指定的日期。
+ * 从数据库中查找指定日期的日报。
+ * @param {String} p_date 日期。
+ * @param {Function(err, docs)} [p_callback]
  */
-exports.findStoriesByDate = function (p_callback, p_date)
+exports.findStoriesByDate = function (p_date, p_callback)
 {
     if (_.isFunction(p_callback))
     {
-        if (_.isEmpty(p_date))
-        {
-            p_callback(new Error("p_date is Empty String."), null);
-        }
-        else
-        {
-            Story.find({ date: p_date }, p_callback);
-        }
+        Story.find({ date: p_date }, p_callback);
     }
 };
 
 /**
- * 查找指定日期的未读日报。如果未指定，则查找所有未读日报。
- * @param  {Function} p_callback 回调函数：function(err, res)。
- * @param  {String} p_date       指定的日期。
+ * 从数据库中查找指定日期的未读日报。如果未指定，则查找所有未读日报。
+ * @param {String} p_date 日期。
+ * @param {Function(err, docs)} [p_callback]
  */
-exports.findUnreadStories = function (p_callback, p_date)
+exports.findUnreadStories = function (p_date, p_callback)
+{
+    if (_.isFunction(p_date))
+    {
+        p_callback = p_date;
+        p_date = null;
+    }
+    
+    Story.find(
+        p_date ? { date: p_date, read: false } : { read: false },
+        p_callback
+    );
+};
+
+/**
+ * 从数据库中查找所有未离线的日报 ID。
+ * @param {Function(err, docs)} [p_callback]
+ */
+exports.findUncachedIDs = function (p_callback)
 {
     if (_.isFunction(p_callback))
     {
-        if (_.isEmpty(p_date))
+        Story.find({ cached: false }, { id: 1 }, p_callback);
+    }
+};
+
+/**
+ * 从数据库中查找满足条件的记录。
+ * @param {Object} p_conditions 指定的查询条件。
+ * @param {Object} [p_projection]
+ * @param {Object} [p_options]
+ * @param {Function(err, docs)} [p_callback]
+ */
+exports.query = function (p_conditions, p_projection, p_options, p_callback)
+{
+    Story.find(p_conditions, p_projection, p_options, p_callback);
+};
+
+/**
+ * 保存知乎日报至数据库。
+ * @param {Object} p_story 指定的日报（特指从服务端获取到的 JSON Object）。
+ * @param {Function(err, doc)} [p_callback]
+ */
+exports.saveStory = function (p_story, p_callback)
+{
+    if (_.isFunction(p_story))
+    {
+        p_story(new Error("p_story must not be a Function."))
+    }
+    else if (_.isEmpty(p_story) || !_.isObject(p_story))
+    {
+        if (_.isFunction(p_callback))
         {
-            Story.find({ read: false }, p_callback);
+            p_callback(new Error("p_story must be a non-empty Object."))
         }
-        else
+    }
+    else
+    {
+        var conditions = {
+            id: p_story.id
+        };
+        
+        var update = {
+            id: p_story.id,
+            date: p_story.date,
+            content: p_story,
+            cached: true
+        };
+        
+        var options = {
+            new: true,
+            upsert: true
+        };
+        
+        Story.findOneAndUpdate(conditions, update, options, p_callback);
+    }
+};
+
+/**
+ * 记录未离线的知乎日报。
+ * @param {String} p_id ID。
+ * @param {String} p_date 日期。
+ * @param {Function(err, doc)} [p_callback]
+ */
+exports.logUncachedStory = function (p_id, p_date, p_callback)
+{
+    Story.findOneAndUpdate({
+        id: p_id
+    }, {
+        id: p_id,
+        date: p_date,
+        cached: false
+    }, {
+        new: true,
+        upsert: true
+    }, p_callback);
+};
+
+/**
+ * 删除数据库中早于指定日期的日报。
+ * @param {String} p_date 日期。
+ * @param {Function(err, res)} [p_callback]
+ */
+exports.removeOldStories = function (p_date, p_callback)
+{
+    if (_.isFunction(p_date))
+    {
+        p_date(new Error("p_date must not be a Function."))
+    }
+    else
+    {
+        Story.remove({ date: { $lt: p_date } }, function (err, res)
         {
-            Story.find(
+            if (_.isFunction(p_callback))
+            {
+                if (err)
                 {
-                    date: p_date,
-                    read: false
-                },
-                p_callback
-            );
-        }
+                    p_callback(err);
+                }
+                else
+                {
+                    p_callback(null, {
+                        date: p_date,
+                        success: (res.result.ok == 1),
+                        count: res.result.n
+                    });
+                }
+            };
+        });
     }
 };
