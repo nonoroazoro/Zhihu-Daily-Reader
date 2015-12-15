@@ -15,13 +15,7 @@ var CatalogSchema = new Schema({
      * 知乎日报 ID 列表。
      * @type {Array}
      */
-    ids: [Number],
-    
-    /**
-     * 是否已全部离线。
-     * @type {[String]}
-     */
-    cached: { type: Boolean, default: false }
+    ids: [Number]
 });
 
 CatalogSchema.index({ date: -1 }, { unique: true });
