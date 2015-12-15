@@ -1,11 +1,12 @@
 ﻿require("./res/DailyPage.less");
 
 var $ = require("jquery");
+var Mousetrap = require("mousetrap");
 var React = require("react");
 var ReactUpdate = React.addons.update;
 var PureRenderMixin = React.addons.PureRenderMixin;
-var DailyManager = require("./controllers/DailyManager");
-var Utils = require("./controllers/Utils");
+var DailyManager = require("./controllers/daily");
+var Utils = require("./controllers/utils");
 
 //var Carousel = require("./components/Carousel");
 var FlexView = require("./components/FlexView");
@@ -57,19 +58,19 @@ var DailyPage = React.createClass(
         // 1、事件处理。
         this._removeEventHandler();
     },
-    
+
     /**
     * 加载热门日报（Carousel）。
     */
     _loadTopStories: function ()
     {
-        DailyManager.getTopStoryIndexes(function (p_data)
+        DailyManager.getTopStoryIDs(function (err, res)
         {
-            if (this.isMounted() && p_data && !p_data.error)
+            if (this.isMounted() && !err && res)
             {
                 this.setState(
                 {
-                    topStoryIndexes: p_data.indexes
+                    topStoryIndexes: res.ids
                 });
             }
         }.bind(this));
@@ -84,12 +85,12 @@ var DailyPage = React.createClass(
             loading: true
         }, function ()
         {
-            DailyManager.getStoryIndexes(function (p_data)
+            DailyManager.getStoryIDs(function (err, res)
             {
-                if (this.isMounted() && p_data && !p_data.error)
+                if (this.isMounted() && !err && res)
                 {
-                    this._currentLoadedDate = p_data.date;
-                    this._addStoryIndexes(p_data.indexes);
+                    this._currentLoadedDate = res.date;
+                    this._addStoryIndexes(res.ids);
                     this._loadPrevStories();
                 }
 
@@ -109,23 +110,26 @@ var DailyPage = React.createClass(
             loading: true
         }, function ()
         {
-            DailyManager.getStoryIndexes(function (p_data)
-            {
-                if (p_data && !p_data.error)
+            DailyManager.getStoryIDs(
+                Utils.prevZhihuDay(this._currentLoadedDate),
+                function (err, res)
                 {
-                    this._currentLoadedDate = p_data.date;
-                    this._addStoryIndexes(p_data.indexes);
-                }
-            
-                this.setState({
-                    loading: false
-                });
+                    if (!err && res)
+                    {
+                        this._currentLoadedDate = res.date;
+                        this._addStoryIndexes(res.ids);
+                    }
 
-                if(_.isFunction(p_callback))
-                {
-                    p_callback();
-                }
-            }.bind(this), Utils.prevZhihuDay(this._currentLoadedDate));
+                    this.setState({
+                        loading: false
+                    });
+
+                    if(_.isFunction(p_callback))
+                    {
+                        p_callback();
+                    }
+                }.bind(this)
+            );
         });
     },
 
@@ -150,7 +154,7 @@ var DailyPage = React.createClass(
             this._$ArticleViewContent.focus();
         }.bind(this));
 
-        $(document).on("keydown", this._globalKeydownHandler);
+        this._addKeyboardShortcuts();
         $(document).on("scroll", this._scrollHandler);
     },
 
@@ -160,81 +164,59 @@ var DailyPage = React.createClass(
     _removeEventHandler: function()
     {
         this._$ArticleView.off("hide.bs.modal");
-        $(document).off("keydown");
+        this._removeKeyboardShortcuts();
         $(document).off("scroll");
     },
 
     /**
-    * 处理全局按键事件。
+    * 添加键盘快捷键。
     */
-    _globalKeydownHandler: function (e)
+    _addKeyboardShortcuts: function()
     {
-        var code = e.which;
-        var extraKey = e.altKey || e.ctrlKey || e.shiftKey || e.metaKey;
-        if(!extraKey)
+        Mousetrap.bind("esc", this._closeArticleView);
+        
+        Mousetrap.bind("j", this._keydownShowNextStory);
+        Mousetrap.bind("k", this._keydownShowPrevStory);
+
+        Mousetrap.bind(["o", "enter"], function()
         {
-            if(code == 27)
+            if (!this._isArticleViewVisible)
             {
-                // ESC：关闭 ArticleView。
-                this._closeArticleView();
+                this._showArticle(DailyManager.getFetchedStories()[this.state.storyIndexes[this._currentIndex]]);
             }
-            else if(code == 74)
+        }.bind(this));
+
+        Mousetrap.bind("left", function()
+        {
+            this._isArticleViewVisible
+                ? this._keydownShowPrevStory()
+                : this._minusCurrentIndex();
+        }.bind(this));
+        Mousetrap.bind("right", function()
+        {
+            this._isArticleViewVisible
+                ? this._keydownShowNextStory()
+                : this._addCurrentIndex();
+        }.bind(this));
+
+        Mousetrap.bind("v", function()
+        {
+            if (this._isArticleViewVisible)
             {
-                // J：ArticleView 显示下一个日报（如果当前未打开 ArticleView 则自动打开）。
-                this._keydownShowNextStory();
+                $(".view-more a").map(function (i, o)
+                {
+                    o.click();
+                });
             }
-            else if(code == 75)
-            {
-                // K：ArticleView 显示上一个日报（如果当前未打开 ArticleView 则自动打开）。
-                this._keydownShowPrevStory();
-            }
-            else if(code == 13 || code == 79)
-            {
-                // Enter、O：打开选中的日报。
-                if(!this._isArticleViewVisible)
-                {
-                    this._showArticle(DailyManager.getFetchedStories()[this.state.storyIndexes[this._currentIndex]]);
-                }
-            }
-            else if(code == 37)
-            {
-                // 左方向：切换到上一个日报。
-                if(this._isArticleViewVisible)
-                {
-                    this._keydownShowPrevStory();
-                }
-                else
-                {
-                    this._minusCurrentIndex();
-                }
-            }
-            else if(code == 39)
-            {
-                // 右方向：切换到下一个日报。
-                if(this._isArticleViewVisible)
-                {
-                    this._keydownShowNextStory();
-                }
-                else
-                {
-                    this._addCurrentIndex();
-                }
-            }
-            else if(code == 86)
-            {
-                // V：打开原始链接。
-                if(this._isArticleViewVisible)
-                {
-                    $(".view-more a").map(function(p_index, p_object)
-                    {
-                        p_object.click();
-                    });
-                }
-                else
-                {
-                }
-            }
-        }
+        }.bind(this));
+    },
+
+    /**
+    * 移除键盘快捷键。
+    */
+    _removeKeyboardShortcuts: function()
+    {
+        Mousetrap.reset();
     },
 
     /**
@@ -305,7 +287,8 @@ var DailyPage = React.createClass(
     */
     _scrollHandler: function (e)
     {
-        if(!this._isLoading && ($(document).scrollTop() >= $(document).height()-$(window).height()))
+        // 185 是 Flex-Tile 的一半高度。
+        if(!this._isLoading && ($(document).scrollTop() >= $(document).height()-$(window).height() - 185))
         {
             this._isLoading = true;
             this._loadPrevStories(function()
@@ -452,7 +435,7 @@ var DailyPage = React.createClass(
         var $newTile = $("#story" + this.state.storyIndexes[p_newIndex]);
         $newTile.addClass("current");
 
-        // 判断是否需要移动滚动跳的位置，以使内容可见。
+        // 判断是否需要移动滚动条的位置，以使内容可见。
         // 71 是 body 的 padding-top 与 FlexTile 的 margin-top 之和（即 51 + 20）。
         var newTop = $newTile.offset().top - 71;
         var moveDown = newTop + $newTile.outerHeight(true) - $(document).scrollTop() > $(window).height();

@@ -1,7 +1,4 @@
-﻿#!/usr/bin/env node
+﻿var config = require("config");
+require("../app").listen(config.port);
 
-var config = require("config");
-var port = process.env.PORT || config.port;
-require("../app").listen(port);
-
-console.log("Server Started on Port: " + port);
+console.log("Application Server started on port: " + config.port);

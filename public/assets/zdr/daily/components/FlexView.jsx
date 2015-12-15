@@ -4,7 +4,7 @@ var _ = require("lodash");
 var classNames = require("classnames");
 var React = require("react");
 var PureRenderMixin = React.addons.PureRenderMixin;
-var DailyManager = require("../controllers/DailyManager");
+var DailyManager = require("../controllers/daily");
 var Preloader = require("./Preloader");
 
 var FlexTile = React.createClass(
@@ -22,16 +22,19 @@ var FlexTile = React.createClass(
     {
         if (this.props.id)
         {
-            DailyManager.getStory(function (data)
-            {
-                if (this.isMounted() && data)
+            DailyManager.getStory(
+                this.props.id,
+                function (err, res)
                 {
-                    this.setState(
+                    if (this.isMounted() && !err && res)
                     {
-                        story: data
-                    });
-                }
-            }.bind(this), this.props.id);
+                        this.setState(
+                        {
+                            story: res
+                        });
+                    }
+                }.bind(this)
+            );
         }
     },
 

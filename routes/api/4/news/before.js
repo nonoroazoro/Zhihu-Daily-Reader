@@ -1,20 +1,19 @@
 ﻿var express = require("express");
 var router = express.Router();
 
-var crawler = require(__base + "/libs/zdr/crawler");
+var daily = require(__base + "/controllers/proxy/daily");
 
 // get stroies of the specified date.
 router.get("/:date?", function (req, res, next)
 {
+    // 如果未指定，则返回最新知乎日报 ID 列表。
     if (req.params.date)
     {
-        //TODO: 暂时先用这种方法，后面加上爬虫。读取本地缓存。
-        crawler.getStoryIndexes(req.params.date, res);
+        daily.getStoryIDs(req.params.date, res, next);
     }
     else
     {
-        // 如果未指定，则返回最新日报的索引。
-        crawler.getLatestStoryIndexes(res);
+        daily.getLatestStoryIDs(res, next);
     }
 });
 

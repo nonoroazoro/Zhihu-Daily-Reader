@@ -1,7 +1,34 @@
 ﻿{
-    // mongodb 配置
-    "db": "mongodb://127.0.0.1/zhihu",
+    // 端口。
+    "port": 80,
 
-    // 程序运行的端口
-    "port": 3000
+    // 数据库。
+    "db": "mongodb://127.0.0.1/zhihu",
+    "poolSize": 10,
+    "auto_reconnect": true,
+
+    // 知乎日报官方 API。
+    "zhihu_daily_api": "http://news-at.zhihu.com/api/4/",
+
+    // 爬虫。
+    "crawler":
+    {
+        // 是否允许缓存（自动离线知乎日报）。
+        "enabled": true,
+
+        // 最大缓存天数（从今天开始计算，过期的日报将被删除）。
+        "max_age": 30,
+
+        // 抓取不同日期之间的时间间隔（单位：秒）。
+        "day_interval": 3,
+
+        // 抓取不同日报之间的时间间隔（单位：秒）。
+        "daily_interval": 1,
+
+        // 抓取日报时的重试次数。
+        "daily_retry": 3
+    },
+
+    // 用户名（随便填咯）。
+    "username": "Zoro"
 }
