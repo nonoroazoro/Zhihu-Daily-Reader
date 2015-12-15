@@ -12,7 +12,7 @@ var StorySchema = new Schema({
     id: Number,
     
     /**
-     * 日期。
+     * 日期（知乎格式，例如："20130519"）。
      * @type {String}
      */
     date: String,
