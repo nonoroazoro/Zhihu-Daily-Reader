@@ -1,12 +1,9 @@
-﻿var _ = require("lodash");
-var async = require("async");
+﻿var async = require("async");
 var config = require("config");
 
 var daily = require("./daily");
 var story = require("../story");
-var status = require("../status");
 var utils = require("../utils");
-var dbhelper = require("../dbhelper");
 
 var stop = false;
 
