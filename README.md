@@ -1,7 +1,9 @@
 # 知乎日报 - 阅读器
 
 知乎日报官方不提供 Web 版，你妹的，那就做一个吧。
-> 快捷键：类似 Google Reader，`j/k/v` 当然还有方向键，你懂的。
+> 离线：自动离线知乎日报（可配置），无法访问 Internet 时也能用啦。
+
+> 快捷键：类似 Google Reader，`j/k/v/o/enter` 当然还有方向键，你懂的。
 
 > 支持：`Firefox/Chrome/IE11`。没测 `Opera`，应该可以。
 
@@ -11,13 +13,13 @@
 
 ## 介绍
 
-- **后端**：`Node`、`Express`（目前还没用数据库，后续更新）
+- **后端**：`Node`、`Express`、`Jade`、`Mongodb`
 - **前端**：`React`
 - **打包**：`Webpack`
 
 ## 用法
 
-*注：服务器端口默认`80`，可在 `./config/production.json` 中自行修改。*
+*按顺序执行即可。注：服务器端口默认`80`，可在 `./config/default.json` 中自行修改。*
 
 **1.clone from git:**
 
@@ -25,25 +27,38 @@
 
 **2.install dependencies:**
 
+    # 1. install npm packages
 	$ cd Zhihu-Daily-Reader && npm install --production
+
+    # 2. install mongodb (可选。不装也没事，会自动关闭数据库相关功能)
+    # https://www.mongodb.org/downloads
+    # （可选）修改 ./config/default.json 爬虫（Crawler）配置。
 
 **3.start app:**
 
-- *windows:*
+- *for **Windows**:*
 
-		# method 1:
+		# 方法1:
 		$ npm start
-		# visit http://localhost
+        # 浏览器访问: http://localhost 或 http://127.0.0.1
 
-		# method 2:
+		# 方法2:
 		$ start.bat
 
-- *linux&mac (Only Tested in Cygwin):*
+- *for **Linux&Mac** (Only Tested in Cygwin):*
 
 		$ npm run startx
-		# visit http://localhost
+        # 浏览器访问: http://localhost 或 http://127.0.0.1
 
 ## 更新历史
+
+###<a href="#v1.1" id="v1.1">1.1</a>
+
+2015年12月15日
+
+- 增加离线功能，无法访问 Internet 时也能用啦（需安装[Mongodb](https://www.mongodb.org/downloads)）。
+- 离线功能可选，无需进行特殊设置（全自动）。
+- 其他细节优化，不想列出来了。
 
 ###<a href="#v1.0" id="v1.0">1.0</a>
 
