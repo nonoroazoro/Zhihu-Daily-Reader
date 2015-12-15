@@ -1,5 +1,6 @@
-﻿var bodyParser = require("body-parser");
+﻿var config = require("config");
 var express = require("express");
+var bodyParser = require("body-parser");
 var favicon = require("serve-favicon");
 
 // init db.
@@ -14,7 +15,10 @@ dbhelper.start(function ()
         }
         else
         {
-            require("./controllers/crawler").start();
+            if (config.crawler.enabled)
+            {
+                require("./controllers/crawler").start();
+            }
         }
     });
 });
