@@ -2,8 +2,8 @@
 var Catalog = require("../models/catalog");
 
 /**
- * 保存目录至数据库。如果已存在，则更新。
- * @param {Object} p_catalog 目录。
+ * 保存知乎日报列表至数据库。如果已存在，则更新。
+ * @param {Object} p_catalog 知乎日报列表。
  * @param {Function(err, doc)} [p_callback]
  */
 exports.saveCatalog = function (p_catalog, p_callback)
@@ -27,7 +27,7 @@ exports.saveCatalog = function (p_catalog, p_callback)
 };
 
 /**
- * 从数据库中查找指定日期的目录。
+ * 从数据库中查找指定日期的知乎日报列表。
  * @param {String} p_date 日期（知乎格式，例如："20130519"）。
  * @param {Function(err, doc)} [p_callback]
  */
@@ -40,7 +40,7 @@ exports.findCatalogByDate = function (p_date, p_callback)
 };
 
 /**
- * 从数据库中查找最近日期的目录（缓存的最近日期）。
+ * 从数据库中查找最近日期的知乎日报列表（缓存的最近日期）。
  * @param {Function(err, doc)} [p_callback]
  */
 exports.findLatestCatalog = function (p_callback)
