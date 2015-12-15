@@ -156,12 +156,13 @@ exports.cacheImages = function (p_urls, p_callback)
 };
 
 /**
- * 离线知乎日报目录（不管是否成功都回调）。
+ * 离线知乎日报列表（不管是否成功都回调）。
  * @param {Object} p_res 中间结果，包含 ids 和 date。
  * @param {Function(err, res)} [p_callback]
  */
 var _cacheStoryIDsTask = function (p_res, p_callback)
 {
+    // 注意：只保存非空列表。
     if (_.isEmpty(p_res.ids))
     {
         p_callback(null, p_res);
