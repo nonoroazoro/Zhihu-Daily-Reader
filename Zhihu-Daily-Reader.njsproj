@@ -18,6 +18,7 @@
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
   <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
   <ItemGroup>
+    <Compile Include="controllers\catalog.js" />
     <Compile Include="controllers\crawler\daily.js" />
     <Compile Include="controllers\daily.js" />
     <Compile Include="controllers\dbhelper.js" />
@@ -29,10 +30,12 @@
     <Compile Include="models\resource.js" />
     <Compile Include="models\status.js" />
     <Compile Include="models\story.js" />
+    <Compile Include="models\catalog.js" />
     <Compile Include="public\assets\libs\mousetrap\mousetrap.js" />
     <Compile Include="public\assets\libs\mousetrap\mousetrap.min.js" />
     <Compile Include="public\assets\zdr\build\error_404.bundle.js" />
     <Compile Include="public\assets\zdr\build\index.bundle.js" />
+    <Compile Include="test\controllers\catalog.test.js" />
     <Compile Include="test\controllers\crawler\daily.test.js" />
     <Compile Include="test\controllers\daily.test.js" />
     <Compile Include="test\controllers\resource.test.js" />
