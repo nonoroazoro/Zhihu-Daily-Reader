@@ -40,14 +40,14 @@ exports.findCatalogByDate = function (p_date, p_callback)
 };
 
 /**
- * 从数据库中查找最新日期的目录（缓存的最新日期）。
+ * 从数据库中查找最近日期的目录（缓存的最近日期）。
  * @param {Function(err, doc)} [p_callback]
  */
 exports.findLatestCatalog = function (p_callback)
 {
     if (_.isFunction(p_callback))
     {
-        Catalog.findOne({}, {}, { sort: { "date": 1 } }, p_callback);
+        Catalog.findOne({}, {}, { sort: { "date": -1 } }, p_callback);
     }
 };
 
