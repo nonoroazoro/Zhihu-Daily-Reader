@@ -2,7 +2,7 @@
 var Schema = mongoose.Schema;
 
 /**
- * 存储知乎日报的目录（以天为单位）。
+ * 存储知乎日报列表（以天为单位）。
  */
 var CatalogSchema = new Schema({
     /**
