@@ -36,7 +36,7 @@
 
 **3.start app:**
 
-- *for **Windows**:*
+- for **Windows**:
 
 		# 方法1:
 		$ npm start
@@ -45,7 +45,7 @@
 		# 方法2:
 		$ start.bat
 
-- *for **Linux&Mac** (Only Tested in Cygwin):*
+- for **Linux&Mac** (Only Tested in Cygwin):
 
 		$ npm run startx
         # 浏览器访问: http://localhost 或 http://127.0.0.1
