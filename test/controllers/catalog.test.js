@@ -6,7 +6,7 @@ var dbhelper = require("../../controllers/dbhelper");
 var Catalog = require("../../models/catalog");
 var CatalogController = require("../../controllers/catalog");
 
-describe.only("controllers/catalog", function ()
+describe("controllers/catalog", function ()
 {
     before(function (done)
     {
