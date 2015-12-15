@@ -9,19 +9,19 @@ var ResourceSchema = new Schema({
      * ID（唯一标识，例如图片原始 URL）。
      * @type {String}
      */
-    id: { type: String },
+    id: String,
     
     /**
      * MIME。
      * @type {String}
      */
-    contentType: { type: String },
+    contentType: String,
     
     /**
      * 内容。
      * @type {Buffer}
      */
-    data: { type: Buffer }
+    data: Buffer
 });
 
 ResourceSchema.index({ id: 1 }, { unique: true });

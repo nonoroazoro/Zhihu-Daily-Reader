@@ -9,19 +9,19 @@ var StatusSchema = new Schema({
      * 用户名（唯一）。
      * @type {String}
      */
-    username: { type: String },
+    username: String,
     
     /**
      * 已离线的日报时间范围（最新）。
      * @type {String}
      */
-    startDate: { type: String },
+    startDate: String,
     
     /**
      * 已离线的日报时间范围（最旧）。
      * @type {String}
      */
-    endDate: { type: String }
+    endDate: String
 });
 
 StatusSchema.index({ username: 1 }, { unique: true });

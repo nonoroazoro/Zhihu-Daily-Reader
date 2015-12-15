@@ -9,13 +9,13 @@ var StorySchema = new Schema({
      * ID。
      * @type {Number}
      */
-    id: { type: Number },
+    id: Number,
     
     /**
      * 日期。
      * @type {String}
      */
-    date: { type: String },
+    date: String,
     
     /**
      * 已读状态。
@@ -27,7 +27,7 @@ var StorySchema = new Schema({
      * 日报内容。对终端来说即真正的 Story。
      * @type {Object}
      */
-    content: { type: Object },
+    content: Object,
     
     /**
      * 是否已离线。
