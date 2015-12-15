@@ -6,7 +6,7 @@ var dbhelper = require("../../controllers/dbhelper");
 var Catalog = require("../../models/catalog");
 var CatalogController = require("../../controllers/catalog");
 
-describe("controllers/catalog", function ()
+describe.only("controllers/catalog", function ()
 {
     before(function (done)
     {
@@ -34,10 +34,7 @@ describe("controllers/catalog", function ()
             {
                 should.not.exist(err);
                 ids = res.ids;
-                CatalogController.saveCatalog({
-                    date: date, 
-                    ids: res.ids
-                }, function (err, doc)
+                CatalogController.saveCatalog(res, function (err, doc)
                 {
                     should.not.exist(err);
                     doc.date.should.equal(date);
