@@ -156,11 +156,31 @@ exports.cacheImages = function (p_urls, p_callback)
 };
 
 /**
+ * 离线知乎日报目录（不管是否成功都回调）。
+ * @param {Object} p_res 中间结果，包含 ids 和 date。
+ * @param {Function(err, res)} [p_callback]
+ */
+var _cacheStoryIDsTask = function (p_res, p_callback)
+{
+    if (_.isEmpty(p_res.ids))
+    {
+        p_callback(null, p_res);
+    }
+    else
+    {
+        catalog.saveCatalog(p_res, function ()
+        {
+            p_callback(null, p_res);
+        });
+    }
+};
+
+/**
  * 对中间结果进行预处理：移除已离线的日报。
  * @param {Object} p_res 中间结果，包含 ids 和 date。
  * @param {Function(err, res)} [p_callback]
  */
-function _preprocessTask(p_res, p_callback)
+ var _preprocessTask = function (p_res, p_callback)
 {
     story.query({
         date: p_res.date,
@@ -183,14 +203,14 @@ function _preprocessTask(p_res, p_callback)
         }
         p_callback(null, p_res);
     });
-}
+};
 
 /**
  * 离线知乎日报。
  * @param {Object} p_res 中间结果，包含 ids 和 date。
  * @param {Function(err, res)} [p_callback]
  */
-function _cacheStoriesTask(p_res, p_callback)
+var _cacheStoriesTask = function (p_res, p_callback)
 {
     var result = { date: p_res.date, cached: [] };
     async.eachSeries(p_res.ids, function (id, done)
@@ -207,24 +227,4 @@ function _cacheStoriesTask(p_res, p_callback)
     {
         p_callback(null, result);
     });
-}
-
-/**
- * 离线知乎日报目录（不管是否成功都回调）。
- * @param {Object} p_res 中间结果，包含 ids 和 date。
- * @param {Function(err, res)} [p_callback]
- */
-var _cacheStoryIDsTask = function (p_res, p_callback)
-{
-    if (_.isEmpty(p_res.ids))
-    {
-        p_callback(null, p_res);
-    }
-    else
-    {
-        catalog.saveCatalog(p_res, function ()
-        {
-            p_callback(null, p_res);
-        });
-    }
 };
