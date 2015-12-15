@@ -176,7 +176,6 @@ exports.fetchStory = function (p_id, p_callback)
                                 }
                             });
                             
-                            // TODO: 图片暂时不入库，后面再说。
                             var avatar = $(e).find(".meta>.avatar").attr("src");
                             if (_.isEmpty(avatar))
                             {
