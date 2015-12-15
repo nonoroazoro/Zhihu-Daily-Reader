@@ -8,6 +8,7 @@ var config = require("config").crawler;
 
 var daily = require("../daily");
 var story = require("../story");
+var catalog = require("../catalog");
 var resource = require("../resource");
 
 /**
@@ -60,6 +61,7 @@ exports.cacheLatestStories = function (p_callback)
     async.waterfall(
         [
             daily.fetchLatestStoryIDs,
+            _cacheStoryIDsTask,
             _preprocessTask,
             _cacheStoriesTask.bind(this)
         ],
@@ -85,14 +87,19 @@ exports.cacheStories = function (p_date, p_ids, p_callback)
         if (_.isFunction(p_ids))
         {
             p_callback = p_ids;
-            tasks.unshift(daily.fetchStoryIDs.bind(this, p_date), _preprocessTask);
+            tasks.unshift(
+                daily.fetchStoryIDs.bind(this, p_date),
+                _cacheStoryIDsTask,
+                _preprocessTask
+            );
         }
         else
         {
-            tasks.unshift(_preprocessTask.bind(this, {
-                date: p_date,
-                ids: p_ids
-            }));
+            var res = { date: p_date, ids: p_ids };
+            tasks.unshift(
+                _cacheStoryIDsTask.bind(this, res),
+                _preprocessTask
+            );
         }
         async.waterfall(tasks, p_callback);
     }
@@ -201,3 +208,23 @@ function _cacheStoriesTask(p_res, p_callback)
         p_callback(null, result);
     });
 }
+
+/**
+ * 离线知乎日报目录（不管是否成功都回调）。
+ * @param {Object} p_res 中间结果，包含 ids 和 date。
+ * @param {Function(err, res)} [p_callback]
+ */
+var _cacheStoryIDsTask = function (p_res, p_callback)
+{
+    if (_.isEmpty(p_res.ids))
+    {
+        p_callback(null, p_res);
+    }
+    else
+    {
+        catalog.saveCatalog(p_res, function ()
+        {
+            p_callback(null, p_res);
+        });
+    }
+};
