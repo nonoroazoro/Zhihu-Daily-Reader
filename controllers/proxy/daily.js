@@ -4,6 +4,7 @@
 
 var daily = require("../daily");
 var story = require("../story");
+var catalog = require("../catalog");
 var resource = require("../resource");
 var dbhelper = require("../dbhelper");
 
@@ -14,11 +15,29 @@ var dbhelper = require("../dbhelper");
  */
 exports.getLatestStoryIDs = function (p_res, p_next)
 {
+    // 注意：最新日报列表优先从知乎服务器获取（不断更新）。
     daily.fetchLatestStoryIDs(function (err, res)
     {
         if (err)
         {
-            p_next(err);
+            if (dbhelper.connected())
+            {
+                catalog.findLatestCatalog(function (err, doc)
+                {
+                    if (err || !doc)
+                    {
+                        p_next(err);
+                    }
+                    else
+                    {
+                        p_res.json(doc);
+                    }
+                });
+            }
+            else
+            {
+                p_next(err);
+            }
         }
         else
         {
@@ -55,17 +74,25 @@ exports.getTopStoryIDs = function (p_res, p_next)
  */
  exports.getStoryIDs = function (p_date, p_res, p_next)
 {
-    daily.fetchStoryIDs(p_date, function (err, res)
+    // 注意：非最新日报列表优先从数据库获取，注意区别。
+    if (dbhelper.connected())
     {
-        if (err)
+        catalog.findCatalogByDate(p_date, function (err, doc)
         {
-            p_next(err);
-        }
-        else
-        {
-            p_res.json(res);
-        }
-    });
+            if (err || !doc)
+            {
+                _fetchStoryIDs(p_date, p_res, p_next);
+            }
+            else
+            {
+                p_res.json(doc);
+            }
+        });
+    }
+    else
+    {
+        _fetchStoryIDs(p_date, p_res, p_next);
+    }
 };
 
 /**
@@ -123,6 +150,21 @@ exports.getTopStoryIDs = function (p_res, p_next)
     {
         _fetchImage(p_url, p_res, p_next);
     }
+};
+
+var _fetchStoryIDs = function (p_date, p_res, p_next)
+{
+    daily.fetchStoryIDs(p_date, function (err, res)
+    {
+        if (err)
+        {
+            p_next(err);
+        }
+        else
+        {
+            p_res.json(res);
+        }
+    });
 };
 
 var _fetchStory = function (p_id, p_res, p_next)
