@@ -18,7 +18,10 @@ exports.start = function ()
         _cleanCacheTask,
     ], function (err, res)
     {
-        console.log(res);
+        if (res)
+        {
+            console.log(res);
+        }
         if (!err)
         {
             _cachePrev(res.date, res.max_age);
