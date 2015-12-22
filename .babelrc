@@ -1,0 +1,3 @@
+﻿{
+  "plugins": ["transform-react-jsx"]
+}
