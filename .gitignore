@@ -4,10 +4,12 @@
 *.dat
 *.dll
 *.DS_Store
+*.log
 *.suo
 *.tmp
 *.user
-*.log
-
-node_modules/
-obj/
+ 
+/.vs/
+/db/
+/node_modules/
+/obj/
