@@ -30,22 +30,27 @@ module.exports = {
         loaders: [
             {
                 test: /\.jsx?$/,
-                loader: "jsx?harmony"
+                exclude: /node_modules/,
+                loader: "babel-loader"
             },
             {
                 test: /\.css$/,
+                exclude: /node_modules/,
                 loader: ExtractTextPlugin.extract("style", "css")
             },
             {
                 test: /\.less$/,
+                exclude: /node_modules/,
                 loader: ExtractTextPlugin.extract("style", "css!less")
             },
             {
                 test: /\.(png|jpg)$/,
+                exclude: /node_modules/,
                 loader: "url?limit=8192"
             },
             {
                 test: /\.woff$/,
+                exclude: /node_modules/,
                 loader: "url?limit=100000&mimetype=application/font-woff"
             }
         ]
