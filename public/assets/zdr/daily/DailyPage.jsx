@@ -27,7 +27,7 @@ var DailyPage = React.createClass(
 
     mixins: [PureRenderMixin],
 
-    getInitialState()
+    getInitialState: function()
     {
         return {
             topStoryIndexes: [],
