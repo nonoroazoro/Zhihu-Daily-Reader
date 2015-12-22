@@ -43,6 +43,7 @@
     <Compile Include="test\controllers\story.test.js" />
     <Compile Include="test\controllers\utils.test.js" />
     <Compile Include="webpack.config.js" />
+    <Content Include=".babelrc" />
     <Content Include="config\default.json" />
     <Content Include="config\development.json" />
     <Content Include="config\production.json" />
