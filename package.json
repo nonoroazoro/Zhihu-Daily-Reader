@@ -1,7 +1,7 @@
 {
   "name": "zhihu-daily-reader",
   "description": "Reader for Zhihu-Daily.",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "private": true,
   "author": {
     "name": "nonoroazoro",
@@ -18,8 +18,7 @@
     "reader"
   ],
   "scripts": {
-    "start": "set NODE_ENV=production&&node ./bin/www",
-    "startx": "env NODE_ENV=production&&node ./bin/www",
+    "start": "node ./bin/www",
     "startdb": "mkdir db | mongod --dbpath ./db",
     "watch": "node_modules/.bin/webpack -d --watch",
     "build": "node_modules/.bin/webpack -p",

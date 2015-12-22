@@ -19,7 +19,7 @@
 
 ## 用法
 
-*按顺序执行即可。注：服务器端口默认`80`，可在 `./config/default.json` 中自行修改。*
+*注：服务器端口默认**`8888`**，如果发生端口冲突，可在**`./config/default.json`**中自行修改。*
 
 **1.clone from git:**
 
@@ -40,19 +40,26 @@
 
 		# 方法1:
 		$ npm start
-        # 浏览器访问: http://localhost 或 http://127.0.0.1
+        # 浏览器访问: http://localhost:8888 或 http://127.0.0.1:8888
 
 		# 方法2:
 		$ start.bat
 
-- for **Linux&Mac** (Only Tested in Cygwin):
+- for **Linux&Mac**:
 
-		$ npm run startx
-        # 浏览器访问: http://localhost 或 http://127.0.0.1
+		$ npm start
+        # 浏览器访问: http://localhost:8888 或 http://127.0.0.1:8888
 
 ## 更新历史
 
-###<a href="#v1.1" id="v1.1">1.1</a>
+###<a href="#v1.1.2" id="v1.1.2">1.1.2</a>
+
+2015年12月22日
+
+- 修正启动脚本（Windows/Mac/Linux）。
+- 修改默认端口为 8888。
+
+###<a href="#v1.1.1" id="v1.1.1">1.1.1</a>
 
 2015年12月15日
 
