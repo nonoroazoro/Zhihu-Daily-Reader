@@ -27,10 +27,13 @@
 
 **2.install dependencies:**
 
-    # 1. install npm packages
+    # 1. install node.js
+	# https://nodejs.org
+
+    # 2. install npm packages
 	$ cd Zhihu-Daily-Reader && npm install --production
 
-    # 2. install mongodb (可选。不装也没事，会自动关闭数据库相关功能)
+    # 3. install mongodb (可选。不装也没事，会自动关闭数据库相关功能)
     # https://www.mongodb.org/downloads
     # （可选）修改 ./config/default.json 爬虫（Crawler）配置。
 
