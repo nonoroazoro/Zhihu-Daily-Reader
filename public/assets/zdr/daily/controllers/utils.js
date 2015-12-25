@@ -1,8 +1,8 @@
 ﻿var _ = require("lodash");
 var moment = require("moment");
 
-const FormatString = "YYYYMMDD";
-const MinDateString = "20130520";
+var FormatString = "YYYYMMDD";
+var MinDateString = "20130520";
 
 /**
  * 知乎日报的起始日期（早于该日期还没有日报呢）。
