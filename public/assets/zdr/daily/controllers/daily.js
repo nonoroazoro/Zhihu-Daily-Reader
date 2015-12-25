@@ -9,7 +9,7 @@ var _stories = {};
 exports.getFetchedStories = function ()
 {
     return _stories;
-}
+};
 
 /**
  * 获取最新热门日报的 ID 列表。
@@ -24,7 +24,7 @@ exports.getTopStoryIDs = function (p_callback)
     {
         p_callback("/api/4/news/top error");
     });
-}
+};
 
 /**
  * 获取指定日期的日报的 ID 列表。
@@ -56,10 +56,10 @@ exports.getStoryIDs = function (p_date, p_callback)
             p_callback(null, p_data);
         }).fail(function ()
         {
-            p_callback("/api/4/news/before/" + +p_date + " error");
+            p_callback("/api/4/news/before/" + p_date + " error");
         });
     }
-}
+};
 
 /**
  * 获取指定唯一标识的日报。
@@ -89,4 +89,4 @@ exports.getStory = function (p_id, p_callback)
             });
         }
     }
-}
+};
