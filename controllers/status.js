@@ -25,7 +25,7 @@ exports.saveStatus = function (p_status, p_callback)
     {
         if (_.isFunction(p_callback))
         {
-            p_callback(new Error("p_status must be a non-empty Object."))
+            p_callback(new Error("p_status must be a non-empty Object."));
         }
     }
     else

@@ -39,7 +39,7 @@ describe("controllers/story", function ()
                 });
             }
             
-            for (var i = 5; i < 10; i++)
+            for (i = 5; i < 10; i++)
             {
                 stories.push({
                     id : i,

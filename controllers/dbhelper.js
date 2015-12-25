@@ -80,7 +80,7 @@ var _connected = false;
         {
             if (!err || err.message == "ns not found")
             {
-                p_callback()
+                p_callback();
             }
             else
             {

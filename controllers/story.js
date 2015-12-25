@@ -79,13 +79,13 @@ exports.saveStory = function (p_story, p_callback)
 {
     if (_.isFunction(p_story))
     {
-        p_story(new Error("p_story must not be a Function."))
+        p_story(new Error("p_story must not be a Function."));
     }
     else if (_.isEmpty(p_story) || !_.isObject(p_story))
     {
         if (_.isFunction(p_callback))
         {
-            p_callback(new Error("p_story must be a non-empty Object."))
+            p_callback(new Error("p_story must be a non-empty Object."));
         }
     }
     else
@@ -139,7 +139,7 @@ exports.removeOldStories = function (p_date, p_callback)
 {
     if (_.isFunction(p_date))
     {
-        p_date(new Error("p_date must not be a Function."))
+        p_date(new Error("p_date must not be a Function."));
     }
     else
     {
@@ -159,7 +159,7 @@ exports.removeOldStories = function (p_date, p_callback)
                         count: res.result.n
                     });
                 }
-            };
+            }
         });
     }
 };

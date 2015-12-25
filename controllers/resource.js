@@ -12,7 +12,7 @@ exports.saveResource = function (p_resource, p_callback)
     {
         if (_.isFunction(p_callback))
         {
-            p_callback(new Error("p_resource must be a non-empty Object."))
+            p_callback(new Error("p_resource must be a non-empty Object."));
         }
     }
     else

@@ -22,7 +22,7 @@ describe("controllers/daily", function ()
     {
         it("should fetch the story IDs of date: 20130519", function (done)
         {
-            var date = "20130519"
+            var date = "20130519";
             var target = {
                 date: "20130519",
                 ids: [401, 396, 395, 394, 390, 388]
@@ -38,7 +38,7 @@ describe("controllers/daily", function ()
         
         it("should not fetch the story IDs of date: 20130518", function (done)
         {
-            var date = "20130518"
+            var date = "20130518";
             var target = {};
             daily.fetchStoryIDs(date, function (err, res)
             {
@@ -50,7 +50,7 @@ describe("controllers/daily", function ()
         
         it("should not fetch the story IDs of date: 20133030", function (done)
         {
-            var date = "20133030"
+            var date = "20133030";
             daily.fetchStoryIDs(date, function (err, res)
             {
                 should.exist(err);

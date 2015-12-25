@@ -47,7 +47,7 @@ describe("controllers/utils", function ()
             done();
         });
         
-        var wrongDate = "20153030"
+        var wrongDate = "20153030";
         it("should convert '" + wrongDate + "' to: 'null'", function (done)
         {
             should(utils.nextZhihuDay(wrongDate)).equal(null);
@@ -65,7 +65,7 @@ describe("controllers/utils", function ()
             done();
         });
         
-        var wrongDate = "20153030"
+        var wrongDate = "20153030";
         it("should convert '" + wrongDate + "' to: 'null'", function (done)
         {
             should(utils.prevZhihuDay(wrongDate)).equal(null);
@@ -94,7 +94,7 @@ describe("controllers/utils", function ()
             done();
         });
         
-        var wrongDate = "20153030"
+        var wrongDate = "20153030";
         it("'" + wrongDate + "' should be: invalid", function (done)
         {
             utils.isValidZhihuDate(wrongDate).should.be.false();
