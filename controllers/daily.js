@@ -12,7 +12,7 @@ var dailyRequest = require("request").defaults({
 });
 
 var utils = require("./utils");
-const PREFIX = "/api/4/imgs/";
+var PREFIX = "/api/4/imgs/";
 
 /**
  * 获取最新知乎日报 ID 列表。
