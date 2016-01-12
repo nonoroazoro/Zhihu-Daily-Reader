@@ -40,7 +40,7 @@
   },
   "devDependencies": {
     "babel-core": "^5.8.34",
-    "babel-loader": "^6.2.0",
+    "babel-loader": "^5.4.0",
     "css-loader": "^0.15.2",
     "extract-text-webpack-plugin": "^0.8.2",
     "file-loader": "^0.8.4",
