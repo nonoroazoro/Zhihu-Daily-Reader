@@ -28,7 +28,7 @@ var NavbarHeader = React.createClass(
                     <span className="icon-bar"></span>
                 </button>
                 <a className="navbar-brand" href="/">
-                    <img alt="知乎日报" src={require("common/res/img/zhihu_daily_logo_blue.png")} />
+                    <img alt="知乎日报" src={require("../common/res/img/zhihu_daily_logo_blue.png")} />
                 </a>
             </div>;
         return navbarHeader;

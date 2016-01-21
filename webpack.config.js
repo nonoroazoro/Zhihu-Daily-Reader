@@ -1,37 +1,70 @@
 ﻿var path = require("path");
-var srcPath = path.resolve(__dirname, "./public/assets/zdr");
+var webpack = require("webpack");
+var AssetsPlugin = require("assets-webpack-plugin");
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
+var srcPath = path.resolve(__dirname, "./public/assets/zdr/");
+var buildPath = path.resolve(srcPath, "./build/");
+
+var isDev = (process.env.NODE_ENV !== "production");
+if (isDev)
+{
+    var arg = process.argv[process.argv.length - 1];
+    if (arg && arg.trim() === "-p")
+    {
+        isDev = false;
+    }
+}
+
+var plugins = [
+    new ExtractTextPlugin("[name].css"),
+    //new webpack.optimize.CommonsChunkPlugin("vendors", "[name].js", Infinity),
+    new webpack.optimize.OccurenceOrderPlugin(),
+];
+
+if (!isDev)
+{
+    plugins.push(new AssetsPlugin(
+    {
+        filename: "assets.json",
+        path: buildPath,
+        prettyPrint: true
+    }));
+}
+
 module.exports = {
-    entry: {
-        index: path.resolve(srcPath, "./index"),
-        error_404: path.resolve(srcPath, "./common/error_404")
+    devtool: isDev ? "inline-source-map" : null,
+    entry:
+    {
+        zdr: srcPath,
+        error: path.resolve(srcPath, "./common/error_404")
     },
-    output: {
-        path: path.resolve(srcPath, "./build"),
-        filename: "[name].bundle.js",
-        chunkFilename: "[id].bundle.js",
+    output:
+    {
+        path: isDev ? buildPath : path.join(buildPath, "/assets/[hash]/"),
+        publicPath: "/assets/[hash]/",
+        filename: "[name].js",
+        chunkFilename: "[id].js",
     },
-    resolve: {
-        extensions: ["", ".js", ".jsx"],
-        alias: {
-            common: path.resolve(srcPath, "./common"),
-            bootstrap: path.resolve(srcPath, "../libs/bootstrap")
-        }
+    resolve:
+    {
+        extensions: ["", ".js", ".jsx"]
     },
-    externals: {
+    externals:
+    {
         "react": "React",
         "jquery": "jQuery",
         "lodash": "_",
         "moment": "moment",
         "mousetrap": "Mousetrap"
     },
-    module: {
+    module:
+    {
         loaders: [
             {
                 test: /\.jsx?$/,
                 exclude: /node_modules/,
-                loader: "babel-loader"
+                loader: "babel"
             },
             {
                 test: /\.css$/,
@@ -46,16 +79,9 @@ module.exports = {
             {
                 test: /\.(png|jpg)$/,
                 exclude: /node_modules/,
-                loader: "url?limit=8192"
-            },
-            {
-                test: /\.woff$/,
-                exclude: /node_modules/,
-                loader: "url?limit=100000&mimetype=application/font-woff"
+                loader: "url?limit=10240"
             }
         ]
     },
-    plugins: [
-        new ExtractTextPlugin("[name].bundle.css")
-    ]
+    plugins: plugins
 };

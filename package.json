@@ -39,6 +39,7 @@
     "serve-favicon": "^2.2.1"
   },
   "devDependencies": {
+    "assets-webpack-plugin": "^3.2.0",
     "babel-core": "^5.8.34",
     "babel-loader": "^5.4.0",
     "css-loader": "^0.15.2",

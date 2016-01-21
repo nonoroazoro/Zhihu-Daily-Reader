@@ -34,8 +34,8 @@
     <Compile Include="models\catalog.js" />
     <Compile Include="public\assets\libs\mousetrap\mousetrap.js" />
     <Compile Include="public\assets\libs\mousetrap\mousetrap.min.js" />
-    <Compile Include="public\assets\zdr\build\error_404.bundle.js" />
-    <Compile Include="public\assets\zdr\build\index.bundle.js" />
+    <Compile Include="public\assets\zdr\build\error.js" />
+    <Compile Include="public\assets\zdr\build\zdr.js" />
     <Compile Include="test\controllers\catalog.test.js" />
     <Compile Include="test\controllers\crawler\daily.test.js" />
     <Compile Include="test\controllers\daily.test.js" />
@@ -126,8 +126,8 @@
     <Content Include="public\assets\libs\bootstrap\less\utilities.less" />
     <Content Include="public\assets\libs\bootstrap\less\variables.less" />
     <Content Include="public\assets\libs\bootstrap\less\wells.less" />
-    <Content Include="public\assets\zdr\build\error_404.bundle.css" />
-    <Content Include="public\assets\zdr\build\index.bundle.css" />
+    <Content Include="public\assets\zdr\build\error.css" />
+    <Content Include="public\assets\zdr\build\zdr.css" />
     <Content Include="public\assets\zdr\common\res\errors.less" />
     <Content Include="public\assets\zdr\common\res\global.less" />
     <Content Include="public\assets\libs\jquery\jquery.min.map" />

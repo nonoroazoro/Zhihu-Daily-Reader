@@ -1,1 +1,0 @@
-!function(t){function r(o){if(n[o])return n[o].exports;var c=n[o]={exports:{},id:o,loaded:!1};return t[o].call(c.exports,c,c.exports,r),c.loaded=!0,c.exports}var n={};return r.m=t,r.c=n,r.p="",r(0)}({0:function(t,r,n){"use strict";n(12);var o=n(3);o(function(){o("#history-back").click(function(){history.back()})})},3:function(t,r){t.exports=jQuery},12:function(t,r){}});
