@@ -61,7 +61,8 @@ module.exports = {
             "bootstrap",
             "lodash",
             "moment",
-            "mousetrap"
+            "mousetrap",
+            "classnames"
         ]
     },
     output:
