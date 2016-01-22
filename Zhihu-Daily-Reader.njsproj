@@ -27,7 +27,6 @@
     <Compile Include="controllers\story.js" />
     <Compile Include="controllers\crawler\index.js" />
     <Compile Include="controllers\utils.js" />
-    <Compile Include="gulpfile.js" />
     <Compile Include="models\resource.js" />
     <Compile Include="models\status.js" />
     <Compile Include="models\story.js" />
