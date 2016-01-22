@@ -55,14 +55,15 @@ module.exports = {
         error: path.resolve(srcPath, "./common/error_404"),
         vendors: [
             "jquery",
-            "react",
-            "react-addons-update",
-            "react-addons-pure-render-mixin",
             "bootstrap",
             "lodash",
             "moment",
             "mousetrap",
-            "classnames"
+            "classnames",
+            "react",
+            "react-dom",
+            "react-addons-update",
+            "react-addons-pure-render-mixin"
         ]
     },
     output:
