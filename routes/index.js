@@ -14,7 +14,7 @@ apis.forEach(function (p_api)
 // home page.
 router.get("/", function (req, res, next)
 {
-    res.render("index");
+    res.render("index", { map: req.app.locals.map });
 });
 
 // api error handler.
