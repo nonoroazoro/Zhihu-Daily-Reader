@@ -98,6 +98,11 @@ module.exports = {
                 test: /\.(png|jpg)$/,
                 exclude: /node_modules/,
                 loader: "url?limit=10240"
+            },
+            {
+                test: /\.woff$/,
+                exclude: /node_modules/,
+                loader: "url?limit=100000&mimetype=application/font-woff"
             }
         ]
     },
