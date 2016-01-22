@@ -1,20 +1,14 @@
-﻿require("./res/index.less");
+﻿import "./res/index.less";
 
-var $ = require("jquery");
-var React = require("react");
+import React from "react";
+import ReactDOM from "react-dom";
+import Navbar from "./components/Navbar";
+import DailyPage from "./daily/DailyPage";
 
-var Navbar = require("./components/Navbar");
-var DailyPage = require("./daily/DailyPage");
-// Other Pages...
-
-$(function ()
-{
-    React.render(
-        <div className="MainContainer container-fluid">
-            <Navbar />
-            <DailyPage />
-        </div>
-        ,
-        document.body
-    );
-});
+ReactDOM.render(
+    <div className="MainContainer container-fluid">
+        <Navbar />
+        <DailyPage />
+    </div>,
+    document.body
+);
