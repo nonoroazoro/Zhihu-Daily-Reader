@@ -1,0 +1,13 @@
+{
+  "vendors": {
+    "js": "/assets/d67eae8b/vendors.js"
+  },
+  "zdr": {
+    "js": "/assets/d67eae8b/zdr.js",
+    "css": "/assets/d67eae8b/res/zdr.css"
+  },
+  "error": {
+    "js": "/assets/d67eae8b/error.js",
+    "css": "/assets/d67eae8b/res/error.css"
+  }
+}
