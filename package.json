@@ -19,10 +19,9 @@
   ],
   "scripts": {
     "start": "node ./bin/www",
-    "startdb": "mongod --dbpath ./db",
-    "watch": "node_modules/.bin/webpack --watch",
-    "build": "node_modules/.bin/webpack -p",
-    "test": "node_modules/.bin/mocha"
+    "watch": "webpack --watch",
+    "build": "webpack -p --config webpack.production.config.js --progress",
+    "test": "mocha"
   },
   "dependencies": {
     "async": "^1.5.2",
