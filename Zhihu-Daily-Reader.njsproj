@@ -31,9 +31,9 @@
     <Compile Include="models\status.js" />
     <Compile Include="models\story.js" />
     <Compile Include="models\catalog.js" />
-    <Compile Include="public\assets\8348b4eb\error.js" />
-    <Compile Include="public\assets\8348b4eb\vendors.js" />
-    <Compile Include="public\assets\8348b4eb\zdr.js" />
+    <Compile Include="public\assets\ae5569bc\error.js" />
+    <Compile Include="public\assets\ae5569bc\vendor.js" />
+    <Compile Include="public\assets\ae5569bc\zdr.js" />
     <Compile Include="test\controllers\catalog.test.js" />
     <Compile Include="test\controllers\crawler\daily.test.js" />
     <Compile Include="test\controllers\daily.test.js" />
@@ -63,8 +63,8 @@
     <Content Include="client\zdr\daily\res\DailyPage.less" />
     <Content Include="client\zdr\daily\components\res\FlexView.less" />
     <Content Include="client\zdr\components\res\Navbar.less" />
-    <Content Include="public\assets\8348b4eb\res\error.css" />
-    <Content Include="public\assets\8348b4eb\res\zdr.css" />
+    <Content Include="public\assets\ae5569bc\res\error.css" />
+    <Content Include="public\assets\ae5569bc\res\zdr.css" />
     <Content Include="public\assets\assets.json" />
     <Content Include="public\vendors\bootstrap\css\bootstrap.css" />
     <Content Include="public\vendors\bootstrap\css\bootstrap.css.map" />
@@ -108,8 +108,8 @@
     <Folder Include="controllers\proxy\" />
     <Folder Include="models\" />
     <Folder Include="client\" />
-    <Folder Include="public\assets\8348b4eb\" />
-    <Folder Include="public\assets\8348b4eb\res\" />
+    <Folder Include="public\assets\ae5569bc\" />
+    <Folder Include="public\assets\ae5569bc\res\" />
     <Folder Include="public\vendors\" />
     <Folder Include="public\vendors\bootstrap\" />
     <Folder Include="public\vendors\bootstrap\css\" />
