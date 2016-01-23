@@ -6,8 +6,6 @@ var hash = "/[hash:8]/";
 config.output.path = path.join(config.output.path, hash);
 config.output.publicPath = path.join(config.output.publicPath, hash);
 
-console.log(config)
-
 config.plugins.push(
     new webpack.DefinePlugin(
     {
