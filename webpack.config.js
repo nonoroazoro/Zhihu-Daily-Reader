@@ -26,8 +26,8 @@ var plugins = [
     new ExtractTextPlugin("res/[name].css"),
     new webpack.optimize.CommonsChunkPlugin(
     {
-        names: "vendors",
-        filename: "vendors.js",
+        name: "vendor",
+        filename: "vendor.js",
         minChunks: Infinity
     }),
     new webpack.ProvidePlugin(
@@ -43,7 +43,7 @@ if (isDev)
     plugins.push(new webpack.SourceMapDevToolPlugin(
     {
         filename: "[file].map",
-        exclude: ["vendors.js"],
+        exclude: ["vendor.js"],
         columns: false,
         module: false
     }));
@@ -52,7 +52,7 @@ if (isDev)
 module.exports = {
     entry:
     {
-        vendors: [
+        vendor: [
             "jquery",
             "bootstrap",
             "lodash",
