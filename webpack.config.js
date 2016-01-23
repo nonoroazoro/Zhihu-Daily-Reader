@@ -34,6 +34,7 @@ var plugins = [
     {
         "jQuery": "jquery",
     }),
+    new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurenceOrderPlugin(),
 ];
 
@@ -51,8 +52,6 @@ if (isDev)
 module.exports = {
     entry:
     {
-        zdr: srcPath,
-        error: path.resolve(srcPath, "./common/error_404"),
         vendors: [
             "jquery",
             "bootstrap",
@@ -64,7 +63,9 @@ module.exports = {
             "react-dom",
             "react-addons-update",
             "react-addons-pure-render-mixin"
-        ]
+        ],
+        zdr: srcPath,
+        error: path.resolve(srcPath, "./common/error_404")
     },
     output:
     {
