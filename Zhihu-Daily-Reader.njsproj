@@ -31,9 +31,9 @@
     <Compile Include="models\status.js" />
     <Compile Include="models\story.js" />
     <Compile Include="models\catalog.js" />
-    <Compile Include="public\assets\acf20d13\error.js" />
-    <Compile Include="public\assets\acf20d13\vendor.js" />
-    <Compile Include="public\assets\acf20d13\zdr.js" />
+    <Compile Include="public\assets\9657467c\error.js" />
+    <Compile Include="public\assets\9657467c\vendor.js" />
+    <Compile Include="public\assets\9657467c\zdr.js" />
     <Compile Include="test\controllers\catalog.test.js" />
     <Compile Include="test\controllers\crawler\daily.test.js" />
     <Compile Include="test\controllers\daily.test.js" />
@@ -41,6 +41,7 @@
     <Compile Include="test\controllers\status.test.js" />
     <Compile Include="test\controllers\story.test.js" />
     <Compile Include="test\controllers\utils.test.js" />
+    <Compile Include="webpack.base.config.js" />
     <Compile Include="webpack.config.js" />
     <Compile Include="webpack.production.config.js" />
     <Content Include="config\default.json" />
@@ -64,8 +65,8 @@
     <Content Include="client\zdr\daily\res\DailyPage.less" />
     <Content Include="client\zdr\daily\components\res\FlexView.less" />
     <Content Include="client\zdr\components\res\Navbar.less" />
-    <Content Include="public\assets\acf20d13\res\error.css" />
-    <Content Include="public\assets\acf20d13\res\zdr.css" />
+    <Content Include="public\assets\9657467c\res\error.css" />
+    <Content Include="public\assets\9657467c\res\zdr.css" />
     <Content Include="public\assets\assets.json" />
     <Content Include="public\vendors\bootstrap\css\bootstrap.css" />
     <Content Include="public\vendors\bootstrap\css\bootstrap.css.map" />
@@ -110,8 +111,8 @@
     <Folder Include="models\" />
     <Folder Include="client\" />
     <Folder Include="public\assets\" />
-    <Folder Include="public\assets\acf20d13\" />
-    <Folder Include="public\assets\acf20d13\res\" />
+    <Folder Include="public\assets\9657467c\" />
+    <Folder Include="public\assets\9657467c\res\" />
     <Folder Include="public\vendors\" />
     <Folder Include="public\vendors\bootstrap\" />
     <Folder Include="public\vendors\bootstrap\css\" />
