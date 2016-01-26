@@ -1,11 +1,11 @@
-﻿var _ = require("lodash");
-var should = require("should");
+﻿import _ from "lodash";
+import should from "should";
 
-var Story = require("../../models/story");
-var StoryController = require("../../controllers/story");
-var dbhelper = require("../../controllers/dbhelper");
+import Story from "../../models/story";
+import StoryController from "../../controllers/story";
+import dbhelper from "../../controllers/dbhelper";
 
-describe("controllers/story", function ()
+describe.only("controllers/story", function ()
 {
     before(function (done)
     {
@@ -27,8 +27,8 @@ describe("controllers/story", function ()
     {
         it("should create new stories: id[0~9], date[20140909, 20150910]", function (done)
         {
-            var stories = [];
-            for (var i = 0; i < 5; i++)
+            let stories = [];
+            for (let i = 0; i < 5; i++)
             {
                 stories.push({
                     id : i,
@@ -39,7 +39,7 @@ describe("controllers/story", function ()
                 });
             }
             
-            for (i = 5; i < 10; i++)
+            for (let i = 5; i < 10; i++)
             {
                 stories.push({
                     id : i,
@@ -60,7 +60,7 @@ describe("controllers/story", function ()
     
     describe("2.findStoryByID", function ()
     {
-        var id = 3;
+        const id = 3;
         it("should find the story of ID: " + id, function (done)
         {
             StoryController.findStoryByID(id, function (err, doc)
@@ -75,7 +75,7 @@ describe("controllers/story", function ()
     
     describe("3.findStoriesByDate", function ()
     {
-        var date = "20150910";
+        const date = "20150910";
         it("should find the stories of date: " + date, function (done)
         {
             StoryController.findStoriesByDate(date, function (err, docs)
@@ -94,7 +94,7 @@ describe("controllers/story", function ()
     
     describe("4.findUnreadStories", function ()
     {
-        var date = "20150910";
+        const date = "20150910";
         it("should find the unread stories of date: " + date, function (done)
         {
             StoryController.findUnreadStories(date, function (err, docs)
@@ -145,7 +145,7 @@ describe("controllers/story", function ()
     {
         it("should save story", function (done)
         {
-            var zhihuStory = {
+            const zhihuStory = {
                 id : 401,
                 date: "20150911",
                 title: "学英语才是正经事儿",
@@ -179,7 +179,7 @@ describe("controllers/story", function ()
     
     describe("7.removeOldStories", function ()
     {
-        var date = "20150910";
+        const date = "20150910";
         it("should remove stories older than: " + date, function (done)
         {
             StoryController.removeOldStories(date, function (err, res)
