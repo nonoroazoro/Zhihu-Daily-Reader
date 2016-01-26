@@ -1,7 +1,7 @@
-﻿var should = require("should");
+﻿import should from "should";
 
-var daily = require("../../controllers/daily");
-var utils = require("../../controllers/utils");
+import daily from "../../controllers/daily";
+import utils from "../../controllers/utils";
 
 describe("controllers/daily", function ()
 {
@@ -22,8 +22,8 @@ describe("controllers/daily", function ()
     {
         it("should fetch the story IDs of date: 20130519", function (done)
         {
-            var date = "20130519";
-            var target = {
+            const date = "20130519";
+            const target = {
                 date: "20130519",
                 ids: [401, 396, 395, 394, 390, 388]
             };
@@ -38,8 +38,8 @@ describe("controllers/daily", function ()
         
         it("should not fetch the story IDs of date: 20130518", function (done)
         {
-            var date = "20130518";
-            var target = {};
+            const date = "20130518";
+            const target = {};
             daily.fetchStoryIDs(date, function (err, res)
             {
                 should.not.exist(err);
@@ -50,7 +50,7 @@ describe("controllers/daily", function ()
         
         it("should not fetch the story IDs of date: 20133030", function (done)
         {
-            var date = "20133030";
+            const date = "20133030";
             daily.fetchStoryIDs(date, function (err, res)
             {
                 should.exist(err);
@@ -63,10 +63,10 @@ describe("controllers/daily", function ()
     {
         it("should fetch the story of ID: 401", function (done)
         {
-            var id = 401;
-            var title = "学英语才是正经事儿";
-            var imageSource = "人民教育出版社";
-            var shareURL = "http://daily.zhihu.com/story/401";
+            const id = 401;
+            const title = "学英语才是正经事儿";
+            const imageSource = "人民教育出版社";
+            const shareURL = "http://daily.zhihu.com/story/401";
             daily.fetchStory(id, function (err, res)
             {
                 should.not.exist(err);
