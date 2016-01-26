@@ -2,27 +2,27 @@
  * 负责向前端传递知乎日报内容。
  */
 
-var daily = require("../daily");
-var story = require("../story");
-var catalog = require("../catalog");
-var resource = require("../resource");
-var dbhelper = require("../dbhelper");
+import daily from "../daily";
+import story from "../story";
+import catalog from "../catalog";
+import resource from "../resource";
+import dbhelper from "../dbhelper";
 
 /**
  * 获取最新知乎日报 ID 列表。
  * @param {Object} p_res 服务端响应。
  * @param {Object} p_next
  */
-exports.getLatestStoryIDs = function (p_res, p_next)
+export function getLatestStoryIDs(p_res, p_next)
 {
     // 注意：最新日报列表优先从知乎服务器获取（不断更新）。
-    daily.fetchLatestStoryIDs(function (err, res)
+    daily.fetchLatestStoryIDs((err, res) =>
     {
         if (err)
         {
             if (dbhelper.connected())
             {
-                catalog.findLatestCatalog(function (err, doc)
+                catalog.findLatestCatalog((err, doc) =>
                 {
                     if (err || !doc)
                     {
@@ -51,9 +51,9 @@ exports.getLatestStoryIDs = function (p_res, p_next)
  * @param {Object} p_res 服务端响应。
  * @param {Object} p_next
  */
-exports.getTopStoryIDs = function (p_res, p_next)
+export function getTopStoryIDs(p_res, p_next)
 {
-    daily.fetchTopStoryIDs(function (err, res)
+    daily.fetchTopStoryIDs((err, res) =>
     {
         if (err)
         {
@@ -72,12 +72,12 @@ exports.getTopStoryIDs = function (p_res, p_next)
  * @param {Object} p_res 服务端响应。
  * @param {Object} p_next
  */
- exports.getStoryIDs = function (p_date, p_res, p_next)
+export function getStoryIDs(p_date, p_res, p_next)
 {
     // 注意：非最新日报列表优先从数据库获取，注意区别。
     if (dbhelper.connected())
     {
-        catalog.findCatalogByDate(p_date, function (err, doc)
+        catalog.findCatalogByDate(p_date, (err, doc) =>
         {
             if (err || !doc)
             {
@@ -101,11 +101,11 @@ exports.getTopStoryIDs = function (p_res, p_next)
  * @param {Object} p_res 服务端响应。
  * @param {Object} p_next
  */
- exports.getStory = function (p_id, p_res, p_next)
+export function getStory(p_id, p_res, p_next)
 {
     if (dbhelper.connected())
     {
-        story.findStoryByID(p_id, function (err, doc)
+        story.findStoryByID(p_id, (err, doc) =>
         {
             if (err || !doc || !doc.cached)
             {
@@ -129,11 +129,11 @@ exports.getTopStoryIDs = function (p_res, p_next)
  * @param {Object} p_res 服务端响应。
  * @param {Object} p_next
  */
- exports.getImage = function (p_url, p_res, p_next)
+export function getImage(p_url, p_res, p_next)
 {
     if (dbhelper.connected())
     {
-        resource.findResourceByID(p_url, function (err, doc)
+        resource.findResourceByID(p_url, (err, doc) =>
         {
             if (err || !doc)
             {
@@ -152,9 +152,9 @@ exports.getTopStoryIDs = function (p_res, p_next)
     }
 };
 
-var _fetchStoryIDs = function (p_date, p_res, p_next)
+function _fetchStoryIDs(p_date, p_res, p_next)
 {
-    daily.fetchStoryIDs(p_date, function (err, res)
+    daily.fetchStoryIDs(p_date, (err, res) =>
     {
         if (err)
         {
@@ -167,9 +167,9 @@ var _fetchStoryIDs = function (p_date, p_res, p_next)
     });
 };
 
-var _fetchStory = function (p_id, p_res, p_next)
+function _fetchStory(p_id, p_res, p_next)
 {
-    daily.fetchStory(p_id, function (err, res)
+    daily.fetchStory(p_id, (err, res) =>
     {
         if (err)
         {
@@ -182,9 +182,9 @@ var _fetchStory = function (p_id, p_res, p_next)
     });
 };
 
-var _fetchImage = function (p_url, p_res, p_next)
+function _fetchImage(p_url, p_res, p_next)
 {
-    daily.fetchImage(p_url, function (err, res)
+    daily.fetchImage(p_url, (err, res) =>
     {
         if (err)
         {
