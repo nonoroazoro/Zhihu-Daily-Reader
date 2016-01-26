@@ -25,7 +25,7 @@
     "startdb": "mkdir db | mongod --dbpath ./db",
     "watch": "webpack --watch",
     "build": "webpack -p --config webpack.production.config.js --progress",
-    "test": "mocha --compilers js:babel-core/register"
+    "test": "mocha"
   },
   "dependencies": {
     "async": "^1.5.2",
