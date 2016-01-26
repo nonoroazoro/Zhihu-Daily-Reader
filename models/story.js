@@ -1,10 +1,11 @@
-﻿var mongoose = require("mongoose");
-var Schema = mongoose.Schema;
+﻿import mongoose from "mongoose";
+
+const Schema = mongoose.Schema;
 
 /**
  * 存储知乎日报内容。
  */
-var StorySchema = new Schema({
+const StorySchema = new Schema({
     /**
      * ID。
      * @type {Number}
@@ -39,4 +40,4 @@ var StorySchema = new Schema({
 StorySchema.index({ id: 1 }, { unique: true });
 StorySchema.index({ date: -1 });
 
-module.exports = mongoose.model("Story", StorySchema);
+export default mongoose.model("Story", StorySchema);

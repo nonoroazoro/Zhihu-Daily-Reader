@@ -1,10 +1,11 @@
-﻿var mongoose = require("mongoose");
-var Schema = mongoose.Schema;
+﻿import mongoose from "mongoose";
+
+const Schema = mongoose.Schema;
 
 /**
  * 存储知乎日报列表（以天为单位）。
  */
-var CatalogSchema = new Schema({
+const CatalogSchema = new Schema({
     /**
      * 日期（知乎格式，例如："20130519"）。
      * @type {String}
@@ -20,4 +21,4 @@ var CatalogSchema = new Schema({
 
 CatalogSchema.index({ date: -1 }, { unique: true });
 
-module.exports = mongoose.model("Catalog", CatalogSchema);
+export default mongoose.model("Catalog", CatalogSchema);

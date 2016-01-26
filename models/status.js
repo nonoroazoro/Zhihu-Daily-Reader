@@ -1,10 +1,11 @@
-﻿var mongoose = require("mongoose");
-var Schema = mongoose.Schema;
+﻿import mongoose from "mongoose";
+
+const Schema = mongoose.Schema;
 
 /**
  * 存储知乎日报阅读器状态（单用户）。
  */
-var StatusSchema = new Schema({
+const StatusSchema = new Schema({
     /**
      * 用户名（唯一）。
      * @type {String}
@@ -26,4 +27,4 @@ var StatusSchema = new Schema({
 
 StatusSchema.index({ username: 1 }, { unique: true });
 
-module.exports = mongoose.model("Status", StatusSchema);
+export default mongoose.model("Status", StatusSchema);
