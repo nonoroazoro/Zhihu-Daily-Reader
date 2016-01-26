@@ -1,10 +1,8 @@
-﻿var _ = require("lodash");
-var should = require("should");
+﻿import should from "should";
 
-var daily = require("../../controllers/daily");
-var dbhelper = require("../../controllers/dbhelper");
-var Resource = require("../../models/resource");
-var ResourceController = require("../../controllers/resource");
+import daily from "../../controllers/daily";
+import dbhelper from "../../controllers/dbhelper";
+import ResourceController from "../../controllers/resource";
 
 describe("controllers/resource", function ()
 {
@@ -24,7 +22,7 @@ describe("controllers/resource", function ()
         }
     });
     
-    var url = "http://pic4.zhimg.com/70/6974e23d1270203c2a14fc6d410dd9e7_b.jpg";
+    const url = "http://pic4.zhimg.com/70/6974e23d1270203c2a14fc6d410dd9e7_b.jpg";
     describe("1.saveResource", function ()
     {
         it("should save the resource of URL:\n\t" + url, function (done)
