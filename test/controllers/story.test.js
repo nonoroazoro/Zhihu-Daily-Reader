@@ -1,5 +1,4 @@
-﻿import _ from "lodash";
-import should from "should";
+﻿import should from "should";
 
 import Story from "../../models/story";
 import StoryController from "../../controllers/story";
@@ -83,7 +82,7 @@ describe.only("controllers/story", function ()
                 should.not.exist(err);
                 should.exist(docs);
                 docs.length.should.equal(5);
-                _.each(docs, function (value, index)
+                docs.forEach(function (value, index)
                 {
                     value.date.should.equal(date);
                 });
@@ -102,7 +101,7 @@ describe.only("controllers/story", function ()
                 should.not.exist(err);
                 should.exist(docs);
                 docs.length.should.equal(2);
-                _.each(docs, function (value, index)
+                docs.forEach(function (value, index)
                 {
                     value.date.should.equal(date);
                     value.read.should.be.false();
@@ -118,7 +117,7 @@ describe.only("controllers/story", function ()
                 should.not.exist(err);
                 should.exist(docs);
                 docs.length.should.equal(4);
-                _.each(docs, function (value, index)
+                docs.forEach(function (value, index)
                 {
                     value.read.should.be.false();
                 });
