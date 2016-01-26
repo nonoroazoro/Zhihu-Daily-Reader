@@ -4,7 +4,7 @@ import Status from "../../models/status";
 import StatusController from "../../controllers/status";
 import dbhelper from "../../controllers/dbhelper";
 
-describe.only("controllers/status", function ()
+describe("controllers/status", function ()
 {
     before(function (done)
     {
