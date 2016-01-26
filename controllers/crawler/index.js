@@ -1,22 +1,22 @@
-﻿var async = require("async");
-var config = require("config");
+﻿import async from "async";
+import config from "config";
 
-var daily = require("./daily");
-var story = require("../story");
-var utils = require("../utils");
+import daily from "./daily";
+import story from "../story";
+import utils from "../utils";
 
-var stop = false;
+let stop = false;
 
 /**
  * 开始爬虫。
  */
-exports.start = function ()
+export function start()
 {
     stop = false;
     async.waterfall([
         _cacheLatestTask,
         _cleanCacheTask,
-    ], function (err, res)
+    ], (err, res) =>
     {
         if (res)
         {
@@ -32,7 +32,7 @@ exports.start = function ()
 /**
  * 停止爬虫。
  */
-exports.stop = function ()
+export function stop()
 {
     stop = true;
 };
@@ -42,7 +42,7 @@ exports.stop = function ()
  */
 function _cacheLatestTask(p_callback)
 {
-    daily.cacheLatestStories(function (err, res)
+    daily.cacheLatestStories((err, res) =>
     {
         if (!err)
         {
@@ -57,7 +57,7 @@ function _cacheLatestTask(p_callback)
  */
 function _cleanCacheTask(p_res, p_callback)
 {
-    story.removeOldStories(p_res.max_age, function ()
+    story.removeOldStories(p_res.max_age, () =>
     {
         p_callback(null, p_res);
     });
@@ -73,12 +73,12 @@ function _cachePrev(p_date, p_maxDate)
     var prevDate = utils.prevZhihuDay(p_date);
     if (prevDate >= p_maxDate)
     {
-        daily.cacheStories(prevDate, function (err, res)
+        daily.cacheStories(prevDate, (err, res) =>
         {
             console.log(res);
             if (!stop)
             {
-                setTimeout(function ()
+                setTimeout(() =>
                 {
                     _cachePrev(prevDate, p_maxDate);
                 }, config.crawler.day_interval * 1000);
