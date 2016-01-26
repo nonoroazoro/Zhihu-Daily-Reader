@@ -1,12 +1,12 @@
-﻿var express = require("express");
-var router = express.Router();
+﻿import { Router } from "express";
 
-var daily = require(__base + "/controllers/proxy/daily");
+const router = Router();
+const daily = require(__base + "/controllers/proxy/daily");
 
 // get top stroies.
-router.get("/", function (req, res, next)
+router.get("/", (req, res, next) =>
 {
     daily.getTopStoryIDs(res, next);
 });
 
-module.exports = router;
+export default router;

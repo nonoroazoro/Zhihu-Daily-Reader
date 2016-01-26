@@ -2,7 +2,7 @@
 
 const router = Router();
 
-// 下级 API 优先路由。
+// 下级 API 优先进入路由。
 const apis = [
     "/api/4",
 ];

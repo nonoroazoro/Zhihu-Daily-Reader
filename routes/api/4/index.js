@@ -1,14 +1,14 @@
-﻿var express = require("express");
-var router = express.Router();
+﻿import { Router } from "express";
 
-var apis = [
+const router = Router();
+const apis = [
     "/news",
     "/imgs",
 ];
 
-apis.forEach(function (p_api)
+apis.forEach((api) =>
 {
-    router.use(p_api, require("." + p_api));
+    router.use(api, require("." + api));
 });
 
-module.exports = router;
+export default router;

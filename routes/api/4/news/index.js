@@ -1,22 +1,21 @@
-﻿var express = require("express");
-var router = express.Router();
+﻿import { Router } from "express";
 
-var daily = require(__base + "/controllers/proxy/daily");
-
-var apis = [
+const router = Router();
+const daily = require(__base + "/controllers/proxy/daily");
+const apis = [
     "/before",
     "/top",
 ];
 
-apis.forEach(function (p_api)
+apis.forEach((api) =>
 {
-    router.use(p_api, require("." + p_api));
+    router.use(api, require("." + api));
 });
 
 // get specified story.
-router.get("/:id", function (req, res, next)
+router.get("/:id", (req, res, next) =>
 {
     daily.getStory(req.params.id, res, next);
 });
 
-module.exports = router;
+export default router;
