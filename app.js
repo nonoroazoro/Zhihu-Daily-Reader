@@ -1,11 +1,11 @@
-﻿var path = require("path");
-var config = require("config");
-var express = require("express");
-var bodyParser = require("body-parser");
-var favicon = require("serve-favicon");
+﻿import path from "path";
+import config from "config";
+import express from "express";
+import bodyParser from "body-parser";
+import favicon from "serve-favicon";
+import dbhelper from "./controllers/dbhelper";
 
 // init db.
-var dbhelper = require("./controllers/dbhelper");
 dbhelper.start(function ()
 {
     dbhelper.connect(function (err)
@@ -25,7 +25,7 @@ dbhelper.start(function ()
 });
 
 // init express.
-var app = express();
+const app = express();
 
 // base dir setup.
 global.__base = __dirname;
@@ -52,17 +52,17 @@ app.use(express.static(__dirname + "/public/", {
 app.locals.map = require("./public/assets/assets.json");
 
 // catch 404 and forward to global error handler.
-app.use(function (req, res, next)
+app.use((req, res, next) =>
 {
-    var err = new Error("404 Not Found");
+    let err = new Error("404 Not Found");
     err.status = 404;
     next(err);
 });
 
 // global error handler.
-app.use(function (err, req, res, next)
+app.use((err, req, res, next) =>
 {
     res.status(err.status || 500).render("error_404", { map: app.locals.map });
 });
 
-module.exports = app;
+export default app;
