@@ -1,4 +1,4 @@
-﻿--compilers js:babel-core/register
+﻿--require babel-core/register
 --reporter spec
 --ui bdd
 --recursive
