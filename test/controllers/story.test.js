@@ -4,7 +4,7 @@ import Story from "../../models/story";
 import StoryController from "../../controllers/story";
 import dbhelper from "../../controllers/dbhelper";
 
-describe.only("controllers/story", function ()
+describe("controllers/story", function ()
 {
     before(function (done)
     {
