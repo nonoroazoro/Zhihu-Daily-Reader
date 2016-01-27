@@ -1,38 +1,37 @@
-﻿/**
+﻿"use strict";
+
+/**
  * 负责请求知乎日报 API，并返回结果。
  */
 
-var _ = require("lodash");
-var config = require("config");
-var cheerio = require("cheerio");
-var querystring = require("querystring");
-var imageRequest = require("request");
-var dailyRequest = require("request").defaults({
-    baseUrl : config.zhihu_daily_api
+const _ = require("lodash");
+const config = require("config");
+const cheerio = require("cheerio");
+const querystring = require("querystring");
+const imageRequest = require("request");
+const dailyRequest = require("request").defaults({
+    baseUrl: config.zhihu_daily_api
 });
 
-var utils = require("./utils");
-var PREFIX = "/api/4/imgs/";
+const utils = require("./utils");
+const PREFIX = "/api/4/imgs/";
 
 /**
  * 获取最新知乎日报 ID 列表。
  * @param {Function(err, res)} [p_callback]
  */
-exports.fetchLatestStoryIDs = function (p_callback)
+module.exports.fetchLatestStoryIDs = function (p_callback)
 {
     if (!_.isFunction(p_callback)) return;
-    
-    dailyRequest.get({ url: "/news/latest", json: true }, function (err, res, body)
+
+    dailyRequest.get({ url: "/news/latest", json: true }, (err, res, body) =>
     {
         if (!err && res.statusCode == 200)
         {
             // 因知乎日报的 API 返回的图片太小，这里直接丢弃，后面再通过其他途径获取图片。
             p_callback(null, {
                 date: body.date,
-                ids: body.stories.map(function (value)
-                {
-                    return value.id;
-                })
+                ids: body.stories.map((value) => value.id)
             });
         }
         else
@@ -46,15 +45,15 @@ exports.fetchLatestStoryIDs = function (p_callback)
  * 获取最新热门知乎日报 ID 列表。
  * @param {Function(err, res)} [p_callback]
  */
-exports.fetchTopStoryIDs = function (p_callback)
+module.exports.fetchTopStoryIDs = function (p_callback)
 {
-    dailyRequest.get({ url: "/news/latest", json: true }, function (err, res, body)
+    dailyRequest.get({ url: "/news/latest", json: true }, (err, res, body) =>
     {
         if (!err && res.statusCode == 200)
         {
-            var images = [];
-            var stories = { date: body.date };
-            stories.ids = body.top_stories.map(function (value)
+            const images = [];
+            const stories = { date: body.date };
+            stories.ids = body.top_stories.map((value) =>
             {
                 images.push(value.image);
                 return {
@@ -80,13 +79,13 @@ exports.fetchTopStoryIDs = function (p_callback)
  * @param {String} p_date 日期。如果小于"20130519"，返回值 res 为 {}。
  * @param {Function(err, res)} [p_callback]
  */
-exports.fetchStoryIDs = function (p_date, p_callback)
+module.exports.fetchStoryIDs = function (p_date, p_callback)
 {
     if (!_.isFunction(p_callback)) return;
-    
+
     // 因知乎日报 API 返回的是指定日期的前一天的日报，
     // 所以要加一天才能获取指定日期的日报。
-    var date = utils.nextZhihuDay(p_date);
+    const date = utils.nextZhihuDay(p_date);
     if (date)
     {
         if (utils.convertZhihuDateToMoment(date).isBefore(utils.MIN_DATE))
@@ -96,16 +95,13 @@ exports.fetchStoryIDs = function (p_date, p_callback)
         }
         else
         {
-            dailyRequest.get({ url: "/news/before/" + date, json: true }, function (err, res, body)
+            dailyRequest.get({ url: "/news/before/" + date, json: true }, (err, res, body) =>
             {
                 if (!err && res.statusCode == 200)
                 {
                     p_callback(null, {
                         date: body.date,
-                        ids: body.stories.map(function (value)
-                        {
-                            return value.id;
-                        })
+                        ids: body.stories.map((value) => value.id)
                     });
                 }
                 else
@@ -126,57 +122,57 @@ exports.fetchStoryIDs = function (p_date, p_callback)
  * @param {String} p_id ID。
  * @param {Function(err, res)} [p_callback]
  */
-exports.fetchStory = function (p_id, p_callback)
+module.exports.fetchStory = function (p_id, p_callback)
 {
     if (!_.isFunction(p_callback)) return;
-    
+
     // 检查 ID 是否为纯数字。
     if (/^\d+$/.test(p_id))
     {
-        dailyRequest.get({ url: "/news/" + p_id, json: true }, function (err, res, body)
+        dailyRequest.get({ url: "/news/" + p_id, json: true }, (err, res, body) =>
         {
             if (!err && res.statusCode == 200)
             {
-                var images = [];
-                var story = {};
+                const images = [];
+                const story = {};
                 story.id = body.id;
                 story.title = body.title;
-                
+
                 images.push(body.image);
                 story.image = PREFIX + querystring.escape(body.image);
-                
+
                 story.imageSource = body.image_source;
                 story.shareURL = body.share_url;
-                
+
                 if (body.body)
                 {
-                    var $ = cheerio.load(body.body, { decodeEntities: false });
-                    story.backgrounds = $(".headline>.headline-background .headline-background-link").map(function (i, e)
+                    const $ = cheerio.load(body.body, { decodeEntities: false });
+                    story.backgrounds = $(".headline>.headline-background .headline-background-link").map((i, e) =>
                     {
                         return {
                             href: $(e).attr("href"),
-                            title : $(e).children(".heading").text(),
-                            text : $(e).children(".heading-content").text()
+                            title: $(e).children(".heading").text(),
+                            text: $(e).children(".heading-content").text()
                         };
                     }).get();
-                    
-                    story.contents = $(".content-inner>.question").map(function (i, e)
+
+                    story.contents = $(".content-inner>.question").map((i, e) =>
                     {
-                        var question = {};
+                        const question = {};
                         question.title = $(e).children(".question-title").text();
-                        question.answers = $(e).children(".answer").map(function (i, e)
+                        question.answers = $(e).children(".answer").map((i, e) =>
                         {
-                            $(e).find(".content img").each(function (i, e)
+                            $(e).find(".content img").each((i, e) =>
                             {
-                                var src = $(e).attr("src");
+                                let src = $(e).attr("src");
                                 if (!_.isEmpty(src))
                                 {
                                     images.push(src);
                                     $(e).attr("src", PREFIX + querystring.escape(src));
                                 }
                             });
-                            
-                            var avatar = $(e).find(".meta>.avatar").attr("src");
+
+                            let avatar = $(e).find(".meta>.avatar").attr("src");
                             if (_.isEmpty(avatar))
                             {
                                 avatar = "";
@@ -186,28 +182,28 @@ exports.fetchStory = function (p_id, p_callback)
                                 images.push(avatar);
                                 avatar = PREFIX + querystring.escape(avatar);
                             }
-                            
+
                             return {
-                                avatar : avatar,
+                                avatar: avatar,
                                 name: $(e).find(".meta>.author").text(),
-                                bio : $(e).find(".meta>.bio").text(),
-                                content : $(e).children(".content").html()
+                                bio: $(e).find(".meta>.bio").text(),
+                                content: $(e).children(".content").html()
                             };
                         }).get();
-                        
-                        var a = $(e).find(".view-more>a");
+
+                        const a = $(e).find(".view-more>a");
                         if (a.length > 0)
                         {
                             question.link = {
-                                href : a.attr("href"),
-                                text : a.text(),
+                                href: a.attr("href"),
+                                text: a.text(),
                             };
                         }
-                        
+
                         return question;
                     }).get();
                 }
-                
+
                 p_callback(null, {
                     story: story,
                     images: images
@@ -230,17 +226,17 @@ exports.fetchStory = function (p_id, p_callback)
  * @param {String} p_url 地址。
  * @param {Function(err, res)} [p_callback]
  */
-exports.fetchImage = function (p_url, p_callback)
+module.exports.fetchImage = function (p_url, p_callback)
 {
     if (!_.isFunction(p_callback)) return;
-    
+
     if (_.isEmpty(p_url))
     {
         p_callback(new Error("p_url must not be null."));
     }
     else
     {
-        imageRequest({ url: p_url, encoding: null }, function (err, res, body)
+        imageRequest({ url: p_url, encoding: null }, (err, res, body) =>
         {
             if (!err && res.statusCode == 200)
             {
