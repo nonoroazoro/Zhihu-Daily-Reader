@@ -5,12 +5,12 @@ const moment = require("moment");
 const crypto = require("crypto");
 
 const FormatString = "YYYYMMDD";
-const MinDateString = "20130520";
+const MinDate = moment("20130520", FormatString, true);
 
 /**
  * 知乎日报的起始日期（早于该日期还没有日报呢）。
  */
-module.exports.MIN_DATE = moment(MinDateString, FormatString, true);
+module.exports.MIN_DATE = MinDate;
 
 /**
  * 转换日期为知乎日期格式。
