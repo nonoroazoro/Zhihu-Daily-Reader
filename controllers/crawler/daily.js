@@ -1,6 +1,4 @@
-﻿"use strict";
-
-/**
+﻿/**
  * 负责爬取知乎日报内容。
  */
 
@@ -84,7 +82,7 @@ module.exports.cacheStories = function (p_date, p_ids, p_callback)
     }
     else
     {
-        var tasks = [_cacheStoriesTask.bind(this)];
+        const tasks = [_cacheStoriesTask.bind(this)];
         if (_.isFunction(p_ids))
         {
             p_callback = p_ids;
@@ -96,7 +94,7 @@ module.exports.cacheStories = function (p_date, p_ids, p_callback)
         }
         else
         {
-            var res = { date: p_date, ids: p_ids };
+            const res = { date: p_date, ids: p_ids };
             tasks.unshift(
                 _cacheStoryIDsTask.bind(this, res),
                 _preprocessTask
@@ -126,10 +124,10 @@ module.exports.cacheImages = function (p_urls, p_callback)
 
         if (_.isArray(p_urls))
         {
-            var errors = [];
-            async.eachSeries(p_urls, function (url, done)
+            const errors = [];
+            async.eachSeries(p_urls, (url, done) =>
             {
-                daily.fetchImage(url, function (err, res)
+                daily.fetchImage(url, (err, res) =>
                 {
                     if (err)
                     {
@@ -138,13 +136,13 @@ module.exports.cacheImages = function (p_urls, p_callback)
                     }
                     else
                     {
-                        resource.saveResource(res, function ()
+                        resource.saveResource(res, () =>
                         {
                             done();
                         });
                     }
                 });
-            }, function ()
+            }, () =>
             {
                 p_callback(errors.length > 0 ? errors : null);
             });
@@ -161,7 +159,7 @@ module.exports.cacheImages = function (p_urls, p_callback)
  * @param {Object} p_res 中间结果，包含 ids 和 date。
  * @param {Function(err, res)} [p_callback]
  */
-var _cacheStoryIDsTask = function (p_res, p_callback)
+function _cacheStoryIDsTask(p_res, p_callback)
 {
     // 注意：只保存非空列表。
     if (_.isEmpty(p_res.ids))
@@ -170,7 +168,7 @@ var _cacheStoryIDsTask = function (p_res, p_callback)
     }
     else
     {
-        catalog.saveCatalog(p_res, function ()
+        catalog.saveCatalog(p_res, () =>
         {
             p_callback(null, p_res);
         });
@@ -182,7 +180,7 @@ var _cacheStoryIDsTask = function (p_res, p_callback)
  * @param {Object} p_res 中间结果，包含 ids 和 date。
  * @param {Function(err, res)} [p_callback]
  */
-var _preprocessTask = function (p_res, p_callback)
+function _preprocessTask(p_res, p_callback)
 {
     story.query({
         date: p_res.date,
@@ -190,15 +188,15 @@ var _preprocessTask = function (p_res, p_callback)
     }, {
         id: 1,
         _id: 0
-    }, function (err, docs)
+    }, (err, docs) =>
     {
         if (!err && docs)
         {
-            var cachedIDs = _.map(docs, function (value)
+            const cachedIDs = _.map(docs, (value) =>
             {
                 return value.id;
             });
-            _.remove(p_res.ids, function (id)
+            _.remove(p_res.ids, (id) =>
             {
                 return _.indexOf(cachedIDs, id) != -1;
             });
