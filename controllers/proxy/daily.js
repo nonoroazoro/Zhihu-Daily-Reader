@@ -2,18 +2,18 @@
  * 负责向前端传递知乎日报内容。
  */
 
-import daily from "../daily";
-import story from "../story";
-import catalog from "../catalog";
-import resource from "../resource";
-import dbhelper from "../dbhelper";
+const daily = require("../daily");
+const story = require("../story");
+const catalog = require("../catalog");
+const resource = require("../resource");
+const dbhelper = require("../dbhelper");
 
 /**
  * 获取最新知乎日报 ID 列表。
  * @param {Object} p_res 服务端响应。
  * @param {Object} p_next
  */
-export function getLatestStoryIDs(p_res, p_next)
+module.exports.getLatestStoryIDs = function (p_res, p_next)
 {
     // 注意：最新日报列表优先从知乎服务器获取（不断更新）。
     daily.fetchLatestStoryIDs((err, res) =>
@@ -51,7 +51,7 @@ export function getLatestStoryIDs(p_res, p_next)
  * @param {Object} p_res 服务端响应。
  * @param {Object} p_next
  */
-export function getTopStoryIDs(p_res, p_next)
+module.exports.getTopStoryIDs = function (p_res, p_next)
 {
     daily.fetchTopStoryIDs((err, res) =>
     {
@@ -72,7 +72,7 @@ export function getTopStoryIDs(p_res, p_next)
  * @param {Object} p_res 服务端响应。
  * @param {Object} p_next
  */
-export function getStoryIDs(p_date, p_res, p_next)
+module.exports.getStoryIDs = function (p_date, p_res, p_next)
 {
     // 注意：非最新日报列表优先从数据库获取，注意区别。
     if (dbhelper.connected())
@@ -101,7 +101,7 @@ export function getStoryIDs(p_date, p_res, p_next)
  * @param {Object} p_res 服务端响应。
  * @param {Object} p_next
  */
-export function getStory(p_id, p_res, p_next)
+module.exports.getStory = function (p_id, p_res, p_next)
 {
     if (dbhelper.connected())
     {
@@ -129,7 +129,7 @@ export function getStory(p_id, p_res, p_next)
  * @param {Object} p_res 服务端响应。
  * @param {Object} p_next
  */
-export function getImage(p_url, p_res, p_next)
+module.exports.getImage = function (p_url, p_res, p_next)
 {
     if (dbhelper.connected())
     {

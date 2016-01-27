@@ -1,6 +1,5 @@
-﻿import { Router } from "express";
-
-const router = Router();
+﻿const express = require("express");
+const router = express.Router();
 
 // 下级 API 优先进入路由。
 const apis = [
@@ -27,4 +26,4 @@ router.use((err, req, res, next) =>
     });
 });
 
-export default router;
+module.exports = router;

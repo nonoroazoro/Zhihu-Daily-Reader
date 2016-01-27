@@ -1,5 +1,4 @@
-﻿import mongoose from "mongoose";
-
+﻿const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 /**
@@ -27,4 +26,4 @@ const StatusSchema = new Schema({
 
 StatusSchema.index({ username: 1 }, { unique: true });
 
-export default mongoose.model("Status", StatusSchema);
+module.exports = mongoose.model("Status", StatusSchema);

@@ -1,5 +1,4 @@
-﻿import mongoose from "mongoose";
-
+﻿const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 /**
@@ -40,4 +39,4 @@ const StorySchema = new Schema({
 StorySchema.index({ id: 1 }, { unique: true });
 StorySchema.index({ date: -1 });
 
-export default mongoose.model("Story", StorySchema);
+module.exports = mongoose.model("Story", StorySchema);

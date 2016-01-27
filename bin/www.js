@@ -1,10 +1,5 @@
-﻿#!/usr/bin/env node
-
-// Babel Injection.
-require("babel-core/register");
-
-var app = require("../app");
-var config = require("config");
+﻿const app = require("../app");
+const config = require("config");
 
 app.set("port", config.port);
 app.listen(config.port);

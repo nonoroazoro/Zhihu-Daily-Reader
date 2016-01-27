@@ -1,5 +1,4 @@
-﻿import mongoose from "mongoose";
-
+﻿const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 /**
@@ -27,4 +26,4 @@ const ResourceSchema = new Schema({
 
 ResourceSchema.index({ id: 1 }, { unique: true });
 
-export default mongoose.model("Resource", ResourceSchema);
+module.exports = mongoose.model("Resource", ResourceSchema);

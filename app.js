@@ -1,14 +1,18 @@
-﻿import path from "path";
-import config from "config";
-import express from "express";
-import bodyParser from "body-parser";
-import favicon from "serve-favicon";
-import dbhelper from "./controllers/dbhelper";
+﻿const path = require("path");
+const config = require("config");
+const express = require("express");
+const bodyParser = require("body-parser");
+const favicon = require("serve-favicon");
+
+const routes = require("./routes");
+const crawler = require("./controllers/crawler");
+const dbhelper = require("./controllers/dbhelper");
+const assetsMap = require("./public/assets/assets.json");
 
 // init db.
-dbhelper.start(function ()
+dbhelper.start(() =>
 {
-    dbhelper.connect(function (err)
+    dbhelper.connect((err) =>
     {
         if (err)
         {
@@ -18,7 +22,7 @@ dbhelper.start(function ()
         {
             if (config.crawler.enabled)
             {
-                require("./controllers/crawler").start();
+                crawler.start();
             }
         }
     });
@@ -26,9 +30,6 @@ dbhelper.start(function ()
 
 // init express.
 const app = express();
-
-// base dir setup.
-global.__base = __dirname;
 
 // view engine setup.
 app.set("views", __dirname + "/views/");
@@ -41,7 +42,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // router setup.
-app.use("/", require("./routes"));
+app.use("/", routes);
 
 // static file setup.
 app.use(express.static(__dirname + "/public/", {
@@ -49,12 +50,12 @@ app.use(express.static(__dirname + "/public/", {
 }));
 
 // assets map setup.
-app.locals.map = require("./public/assets/assets.json");
+app.locals.map = assetsMap;
 
 // catch 404 and forward to global error handler.
 app.use((req, res, next) =>
 {
-    let err = new Error("404 Not Found");
+    const err = new Error("404 Not Found");
     err.status = 404;
     next(err);
 });
@@ -65,4 +66,4 @@ app.use((err, req, res, next) =>
     res.status(err.status || 500).render("error_404", { map: app.locals.map });
 });
 
-export default app;
+module.exports = app;

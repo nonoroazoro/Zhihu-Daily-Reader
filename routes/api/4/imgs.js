@@ -1,8 +1,8 @@
-﻿import { Router } from "express";
-import querystring from "querystring";
+﻿const express = require("express");
+const router = express.Router();
+const querystring = require("querystring");
 
-const router = Router();
-const daily = require(__base + "/controllers/proxy/daily");
+const daily = require("../../../controllers/proxy/daily");
 
 // get zhihu-daily image.
 router.get("/:url", (req, res, next) =>
@@ -10,4 +10,4 @@ router.get("/:url", (req, res, next) =>
     daily.getImage(querystring.unescape(req.params.url), res, next);
 });
 
-export default router;
+module.exports = router;

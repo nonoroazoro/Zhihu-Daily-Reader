@@ -1,15 +1,17 @@
-﻿/**
+﻿"use strict";
+
+/**
  * 负责爬取知乎日报内容。
  */
 
-var _ = require("lodash");
-var async = require("async");
-var config = require("config").crawler;
+const _ = require("lodash");
+const async = require("async");
+const config = require("config").crawler;
 
-var daily = require("../daily");
-var story = require("../story");
-var catalog = require("../catalog");
-var resource = require("../resource");
+const daily = require("../daily");
+const story = require("../story");
+const catalog = require("../catalog");
+const resource = require("../resource");
 
 /**
  * 离线指定的日报。
@@ -17,23 +19,22 @@ var resource = require("../resource");
  * @param {String} p_date 日期。
  * @param {Function(err, doc)} [p_callback]
  */
-exports.cacheStory = function (p_id, p_date, p_callback)
+module.exports.cacheStory = function (p_id, p_date, p_callback)
 {
-    var that = this;
     async.retry({
         times: config.daily_retry,
         interval: config.daily_interval * 1000
     },
-    function (done, results)
+    (done, results) =>
     {
         daily.fetchStory(p_id, done);
     },
-    function (err, res)
+    (err, res) =>
     {
         // 不管抓取失败与否，都将 ID 记录下来（完备）。
         if (err)
         {
-            story.logUncachedStory(p_id, p_date, function ()
+            story.logUncachedStory(p_id, p_date, () =>
             {
                 p_callback(err);
             });
@@ -41,9 +42,9 @@ exports.cacheStory = function (p_id, p_date, p_callback)
         else
         {
             res.story.date = p_date;
-            story.saveStory(res.story, function (err, doc)
+            story.saveStory(res.story, (err, doc) =>
             {
-                that.cacheImages(res.images, function ()
+                this.cacheImages(res.images, () =>
                 {
                     p_callback(err, doc);
                 });
@@ -56,7 +57,7 @@ exports.cacheStory = function (p_id, p_date, p_callback)
  * 离线最新的知乎日报。
  * @param {Function(err, res)} [p_callback]
  */
-exports.cacheLatestStories = function (p_callback)
+module.exports.cacheLatestStories = function (p_callback)
 {
     async.waterfall(
         [
@@ -75,7 +76,7 @@ exports.cacheLatestStories = function (p_callback)
  * @param {Array} [p_ids] ID 列表。
  * @param {Function(err, res)} [p_callback]
  */
-exports.cacheStories = function (p_date, p_ids, p_callback)
+module.exports.cacheStories = function (p_date, p_ids, p_callback)
 {
     if (_.isFunction(p_date))
     {
@@ -110,7 +111,7 @@ exports.cacheStories = function (p_date, p_ids, p_callback)
  * @param {String|Array} p_urls 单个或多个图片地址。
  * @param {Function(err, res)} [p_callback]
  */
-exports.cacheImages = function (p_urls, p_callback)
+module.exports.cacheImages = function (p_urls, p_callback)
 {
     if (_.isFunction(p_urls))
     {
@@ -122,7 +123,7 @@ exports.cacheImages = function (p_urls, p_callback)
         {
             p_urls = [p_urls];
         }
-        
+
         if (_.isArray(p_urls))
         {
             var errors = [];
@@ -145,7 +146,7 @@ exports.cacheImages = function (p_urls, p_callback)
                 });
             }, function ()
             {
-                p_callback(errors.length > 0? errors: null);
+                p_callback(errors.length > 0 ? errors : null);
             });
         }
         else
@@ -181,7 +182,7 @@ var _cacheStoryIDsTask = function (p_res, p_callback)
  * @param {Object} p_res 中间结果，包含 ids 和 date。
  * @param {Function(err, res)} [p_callback]
  */
- var _preprocessTask = function (p_res, p_callback)
+var _preprocessTask = function (p_res, p_callback)
 {
     story.query({
         date: p_res.date,
@@ -189,7 +190,7 @@ var _cacheStoryIDsTask = function (p_res, p_callback)
     }, {
         id: 1,
         _id: 0
-    }, function (err , docs)
+    }, function (err, docs)
     {
         if (!err && docs)
         {
@@ -211,21 +212,25 @@ var _cacheStoryIDsTask = function (p_res, p_callback)
  * @param {Object} p_res 中间结果，包含 ids 和 date。
  * @param {Function(err, res)} [p_callback]
  */
-var _cacheStoriesTask = function (p_res, p_callback)
+function _cacheStoriesTask(p_res, p_callback)
 {
-    var result = { date: p_res.date, cached: [] };
-    async.eachSeries(p_res.ids, function (id, done)
-    {
-        this.cacheStory(id, p_res.date, function (err)
+    const result = { date: p_res.date, cached: [] };
+    async.eachSeries(
+        p_res.ids,
+        (id, done) =>
         {
-            if (!err)
+            this.cacheStory(id, p_res.date, (err) =>
             {
-                result.cached.push(id);
-            }
-            done();
-        });
-    }.bind(this), function ()
-    {
-        p_callback(null, result);
-    });
+                if (!err)
+                {
+                    result.cached.push(id);
+                }
+                done();
+            });
+        },
+        () =>
+        {
+            p_callback(null, result);
+        }
+    );
 };

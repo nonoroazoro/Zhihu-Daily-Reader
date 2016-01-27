@@ -1,27 +1,31 @@
-﻿import async from "async";
-import config from "config";
+﻿"use strict";
 
-import daily from "./daily";
-import story from "../story";
-import utils from "../utils";
+const async = require("async");
+const config = require("config");
+
+const daily = require("./daily");
+const story = require("../story");
+const utils = require("../utils");
 
 let stop = false;
 
 /**
  * 开始爬虫。
  */
-export function start()
+module.exports.start = function ()
 {
     stop = false;
     async.waterfall([
         _cacheLatestTask,
         _cleanCacheTask,
-    ], (err, res) =>
+    ],
+    (err, res) =>
     {
         if (res)
         {
             console.log(res);
         }
+
         if (!err)
         {
             _cachePrev(res.date, res.max_age);
@@ -32,7 +36,7 @@ export function start()
 /**
  * 停止爬虫。
  */
-export function stop()
+module.exports.stop = function ()
 {
     stop = true;
 };
@@ -70,7 +74,7 @@ function _cleanCacheTask(p_res, p_callback)
  */
 function _cachePrev(p_date, p_maxDate)
 {
-    var prevDate = utils.prevZhihuDay(p_date);
+    let prevDate = utils.prevZhihuDay(p_date);
     if (prevDate >= p_maxDate)
     {
         daily.cacheStories(prevDate, (err, res) =>

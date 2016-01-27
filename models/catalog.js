@@ -1,5 +1,4 @@
-﻿import mongoose from "mongoose";
-
+﻿const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 /**
@@ -21,4 +20,4 @@ const CatalogSchema = new Schema({
 
 CatalogSchema.index({ date: -1 }, { unique: true });
 
-export default mongoose.model("Catalog", CatalogSchema);
+module.exports = mongoose.model("Catalog", CatalogSchema);

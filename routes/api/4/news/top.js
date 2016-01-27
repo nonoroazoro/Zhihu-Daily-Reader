@@ -1,7 +1,7 @@
-﻿import { Router } from "express";
+﻿const express = require("express");
+const router = express.Router();
 
-const router = Router();
-const daily = require(__base + "/controllers/proxy/daily");
+const daily = require("../../../../controllers/proxy/daily");
 
 // get top stroies.
 router.get("/", (req, res, next) =>
@@ -9,4 +9,4 @@ router.get("/", (req, res, next) =>
     daily.getTopStoryIDs(res, next);
 });
 
-export default router;
+module.exports = router;

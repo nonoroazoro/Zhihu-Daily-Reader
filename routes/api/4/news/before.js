@@ -1,7 +1,6 @@
-﻿import { Router } from "express";
-
-const router = Router();
-const daily = require(__base + "/controllers/proxy/daily");
+﻿const express = require("express");
+const router = express.Router();
+const daily = require("../../../../controllers/proxy/daily");
 
 // get stroies of the specified date.
 router.get("/:date?", (req, res, next) =>
@@ -17,4 +16,4 @@ router.get("/:date?", (req, res, next) =>
     }
 });
 
-export default router;
+module.exports = router;
