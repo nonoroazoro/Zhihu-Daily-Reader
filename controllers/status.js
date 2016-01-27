@@ -1,12 +1,12 @@
-﻿var _ = require("lodash");
-var Status = require("../models/status");
+﻿const _ = require("lodash");
+const Status = require("../models/status");
 
 /**
  * 从数据库中查找指定用户的阅读状态。
  * @param {String} p_username 用户名。
  * @param {Function(err, doc)} [p_callback]
  */
-exports.findStatusByUsername = function (p_username, p_callback)
+module.exports.findStatusByUsername = function (p_username, p_callback)
 {
     if (_.isFunction(p_callback))
     {
@@ -19,7 +19,7 @@ exports.findStatusByUsername = function (p_username, p_callback)
  * @param {Object} p_status 阅读状态。
  * @param {Function(err, doc)} [p_callback]
  */
-exports.saveStatus = function (p_status, p_callback)
+module.exports.saveStatus = function (p_status, p_callback)
 {
     if (_.isEmpty(p_status) || !_.isObject(p_status))
     {
