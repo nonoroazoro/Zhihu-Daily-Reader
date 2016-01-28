@@ -62,7 +62,6 @@
     <Content Include="client\zdr\daily\res\DailyPage.less" />
     <Content Include="client\zdr\daily\components\res\FlexView.less" />
     <Content Include="client\zdr\components\res\Navbar.less" />
-    <Content Include="public\assets\assets.json" />
     <Content Include="public\vendors\bootstrap\css\bootstrap.css" />
     <Content Include="public\vendors\bootstrap\css\bootstrap.css.map" />
     <Content Include="public\vendors\bootstrap\css\bootstrap.min.css" />
