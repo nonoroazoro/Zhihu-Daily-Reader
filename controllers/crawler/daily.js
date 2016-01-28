@@ -19,6 +19,7 @@ const resource = require("../resource");
  */
 module.exports.cacheStory = function (p_id, p_date, p_callback)
 {
+    const self = this;
     async.retry({
         times: config.daily_retry,
         interval: config.daily_interval * 1000
@@ -42,7 +43,7 @@ module.exports.cacheStory = function (p_id, p_date, p_callback)
             res.story.date = p_date;
             story.saveStory(res.story, (err, doc) =>
             {
-                this.cacheImages(res.images, () =>
+                self.cacheImages(res.images, () =>
                 {
                     p_callback(err, doc);
                 });
@@ -76,18 +77,19 @@ module.exports.cacheLatestStories = function (p_callback)
  */
 module.exports.cacheStories = function (p_date, p_ids, p_callback)
 {
+    const self = this;
     if (_.isFunction(p_date))
     {
         p_date(new Error("p_date must not be null."));
     }
     else
     {
-        const tasks = [_cacheStoriesTask.bind(this)];
+        const tasks = [_cacheStoriesTask.bind(self)];
         if (_.isFunction(p_ids))
         {
             p_callback = p_ids;
             tasks.unshift(
-                daily.fetchStoryIDs.bind(this, p_date),
+                daily.fetchStoryIDs.bind(self, p_date),
                 _cacheStoryIDsTask,
                 _preprocessTask
             );
@@ -96,7 +98,7 @@ module.exports.cacheStories = function (p_date, p_ids, p_callback)
         {
             const res = { date: p_date, ids: p_ids };
             tasks.unshift(
-                _cacheStoryIDsTask.bind(this, res),
+                _cacheStoryIDsTask.bind(self, res),
                 _preprocessTask
             );
         }
@@ -212,12 +214,13 @@ function _preprocessTask(p_res, p_callback)
  */
 function _cacheStoriesTask(p_res, p_callback)
 {
+    const self = this;
     const result = { date: p_res.date, cached: [] };
     async.eachSeries(
         p_res.ids,
         (id, done) =>
         {
-            this.cacheStory(id, p_res.date, (err) =>
+            self.cacheStory(id, p_res.date, (err) =>
             {
                 if (!err)
                 {
