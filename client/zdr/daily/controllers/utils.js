@@ -1,22 +1,22 @@
-﻿var _ = require("lodash");
-var moment = require("moment");
+﻿const _ = require("lodash");
+const moment = require("moment");
 
-var FormatString = "YYYYMMDD";
-var MinDateString = "20130520";
+const FormatString = "YYYYMMDD";
+const MinDate = moment("20130520", FormatString, true);
 
 /**
  * 知乎日报的起始日期（早于该日期还没有日报呢）。
  */
-exports.MIN_DATE = moment(MinDateString, FormatString, true);
+export const MIN_DATE = MinDate;
 
 /**
  * 转换日期为知乎日期格式。
  * @param {String|Date} p_date 日期。
  * @return {String} 知乎日期格式字符串；如果 p_date 是无效的日期，返回 null。
  */
-exports.convertToZhihuDate = function (p_date)
+export function convertToZhihuDate(p_date)
 {
-    var m = null;
+    let m = null;
     if (_.isDate(p_date))
     {
         m = moment(p_date);
@@ -45,7 +45,7 @@ exports.convertToZhihuDate = function (p_date)
  * @param {String} p_date 形如"20150726"的日期字符串。
  * @return {Moment}
  */
-exports.convertZhihuDateToMoment = function (p_date)
+export function convertZhihuDateToMoment(p_date)
 {
     return moment(p_date, FormatString, true);
 };
@@ -55,7 +55,7 @@ exports.convertZhihuDateToMoment = function (p_date)
  * @param {String|Date} p_date 日期。
  * @return {String} 知乎日期格式字符串；如果 p_date 是无效的日期，返回 null。
  */
-exports.nextZhihuDay = function (p_date)
+export function nextZhihuDay(p_date)
 {
     return this.subZhihuDate(p_date, -1);
 };
@@ -65,7 +65,7 @@ exports.nextZhihuDay = function (p_date)
  * @param {Date|String} p_date 日期。
  * @return {String} 知乎日期格式字符串；如果 p_date 是无效的日期，返回 null。
  */
-exports.prevZhihuDay = function (p_date)
+export function prevZhihuDay(p_date)
 {
     return this.subZhihuDate(p_date);
 };
@@ -76,9 +76,9 @@ exports.prevZhihuDay = function (p_date)
  * @param {Number} p_day 要减去的天数，可以为负数（相当于增加天数）；如果不指定，天数减1。
  * @return {String} 知乎日期格式字符串；如果 p_date 是无效的日期，返回 null。
  */
-exports.subZhihuDate = function (p_date, p_day)
+export function subZhihuDate(p_date, p_day)
 {
-    var m = this.convertZhihuDateToMoment(this.convertToZhihuDate(p_date));
+    const m = this.convertZhihuDateToMoment(this.convertToZhihuDate(p_date));
     return m.isValid() ? m.subtract(p_day || 1, "day").format(FormatString) : null;
 };
 
@@ -87,7 +87,7 @@ exports.subZhihuDate = function (p_date, p_day)
  * @param {String} p_date 日期。
  * @return {Boolean}
  */
-exports.isValidZhihuDate = function (p_date)
+export function isValidZhihuDate(p_date)
 {
     return this.convertZhihuDateToMoment(p_date).isValid();
 };

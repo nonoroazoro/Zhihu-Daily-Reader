@@ -1,12 +1,12 @@
-﻿var _ = require("lodash");
-var $ = require("jquery");
+﻿import _ from "lodash";
+import $ from "jquery";
 
-var _stories = {};
+const _stories = {};
 
 /**
  * 获取目前已从服务端获取到的所有日报内容的缓存（以日报 id 进行检索，无序，请勿用 index 检索）。
  */
-exports.getFetchedStories = function ()
+export function getFetchedStories()
 {
     return _stories;
 };
@@ -15,12 +15,12 @@ exports.getFetchedStories = function ()
  * 获取最新热门日报的 ID 列表。
  * @param {Function(err, res)} [p_callback]
  */
-exports.getTopStoryIDs = function (p_callback)
+export function getTopStoryIDs(p_callback)
 {
-    $.get("/api/4/news/top", function (p_data)
+    $.get("/api/4/news/top", (p_data) =>
     {
         p_callback(null, p_data);
-    }).fail(function ()
+    }).fail(() =>
     {
         p_callback("/api/4/news/top error");
     });
@@ -31,7 +31,7 @@ exports.getTopStoryIDs = function (p_callback)
  * @param String p_date 指定的日期。如果未指定，则返回最新日报的索引；如果小于 20130519，则返回 {}。
  * @param {Function(err, res)} [p_callback]
  */
-exports.getStoryIDs = function (p_date, p_callback)
+export function getStoryIDs(p_date, p_callback)
 {
     if (_.isFunction(p_date))
     {
@@ -41,20 +41,20 @@ exports.getStoryIDs = function (p_date, p_callback)
     
     if (_.isEmpty(_.trim(p_date)))
     {
-        $.get("/api/4/news/before", function (p_data)
+        $.get("/api/4/news/before", (p_data) =>
         {
             p_callback(null, p_data);
-        }).fail(function ()
+        }).fail(() =>
         {
             p_callback("/api/4/news/before error");
         });
     }
     else
     {
-        $.get("/api/4/news/before/" + p_date, function (p_data)
+        $.get("/api/4/news/before/" + p_date, (p_data) =>
         {
             p_callback(null, p_data);
-        }).fail(function ()
+        }).fail(() =>
         {
             p_callback("/api/4/news/before/" + p_date + " error");
         });
@@ -66,7 +66,7 @@ exports.getStoryIDs = function (p_date, p_callback)
  * @param String p_id 指定的唯一标识。
  * @param {Function(err, res)} [p_callback]
  */
-exports.getStory = function (p_id, p_callback)
+export function getStory(p_id, p_callback)
 {
     if (_.isFunction(p_callback))
     {
@@ -79,11 +79,11 @@ exports.getStory = function (p_id, p_callback)
         }
         else
         {
-            $.get("/api/4/news/" + p_id, function (p_data)
+            $.get("/api/4/news/" + p_id, (p_data) =>
             {
                 _stories[p_id] = p_data;
                 p_callback(null, p_data);
-            }).fail(function ()
+            }).fail(() =>
             {
                 p_callback("/api/4/news/ error");
             });
