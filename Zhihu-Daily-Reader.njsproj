@@ -41,6 +41,7 @@
     <Compile Include="webpack.base.config.js" />
     <Compile Include="webpack.config.js" />
     <Compile Include="webpack.production.config.js" />
+    <Content Include=".babelrc" />
     <Content Include="config\default.json" />
     <Content Include="config\development.json" />
     <Content Include="config\production.json" />
