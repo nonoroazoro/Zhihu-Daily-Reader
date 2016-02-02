@@ -1,16 +1,15 @@
-﻿require("./res/ArticleView.less");
+﻿import "./res/ArticleView.less";
 
-var _ = require("lodash");
-var classNames = require("classnames");
-var React = require("react");
-var PureRenderMixin = require("react-addons-pure-render-mixin");
+import _ from "lodash";
+import React from "react";
+import classNames from "classnames";
 
-var ArticleHeader = React.createClass(
+class ArticleHeader extends React.Component
 {
-    render : function()
+    render()
     {
-        var hasBackgrounds = this.props.story.backgrounds.length > 0;
-        var classesHeaderPicture = classNames(
+        const hasBackgrounds = this.props.story.backgrounds.length > 0;
+        const classesHeaderPicture = classNames(
             "article-header-picture",
             {
                 "radius-all": !hasBackgrounds,
@@ -18,7 +17,7 @@ var ArticleHeader = React.createClass(
             }
         );
 
-        var classesHeaderCaption = classNames(
+        const classesHeaderCaption = classNames(
             "article-header-caption",
             {
                 "radius-bottom": !hasBackgrounds,
@@ -26,14 +25,14 @@ var ArticleHeader = React.createClass(
         );
         
         // 没有图片版权信息时隐藏。
-        var classesImageSource = classNames(
+        const classesImageSource = classNames(
             {
                 "hide": !this.props.story.imageSource,
             }
         );
 
-        var rows = [];
-        var titleRow =
+        const rows = [];
+        const titleRow =
             <div className="article-header-title" key="article-header">
                 <button type="button" className="close" data-dismiss="modal">
                     <span>&times;</span>
@@ -53,9 +52,9 @@ var ArticleHeader = React.createClass(
             </div>;
         rows.push(titleRow);
     
-        if(hasBackgrounds)
+        if (hasBackgrounds)
         {
-            var backgroundRows = _.map(this.props.story.backgrounds, function(value, i)
+            const backgroundRows = _.map(this.props.story.backgrounds, (value, i) =>
             {
                 return (
                     <a className="article-backgrounds-content"
@@ -81,32 +80,32 @@ var ArticleHeader = React.createClass(
             </div>
         );
     }
-});
+}
 
-var ArticleBody = React.createClass(
+class ArticleBody extends React.Component
 {
-    render : function()
+    render()
     {
-        var questions = [];
-        var item = null;
-        var length = this.props.contents.length;
-        for (var i = 0; i < length; i++)
+        let item = null;
+        const questions = [];
+        const length = this.props.contents.length;
+        for (let i = 0; i < length; i++)
         {
             // innerRows 包含：标题、答案、外链。
-            var innerRows = [];
+            const innerRows = [];
             item = this.props.contents[i];
 
             // 1、标题。
-            if(!_.isEmpty(item.title))
+            if (!_.isEmpty(item.title))
             {
                 innerRows.push(<h3 className="question-title" key={"question-title"+i}>{item.title}</h3>);
             }
 
             // 2、答案。
-            var answers = _.map(item.answers, function(value, j)
+            const answers = _.map(item.answers, (value, j) =>
             {
                 // 没有作者图片时隐藏。
-                var classesAvatar = classNames(
+                const classesAvatar = classNames(
                     "avatar",
                     {
                         "hide": _.isEmpty(value.avatar),
@@ -124,10 +123,10 @@ var ArticleBody = React.createClass(
                     </div>
                 );
             });
-            Array.prototype.push.apply(innerRows, answers);
+            innerRows.push(...answers);
 
             // 3、外链。
-            if(item.link)
+            if (item.link)
             {
                 innerRows.push(
                     <div className="view-more" key={"view-more"+i}>
@@ -155,23 +154,25 @@ var ArticleBody = React.createClass(
             </div>
         );
     }
-});
+}
 
-var ArticleView = React.createClass(
+export default class ArticleView extends React.Component
 {
-    mixins: [PureRenderMixin],
-
-    getDefaultProps: function ()
+    static propTypes =
     {
-        return {
-            id: "ArticleView"
-        };
-    },
+        id: React.PropTypes.string,
+        story: React.PropTypes.object
+    };
 
-    render: function ()
+    static defaultProps =
     {
-        var rows = [];
-        if(this.props.story)
+        id: "ArticleView"
+    };
+
+    render()
+    {
+        let rows = [];
+        if (this.props.story)
         {
             rows = [
                 <ArticleHeader key="header" story={this.props.story} />,
@@ -189,6 +190,4 @@ var ArticleView = React.createClass(
             </div>
         );
     }
-});
-
-module.exports = ArticleView;
+}
