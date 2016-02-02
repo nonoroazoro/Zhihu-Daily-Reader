@@ -5,7 +5,7 @@ var classNames = require("classnames");
 var React = require("react");
 var PureRenderMixin = require("react-addons-pure-render-mixin");
 var DailyManager = require("../controllers/daily");
-var Preloader = require("./Preloader");
+import Preloader from "./Preloader";
 
 var FlexTile = React.createClass(
 {

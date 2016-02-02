@@ -10,7 +10,7 @@ var Utils = require("./controllers/utils");
 
 //var Carousel = require("./components/Carousel");
 var FlexView = require("./components/FlexView");
-var ArticleView = require("./components/ArticleView");
+import ArticleView from "./components/ArticleView";
 
 /**
  * 知乎日报页面。
