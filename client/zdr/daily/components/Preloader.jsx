@@ -1,21 +1,24 @@
-﻿require("./res/Preloader.less");
+﻿import "./res/Preloader.less";
 
-var _ = require("lodash");
-var React = require("react");
+import _ from "lodash";
+import React from "react";
 
-var Preloader = React.createClass(
+export default class Preloader extends React.Component
 {
-    getDefaultProps: function ()
+    static propTypes =
     {
-        return {
-            className: null
-        };
-    },
+        className: React.PropTypes.string
+    };
 
-    render: function ()
+    static defaultProps =
     {
-        var classes = "Preloader";
-        if(!_.isEmpty(_.trim(this.props.className)))
+        className: null
+    };
+
+    render()
+    {
+        let classes = "Preloader";
+        if (!_.isEmpty(_.trim(this.props.className)))
         {
             classes = classes + " " + this.props.className;
         }
@@ -30,6 +33,4 @@ var Preloader = React.createClass(
             </div>
         );
     }
-});
-
-module.exports = Preloader;
+}
