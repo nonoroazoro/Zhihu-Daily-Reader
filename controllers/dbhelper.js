@@ -9,7 +9,7 @@ const cp = require("child_process");
 const mongoose = require("mongoose");
 
 /**
- * 启动数据库（Server）。
+ * 启动数据库 Server。
  * @param {Function(err)} [p_callback]
  */
 module.exports.start = function (p_callback)
@@ -22,12 +22,20 @@ module.exports.start = function (p_callback)
 
     if (fs.existsSync(dbpath))
     {
-        cp.execFile("mongod", ["--dbpath", dbpath]);
-        setTimeout(p_callback, 1000);
+        let timer;
+        cp.execFile("mongod", ["--dbpath", dbpath], (error) =>
+        {
+            if (timer)
+            {
+                clearTimeout(timer);
+            }
+            p_callback(new Error("Can not find mongodb in your system."));
+        });
+        timer = setTimeout(p_callback, 1000);
     }
     else
     {
-        p_callback(new Error("Can not find/create database dir: " + dbpath));
+        p_callback(new Error("Can not find/create database dir: '" + dbpath + "'."));
     }
 };
 
@@ -76,20 +84,20 @@ module.exports.dropAllCollections = function (p_callback)
     {
         collection.drop(done);
     },
-    (err) =>
-    {
-        if (_.isFunction(p_callback))
+        (err) =>
         {
-            if (!err || err.message == "ns not found")
+            if (_.isFunction(p_callback))
             {
-                p_callback();
+                if (!err || err.message == "ns not found")
+                {
+                    p_callback();
+                }
+                else
+                {
+                    p_callback(err);
+                }
             }
-            else
-            {
-                p_callback(err);
-            }
-        }
-    });
+        });
 };
 
 /**
