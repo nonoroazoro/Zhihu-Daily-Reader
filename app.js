@@ -1,4 +1,6 @@
-﻿const path = require("path");
+﻿"use strict";
+
+const path = require("path");
 const config = require("config");
 const express = require("express");
 const bodyParser = require("body-parser");
@@ -10,22 +12,30 @@ const dbhelper = require("./controllers/dbhelper");
 const assetsMap = require("./public/assets/assets.json");
 
 // init db.
-dbhelper.start(() =>
+dbhelper.start((err) =>
 {
-    dbhelper.connect((err) =>
+    let msg = "\nDatabase Server not started, some features will be shut down.";
+    if (err)
     {
-        if (err)
+        console.error(err.message + msg);
+    }
+    else
+    {
+        dbhelper.connect((err) =>
         {
-            console.error("Database Server not started, some features will be shut down.");
-        }
-        else
-        {
-            if (config.crawler.enabled)
+            if (err)
             {
-                crawler.start();
+                console.error(msg);
             }
-        }
-    });
+            else
+            {
+                if (config.crawler.enabled)
+                {
+                    crawler.start();
+                }
+            }
+        });
+    }
 });
 
 // init express.
