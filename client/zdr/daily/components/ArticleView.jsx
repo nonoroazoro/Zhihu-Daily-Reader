@@ -1,7 +1,7 @@
 ﻿import "./res/ArticleView.less";
 
-import _ from "lodash";
-import React from "react";
+import _          from "lodash";
+import React      from "react";
 import classNames from "classnames";
 
 class ArticleHeader extends React.Component
@@ -158,15 +158,10 @@ class ArticleBody extends React.Component
 
 export default class ArticleView extends React.Component
 {
-    static propTypes =
-    {
-        id: React.PropTypes.string,
-        story: React.PropTypes.object
-    };
-
     static defaultProps =
     {
-        id: "ArticleView"
+        id: "ArticleView",
+        story: null
     };
 
     render()
