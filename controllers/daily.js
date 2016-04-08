@@ -147,6 +147,13 @@ module.exports.fetchStory = function (p_id, p_callback)
                 if (body.body)
                 {
                     const $ = cheerio.load(body.body, { decodeEntities: false });
+
+                    // 所有链接都添加新标签打开。
+                    $("a").each((i, e) =>
+                    {
+                        $(e).attr("target", "_blank");
+                    });
+
                     story.backgrounds = $(".headline>.headline-background .headline-background-link").map((i, e) =>
                     {
                         return {
@@ -190,15 +197,6 @@ module.exports.fetchStory = function (p_id, p_callback)
                                 content: $(e).children(".content").html()
                             };
                         }).get();
-
-                        const a = $(e).find(".view-more>a");
-                        if (a.length > 0)
-                        {
-                            question.link = {
-                                href: a.attr("href"),
-                                text: a.text(),
-                            };
-                        }
 
                         return question;
                     }).get();
