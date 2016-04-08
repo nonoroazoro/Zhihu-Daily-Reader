@@ -1,69 +1,83 @@
-﻿require("./res/Carousel.less");
+﻿import "./res/Carousel.less";
 
-var $ = require("jquery");
-var _ = require("lodash");
-var classNames = require("classnames");
-var React = require("react");
-var PureRenderMixin = require("react-addons-pure-render-mixin");
+import $               from "jquery";
+import _               from "lodash";
+import React           from "react";
+import classNames      from "classnames";
+import PureRenderMixin from "react-addons-pure-render-mixin";
 
 /**
  * 幻灯片指示器。
  */
-var CarouselIndicator = React.createClass(
+class CarouselIndicator extends React.Component
 {
-    render: function ()
+    static defaultProps =
     {
-        var indicators = [];
-        var length = this.props.length;
+        length: 0,
+        target: null
+    };
+
+    render()
+    {
+        const indicators = [];
+        const length = this.props.length;
         if (length > 0)
         {
             indicators.push(<li className="active" key="indicator0" data-target={this.props.target} data-slide-to={0} />);
-            for (var i = 1; i < length; i++)
+            for (let i = 1; i < length; i++)
             {
                 indicators.push(<li key={"indicator" + i} data-target={this.props.target} data-slide-to={i} />);
             }
         }
 
         // 少于1页时隐藏指示器。
-        var classes = classNames(
-            "CarouselIndicator", "carousel-indicators",
+        const classes = classNames(
+            "CarouselIndicator",
+            "carousel-indicators",
             {
-                "hide": (length <= 1),
+                "hide": (length <= 1)
             }
         );
+
         return (
             <ol className={classes}>
                 {indicators}
             </ol>
         );
     }
-});
+}
 
 /**
  * 幻灯片内容。
  */
-var CarouselInner = React.createClass(
+class CarouselInner extends React.Component
 {
-    handleClick: function (p_storyId, e)
+    static defaultProps =
+    {
+        indexes: [],
+        onClick: null
+    };
+
+    handleClick(p_storyID, e)
     {
         if (_.isFunction(this.props.onClick))
         {
             this.props.onClick(
             {
-                id: p_storyId
+                id: p_storyID
             });
         }
-    },
+    }
 
-    render: function ()
+    render()
     {
-        var that = this;
-        var rows = _.map(this.props.indexes, function (value, i)
+        const rows = _.map(this.props.indexes, (value, index) =>
         {
             return (
-                <div className={i == 0 ? "item active" : "item"} key={"slide" + i}>
-                    <div className="carousel-picture"
-                        onClick={that.handleClick.bind(that, value.id)}
+                <div className={index == 0 ? "item active" : "item"} key={"slide" + index}>
+                    <div
+                        className="carousel-picture"
+                        onClick={this.handleClick.bind(this, value.id)}
                         style={{backgroundImage: "url(" + value.image + ")"}} />
                     <div className="carousel-caption">
                         <h3>{value.title}</h3>
@@ -78,76 +92,90 @@ var CarouselInner = React.createClass(
             </div>
         );
     }
-});
+}
 
 /**
  * 两侧控制器。
  */
-var CarouselControls = React.createClass(
+class CarouselControls extends React.Component
 {
-    render: function ()
+    static defaultProps =
+    {
+        length: 0,
+        target: null
+    };
+
+    render()
     {
         // 少于1页时隐藏控制器。
-        var classes = classNames(
+        const classes = classNames(
             "CarouselControl",
             {
-                "hide": (this.props.length <= 1),
+                "hide": (this.props.length <= 1)
             }
         );
 
         return (
             <div className={classes}>
-                <a className="left carousel-control"
-                   href={this.props.href}
-                   role="button"
-                   data-slide="prev">
+                <a
+                    className="left carousel-control"
+                    href={this.props.target}
+                    role="button"
+                    data-slide="prev">
                     <span className="glyphicon glyphicon-chevron-left" />
-                    <span className="sr-only">Previous</span>
+                    <span className="sr-only">上一页</span>
                 </a>
-                <a className="right carousel-control"
-                   href={this.props.href}
-                   role="button"
-                   data-slide="next">
+                <a
+                    className="right carousel-control"
+                    href={this.props.target}
+                    role="button"
+                    data-slide="next">
                     <span className="glyphicon glyphicon-chevron-right" />
-                    <span className="sr-only">Next</span>
+                    <span className="sr-only">下一页</span>
                 </a>
             </div>
         );
     }
-});
+}
 
 /**
  * 知乎日报：热门消息栏。
  */
-var Carousel = React.createClass(
+export default class Carousel extends React.Component
 {
-    mixins: [PureRenderMixin],
-
-    getDefaultProps: function ()
+    constructor(p_props)
     {
-        return {
-            id: "Carousel",
-        };
-    },
+        super(p_props);
+        this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
+    }
 
-    render: function ()
+    static defaultProps =
     {
-        var indexes = this.props.indexes || [];
-        var length = indexes.length;
-        var target = "#" + this.props.id;
+        id: "Carousel",
+        indexes: [],
+        onClick: null
+    };
+
+    render()
+    {
+        const indexes = this.props.indexes || [];
+        const length = indexes.length;
+        const target = "#" + this.props.id;
 
         // 无内容时隐藏。
-        var carouselClassNames = classNames(
-            "Carousel", "carousel", "slide",
+        const carouselClassNames = classNames(
+            "Carousel",
+            "carousel",
+            "slide",
             {
-                "hide": (length == 0),
+                "hide": (length == 0)
             }
         );
 
         // 1页以下时隐藏控制器。
-        var controlsClassNames = classNames(
+        const controlsClassNames = classNames(
             {
-                "hide": (length <= 1),
+                "hide": (length <= 1)
             }
         );
 
@@ -155,10 +183,8 @@ var Carousel = React.createClass(
             <div id={this.props.id} className={carouselClassNames} data-ride="carousel">
                 <CarouselIndicator target={target} length={length} />
                 <CarouselInner onClick={this.props.onClick} indexes={indexes} />
-                <CarouselControls className={controlsClassNames} href={target} length={length} />
+                <CarouselControls className={controlsClassNames} target={target} length={length} />
             </div>
         );
     }
-});
-
-module.exports = Carousel;
+}
