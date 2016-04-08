@@ -1,12 +1,9 @@
-﻿var React = require("react");
+﻿import React from "react";
 
-var Footer = React.createClass(
+export default class Footer extends React.Component
 {
-    render: function ()
+    render()
     {
-        var footer = <footer />;
-        return footer;
+        return <footer />;
     }
-});
-
-module.exports = Footer;
+}
