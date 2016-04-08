@@ -1,15 +1,10 @@
 ﻿import "./res/Preloader.less";
 
-import _ from "lodash";
-import React from "react";
+import React      from "react";
+import classNames from "classnames";
 
 export default class Preloader extends React.Component
 {
-    static propTypes =
-    {
-        className: React.PropTypes.string
-    };
-
     static defaultProps =
     {
         className: null
@@ -17,12 +12,13 @@ export default class Preloader extends React.Component
 
     render()
     {
-        let classes = "Preloader";
-        if (!_.isEmpty(_.trim(this.props.className)))
-        {
-            classes = classes + " " + this.props.className;
-        }
-        
+        const classes = classNames(
+            "Preloader",
+            {
+                [this.props.className]: (this.props.className != null && this.props.className.trim() != "")
+            }
+        );
+
         return (
             <div className={classes}>
                 <span className="wave1"/>
