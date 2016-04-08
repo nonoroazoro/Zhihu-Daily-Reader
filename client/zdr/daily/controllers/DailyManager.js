@@ -19,7 +19,7 @@ export default class DailyManager
      */
     static getTopStoryIDs(p_callback)
     {
-        $.get("/api/4/news/top", (p_data) =>
+        return $.get("/api/4/news/top", (p_data) =>
         {
             p_callback(null, p_data);
         }).fail(() =>
@@ -43,7 +43,7 @@ export default class DailyManager
     
         if (_.isEmpty(_.trim(p_date)))
         {
-            $.get("/api/4/news/before", (p_data) =>
+            return $.get("/api/4/news/before", (p_data) =>
             {
                 p_callback(null, p_data);
             }).fail(() =>
@@ -53,7 +53,7 @@ export default class DailyManager
         }
         else
         {
-            $.get("/api/4/news/before/" + p_date, (p_data) =>
+            return $.get("/api/4/news/before/" + p_date, (p_data) =>
             {
                 p_callback(null, p_data);
             }).fail(() =>
@@ -81,7 +81,7 @@ export default class DailyManager
             }
             else
             {
-                $.get("/api/4/news/" + p_id, (p_data) =>
+                return $.get("/api/4/news/" + p_id, (p_data) =>
                 {
                     _stories[p_id] = p_data;
                     p_callback(null, p_data);
