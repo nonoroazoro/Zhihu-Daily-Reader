@@ -8,7 +8,7 @@ var PureRenderMixin = require("react-addons-pure-render-mixin");
 var DailyManager = require("./controllers/daily");
 var Utils = require("./controllers/utils");
 
-//var Carousel = require("./components/Carousel");
+//import Carousel from "./components/Carousel";
 var FlexView = require("./components/FlexView");
 import ArticleView from "./components/ArticleView";
 
