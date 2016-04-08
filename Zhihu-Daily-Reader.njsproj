@@ -18,6 +18,7 @@
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
   <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
   <ItemGroup>
+    <Compile Include="client\zdr\daily\controllers\Utils.js" />
     <Compile Include="controllers\catalog.js" />
     <Compile Include="controllers\crawler\daily.js" />
     <Compile Include="controllers\daily.js" />
@@ -83,7 +84,6 @@
     <Compile Include="bin\www.js" />
     <Compile Include="controllers\proxy\daily.js" />
     <Compile Include="client\zdr\daily\controllers\daily.js" />
-    <Compile Include="client\zdr\daily\controllers\utils.js" />
     <Compile Include="client\zdr\common\error_404.jsx" />
     <Compile Include="client\zdr\index.jsx" />
     <Compile Include="routes\api\4\news\before.js" />
