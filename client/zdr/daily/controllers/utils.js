@@ -1,13 +1,12 @@
-﻿const _ = require("lodash");
-const moment = require("moment");
+﻿import _      from "lodash";
+import moment from "moment";
 
 const FormatString = "YYYYMMDD";
-const MinDate = moment("20130520", FormatString, true);
 
 /**
  * 知乎日报的起始日期（早于该日期还没有日报呢）。
  */
-export const MIN_DATE = MinDate;
+export const MIN_DATE = moment("20130520", FormatString, true);
 
 /**
  * 转换日期为知乎日期格式。
@@ -38,7 +37,7 @@ export function convertToZhihuDate(p_date)
     {
         return null;
     }
-};
+}
 
 /**
  * 转换知乎日期为 Moment 对象。
@@ -48,7 +47,7 @@ export function convertToZhihuDate(p_date)
 export function convertZhihuDateToMoment(p_date)
 {
     return moment(p_date, FormatString, true);
-};
+}
 
 /**
  * 计算指定日期的后一天对应的知乎日期。
@@ -58,7 +57,7 @@ export function convertZhihuDateToMoment(p_date)
 export function nextZhihuDay(p_date)
 {
     return this.subZhihuDate(p_date, -1);
-};
+}
 
 /**
  * 计算指定日期的前一天对应的知乎日期。
@@ -68,7 +67,7 @@ export function nextZhihuDay(p_date)
 export function prevZhihuDay(p_date)
 {
     return this.subZhihuDate(p_date);
-};
+}
 
 /**
  * 计算指定日期减去指定天数后对应的知乎日期。
@@ -80,7 +79,7 @@ export function subZhihuDate(p_date, p_day)
 {
     const m = this.convertZhihuDateToMoment(this.convertToZhihuDate(p_date));
     return m.isValid() ? m.subtract(p_day || 1, "day").format(FormatString) : null;
-};
+}
 
 /**
  * 检查指定的日期是否符合知乎日期格式，即是否形如"20150726"。
@@ -90,4 +89,4 @@ export function subZhihuDate(p_date, p_day)
 export function isValidZhihuDate(p_date)
 {
     return this.convertZhihuDateToMoment(p_date).isValid();
-};
+}
