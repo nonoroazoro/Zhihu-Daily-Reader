@@ -1,6 +1,6 @@
 ﻿import "./res/errors.less";
 
-import $ from "jquery";
+import $    from "jquery";
 import logo from "./res/img/zhihu_daily_logo_blue.png";
 
 $(() =>
