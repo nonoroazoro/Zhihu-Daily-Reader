@@ -91,7 +91,7 @@ class ArticleBody extends React.Component
         const length = this.props.contents.length;
         for (let i = 0; i < length; i++)
         {
-            // innerRows 包含：标题、答案、外链。
+            // innerRows 包含：标题、答案。
             const innerRows = [];
             item = this.props.contents[i];
 
@@ -124,16 +124,6 @@ class ArticleBody extends React.Component
                 );
             });
             innerRows.push(...answers);
-
-            // 3、外链。
-            if (item.link)
-            {
-                innerRows.push(
-                    <div className="view-more" key={"view-more"+i}>
-                        <a href={item.link.href} target="_blank"><b>{item.link.text}</b></a>
-                    </div>
-                );
-            }
 
             questions.push(
                 <div className="question" key={"question"+i}>
