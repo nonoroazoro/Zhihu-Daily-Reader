@@ -10,7 +10,7 @@ import Utils        from "./controllers/Utils";
 import DailyManager from "./controllers/DailyManager";
 
 //import Carousel from "./components/Carousel";
-var FlexView = require("./components/FlexView");
+import FlexView    from "./components/FlexView";
 import ArticleView from "./components/ArticleView";
 
 /**
