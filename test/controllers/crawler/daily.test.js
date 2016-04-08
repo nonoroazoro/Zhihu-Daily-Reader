@@ -1,10 +1,8 @@
-﻿var _ = require("lodash");
-var should = require("should");
+﻿import should from "should";
 
-var utils = require("../../../controllers/utils");
-var daily = require("../../../controllers/crawler/daily");
-var resource = require("../../../controllers/resource");
-var dbhelper = require("../../../controllers/dbhelper");
+import daily from "../../../controllers/crawler/daily";
+import resource from "../../../controllers/resource";
+import dbhelper from "../../../controllers/dbhelper";
 
 describe("controllers/crawler/daily", function ()
 {
@@ -27,8 +25,8 @@ describe("controllers/crawler/daily", function ()
     describe("1.cacheStory", function ()
     {
         this.timeout(5000);
-        var id = 401;
-        var date = "20130520";
+        const id = 401;
+        const date = "20130520";
         it("should cache the story of ID: " + id, function (done)
         {
             daily.cacheStory(id, date, function (err, doc)
@@ -67,7 +65,7 @@ describe("controllers/crawler/daily", function ()
             });
         });
         
-        ids = [418, 417, 414, 413, 410, 409, 408, 407, 404];
+        const ids = [418, 417, 414, 413, 410, 409, 408, 407, 404];
         it("should cache the stories of date: 20130520" + " and IDs:\n\t" + ids, function (done)
         {
             daily.cacheStories("20130520", ids, function (err, res)
@@ -81,7 +79,7 @@ describe("controllers/crawler/daily", function ()
     describe("4.cacheImages", function ()
     {
         this.timeout(10000);
-        var url = "http://pic1.zhimg.com/70/69ceec9a0536ce5813977c8b4c8d1860_b.jpg";
+        const url = "http://pic1.zhimg.com/70/69ceec9a0536ce5813977c8b4c8d1860_b.jpg";
         it("should cache the image:\n\t" + url, function (done)
         {
             daily.cacheImages(url, function (err, res)
@@ -96,7 +94,7 @@ describe("controllers/crawler/daily", function ()
             });
         });
         
-        var urls = [
+        const urls = [
             "http://pic3.zhimg.com/997f4ed30d3c663acde396b2d3dd528e.jpg",
             "http://pic3.zhimg.com/b18702a3f6951e5b1382a753eb0b7a6e_is.jpg",
             "http://pic4.zhimg.com/70/f1454ada08504cf5c9d0cbdc333f5c4f_b.jpg",

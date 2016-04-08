@@ -1,27 +1,31 @@
-﻿var async = require("async");
-var config = require("config");
+﻿"use strict";
 
-var daily = require("./daily");
-var story = require("../story");
-var utils = require("../utils");
+const async = require("async");
+const config = require("config");
 
-var stop = false;
+const daily = require("./daily");
+const story = require("../story");
+const utils = require("../utils");
+
+let stop = false;
 
 /**
  * 开始爬虫。
  */
-exports.start = function ()
+module.exports.start = function ()
 {
     stop = false;
     async.waterfall([
         _cacheLatestTask,
         _cleanCacheTask,
-    ], function (err, res)
+    ],
+    (err, res) =>
     {
         if (res)
         {
             console.log(res);
         }
+
         if (!err)
         {
             _cachePrev(res.date, res.max_age);
@@ -32,7 +36,7 @@ exports.start = function ()
 /**
  * 停止爬虫。
  */
-exports.stop = function ()
+module.exports.stop = function ()
 {
     stop = true;
 };
@@ -42,7 +46,7 @@ exports.stop = function ()
  */
 function _cacheLatestTask(p_callback)
 {
-    daily.cacheLatestStories(function (err, res)
+    daily.cacheLatestStories((err, res) =>
     {
         if (!err)
         {
@@ -57,7 +61,7 @@ function _cacheLatestTask(p_callback)
  */
 function _cleanCacheTask(p_res, p_callback)
 {
-    story.removeOldStories(p_res.max_age, function ()
+    story.removeOldStories(p_res.max_age, () =>
     {
         p_callback(null, p_res);
     });
@@ -70,15 +74,15 @@ function _cleanCacheTask(p_res, p_callback)
  */
 function _cachePrev(p_date, p_maxDate)
 {
-    var prevDate = utils.prevZhihuDay(p_date);
+    let prevDate = utils.prevZhihuDay(p_date);
     if (prevDate >= p_maxDate)
     {
-        daily.cacheStories(prevDate, function (err, res)
+        daily.cacheStories(prevDate, (err, res) =>
         {
             console.log(res);
             if (!stop)
             {
-                setTimeout(function ()
+                setTimeout(() =>
                 {
                     _cachePrev(prevDate, p_maxDate);
                 }, config.crawler.day_interval * 1000);

@@ -1,31 +1,41 @@
-﻿var fs = require("fs");
-var _ = require("lodash");
-var path = require("path");
-var async = require("async");
-var config = require("config");
-var cp = require("child_process");
-var mongoose = require("mongoose");
+﻿"use strict";
+
+const fs = require("fs");
+const _ = require("lodash");
+const path = require("path");
+const async = require("async");
+const config = require("config");
+const cp = require("child_process");
+const mongoose = require("mongoose");
 
 /**
- * 启动数据库（Server）。
+ * 启动数据库 Server。
  * @param {Function(err)} [p_callback]
  */
-exports.start = function (p_callback)
+module.exports.start = function (p_callback)
 {
-    var dbpath = path.resolve(__dirname, "../db");
+    const dbpath = path.resolve(__dirname, "../db");
     if (!fs.existsSync(dbpath))
     {
         fs.mkdirSync(dbpath);
     }
-    
+
     if (fs.existsSync(dbpath))
     {
-        cp.execFile("mongod", ["--dbpath", dbpath]);
-        setTimeout(p_callback, 1000);
+        let timer;
+        cp.execFile("mongod", ["--dbpath", dbpath], (error) =>
+        {
+            if (timer)
+            {
+                clearTimeout(timer);
+            }
+            p_callback(new Error("Can not find mongodb in your system."));
+        });
+        timer = setTimeout(p_callback, 1000);
     }
     else
     {
-        p_callback(new Error("Can not find/create database dir: " + dbpath));
+        p_callback(new Error("Can not find/create database dir: '" + dbpath + "'."));
     }
 };
 
@@ -33,7 +43,7 @@ exports.start = function (p_callback)
  * 连接数据库。
  * @param {Function(err)} [p_callback]
  */
-exports.connect = function (p_callback)
+module.exports.connect = function (p_callback)
 {
     mongoose.connect(
         config.db,
@@ -43,7 +53,7 @@ exports.connect = function (p_callback)
                 poolSize: config.poolSize
             },
         },
-        function (err)
+        (err) =>
         {
             _connected = !err;
             _monitor();
@@ -55,11 +65,11 @@ exports.connect = function (p_callback)
     );
 };
 
-var _connected = false;
+let _connected = false;
 /**
  * 检查数据库是否已连接。
  */
- exports.connected = function ()
+module.exports.connected = function ()
 {
     return _connected;
 };
@@ -68,45 +78,45 @@ var _connected = false;
  * 删除所有集合。
  * @param {Function(err)} [p_callback]
  */
- exports.dropAllCollections = function (p_callback)
+module.exports.dropAllCollections = function (p_callback)
 {
-    async.each(mongoose.connection.collections, function (collection, done)
+    async.each(mongoose.connection.collections, (collection, done) =>
     {
         collection.drop(done);
     },
-    function (err)
-    {
-        if (_.isFunction(p_callback))
+        (err) =>
         {
-            if (!err || err.message == "ns not found")
+            if (_.isFunction(p_callback))
             {
-                p_callback()
+                if (!err || err.message == "ns not found")
+                {
+                    p_callback();
+                }
+                else
+                {
+                    p_callback(err);
+                }
             }
-            else
-            {
-                p_callback(err);
-            }
-        }
-    });
+        });
 };
 
 /**
  * 监控数据库状态。
  */
-var _monitor = function ()
+function _monitor()
 {
-    var db = mongoose.connection.db;
-    db.on("reconnect", function ()
+    const db = mongoose.connection.db;
+    db.on("reconnect", () =>
     {
         _connected = true;
     });
-    
-    db.on("close", function ()
+
+    db.on("close", () =>
     {
         _connected = false;
     });
-    
-    db.on("error", function ()
+
+    db.on("error", () =>
     {
         _connected = false;
     });

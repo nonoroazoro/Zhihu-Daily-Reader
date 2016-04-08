@@ -1,9 +1,8 @@
-﻿var _ = require("lodash");
-var should = require("should");
+﻿import should from "should";
 
-var Status = require("../../models/status");
-var StatusController = require("../../controllers/status");
-var dbhelper = require("../../controllers/dbhelper");
+import Status from "../../models/status";
+import StatusController from "../../controllers/status";
+import dbhelper from "../../controllers/dbhelper";
 
 describe("controllers/status", function ()
 {
@@ -37,7 +36,7 @@ describe("controllers/status", function ()
     
     describe("2.findStatusByUsername", function ()
     {
-        var username = "Zoro";
+        const username = "Zoro";
         it("should find the status of user: '" + username + "'", function (done)
         {
             StatusController.findStatusByUsername(username, function (err, doc)
@@ -49,7 +48,7 @@ describe("controllers/status", function ()
             });
         });
         
-        var wrongUsername = " ";
+        const wrongUsername = " ";
         it("should not find the status of user: '" + wrongUsername + "'", function (done)
         {
             StatusController.findStatusByUsername(wrongUsername, function (err, doc)
@@ -64,7 +63,7 @@ describe("controllers/status", function ()
     {
         it("should save the status of: Zoro, , 20150910", function (done)
         {
-            var status = {
+            const status = {
                 username: "Zoro",
                 endDate: "20150910"
             };

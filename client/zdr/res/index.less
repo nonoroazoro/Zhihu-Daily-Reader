@@ -1,0 +1,21 @@
+﻿@import "../common/res/global.less";
+
+body
+{
+    padding-top: 51px;
+
+    #MainContainer
+    {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    &.modal-open
+    {
+        /* 修正 bootstrap modal dialog 导致的错位。 */
+        .Navbar
+        {
+            padding-right: 15px;
+        }
+    }
+}

@@ -1,0 +1,190 @@
+﻿import "./res/Carousel.less";
+
+import $               from "jquery";
+import _               from "lodash";
+import React           from "react";
+import classNames      from "classnames";
+import PureRenderMixin from "react-addons-pure-render-mixin";
+
+/**
+ * 幻灯片指示器。
+ */
+class CarouselIndicator extends React.Component
+{
+    static defaultProps =
+    {
+        length: 0,
+        target: null
+    };
+
+    render()
+    {
+        const indicators = [];
+        const length = this.props.length;
+        if (length > 0)
+        {
+            indicators.push(<li className="active" key="indicator0" data-target={this.props.target} data-slide-to={0} />);
+            for (let i = 1; i < length; i++)
+            {
+                indicators.push(<li key={"indicator" + i} data-target={this.props.target} data-slide-to={i} />);
+            }
+        }
+
+        // 少于1页时隐藏指示器。
+        const classes = classNames(
+            "CarouselIndicator",
+            "carousel-indicators",
+            {
+                "hide": (length <= 1)
+            }
+        );
+
+        return (
+            <ol className={classes}>
+                {indicators}
+            </ol>
+        );
+    }
+}
+
+/**
+ * 幻灯片内容。
+ */
+class CarouselInner extends React.Component
+{
+    static defaultProps =
+    {
+        indexes: [],
+        onClick: null
+    };
+
+    handleClick(p_storyID, e)
+    {
+        if (_.isFunction(this.props.onClick))
+        {
+            this.props.onClick(
+            {
+                id: p_storyID
+            });
+        }
+    }
+
+    render()
+    {
+        const rows = _.map(this.props.indexes, (value, index) =>
+        {
+            return (
+                <div className={index == 0 ? "item active" : "item"} key={"slide" + index}>
+                    <div
+                        className="carousel-picture"
+                        onClick={this.handleClick.bind(this, value.id)}
+                        style={{backgroundImage: "url(" + value.image + ")"}} />
+                    <div className="carousel-caption">
+                        <h3>{value.title}</h3>
+                    </div>
+                </div>
+            );
+        });
+
+        return (
+            <div className="CarouselInner carousel-inner" role="listbox">
+                {rows}
+            </div>
+        );
+    }
+}
+
+/**
+ * 两侧控制器。
+ */
+class CarouselControls extends React.Component
+{
+    static defaultProps =
+    {
+        length: 0,
+        target: null
+    };
+
+    render()
+    {
+        // 少于1页时隐藏控制器。
+        const classes = classNames(
+            "CarouselControl",
+            {
+                "hide": (this.props.length <= 1)
+            }
+        );
+
+        return (
+            <div className={classes}>
+                <a
+                    className="left carousel-control"
+                    href={this.props.target}
+                    role="button"
+                    data-slide="prev">
+                    <span className="glyphicon glyphicon-chevron-left" />
+                    <span className="sr-only">上一页</span>
+                </a>
+                <a
+                    className="right carousel-control"
+                    href={this.props.target}
+                    role="button"
+                    data-slide="next">
+                    <span className="glyphicon glyphicon-chevron-right" />
+                    <span className="sr-only">下一页</span>
+                </a>
+            </div>
+        );
+    }
+}
+
+/**
+ * 知乎日报：热门消息栏。
+ */
+export default class Carousel extends React.Component
+{
+    constructor(p_props)
+    {
+        super(p_props);
+        this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
+    }
+
+    static defaultProps =
+    {
+        id: "Carousel",
+        indexes: [],
+        onClick: null
+    };
+
+    render()
+    {
+        const indexes = this.props.indexes || [];
+        const length = indexes.length;
+        const target = "#" + this.props.id;
+
+        // 无内容时隐藏。
+        const carouselClassNames = classNames(
+            "Carousel",
+            "carousel",
+            "slide",
+            {
+                "hide": (length == 0)
+            }
+        );
+
+        // 1页以下时隐藏控制器。
+        const controlsClassNames = classNames(
+            {
+                "hide": (length <= 1)
+            }
+        );
+
+        return (
+            <div id={this.props.id} className={carouselClassNames} data-ride="carousel">
+                <CarouselIndicator target={target} length={length} />
+                <CarouselInner onClick={this.props.onClick} indexes={indexes} />
+                <CarouselControls className={controlsClassNames} target={target} length={length} />
+            </div>
+        );
+    }
+}

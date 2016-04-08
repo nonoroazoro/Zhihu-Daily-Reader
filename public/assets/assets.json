@@ -1,0 +1,13 @@
+{
+  "vendor": {
+    "js": "\\assets\\1ce31e38\\vendor.js"
+  },
+  "zdr": {
+    "js": "\\assets\\1ce31e38\\zdr.js",
+    "css": "\\assets\\1ce31e38\\res/zdr.css"
+  },
+  "error": {
+    "js": "\\assets\\1ce31e38\\error.js",
+    "css": "\\assets\\1ce31e38\\res/error.css"
+  }
+}

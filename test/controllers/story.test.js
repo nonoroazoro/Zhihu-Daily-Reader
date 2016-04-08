@@ -1,9 +1,8 @@
-﻿var _ = require("lodash");
-var should = require("should");
+﻿import should from "should";
 
-var Story = require("../../models/story");
-var StoryController = require("../../controllers/story");
-var dbhelper = require("../../controllers/dbhelper");
+import Story from "../../models/story";
+import StoryController from "../../controllers/story";
+import dbhelper from "../../controllers/dbhelper";
 
 describe("controllers/story", function ()
 {
@@ -27,8 +26,8 @@ describe("controllers/story", function ()
     {
         it("should create new stories: id[0~9], date[20140909, 20150910]", function (done)
         {
-            var stories = [];
-            for (var i = 0; i < 5; i++)
+            let stories = [];
+            for (let i = 0; i < 5; i++)
             {
                 stories.push({
                     id : i,
@@ -39,7 +38,7 @@ describe("controllers/story", function ()
                 });
             }
             
-            for (var i = 5; i < 10; i++)
+            for (let i = 5; i < 10; i++)
             {
                 stories.push({
                     id : i,
@@ -60,7 +59,7 @@ describe("controllers/story", function ()
     
     describe("2.findStoryByID", function ()
     {
-        var id = 3;
+        const id = 3;
         it("should find the story of ID: " + id, function (done)
         {
             StoryController.findStoryByID(id, function (err, doc)
@@ -75,7 +74,7 @@ describe("controllers/story", function ()
     
     describe("3.findStoriesByDate", function ()
     {
-        var date = "20150910";
+        const date = "20150910";
         it("should find the stories of date: " + date, function (done)
         {
             StoryController.findStoriesByDate(date, function (err, docs)
@@ -83,7 +82,7 @@ describe("controllers/story", function ()
                 should.not.exist(err);
                 should.exist(docs);
                 docs.length.should.equal(5);
-                _.each(docs, function (value, index)
+                docs.forEach(function (value, index)
                 {
                     value.date.should.equal(date);
                 });
@@ -94,7 +93,7 @@ describe("controllers/story", function ()
     
     describe("4.findUnreadStories", function ()
     {
-        var date = "20150910";
+        const date = "20150910";
         it("should find the unread stories of date: " + date, function (done)
         {
             StoryController.findUnreadStories(date, function (err, docs)
@@ -102,7 +101,7 @@ describe("controllers/story", function ()
                 should.not.exist(err);
                 should.exist(docs);
                 docs.length.should.equal(2);
-                _.each(docs, function (value, index)
+                docs.forEach(function (value, index)
                 {
                     value.date.should.equal(date);
                     value.read.should.be.false();
@@ -118,7 +117,7 @@ describe("controllers/story", function ()
                 should.not.exist(err);
                 should.exist(docs);
                 docs.length.should.equal(4);
-                _.each(docs, function (value, index)
+                docs.forEach(function (value, index)
                 {
                     value.read.should.be.false();
                 });
@@ -145,7 +144,7 @@ describe("controllers/story", function ()
     {
         it("should save story", function (done)
         {
-            var zhihuStory = {
+            const zhihuStory = {
                 id : 401,
                 date: "20150911",
                 title: "学英语才是正经事儿",
@@ -179,7 +178,7 @@ describe("controllers/story", function ()
     
     describe("7.removeOldStories", function ()
     {
-        var date = "20150910";
+        const date = "20150910";
         it("should remove stories older than: " + date, function (done)
         {
             StoryController.removeOldStories(date, function (err, res)

@@ -1,22 +1,23 @@
 ﻿extends ./templates/layout
 
-block res
-    link(href="/assets/zdr/build/error_404.bundle.css", rel="stylesheet")
+append res
+    script(src=map.vendor.js)
+    link(href=map.error.css, rel="stylesheet")
 
-block body
+append body
     .container
         .error
             h1.header
                 a(href="/")
-                    img(src="/assets/zdr/common/res/img/zhihu_daily_logo_blue.png", alt="知乎日报")
+                    img#logo(alt="知乎日报")
             .content.text-center
                 p: strong 你似乎来到了没有知识存在的荒原...
                 p 请确认来源链接是否正确？日报是否存在？
                 hr
                 p
                     a(href="/") 返回首页
-                    span  或者 
+                    span  或者
                     a#history-back(href="javascript:;") 返回上页
 
-block scripts
-    script(src="/assets/zdr/build/error_404.bundle.js")
+append scripts
+    script(src=map.error.js)

@@ -1,6 +1,6 @@
 # 知乎日报 - 阅读器
 
-知乎日报官方不提供 Web 版，你妹的，那就做一个吧。
+知乎日报官方不提供 Web 版（网页版），你妹的，那就做一个吧。
 > 离线：自动离线知乎日报（可配置），无法访问 Internet 时也能用啦。
 
 > 快捷键：类似 Google Reader，`j/k/v/o/enter` 当然还有方向键，你懂的。
@@ -27,10 +27,13 @@
 
 **2.install dependencies:**
 
-    # 1. install npm packages
+    # 1. install node.js
+	# https://nodejs.org
+
+    # 2. install npm packages
 	$ cd Zhihu-Daily-Reader && npm install --production
 
-    # 2. install mongodb (可选。不装也没事，会自动关闭数据库相关功能)
+    # 3. install mongodb (可选。不装也没事，会自动关闭数据库相关功能)
     # https://www.mongodb.org/downloads
     # （可选）修改 ./config/default.json 爬虫（Crawler）配置。
 
@@ -52,12 +55,24 @@
 
 ## 更新历史
 
+###<a href="#v1.1.3" id="v1.1.3">1.1.3</a>
+
+2016年4月9日
+
+- 修复正文内容外链出现重复的 bug。
+- 修改正文内容外链，默认在新窗口打开。
+- 前端全部迁到 ES6 + ES7 Stage-0。
+- 更新 webpack 配置。
+- 嵌入的外链视频目前还不能正常播放，待解决。
+
+
 ###<a href="#v1.1.2" id="v1.1.2">1.1.2</a>
 
 2015年12月22日
 
 - 修正启动脚本（Windows/Mac/Linux）。
 - 修改默认端口为 8888。
+
 
 ###<a href="#v1.1.1" id="v1.1.1">1.1.1</a>
 
@@ -66,6 +81,7 @@
 - 增加离线功能，无法访问 Internet 时也能用啦（需安装[Mongodb](https://www.mongodb.org/downloads)）。
 - 离线功能可选，无需进行特殊设置（全自动）。
 - 其他细节优化，不想列出来了。
+
 
 ###<a href="#v1.0" id="v1.0">1.0</a>
 

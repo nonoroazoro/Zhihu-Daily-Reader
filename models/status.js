@@ -1,10 +1,10 @@
-﻿var mongoose = require("mongoose");
-var Schema = mongoose.Schema;
+﻿const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
 /**
  * 存储知乎日报阅读器状态（单用户）。
  */
-var StatusSchema = new Schema({
+const StatusSchema = new Schema({
     /**
      * 用户名（唯一）。
      * @type {String}

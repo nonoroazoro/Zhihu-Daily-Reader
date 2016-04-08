@@ -1,24 +1,24 @@
-﻿var express = require("express");
-var router = express.Router();
+﻿const express = require("express");
+const router = express.Router();
 
-// 下级 API 优先路由。
-var apis = [
+// 下级 API 优先进入路由。
+const apis = [
     "/api/4",
 ];
 
-apis.forEach(function (p_api)
+apis.forEach((api) =>
 {
-    router.use(p_api, require("." + p_api));
+    router.use(api, require("." + api));
 });
 
 // home page.
-router.get("/", function (req, res, next)
+router.get("/", (req, res, next) =>
 {
-    res.render("index");
+    res.render("index", { map: req.app.locals.map });
 });
 
 // api error handler.
-router.use(function (err, req, res, next)
+router.use((err, req, res, next) =>
 {
     res.status(404).send({
         status: 404,

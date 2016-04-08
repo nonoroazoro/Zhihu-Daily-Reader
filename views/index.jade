@@ -1,10 +1,11 @@
 ﻿extends ./templates/layout
 
-block res
-    script(src="/assets/libs/react/react-with-addons.min.js")
-    script(src="/assets/libs/bootstrap/js/bootstrap.min.js")
-    script(src="/assets/libs/lodash/lodash.min.js")
-    script(src="/assets/libs/moment/moment.min.js")
-    script(src="/assets/libs/mousetrap/mousetrap.min.js")
-    script(src="/assets/zdr/build/index.bundle.js")
-    link(href="/assets/zdr/build/index.bundle.css", rel="stylesheet")
+append res
+    script(src=map.vendor.js)
+    link(href=map.zdr.css, rel="stylesheet")
+
+append body
+    #MainContainer.container-fluid
+
+append scripts
+    script(src=map.zdr.js)

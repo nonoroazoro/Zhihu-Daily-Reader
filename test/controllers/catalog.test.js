@@ -1,10 +1,8 @@
-﻿var _ = require("lodash");
-var should = require("should");
+﻿import should from "should";
 
-var daily = require("../../controllers/daily");
-var dbhelper = require("../../controllers/dbhelper");
-var Catalog = require("../../models/catalog");
-var CatalogController = require("../../controllers/catalog");
+import daily from "../../controllers/daily";
+import dbhelper from "../../controllers/dbhelper";
+import CatalogController from "../../controllers/catalog";
 
 describe("controllers/catalog", function ()
 {
@@ -24,8 +22,8 @@ describe("controllers/catalog", function ()
         }
     });
     
-    var date = "20151214";
-    var ids = [];
+    let ids = [];
+    const date = "20151214";
     describe("1.saveCatalog", function ()
     {
         it("should save the catalog of date: " + date, function (done)

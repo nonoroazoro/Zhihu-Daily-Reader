@@ -1,10 +1,10 @@
-﻿var mongoose = require("mongoose");
-var Schema = mongoose.Schema;
+﻿const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
 /**
  * 存储知乎日报内容。
  */
-var StorySchema = new Schema({
+const StorySchema = new Schema({
     /**
      * ID。
      * @type {Number}

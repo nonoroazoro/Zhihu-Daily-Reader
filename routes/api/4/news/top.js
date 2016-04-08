@@ -1,10 +1,10 @@
-﻿var express = require("express");
-var router = express.Router();
+﻿const express = require("express");
+const router = express.Router();
 
-var daily = require(__base + "/controllers/proxy/daily");
+const daily = require("../../../../controllers/proxy/daily");
 
 // get top stroies.
-router.get("/", function (req, res, next)
+router.get("/", (req, res, next) =>
 {
     daily.getTopStoryIDs(res, next);
 });

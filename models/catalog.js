@@ -1,10 +1,10 @@
-﻿var mongoose = require("mongoose");
-var Schema = mongoose.Schema;
+﻿const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
 /**
  * 存储知乎日报列表（以天为单位）。
  */
-var CatalogSchema = new Schema({
+const CatalogSchema = new Schema({
     /**
      * 日期（知乎格式，例如："20130519"）。
      * @type {String}

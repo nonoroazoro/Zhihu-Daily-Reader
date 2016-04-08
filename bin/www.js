@@ -1,4 +1,7 @@
-﻿var config = require("config");
-require("../app").listen(config.port);
+﻿const app = require("../app");
+const config = require("config");
 
-console.log("Application Server started on port: " + config.port);
+app.set("port", config.port);
+app.listen(config.port);
+
+console.log("\nApplication Server started on port: " + config.port + "\n");

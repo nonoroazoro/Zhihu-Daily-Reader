@@ -1,12 +1,12 @@
-﻿var _ = require("lodash");
-var Story = require("../models/story");
+﻿const _ = require("lodash");
+const Story = require("../models/story");
 
 /**
  * 从数据库中查找指定 ID 的日报。
  * @param {String} p_id ID。
  * @param {Function(err, doc)} [p_callback]
  */
-exports.findStoryByID = function (p_id, p_callback)
+module.exports.findStoryByID = function (p_id, p_callback)
 {
     if (_.isFunction(p_callback))
     {
@@ -19,7 +19,7 @@ exports.findStoryByID = function (p_id, p_callback)
  * @param {String} p_date 日期。
  * @param {Function(err, docs)} [p_callback]
  */
-exports.findStoriesByDate = function (p_date, p_callback)
+module.exports.findStoriesByDate = function (p_date, p_callback)
 {
     if (_.isFunction(p_callback))
     {
@@ -32,7 +32,7 @@ exports.findStoriesByDate = function (p_date, p_callback)
  * @param {String} p_date 日期。
  * @param {Function(err, docs)} [p_callback]
  */
-exports.findUnreadStories = function (p_date, p_callback)
+module.exports.findUnreadStories = function (p_date, p_callback)
 {
     if (_.isFunction(p_date))
     {
@@ -50,7 +50,7 @@ exports.findUnreadStories = function (p_date, p_callback)
  * 从数据库中查找所有未离线的日报 ID。
  * @param {Function(err, docs)} [p_callback]
  */
-exports.findUncachedIDs = function (p_callback)
+module.exports.findUncachedIDs = function (p_callback)
 {
     if (_.isFunction(p_callback))
     {
@@ -65,7 +65,7 @@ exports.findUncachedIDs = function (p_callback)
  * @param {Object} [p_options]
  * @param {Function(err, docs)} [p_callback]
  */
-exports.query = function (p_conditions, p_projection, p_options, p_callback)
+module.exports.query = function (p_conditions, p_projection, p_options, p_callback)
 {
     Story.find(p_conditions, p_projection, p_options, p_callback);
 };
@@ -75,33 +75,33 @@ exports.query = function (p_conditions, p_projection, p_options, p_callback)
  * @param {Object} p_story 指定的日报（特指从服务端获取到的 JSON Object）。
  * @param {Function(err, doc)} [p_callback]
  */
-exports.saveStory = function (p_story, p_callback)
+module.exports.saveStory = function (p_story, p_callback)
 {
     if (_.isFunction(p_story))
     {
-        p_story(new Error("p_story must not be a Function."))
+        p_story(new Error("p_story must not be a Function."));
     }
     else if (_.isEmpty(p_story) || !_.isObject(p_story))
     {
         if (_.isFunction(p_callback))
         {
-            p_callback(new Error("p_story must be a non-empty Object."))
+            p_callback(new Error("p_story must be a non-empty Object."));
         }
     }
     else
     {
-        var conditions = {
+        const conditions = {
             id: p_story.id
         };
         
-        var update = {
+        const update = {
             id: p_story.id,
             date: p_story.date,
             content: p_story,
             cached: true
         };
         
-        var options = {
+        const options = {
             new: true,
             upsert: true
         };
@@ -116,7 +116,7 @@ exports.saveStory = function (p_story, p_callback)
  * @param {String} p_date 日期。
  * @param {Function(err, doc)} [p_callback]
  */
-exports.logUncachedStory = function (p_id, p_date, p_callback)
+module.exports.logUncachedStory = function (p_id, p_date, p_callback)
 {
     Story.findOneAndUpdate({
         id: p_id
@@ -135,15 +135,15 @@ exports.logUncachedStory = function (p_id, p_date, p_callback)
  * @param {String} p_date 日期。
  * @param {Function(err, res)} [p_callback]
  */
-exports.removeOldStories = function (p_date, p_callback)
+module.exports.removeOldStories = function (p_date, p_callback)
 {
     if (_.isFunction(p_date))
     {
-        p_date(new Error("p_date must not be a Function."))
+        p_date(new Error("p_date must not be a Function."));
     }
     else
     {
-        Story.remove({ date: { $lt: p_date } }, function (err, res)
+        Story.remove({ date: { $lt: p_date } }, (err, res) =>
         {
             if (_.isFunction(p_callback))
             {
@@ -159,7 +159,7 @@ exports.removeOldStories = function (p_date, p_callback)
                         count: res.result.n
                     });
                 }
-            };
+            }
         });
     }
 };

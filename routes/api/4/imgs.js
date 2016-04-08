@@ -1,11 +1,11 @@
-﻿var querystring = require("querystring");
-var express = require("express");
-var router = express.Router();
+﻿const express = require("express");
+const router = express.Router();
+const querystring = require("querystring");
 
-var daily = require(__base + "/controllers/proxy/daily");
+const daily = require("../../../controllers/proxy/daily");
 
 // get zhihu-daily image.
-router.get("/:url", function (req, res, next)
+router.get("/:url", (req, res, next) =>
 {
     daily.getImage(querystring.unescape(req.params.url), res, next);
 });
