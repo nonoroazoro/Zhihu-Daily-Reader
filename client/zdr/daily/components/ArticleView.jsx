@@ -54,13 +54,13 @@ class ArticleHeader extends React.Component
     
         if (hasBackgrounds)
         {
-            const backgroundRows = _.map(this.props.story.backgrounds, (value, i) =>
+            const backgroundRows = _.map(this.props.story.backgrounds, (value, index) =>
             {
                 return (
                     <a className="article-backgrounds-content"
                         href={value.href}
                         target="_blank"
-                        key={"background" + i}>
+                        key={"background" + index}>
                         <h4>{value.title + "：" + value.text}</h4>
                     </a>
                 );
@@ -102,7 +102,7 @@ class ArticleBody extends React.Component
             }
 
             // 2、答案。
-            const answers = _.map(item.answers, (value, j) =>
+            const answers = _.map(item.answers, (value, index) =>
             {
                 // 没有作者图片时隐藏。
                 const classesAvatar = classNames(
@@ -113,7 +113,7 @@ class ArticleBody extends React.Component
                 );
 
                 return (
-                    <div className="question-answer" key={"question-answer-"+i+"-"+j}>
+                    <div className="question-answer" key={"question-answer-" + i + "-" + index}>
                         <div className="question-answer-meta">
                             <img className={classesAvatar} src={value.avatar} />
                             <span className="author">{value.name}</span>
@@ -144,7 +144,7 @@ class ArticleBody extends React.Component
             // 分隔符。
             if (i < length -1)
             {
-                questions.push(<hr className="question-separator" key={"question-separator"+i}/>);
+                questions.push(<hr className="question-separator" key={"question-separator"+i} />);
             }
         }
 
@@ -166,20 +166,20 @@ export default class ArticleView extends React.Component
 
     render()
     {
-        let rows = [];
+        let header = null;
+        let body = null;
         if (this.props.story)
         {
-            rows = [
-                <ArticleHeader key="header" story={this.props.story} />,
-                <ArticleBody key="body" contents={this.props.story.contents} />,
-            ];
+            header = <ArticleHeader story={this.props.story} />;
+            body = <ArticleBody contents={this.props.story.contents} />;
         }
 
         return (
             <div id={this.props.id} className="ArticleView modal fade">
                 <div className="modal-dialog modal-lg">
                     <div className="modal-content">
-                        {rows}
+                        {header}
+                        {body}
                     </div>
                 </div>
             </div>
