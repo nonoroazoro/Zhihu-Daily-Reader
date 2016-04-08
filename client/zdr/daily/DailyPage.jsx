@@ -5,8 +5,9 @@ var Mousetrap = require("mousetrap");
 var React = require("react");
 var ReactUpdate = require("react-addons-update");
 var PureRenderMixin = require("react-addons-pure-render-mixin");
-var DailyManager = require("./controllers/daily");
-import Utils from "./controllers/Utils";
+
+import Utils        from "./controllers/Utils";
+import DailyManager from "./controllers/DailyManager";
 
 //import Carousel from "./components/Carousel";
 var FlexView = require("./components/FlexView");
