@@ -1,46 +1,61 @@
-﻿require("./res/FlexView.less");
+﻿import "./res/FlexView.less";
 
-var _ = require("lodash");
-var classNames = require("classnames");
-var React = require("react");
-var PureRenderMixin = require("react-addons-pure-render-mixin");
+import _               from "lodash";
+import React           from "react";
+import classNames      from "classnames";
+import PureRenderMixin from "react-addons-pure-render-mixin";
 
-import DailyManager from "../controllers/DailyManager";
+import Preloader       from "./Preloader";
+import DailyManager    from "../controllers/DailyManager";
 
-import Preloader from "./Preloader";
-
-var FlexTile = React.createClass(
+class FlexTile extends React.Component
 {
-    mixins: [PureRenderMixin],
-
-    getInitialState: function ()
+    constructor(p_props)
     {
-        return {
-            story: null
-        };
-    },
+        super(p_props);
+        this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
+    }
 
-    componentDidMount: function ()
+    static defaultProps =
+    {
+        id: null,
+        onClick: null
+    };
+
+    state = { story: null };
+
+    _request = null;
+
+    componentDidMount()
     {
         if (this.props.id)
         {
-            DailyManager.getStory(
+            this._request = DailyManager.getStory(
                 this.props.id,
-                function (err, res)
+                (err, res) =>
                 {
-                    if (this.isMounted() && !err && res)
+                    if (!err && res)
                     {
                         this.setState(
                         {
                             story: res
                         });
                     }
-                }.bind(this)
+                }
             );
         }
-    },
+    }
 
-    handleClick: function (e)
+    componentWillUnmount()
+    {
+        if (this._request)
+        {
+            this._request.abort();
+            this._request = null;
+        }
+    }
+
+    handleClick(e)
     {
         if (_.isFunction(this.props.onClick))
         {
@@ -48,21 +63,21 @@ var FlexTile = React.createClass(
                 story: this.state.story
             });
         }
-    },
+    }
 
-    render: function ()
+    render()
     {
         var item = null;
         var story = this.state.story;
         if (story)
         {
-            // 如果没有 img 要作处理，否则不好看。
+            // 如果没有 img 要处理，否则不好看。
             item =
                 <div id={"story"+story.id} className="flex-tile">
                     <div className="flex-tile-content">
-                        <div className="flex-tile-picture" style={{backgroundImage: "url(" + story.image + ")"}} onClick={this.handleClick} />
+                        <div className="flex-tile-picture" style={{backgroundImage: "url(" + story.image + ")"}} onClick={this.handleClick.bind(this)} />
                         <div className="flex-tile-title">
-                            <a className="flex-tile-link" href="javascript:;" onClick={this.handleClick}>
+                            <a className="flex-tile-link" href="javascript:;" onClick={this.handleClick.bind(this)}>
                                 {story.title}
                             </a>
                         </div>
@@ -79,21 +94,31 @@ var FlexTile = React.createClass(
         }
         return item;
     }
-});
+}
 
-var FlexView = React.createClass(
+export default class FlexView extends React.Component
 {
-    mixins: [PureRenderMixin],
-
-    render: function ()
+    constructor(p_props)
     {
-        var that = this;
-        var items = _.map(that.props.indexes, function (value)
+        super(p_props);
+        this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
+    }
+
+    static defaultProps =
+    {
+        indexes: [],
+        loading: false,
+        onTileClick: null
+    };
+
+    render()
+    {
+        const items = _.map(this.props.indexes, (value) =>
         {
-            return (<FlexTile onClick={that.props.onTileClick} key={"tile" + value} id={value} />);
+            return (<FlexTile id={value} onClick={this.props.onTileClick} key={"tile" + value} />);
         });
 
-        var preloaderClasses = classNames(
+        const preloaderClasses = classNames(
             "flex-preloader",
             {
                 "loading": this.props.loading,
@@ -109,6 +134,4 @@ var FlexView = React.createClass(
             </div>
         );
     }
-});
-
-module.exports = FlexView;
+}
