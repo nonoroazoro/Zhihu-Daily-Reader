@@ -25,7 +25,6 @@ class FlexTile extends React.Component
     state = { story: null };
 
     _request = null;
-
     componentDidMount()
     {
         if (this.props.storyID)
@@ -60,7 +59,8 @@ class FlexTile extends React.Component
         if (_.isFunction(this.props.onClick))
         {
             this.props.onClick({
-                story: this.state.story
+                story: this.state.story,
+                target: this.refs.self
             });
         }
     }
@@ -73,7 +73,7 @@ class FlexTile extends React.Component
         {
             // 如果没有 img 要处理，否则不好看。
             item =
-                <div id={"story"+story.id} className="flex-tile">
+                <div id={"story"+story.id} className="flex-tile" ref="self">
                     <div className="flex-tile-content">
                         <div className="flex-tile-picture" style={{backgroundImage: "url(" + story.image + ")"}} onClick={this.handleClick.bind(this)} />
                         <div className="flex-tile-title">
@@ -106,19 +106,25 @@ export default class FlexView extends React.Component
 
     static defaultProps =
     {
-        indexes: [],
+        // 日报 ID 列表。 
+        contents: [],
+
+        // 加载状态。
         loading: false,
+
+        // 点击事件。
         onTileClick: null
     };
 
     render()
     {
-        const items = _.map(this.props.indexes, (value) =>
+        const items = _.map(this.props.contents, (value) =>
         {
             return (<FlexTile
                         key={value}
                         storyID={value}
-                        onClick={this.props.onTileClick} />
+                        onClick={this.props.onTileClick}
+                    />
             );
         });
 
