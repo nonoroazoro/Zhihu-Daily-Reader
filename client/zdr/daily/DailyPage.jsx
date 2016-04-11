@@ -439,15 +439,23 @@ export default class DailyPage extends React.Component
         const $newTile = $("#story" + this.state.storyIndexes[p_newIndex]);
         $newTile.addClass("current");
 
-        // 判断是否需要移动滚动条的位置，以使内容可见。
-        // 71 是 body 的 padding-top 与 FlexTile 的 margin-top 之和（即 51 + 20）。
-        const newTop = $newTile.offset().top - 71;
-        const moveDown = newTop + $newTile.outerHeight(true) - $(document).scrollTop() > $(window).height();
-        const moveUp = newTop < $(document).scrollTop();
-        if (moveDown || moveUp)
+        this.ensureVisible($newTile);
+    }
+
+    ensureVisible($p_tile)
+    {
+        if ($p_tile)
         {
-            // 此处用 animate 的话，存在问题，按住按键不放会出问题。
-            $(document).scrollTop(newTop);
+            // 判断是否需要移动滚动条的位置，以使日报内容可见。
+            // 71 是 body 的 padding-top 与 FlexTile 的 margin-top 之和（即 51 + 20）。
+            const newTop = $p_tile.offset().top - 71;
+            const moveDown = newTop + $p_tile.outerHeight(true) - $(document).scrollTop() > $(window).height();
+            const moveUp = newTop < $(document).scrollTop();
+            if (moveDown || moveUp)
+            {
+                // 此处用 animate 的话，存在问题，按住按键不放会出问题。
+                $(document).scrollTop(newTop);
+            }
         }
     }
 
