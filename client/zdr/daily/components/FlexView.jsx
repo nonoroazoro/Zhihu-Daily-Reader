@@ -67,14 +67,14 @@ class FlexTile extends React.Component
 
     render()
     {
-        var item = null;
-        var story = this.state.story;
+        let item = null;
+        const story = this.state.story;
         if (story)
         {
             // 如果没有 img 要处理，否则不好看。
             item =
                 <div
-                    id={"story"+story.id}
+                    id={"story" + story.id}
                     className="flex-tile"
                     ref="self">
                     <div className="flex-tile-content">
