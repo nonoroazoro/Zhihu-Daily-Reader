@@ -2,7 +2,7 @@
 
 import _               from "lodash";
 import React           from "react";
-import classNames      from "classnames";
+import ClassNames      from "classnames";
 import PureRenderMixin from "react-addons-pure-render-mixin";
 
 import Preloader       from "./Preloader";
@@ -73,11 +73,20 @@ class FlexTile extends React.Component
         {
             // 如果没有 img 要处理，否则不好看。
             item =
-                <div id={"story"+story.id} className="flex-tile" ref="self">
+                <div
+                    id={"story"+story.id}
+                    className="flex-tile"
+                    ref="self">
                     <div className="flex-tile-content">
-                        <div className="flex-tile-picture" style={{backgroundImage: "url(" + story.image + ")"}} onClick={this.handleClick.bind(this)} />
+                        <div
+                            className="flex-tile-picture"
+                            style={{backgroundImage: "url(" + story.image + ")"}}
+                            onClick={this.handleClick.bind(this)} />
                         <div className="flex-tile-title">
-                            <a className="flex-tile-link" href="javascript:;" onClick={this.handleClick.bind(this)}>
+                            <a
+                                className="flex-tile-link"
+                                href="javascript:;"
+                                onClick={this.handleClick.bind(this)}>
                                 {story.title}
                             </a>
                         </div>
@@ -86,7 +95,10 @@ class FlexTile extends React.Component
                     <div className="flex-tile-footer">
                         <div className="flex-tile-footer-right-buttons">
                             <a href={story.shareURL} target="_blank">
-                                <span className="glyphicon glyphicon-new-window" title="在新标签页中打开原文" />
+                                <span
+                                    className="glyphicon glyphicon-new-window"
+                                    title="在新标签页中打开原文"
+                                />
                             </a>
                         </div>
                     </div>
@@ -128,7 +140,7 @@ export default class FlexView extends React.Component
             );
         });
 
-        const classes = classNames(
+        const classes = ClassNames(
             "flex-preloader",
             {
                 "loading": this.props.loading
