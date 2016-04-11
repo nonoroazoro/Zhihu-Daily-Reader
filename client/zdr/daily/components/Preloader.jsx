@@ -1,21 +1,27 @@
 ﻿import "./res/Preloader.less";
 
-import React      from "react";
-import classNames from "classnames";
+import _               from "lodash";
+import React           from "react";
+import ClassNames      from "classnames";
+import PureRenderMixin from "react-addons-pure-render-mixin";
 
 export default class Preloader extends React.Component
 {
-    static defaultProps =
+    constructor(p_props)
     {
-        className: null
-    };
+        super(p_props);
+        this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
+    }
+
+    static defaultProps = { className: null };
 
     render()
     {
-        const classes = classNames(
+        const className = _.trim(this.props.className);
+        const classes = ClassNames(
             "Preloader",
             {
-                [this.props.className]: (this.props.className != null && this.props.className.trim() != "")
+                [className]: !_.isEmpty(className)
             }
         );
 
