@@ -460,7 +460,10 @@ export default class DailyPage extends React.Component
 
         return (
             <div className="DailyPage container-fluid">
-                <FlexView onTileClick={this._tileClickHandler.bind(this)} indexes={this.state.storyIndexes} loading={this.state.loading} />
+                <FlexView
+                    onTileClick={this._tileClickHandler.bind(this)}
+                    contents={this.state.storyIndexes}
+                    loading={this.state.loading} />
                 <ArticleView story={this.state.currentStory} />
             </div>
         );
