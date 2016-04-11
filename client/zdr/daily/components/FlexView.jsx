@@ -18,7 +18,7 @@ class FlexTile extends React.Component
 
     static defaultProps =
     {
-        id: null,
+        storyID: null,
         onClick: null
     };
 
@@ -28,10 +28,10 @@ class FlexTile extends React.Component
 
     componentDidMount()
     {
-        if (this.props.id)
+        if (this.props.storyID)
         {
             this._request = DailyManager.getStory(
-                this.props.id,
+                this.props.storyID,
                 (err, res) =>
                 {
                     if (!err && res)
@@ -115,13 +115,17 @@ export default class FlexView extends React.Component
     {
         const items = _.map(this.props.indexes, (value) =>
         {
-            return (<FlexTile id={value} onClick={this.props.onTileClick} key={"tile" + value} />);
+            return (<FlexTile
+                        key={value}
+                        storyID={value}
+                        onClick={this.props.onTileClick} />
+            );
         });
 
-        const preloaderClasses = classNames(
+        const classes = classNames(
             "flex-preloader",
             {
-                "loading": this.props.loading,
+                "loading": this.props.loading
             }
         );
 
@@ -130,7 +134,7 @@ export default class FlexView extends React.Component
                 <div className="flex-content">
                     {items}
                 </div>
-                <Preloader className={preloaderClasses} />
+                <Preloader className={classes} />
             </div>
         );
     }
