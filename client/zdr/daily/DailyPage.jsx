@@ -458,11 +458,11 @@ export default class DailyPage extends React.Component
         //    <Carousel onClick={this._carouselClickHandler.bind(this)} indexes={this.state.topStoryIndexes} />
         //</div>
 
-        var page =
+        return (
             <div className="DailyPage container-fluid">
-                <FlexView onTileClick={this._tileClickHandler.bind(this)} indexes={this.state.storyIndexes} loading={this.state.loading}/>
+                <FlexView onTileClick={this._tileClickHandler.bind(this)} indexes={this.state.storyIndexes} loading={this.state.loading} />
                 <ArticleView story={this.state.currentStory} />
-            </div>;
-        return page;
+            </div>
+        );
     }
 }
