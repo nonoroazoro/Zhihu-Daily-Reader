@@ -12,6 +12,7 @@ import DailyManager    from "./controllers/DailyManager";
 //import Carousel        from "./components/Carousel";
 import FlexView        from "./components/FlexView";
 import ArticleView     from "./components/ArticleView";
+import ShortcutsView   from "./components/ShortcutsView";
 
 /**
  * 知乎日报页面。
@@ -28,9 +29,11 @@ export default class DailyPage extends React.Component
     _currentIndex = -1;
     _isLoading = false;
     _isArticleViewVisible = false;
+    _openShortcutsViewFlag = false;
 
     _$ArticleView = null;
     _$ArticleViewContent = null;
+    _$ShortcutsView = null;
 
     state =
     {
@@ -45,6 +48,7 @@ export default class DailyPage extends React.Component
         // 1、初始化。
         this._$ArticleView = $("#ArticleView");
         this._$ArticleViewContent = $("#ArticleView .modal-content");
+        this._$ShortcutsView = $("#ShortcutsView");
 
         // 2、加载热门日报（不好看。。。匿了吧-_-）。
         //this._loadTopStories();
@@ -149,6 +153,13 @@ export default class DailyPage extends React.Component
         this._$ArticleView.on("hidden.bs.modal", (e) =>
         {
             this._isArticleViewVisible = false;
+
+            // hack。不等上一个 modal dialog 关闭就打开新的 modal dialog 时会出现 padding-right bug 和抖动。
+            if (this._openShortcutsViewFlag)
+            {
+                this._openShortcutsViewFlag = false;
+                this._openShortcutsView();
+            }
         });
 
         this._$ArticleView.on("shown.bs.modal", (e) =>
@@ -177,6 +188,7 @@ export default class DailyPage extends React.Component
     _addKeyboardShortcuts()
     {
         Mousetrap.bind("esc", this._closeArticleView.bind(this));
+        Mousetrap.bind("esc", this._closeShortcutsView.bind(this));
         
         Mousetrap.bind("j", this._keydownShowNextStory.bind(this));
         Mousetrap.bind("k", this._keydownShowPrevStory.bind(this));
@@ -210,6 +222,21 @@ export default class DailyPage extends React.Component
                 {
                     value.click();
                 });
+            }
+        });
+
+        // 显示键盘快捷键帮助。
+        Mousetrap.bind(["h", "?"], () =>
+        {
+            if (this._isArticleViewVisible)
+            {
+                // hack。
+                this._openShortcutsViewFlag = true;
+                this._closeArticleView();
+            }
+            else
+            {
+                this._openShortcutsView();
             }
         });
     }
@@ -391,6 +418,22 @@ export default class DailyPage extends React.Component
     }
 
     /**
+     * 显示 ShortcutsView。
+     */
+    _openShortcutsView()
+    {
+        this._$ShortcutsView.modal();
+    }
+
+    /**
+     * 隐藏 ShortcutsView。
+     */
+    _closeShortcutsView()
+    {
+        this._$ShortcutsView.modal("hide");
+    }
+
+    /**
     * 当前日报索引增加1。
     */
     _increaseCurrentIndex()
@@ -481,6 +524,7 @@ export default class DailyPage extends React.Component
                     contents={this.state.storyIDs}
                     loading={this.state.loading} />
                 <ArticleView story={this.state.currentStory} />
+                <ShortcutsView />
             </div>
         );
     }
