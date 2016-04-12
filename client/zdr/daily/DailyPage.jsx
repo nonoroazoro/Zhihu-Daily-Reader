@@ -185,7 +185,7 @@ export default class DailyPage extends React.Component
         {
             if (!this._isArticleViewVisible && this._currentIndex >= 0)
             {
-                this._showArticle(DailyManager.getFetchedStories()[this.state.storyIDs[this._currentIndex]]);
+                this._showArticle(DailyManager.getFetchedStories()[this.state.storyIDs[this._currentIndex]], false);
             }
         });
 
@@ -302,16 +302,16 @@ export default class DailyPage extends React.Component
     }
 
     /**
-    * 重设 ArticleView 的垂直滚动条位置。
-    */
+     * 重设 ArticleView 的垂直滚动条位置。
+     */
     _resetArticleViewScroll()
     {
         this._$ArticleViewContent.scrollTop(0);
     }
 
     /**
-    * 向 FlexView 中添加日报。
-    */
+     * 向 FlexView 中添加日报。
+     */
     _addStoryIDs(p_storyIDs)
     {
         this.setState(
@@ -325,22 +325,24 @@ export default class DailyPage extends React.Component
 
     _carouselClickHandler(e)
     {
-        this._showArticle(DailyManager.getFetchedStories()[e.id]);
+        this._showArticle(DailyManager.getFetchedStories()[e.id], false);
     }
 
     _tileClickHandler(e)
     {
-        this._showArticle(e.story);
+        this._showArticle(e.story, false);
     }
 
     /**
-    * 显示 ArticleView 并加载指定的日报。
-    */
-    _showArticle(p_story)
+     * 显示 ArticleView 并加载指定的日报（可指定是否自动调整 Tile 位置使其可见）。
+     * @param {Object} p_story
+     * @param {Boolean} [p_ensureTileVisible]
+     */
+    _showArticle(p_story, p_ensureTileVisible)
     {
         this._updateArticle(p_story, () =>
         {
-            this._setCurrentIndex(this._getStoryIndexByID(p_story.id));
+            this._setCurrentIndex(this._getStoryIndexByID(p_story.id), p_ensureTileVisible);
             this._openArticleView();
         });
     }
@@ -388,11 +390,6 @@ export default class DailyPage extends React.Component
         }
     }
 
-
-
-
-
-
     /**
     * 当前日报索引增加1。
     */
@@ -418,27 +415,25 @@ export default class DailyPage extends React.Component
     }
 
     /**
-    * 设置日报索引。
-    */
-    _setCurrentIndex(p_index)
+     * 设置日报索引（可指定是否自动调整 Tile 位置使其可见）。
+     * @param {Number} p_index
+     * @param {Boolean} [p_ensureTileVisible]
+     */
+    _setCurrentIndex(p_nextIndex, p_ensureTileVisible)
     {
-        const e = { prevIndex: this._currentIndex, nextIndex: p_index };
-        if (e.nextIndex != e.prevIndex)
+        const prevIndex = this._currentIndex;
+        if (p_nextIndex != prevIndex)
         {
-            this._currentIndex = e.nextIndex;
-            this._currentIndexChangedHandler(e);
+            this._currentIndex = p_nextIndex;
+            this._updateTileStyle(prevIndex, p_nextIndex, p_ensureTileVisible);
         }
     }
 
-    _currentIndexChangedHandler(e)
-    {
-        this._updateTileStyle(e.prevIndex, e.nextIndex);
-    }
-
     /**
-    * 更新当前选中的 Story Tile 的样式。
-    */
-    _updateTileStyle(p_prevIndex, p_nextIndex)
+     * 更新当前选中的 Story Tile 的样式。
+     * @param {Boolean} [p_ensureTileVisible]
+     */
+    _updateTileStyle(p_prevIndex, p_nextIndex, p_ensureTileVisible)
     {
         if (p_prevIndex >= 0)
         {
@@ -448,7 +443,11 @@ export default class DailyPage extends React.Component
         const $newTile = $("#story" + this.state.storyIDs[p_nextIndex]);
         $newTile.addClass("current");
 
-        this.ensureVisible($newTile);
+        // 仅当明确指定不自动调整时，才不执行。未指定，或指定为 true 时都会自动调整。
+        if (!(p_ensureTileVisible === false))
+        {
+            this.ensureVisible($newTile);
+        }
     }
 
     ensureVisible($p_tile)
