@@ -235,7 +235,7 @@ export default class DailyPage extends React.Component
                 const story = DailyManager.getFetchedStories()[this.state.storyIDs[index]];
                 if (this._isArticleViewVisible)
                 {
-                    this._loadArticle(story, () =>
+                    this._updateArticle(story, () =>
                     {
                         this._increaseCurrentIndex();
                         this._resetArticleViewScroll();
@@ -272,7 +272,7 @@ export default class DailyPage extends React.Component
             const story = DailyManager.getFetchedStories()[this.state.storyIDs[index]];
             if(this._isArticleViewVisible)
             {
-                this._loadArticle(story, () =>
+                this._updateArticle(story, () =>
                 {
                     this._decreaseCurrentIndex();
                     this._resetArticleViewScroll();
@@ -338,7 +338,7 @@ export default class DailyPage extends React.Component
     */
     _showArticle(p_story)
     {
-        this._loadArticle(p_story, () =>
+        this._updateArticle(p_story, () =>
         {
             this._setCurrentIndex(this._getStoryIndexById(p_story.id));
             this._openArticleView();
@@ -346,9 +346,9 @@ export default class DailyPage extends React.Component
     }
 
     /**
-    * 向 ArticleView 中加载指定的日报（仅改变内容，不改变显示状态，允许在回调中进行控制）。
+    * 更新 ArticleView 中的日报内容（不改变“显示/隐藏”状态）。
     */
-    _loadArticle(p_story, p_callback)
+    _updateArticle(p_story, p_callback)
     {
         if (p_story)
         {
