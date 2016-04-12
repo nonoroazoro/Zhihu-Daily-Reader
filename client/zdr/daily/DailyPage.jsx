@@ -32,11 +32,10 @@ export default class DailyPage extends React.Component
     _$ArticleView = null;
     _$ArticleViewContent = null;
 
-
     state =
     {
-        topStoryIndexes: [],
-        storyIndexes: [],
+        topStoryIDs: [],
+        storyIDs: [],
         currentStory: null,
         loading: false
     };
@@ -74,7 +73,7 @@ export default class DailyPage extends React.Component
             {
                 this.setState(
                 {
-                    topStoryIndexes: res.ids
+                    topStoryIDs: res.ids
                 });
             }
         });
@@ -186,7 +185,7 @@ export default class DailyPage extends React.Component
         {
             if (!this._isArticleViewVisible)
             {
-                this._showArticle(DailyManager.getFetchedStories()[this.state.storyIndexes[this._currentIndex]]);
+                this._showArticle(DailyManager.getFetchedStories()[this.state.storyIDs[this._currentIndex]]);
             }
         });
 
@@ -194,13 +193,13 @@ export default class DailyPage extends React.Component
         {
             this._isArticleViewVisible
                 ? this._keydownShowPrevStory()
-                : this._minusCurrentIndex();
+                : this._decreaseCurrentIndex();
         });
         Mousetrap.bind("right", () =>
         {
             this._isArticleViewVisible
                 ? this._keydownShowNextStory()
-                : this._addCurrentIndex();
+                : this._increaseCurrentIndex();
         });
 
         Mousetrap.bind("v", () =>
@@ -229,16 +228,16 @@ export default class DailyPage extends React.Component
     _keydownShowNextStory()
     {
         const index = this._currentIndex + 1;
-        if (index < this.state.storyIndexes.length)
+        if (index < this.state.storyIDs.length)
         {
             if (!this._isLoading)
             {
-                const story = DailyManager.getFetchedStories()[this.state.storyIndexes[index]];
+                const story = DailyManager.getFetchedStories()[this.state.storyIDs[index]];
                 if (this._isArticleViewVisible)
                 {
                     this._loadArticle(story, () =>
                     {
-                        this._addCurrentIndex();
+                        this._increaseCurrentIndex();
                         this._resetArticleViewScroll();
                     });
                 }
@@ -270,12 +269,12 @@ export default class DailyPage extends React.Component
         const index = this._currentIndex - 1;
         if (index >= 0)
         {
-            const story = DailyManager.getFetchedStories()[this.state.storyIndexes[index]];
+            const story = DailyManager.getFetchedStories()[this.state.storyIDs[index]];
             if(this._isArticleViewVisible)
             {
                 this._loadArticle(story, () =>
                 {
-                    this._minusCurrentIndex();
+                    this._decreaseCurrentIndex();
                     this._resetArticleViewScroll();
                 });
             }
@@ -313,13 +312,13 @@ export default class DailyPage extends React.Component
     /**
     * 增量加载指定的日报。
     */
-    _addStoryIndexes(p_indexes)
+    _addStoryIndexes(p_storyIDs)
     {
         this.setState(
         {
-            storyIndexes: ReactUpdate(this.state.storyIndexes,
+            storyIDs: ReactUpdate(this.state.storyIDs,
             {
-                $push: p_indexes
+                $push: p_storyIDs
             })
         });
     }
@@ -351,7 +350,7 @@ export default class DailyPage extends React.Component
     */
     _loadArticle(p_story, p_callback)
     {
-        if(p_story)
+        if (p_story)
         {
             this.setState({
                 currentStory: p_story
@@ -364,7 +363,7 @@ export default class DailyPage extends React.Component
     */
     _getStoryIndexById(p_id)
     {
-        return _.indexOf(this.state.storyIndexes, p_id);
+        return _.indexOf(this.state.storyIDs, p_id);
     }
 
     /**
@@ -389,25 +388,32 @@ export default class DailyPage extends React.Component
         }
     }
 
+
+
+
+
+
     /**
     * 当前日报索引增加1。
     */
-    _addCurrentIndex()
+    _increaseCurrentIndex()
     {
-        if (this._currentIndex + 1 < this.state.storyIndexes.length)
+        const nextIndex = this._currentIndex + 1;
+        if (nextIndex < this.state.storyIDs.length)
         {
-            this._setCurrentIndex(this._currentIndex + 1);
+            this._setCurrentIndex(nextIndex);
         }
     }
 
     /**
     * 当前日报索引减少1。
     */
-    _minusCurrentIndex()
+    _decreaseCurrentIndex()
     {
-        if (this._currentIndex > 0)
+        const nextIndex = this._currentIndex - 1;
+        if (nextIndex >= 0)
         {
-            this._setCurrentIndex(this._currentIndex - 1);
+            this._setCurrentIndex(nextIndex);
         }
     }
 
@@ -416,27 +422,30 @@ export default class DailyPage extends React.Component
     */
     _setCurrentIndex(p_index)
     {
-        const e = { oldIndex: this._currentIndex, newIndex: p_index };
-        this._currentIndex = p_index;
-        this._currentIndexChangedHandler(e);
+        const e = { prevIndex: this._currentIndex, nextIndex: p_index };
+        if (e.nextIndex != e.prevIndex)
+        {
+            this._currentIndex = e.nextIndex;
+            this._currentIndexChangedHandler(e);
+        }
     }
 
     _currentIndexChangedHandler(e)
     {
-        this._updateCurrentTile(e.oldIndex, e.newIndex);
+        this._updateTileStyle(e.prevIndex, e.nextIndex);
     }
 
     /**
-    * 更新当前 FlexTile 样式。
+    * 更新当前选中的 Story Tile 的样式。
     */
-    _updateCurrentTile(p_oldIndex, p_newIndex)
+    _updateTileStyle(p_prevIndex, p_nextIndex)
     {
-        if (p_oldIndex >= 0)
+        if (p_prevIndex >= 0)
         {
-            $("#story" + this.state.storyIndexes[p_oldIndex]).removeClass("current");
+            $("#story" + this.state.storyIDs[p_prevIndex]).removeClass("current");
         }
 
-        const $newTile = $("#story" + this.state.storyIndexes[p_newIndex]);
+        const $newTile = $("#story" + this.state.storyIDs[p_nextIndex]);
         $newTile.addClass("current");
 
         this.ensureVisible($newTile);
@@ -463,14 +472,14 @@ export default class DailyPage extends React.Component
     {
         // 幻灯片（不好看。。。隐藏了吧-_-）。
         //<div className="CarouselContainer container-fluid">
-        //    <Carousel onClick={this._carouselClickHandler.bind(this)} indexes={this.state.topStoryIndexes} />
+        //    <Carousel onClick={this._carouselClickHandler.bind(this)} storyIDs={this.state.topStoryIDs} />
         //</div>
 
         return (
             <div className="DailyPage container-fluid">
                 <FlexView
                     onTileClick={this._tileClickHandler.bind(this)}
-                    contents={this.state.storyIndexes}
+                    contents={this.state.storyIDs}
                     loading={this.state.loading} />
                 <ArticleView story={this.state.currentStory} />
             </div>
