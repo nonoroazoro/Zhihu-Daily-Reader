@@ -93,7 +93,7 @@ export default class DailyPage extends React.Component
                 if (!err && res)
                 {
                     this._currentLoadedDate = res.date;
-                    this._addStoryIndexes(res.ids);
+                    this._addStoryIDs(res.ids);
                     this._loadPrevStories();
                 }
 
@@ -120,14 +120,14 @@ export default class DailyPage extends React.Component
                     if (!err && res)
                     {
                         this._currentLoadedDate = res.date;
-                        this._addStoryIndexes(res.ids);
+                        this._addStoryIDs(res.ids);
                     }
 
                     this.setState({
                         loading: false
                     });
 
-                    if(_.isFunction(p_callback))
+                    if (_.isFunction(p_callback))
                     {
                         p_callback();
                     }
@@ -310,9 +310,9 @@ export default class DailyPage extends React.Component
     }
 
     /**
-    * 增量加载指定的日报。
+    * 向 FlexView 中添加日报。
     */
-    _addStoryIndexes(p_storyIDs)
+    _addStoryIDs(p_storyIDs)
     {
         this.setState(
         {
@@ -340,7 +340,7 @@ export default class DailyPage extends React.Component
     {
         this._updateArticle(p_story, () =>
         {
-            this._setCurrentIndex(this._getStoryIndexById(p_story.id));
+            this._setCurrentIndex(this._getStoryIndexByID(p_story.id));
             this._openArticleView();
         });
     }
@@ -361,7 +361,7 @@ export default class DailyPage extends React.Component
     /**
     * 获取指定唯一标识的日报的索引。
     */
-    _getStoryIndexById(p_id)
+    _getStoryIndexByID(p_id)
     {
         return _.indexOf(this.state.storyIDs, p_id);
     }
