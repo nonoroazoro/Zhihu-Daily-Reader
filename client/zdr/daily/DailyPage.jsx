@@ -183,7 +183,7 @@ export default class DailyPage extends React.Component
 
         Mousetrap.bind(["o", "enter"], () =>
         {
-            if (!this._isArticleViewVisible)
+            if (!this._isArticleViewVisible && this._currentIndex >= 0)
             {
                 this._showArticle(DailyManager.getFetchedStories()[this.state.storyIDs[this._currentIndex]]);
             }
@@ -223,7 +223,7 @@ export default class DailyPage extends React.Component
     }
 
     /**
-    * ArticleView 显示下一个日报（如果当前未打开 ArticleView 则自动打开）。
+    * ArticleView 显示下一个日报（如果当前未显示 ArticleView 则自动显示）。
     */
     _keydownShowNextStory()
     {
@@ -262,7 +262,7 @@ export default class DailyPage extends React.Component
     }
 
     /**
-    * ArticleView 显示上一个日报（如果当前未打开 ArticleView 则自动打开）。
+    * ArticleView 显示上一个日报（如果当前未显示 ArticleView 则自动显示）。
     */
     _keydownShowPrevStory()
     {
@@ -290,7 +290,7 @@ export default class DailyPage extends React.Component
     */
     _scrollHandler(e)
     {
-        // 185 是 Flex-Tile 的一半高度。
+        // 185 是 FlexTile 的一半高度。
         if (!this._isLoading && ($(document).scrollTop() >= $(document).height()-$(window).height() - 185))
         {
             this._isLoading = true;
@@ -334,7 +334,7 @@ export default class DailyPage extends React.Component
     }
 
     /**
-    * 打开 ArticleView 并加载指定的日报。
+    * 显示 ArticleView 并加载指定的日报。
     */
     _showArticle(p_story)
     {
@@ -367,7 +367,7 @@ export default class DailyPage extends React.Component
     }
 
     /**
-    * 打开 ArticleView。
+    * 显示 ArticleView。
     */
     _openArticleView()
     {
@@ -378,7 +378,7 @@ export default class DailyPage extends React.Component
     }
 
     /**
-    * 关闭 ArticleView。
+    * 隐藏 ArticleView。
     */
     _closeArticleView()
     {
