@@ -54,7 +54,7 @@ class CarouselInner extends React.Component
 {
     static defaultProps =
     {
-        indexes: [],
+        storyIDs: [],
         onClick: null
     };
 
@@ -71,10 +71,12 @@ class CarouselInner extends React.Component
 
     render()
     {
-        const rows = _.map(this.props.indexes, (value, index) =>
+        const rows = _.map(this.props.storyIDs, (value, index) =>
         {
             return (
-                <div className={index == 0 ? "item active" : "item"} key={"slide" + index}>
+                <div
+                    className={index == 0 ? "item active" : "item"}
+                    key={index}>
                     <div
                         className="carousel-picture"
                         onClick={this.handleClick.bind(this, value.id)}
@@ -87,7 +89,9 @@ class CarouselInner extends React.Component
         });
 
         return (
-            <div className="CarouselInner carousel-inner" role="listbox">
+            <div
+                className="CarouselInner carousel-inner"
+                role="listbox">
                 {rows}
             </div>
         );
@@ -152,14 +156,14 @@ export default class Carousel extends React.Component
     static defaultProps =
     {
         id: "Carousel",
-        indexes: [],
+        storyIDs: [],
         onClick: null
     };
 
     render()
     {
-        const indexes = this.props.indexes || [];
-        const length = indexes.length;
+        const storyIDs = this.props.storyIDs || [];
+        const length = storyIDs.length;
         const target = "#" + this.props.id;
 
         // 无内容时隐藏。
@@ -182,7 +186,7 @@ export default class Carousel extends React.Component
         return (
             <div id={this.props.id} className={carouselClassNames} data-ride="carousel">
                 <CarouselIndicator target={target} length={length} />
-                <CarouselInner onClick={this.props.onClick} indexes={indexes} />
+                <CarouselInner onClick={this.props.onClick} storyIDs={storyIDs} />
                 <CarouselControls className={controlsClassNames} target={target} length={length} />
             </div>
         );
