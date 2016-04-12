@@ -1,15 +1,82 @@
 ﻿import "./res/ShortcutsView.less";
 
-import React from "react";
+import _               from "lodash";
+import React           from "react";
+import PureRenderMixin from "react-addons-pure-render-mixin";
+
+class ShortcutsBody extends React.Component
+{
+    constructor(p_props)
+    {
+        super(p_props);
+        this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
+    }
+
+    static defaultProps =
+    {
+        keys: {}
+    };
+
+    render()
+    {
+        const rows = _.map(Object.keys(this.props.keys), (key, index) =>
+        {
+            return (
+                <tr key={index}>
+                    <th scope="row">{index+1}</th>
+                    <td>{key}</td>
+                    <td>{this.props.keys[key]}</td>
+                </tr>
+            );
+        });
+
+        const table =
+            <table className="table table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Shortcut</th>
+                        <th>Command</th>
+                    </tr>
+                </thead>
+                <tbody>
+                   {rows}
+                </tbody>
+            </table>;
+
+        return (
+            <div className="ShortcutsBody modal-body">
+                {table}
+            </div>
+        );
+    }
+}
 
 /**
  * 快捷键帮助对话框。
  */
 export default class ShortcutsView extends React.Component
 {
+    constructor(p_props)
+    {
+        super(p_props);
+        this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
+    }
+
     static defaultProps =
     {
-        id: "ShortcutsView"
+        id: "ShortcutsView",
+        keys:
+        {
+            "esc": "关闭阅读界面",
+            "h/?": "显示快捷键帮助",
+            "j": "打开或切换至上一篇",
+            "k": "打开或切换至下一篇",
+            "←": "选中或切换上一篇",
+            "→": "选中或切换下一篇",
+            "o/enter": "打开当前所选日报", 
+            "v": "查看知乎讨论",
+        }
     };
 
     render()
@@ -24,9 +91,7 @@ export default class ShortcutsView extends React.Component
                             </button>
                             <h3 className="title">键盘快捷键</h3>
                         </div>
-                        <div className="ShortcutsBody modal-body">
-                            <p>One fine body&hellip;</p>
-                        </div>
+                        <ShortcutsBody keys={this.props.keys} />
                     </div>
                 </div>
             </div>
