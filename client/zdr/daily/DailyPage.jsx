@@ -187,9 +187,12 @@ export default class DailyPage extends React.Component
     */
     _addKeyboardShortcuts()
     {
-        Mousetrap.bind("esc", this._closeArticleView.bind(this));
-        Mousetrap.bind("esc", this._closeShortcutsView.bind(this));
-        
+        Mousetrap.bind(["esc", "escape"], () =>
+        {
+            this._closeArticleView();
+            this._closeShortcutsView();
+        });
+
         Mousetrap.bind("j", this._keydownShowNextStory.bind(this));
         Mousetrap.bind("k", this._keydownShowPrevStory.bind(this));
 
