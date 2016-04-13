@@ -1,6 +1,7 @@
 ﻿var path = require("path");
 var webpack = require("webpack");
 var AssetsPlugin = require("assets-webpack-plugin");
+var CleanWebpackPlugin = require("clean-webpack-plugin");
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 var mainPath = path.resolve(__dirname, "./client/");
@@ -71,6 +72,7 @@ module.exports = {
         ]
     },
     plugins: [
+        new CleanWebpackPlugin([buildPath]),
         new AssetsPlugin(
         {
             filename: "assets.json",
