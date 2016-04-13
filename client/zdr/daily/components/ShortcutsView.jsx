@@ -12,6 +12,11 @@ class ShortcutsBody extends React.Component
         this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
     }
 
+    static propTypes =
+    {
+        keys: React.PropTypes.object
+    };
+
     static defaultProps =
     {
         keys: {}
@@ -62,6 +67,12 @@ export default class ShortcutsView extends React.Component
         super(p_props);
         this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
     }
+
+    static propTypes =
+    {
+        id: React.PropTypes.string,
+        keys: React.PropTypes.object
+    };
 
     static defaultProps =
     {

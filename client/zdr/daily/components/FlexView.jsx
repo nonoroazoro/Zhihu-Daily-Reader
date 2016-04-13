@@ -16,6 +16,12 @@ class FlexTile extends React.Component
         this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
     }
 
+    static propTypes =
+    {
+        storyID: React.PropTypes.number,
+        onClick: React.PropTypes.func
+    };
+
     static defaultProps =
     {
         storyID: null,
@@ -115,6 +121,13 @@ export default class FlexView extends React.Component
         super(p_props);
         this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
     }
+
+    static propTypes =
+    {
+        contents: React.PropTypes.array,
+        loading: React.PropTypes.bool,
+        onTileClick: React.PropTypes.func
+    };
 
     static defaultProps =
     {

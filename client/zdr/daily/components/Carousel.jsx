@@ -11,6 +11,12 @@ import PureRenderMixin from "react-addons-pure-render-mixin";
  */
 class CarouselIndicator extends React.Component
 {
+    static propTypes =
+    {
+        length: React.PropTypes.number,
+        target: React.PropTypes.string
+    };
+
     static defaultProps =
     {
         length: 0,
@@ -52,6 +58,12 @@ class CarouselIndicator extends React.Component
  */
 class CarouselInner extends React.Component
 {
+    static propTypes =
+    {
+        storyIDs: React.PropTypes.array,
+        onClick: React.PropTypes.func
+    };
+
     static defaultProps =
     {
         storyIDs: [],
@@ -103,6 +115,12 @@ class CarouselInner extends React.Component
  */
 class CarouselControls extends React.Component
 {
+    static propTypes =
+    {
+        length: React.PropTypes.number,
+        target: React.PropTypes.string
+    };
+
     static defaultProps =
     {
         length: 0,
@@ -152,6 +170,13 @@ export default class Carousel extends React.Component
         super(p_props);
         this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
     }
+
+    static propTypes =
+    {
+        id: React.PropTypes.string,
+        storyIDs: React.PropTypes.array,
+        onClick: React.PropTypes.func
+    };
 
     static defaultProps =
     {

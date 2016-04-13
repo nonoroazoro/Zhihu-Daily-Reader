@@ -6,72 +6,85 @@ import classNames from "classnames";
 
 class ArticleHeader extends React.Component
 {
+    static propTypes =
+    {
+        story: React.PropTypes.object
+    };
+
+    static defaultProps =
+    {
+        story: null
+    };
+
     render()
     {
-        const hasBackgrounds = this.props.story.backgrounds.length > 0;
-        const classesHeaderPicture = classNames(
-            "article-header-picture",
-            {
-                "radius-all": !hasBackgrounds,
-                "radius-top": hasBackgrounds,
-            }
-        );
-
-        const classesHeaderCaption = classNames(
-            "article-header-caption",
-            {
-                "radius-bottom": !hasBackgrounds,
-            }
-        );
-        
-        // 没有图片版权信息时隐藏。
-        const classesImageSource = classNames(
-            {
-                "hide": !this.props.story.imageSource,
-            }
-        );
-
         const rows = [];
-        const titleRow =
-            <div className="article-header-title" key="article-header">
-                <button type="button" className="close" data-dismiss="modal">
-                    <span>&times;</span>
-                </button>
-                <div className={classesHeaderPicture} style={{backgroundImage: "url(" + this.props.story.image + ")"}}>
-                    <div className={classesHeaderCaption}>
-                        <a href={this.props.story.shareURL} target="_blank">
-                            <h3>{this.props.story.title}</h3>
-                        </a>
-                        <a classNames={classesImageSource} href={"https://www.google.com/search?q=" + this.props.story.imageSource}
-                           target="_blank">
-                            <span className="glyphicon glyphicon-copyright-mark" />
-                            {this.props.story.imageSource}
-                        </a>
-                    </div>
-                </div>
-            </div>;
-        rows.push(titleRow);
-    
-        if (hasBackgrounds)
+        if (this.props.story)
         {
-            const backgroundRows = _.map(this.props.story.backgrounds, (value, index) =>
-            {
-                return (
-                    <a className="article-backgrounds-content"
-                        href={value.href}
-                        target="_blank"
-                        key={"background" + index}>
-                        <h4>{value.title + "：" + value.text}</h4>
-                    </a>
-                );
-            });
-
-            rows.push(
-                <div className="article-backgrounds" key="article-backgrounds">
-                    {backgroundRows}
-                    <span className="article-backgrounds-arrow glyphicon glyphicon-chevron-right" />
-                </div>
+            const hasBackgrounds = this.props.story.backgrounds.length > 0;
+            const classesHeaderPicture = classNames(
+                "article-header-picture",
+                {
+                    "radius-all": !hasBackgrounds,
+                    "radius-top": hasBackgrounds,
+                }
             );
+
+            const classesHeaderCaption = classNames(
+                "article-header-caption",
+                {
+                    "radius-bottom": !hasBackgrounds,
+                }
+            );
+        
+            // 没有图片版权信息时隐藏。
+            const classesImageSource = classNames(
+                {
+                    "hide": !this.props.story.imageSource,
+                }
+            );
+
+            const titleRow =
+                <div className="article-header-title" key="article-header">
+                    <button type="button" className="close" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                    <div className={classesHeaderPicture} style={{backgroundImage: "url(" + this.props.story.image + ")"}}>
+                        <div className={classesHeaderCaption}>
+                            <a href={this.props.story.shareURL} target="_blank">
+                                <h3>{this.props.story.title}</h3>
+                            </a>
+                            <a classNames={classesImageSource} href={"https://www.google.com/search?q=" + this.props.story.imageSource}
+                               target="_blank">
+                                <span className="glyphicon glyphicon-copyright-mark" />
+                                {this.props.story.imageSource}
+                            </a>
+                        </div>
+                    </div>
+                </div>;
+            rows.push(titleRow);
+    
+            if (hasBackgrounds)
+            {
+                const backgroundRows = _.map(this.props.story.backgrounds, (value, index) =>
+                {
+                    return (
+                        <a className="article-backgrounds-content"
+                            href={value.href}
+                            target="_blank"
+                            key={"background" + index}>
+                            <h4>{value.title + "：" + value.text}</h4>
+                        </a>
+                    );
+                });
+
+                rows.push(
+                    <div className="article-backgrounds" key="article-backgrounds">
+                        {backgroundRows}
+                        <span className="article-backgrounds-arrow glyphicon glyphicon-chevron-right" />
+                    </div>
+                );
+            }
         }
 
         return (
@@ -84,6 +97,16 @@ class ArticleHeader extends React.Component
 
 class ArticleBody extends React.Component
 {
+    static propTypes =
+    {
+        contents: React.PropTypes.array
+    };
+
+    static defaultProps =
+    {
+        contents: []
+    };
+
     render()
     {
         let item = null;
@@ -148,6 +171,12 @@ class ArticleBody extends React.Component
 
 export default class ArticleView extends React.Component
 {
+    static propTypes =
+    {
+        id: React.PropTypes.string,
+        story: React.PropTypes.object
+    };
+
     static defaultProps =
     {
         id: "ArticleView",

@@ -13,6 +13,8 @@ export default class Preloader extends React.Component
         this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
     }
 
+    static propTypes = { className: React.PropTypes.string };
+
     static defaultProps = { className: null };
 
     render()
