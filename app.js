@@ -3,8 +3,9 @@
 const path = require("path");
 const config = require("config");
 const express = require("express");
-const bodyParser = require("body-parser");
 const favicon = require("serve-favicon");
+const bodyParser = require("body-parser");
+const compression = require("compression");
 
 const routes = require("./routes");
 const crawler = require("./controllers/crawler");
@@ -44,6 +45,9 @@ const app = express();
 // view engine setup.
 app.set("views", __dirname + "/views/");
 app.set("view engine", "jade");
+
+// compression.
+app.use(compression());
 
 // favicon setup.
 app.use(favicon(__dirname + "/public/favicon.ico"));
