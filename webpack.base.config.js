@@ -16,7 +16,6 @@ module.exports = {
             "lodash",
             "moment",
             "mousetrap",
-            "classnames",
             "react",
             "react-dom",
             "react-addons-update",
