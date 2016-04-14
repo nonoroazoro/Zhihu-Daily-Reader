@@ -45,6 +45,7 @@
     <Compile Include="webpack.config.js" />
     <Compile Include="webpack.production.config.js" />
     <Content Include=".babelrc" />
+    <Content Include=".eslintrc" />
     <Content Include="client\zdr\daily\components\res\ShortcutsView.less" />
     <Content Include="config\default.json" />
     <Content Include="config\development.json" />

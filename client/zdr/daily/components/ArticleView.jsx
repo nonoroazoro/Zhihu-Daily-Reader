@@ -27,14 +27,14 @@ class ArticleHeader extends React.Component
                 "article-header-picture",
                 {
                     "radius-all": !hasBackgrounds,
-                    "radius-top": hasBackgrounds,
+                    "radius-top": hasBackgrounds
                 }
             );
 
             const classesHeaderCaption = classNames(
                 "article-header-caption",
                 {
-                    "radius-bottom": !hasBackgrounds,
+                    "radius-bottom": !hasBackgrounds
                 }
             );
         

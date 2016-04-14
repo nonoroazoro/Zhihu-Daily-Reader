@@ -1,6 +1,15 @@
 ﻿var webpack = require("webpack");
 var config = require("./webpack.base.config");
 
+config.module.preLoaders =
+[
+    {
+        test: /\.jsx?$/,
+        exclude: /node_modules/,
+        loader: "eslint"
+    }
+];
+
 config.plugins.push(
     new webpack.SourceMapDevToolPlugin(
     {

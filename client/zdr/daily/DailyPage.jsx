@@ -25,7 +25,7 @@ export default class DailyPage extends React.Component
         super(p_props);
         this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
     }
-
+    
     _currentLoadedDate = null;
     _currentIndex = -1;
     _isLoading = false;
@@ -36,8 +36,7 @@ export default class DailyPage extends React.Component
     _$ArticleViewContent = null;
     _$ShortcutsView = null;
 
-    state =
-    {
+    state = {
         topStoryIDs: [],
         storyIDs: [],
         currentStory: null,
@@ -76,8 +75,7 @@ export default class DailyPage extends React.Component
         {
             if (!err && res)
             {
-                this.setState(
-                {
+                this.setState({
                     topStoryIDs: res.ids
                 });
             }
