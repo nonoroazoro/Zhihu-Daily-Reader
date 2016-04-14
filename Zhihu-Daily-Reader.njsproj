@@ -20,7 +20,6 @@
   <ItemGroup>
     <Compile Include="client\zdr\daily\components\ShortcutsView.jsx" />
     <Compile Include="client\zdr\daily\controllers\DailyManager.js" />
-    <Compile Include="client\zdr\daily\controllers\Utils.js" />
     <Compile Include="controllers\catalog.js" />
     <Compile Include="controllers\crawler\daily.js" />
     <Compile Include="controllers\daily.js" />

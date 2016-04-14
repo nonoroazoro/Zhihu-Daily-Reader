@@ -1,7 +1,8 @@
 ﻿import "./res/FlexView.less";
 
-import _               from "lodash";
 import React           from "react";
+import isFunction      from "lodash/lang/isFunction";
+import map             from "lodash/collection/map";
 import ClassNames      from "classnames";
 import PureRenderMixin from "react-addons-pure-render-mixin";
 
@@ -62,7 +63,7 @@ class FlexTile extends React.Component
 
     handleClick(e)
     {
-        if (_.isFunction(this.props.onClick))
+        if (isFunction(this.props.onClick))
         {
             this.props.onClick({
                 story: this.state.story,
@@ -143,7 +144,7 @@ export default class FlexView extends React.Component
 
     render()
     {
-        const items = _.map(this.props.contents, (value) =>
+        const items = map(this.props.contents, (value) =>
         {
             return (<FlexTile
                         key={value}

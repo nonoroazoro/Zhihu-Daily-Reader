@@ -1,6 +1,6 @@
 ﻿import "./res/ShortcutsView.less";
 
-import _               from "lodash";
+import map             from "lodash/collection/map";
 import React           from "react";
 import PureRenderMixin from "react-addons-pure-render-mixin";
 
@@ -24,7 +24,7 @@ class ShortcutsBody extends React.Component
 
     render()
     {
-        const rows = _.map(Object.keys(this.props.keys), (key, index) =>
+        const rows = map(Object.keys(this.props.keys), (key, index) =>
         {
             return (
                 <tr key={index}>

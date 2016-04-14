@@ -1,6 +1,7 @@
 ﻿import "./res/ArticleView.less";
 
-import _          from "lodash";
+import map        from "lodash/collection/map";
+import isEmpty    from "lodash/lang/isEmpty";
 import React      from "react";
 import classNames from "classnames";
 
@@ -66,7 +67,7 @@ class ArticleHeader extends React.Component
     
             if (hasBackgrounds)
             {
-                const backgroundRows = _.map(this.props.story.backgrounds, (value, index) =>
+                const backgroundRows = map(this.props.story.backgrounds, (value, index) =>
                 {
                     return (
                         <a className="article-backgrounds-content"
@@ -119,19 +120,19 @@ class ArticleBody extends React.Component
             item = this.props.contents[i];
 
             // 1、标题。
-            if (!_.isEmpty(item.title))
+            if (!isEmpty(item.title))
             {
                 innerRows.push(<h3 className="question-title" key={"question-title"+i}>{item.title}</h3>);
             }
 
             // 2、答案。
-            const answers = _.map(item.answers, (value, index) =>
+            const answers = map(item.answers, (value, index) =>
             {
                 // 没有作者图片时隐藏。
                 const classesAvatar = classNames(
                     "avatar",
                     {
-                        "hide": _.isEmpty(value.avatar),
+                        "hide": isEmpty(value.avatar),
                     }
                 );
 

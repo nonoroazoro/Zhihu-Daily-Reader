@@ -1,7 +1,8 @@
 ﻿import "./res/Carousel.less";
 
 import $               from "jquery";
-import _               from "lodash";
+import isFunction      from "lodash/lang/isFunction";
+import map             from "lodash/collection/map";
 import React           from "react";
 import classNames      from "classnames";
 import PureRenderMixin from "react-addons-pure-render-mixin";
@@ -72,7 +73,7 @@ class CarouselInner extends React.Component
 
     handleClick(p_storyID, e)
     {
-        if (_.isFunction(this.props.onClick))
+        if (isFunction(this.props.onClick))
         {
             this.props.onClick(
             {
@@ -83,7 +84,7 @@ class CarouselInner extends React.Component
 
     render()
     {
-        const rows = _.map(this.props.storyIDs, (value, index) =>
+        const rows = map(this.props.storyIDs, (value, index) =>
         {
             return (
                 <div

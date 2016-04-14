@@ -14,7 +14,15 @@ module.exports = {
         vendor: [
             "jquery",
             "bootstrap",
-            "lodash",
+            
+            // to reduce bundle file size.
+            "lodash/collection/map",
+            "lodash/lang/isDate",
+            "lodash/lang/isEmpty",
+            "lodash/lang/isFunction",
+            "lodash/lang/isString",
+            "lodash/string/trim",
+
             "moment",
             "mousetrap",
             "react",

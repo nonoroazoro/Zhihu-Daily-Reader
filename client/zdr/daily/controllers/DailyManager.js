@@ -1,5 +1,7 @@
-﻿import _ from "lodash";
-import $ from "jquery";
+﻿import $          from "jquery";
+import trim       from "lodash/string/trim";
+import isEmpty    from "lodash/lang/isEmpty";
+import isFunction from "lodash/lang/isFunction";
 
 const _stories = {};
 
@@ -35,13 +37,13 @@ export default class DailyManager
      */
     static getStoryIDs(p_date, p_callback)
     {
-        if (_.isFunction(p_date))
+        if (isFunction(p_date))
         {
             p_callback = p_date;
             p_date = null;
         }
     
-        if (_.isEmpty(_.trim(p_date)))
+        if (isEmpty(trim(p_date)))
         {
             return $.get("/api/4/news/before", (p_data) =>
             {
@@ -70,11 +72,11 @@ export default class DailyManager
      */
     static getStory(p_id, p_callback)
     {
-        if (_.isFunction(p_callback))
+        if (isFunction(p_callback))
         {
-            if (_.isEmpty(_.trim(p_id)))
+            if (isEmpty(trim(p_id)))
             {
-                if (_.isFunction(p_callback))
+                if (isFunction(p_callback))
                 {
                     p_callback("p_id must not be null");
                 }

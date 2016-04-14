@@ -1,6 +1,7 @@
 ﻿import "./res/Preloader.less";
 
-import _               from "lodash";
+import trim            from "lodash/string/trim";
+import isEmpty         from "lodash/lang/isEmpty";
 import React           from "react";
 import ClassNames      from "classnames";
 import PureRenderMixin from "react-addons-pure-render-mixin";
@@ -19,11 +20,11 @@ export default class Preloader extends React.Component
 
     render()
     {
-        const className = _.trim(this.props.className);
+        const className = trim(this.props.className);
         const classes = ClassNames(
             "Preloader",
             {
-                [className]: !_.isEmpty(className)
+                [className]: !isEmpty(className)
             }
         );
 

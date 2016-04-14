@@ -3,6 +3,7 @@
 import $               from "jquery";
 import React           from "react";
 import Mousetrap       from "mousetrap";
+import isFunction      from "lodash/lang/isFunction";
 import ReactUpdate     from "react-addons-update";
 import PureRenderMixin from "react-addons-pure-render-mixin";
 
@@ -131,7 +132,7 @@ export default class DailyPage extends React.Component
                         loading: false
                     });
 
-                    if (_.isFunction(p_callback))
+                    if (isFunction(p_callback))
                     {
                         p_callback();
                     }
@@ -372,7 +373,7 @@ export default class DailyPage extends React.Component
     {
         this._updateArticle(p_story, () =>
         {
-            this._setCurrentIndex(this._getStoryIndexByID(p_story.id), p_ensureTileVisible);
+            this._setCurrentIndex(this.state.storyIDs.indexOf(p_story.id), p_ensureTileVisible);
             this._openArticleView();
         });
     }
@@ -388,14 +389,6 @@ export default class DailyPage extends React.Component
                 currentStory: p_story
             }, p_callback);
         }
-    }
-
-    /**
-    * 获取指定唯一标识的日报的索引。
-    */
-    _getStoryIndexByID(p_id)
-    {
-        return _.indexOf(this.state.storyIDs, p_id);
     }
 
     /**
