@@ -344,12 +344,14 @@ export default class DailyPage extends React.Component
     _addStoryIDs(p_storyIDs)
     {
         this.setState(
-        {
-            storyIDs: ReactUpdate(this.state.storyIDs,
             {
-                $push: p_storyIDs
-            })
-        });
+                storyIDs: ReactUpdate(this.state.storyIDs,
+                    {
+                        $push: p_storyIDs
+                    }
+                )
+            }
+        );
     }
 
     _carouselClickHandler(e)

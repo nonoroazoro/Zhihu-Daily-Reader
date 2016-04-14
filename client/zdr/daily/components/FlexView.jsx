@@ -17,14 +17,12 @@ class FlexTile extends React.Component
         this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
     }
 
-    static propTypes =
-    {
+    static propTypes = {
         storyID: React.PropTypes.number,
         onClick: React.PropTypes.func
     };
 
-    static defaultProps =
-    {
+    static defaultProps = {
         storyID: null,
         onClick: null
     };
@@ -43,9 +41,10 @@ class FlexTile extends React.Component
                     if (!err && res)
                     {
                         this.setState(
-                        {
-                            story: res
-                        });
+                            {
+                                story: res
+                            }
+                        );
                     }
                 }
             );
@@ -123,15 +122,13 @@ export default class FlexView extends React.Component
         this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
     }
 
-    static propTypes =
-    {
+    static propTypes = {
         contents: React.PropTypes.array,
         loading: React.PropTypes.bool,
         onTileClick: React.PropTypes.func
     };
 
-    static defaultProps =
-    {
+    static defaultProps = {
         // 日报 ID 列表。 
         contents: [],
 
@@ -146,11 +143,12 @@ export default class FlexView extends React.Component
     {
         const items = map(this.props.contents, (value) =>
         {
-            return (<FlexTile
-                        key={value}
-                        storyID={value}
-                        onClick={this.props.onTileClick}
-                    />
+            return (
+                <FlexTile
+                    key={value}
+                    storyID={value}
+                    onClick={this.props.onTileClick}
+                />
             );
         });
 

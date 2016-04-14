@@ -12,13 +12,11 @@ class ShortcutsBody extends React.Component
         this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
     }
 
-    static propTypes =
-    {
+    static propTypes = {
         keys: React.PropTypes.object
     };
 
-    static defaultProps =
-    {
+    static defaultProps = {
         keys: {}
     };
 
@@ -68,14 +66,12 @@ export default class ShortcutsView extends React.Component
         this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
     }
 
-    static propTypes =
-    {
+    static propTypes = {
         id: React.PropTypes.string,
         keys: React.PropTypes.object
     };
 
-    static defaultProps =
-    {
+    static defaultProps = {
         id: "ShortcutsView",
         keys:
         {
@@ -86,7 +82,7 @@ export default class ShortcutsView extends React.Component
             "←": "选中或切换上一篇",
             "→": "选中或切换下一篇",
             "o/enter": "打开当前所选日报", 
-            "v": "查看知乎讨论",
+            "v": "查看知乎讨论"
         }
     };
 

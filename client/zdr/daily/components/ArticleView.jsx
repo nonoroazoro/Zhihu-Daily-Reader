@@ -7,13 +7,11 @@ import classNames from "classnames";
 
 class ArticleHeader extends React.Component
 {
-    static propTypes =
-    {
+    static propTypes = {
         story: React.PropTypes.object
     };
 
-    static defaultProps =
-    {
+    static defaultProps = {
         story: null
     };
 
@@ -41,7 +39,7 @@ class ArticleHeader extends React.Component
             // 没有图片版权信息时隐藏。
             const classesImageSource = classNames(
                 {
-                    "hide": !this.props.story.imageSource,
+                    "hide": !this.props.story.imageSource
                 }
             );
 
@@ -98,13 +96,11 @@ class ArticleHeader extends React.Component
 
 class ArticleBody extends React.Component
 {
-    static propTypes =
-    {
+    static propTypes = {
         contents: React.PropTypes.array
     };
 
-    static defaultProps =
-    {
+    static defaultProps = {
         contents: []
     };
 
@@ -132,7 +128,7 @@ class ArticleBody extends React.Component
                 const classesAvatar = classNames(
                     "avatar",
                     {
-                        "hide": isEmpty(value.avatar),
+                        "hide": isEmpty(value.avatar)
                     }
                 );
 
@@ -172,14 +168,12 @@ class ArticleBody extends React.Component
 
 export default class ArticleView extends React.Component
 {
-    static propTypes =
-    {
+    static propTypes = {
         id: React.PropTypes.string,
         story: React.PropTypes.object
     };
 
-    static defaultProps =
-    {
+    static defaultProps = {
         id: "ArticleView",
         story: null
     };
