@@ -35,7 +35,8 @@
             "error",
             4
         ],
-        no-unused-vars:
+        "react/no-danger": 1,
+        "no-unused-vars":
         [
             "error",
             {
