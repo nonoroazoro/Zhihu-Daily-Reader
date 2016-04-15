@@ -30,8 +30,8 @@ module.exports = {
             "react-addons-update",
             "react-addons-pure-render-mixin"
         ],
-        zdr: "./zdr",
-        error: "./zdr/common/error_404"
+        zdr: ["./zdr"],
+        error: ["./zdr/common/error_404"]
     },
     output:
     {
