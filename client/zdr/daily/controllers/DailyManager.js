@@ -1,7 +1,7 @@
 ﻿import $          from "jquery";
-import trim       from "lodash/string/trim";
-import isEmpty    from "lodash/lang/isEmpty";
-import isFunction from "lodash/lang/isFunction";
+import trim       from "lodash/trim";
+import isEmpty    from "lodash/isEmpty";
+import isFunction from "lodash/isFunction";
 
 const _stories = {};
 

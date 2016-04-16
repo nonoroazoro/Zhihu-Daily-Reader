@@ -1,7 +1,7 @@
 ﻿import "./res/ArticleView.less";
 
-import map        from "lodash/collection/map";
-import isEmpty    from "lodash/lang/isEmpty";
+import map        from "lodash/map";
+import isEmpty    from "lodash/isEmpty";
 import React      from "react";
 import classNames from "classnames";
 

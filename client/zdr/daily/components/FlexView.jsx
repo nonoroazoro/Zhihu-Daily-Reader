@@ -1,8 +1,8 @@
 ﻿import "./res/FlexView.less";
 
 import React           from "react";
-import isFunction      from "lodash/lang/isFunction";
-import map             from "lodash/collection/map";
+import isFunction      from "lodash/isFunction";
+import map             from "lodash/map";
 import ClassNames      from "classnames";
 import PureRenderMixin from "react-addons-pure-render-mixin";
 
