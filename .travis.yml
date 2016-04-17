@@ -13,6 +13,3 @@ branches:
 cache:
     directories:
         node_modules
-
-script:
-    - npm test
