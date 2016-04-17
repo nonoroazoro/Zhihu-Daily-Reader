@@ -13,7 +13,9 @@ branches:
 install:
     - npm install
 
-script:
-    - npm run startdb
+before_script:
     - sleep 15
+    - mongo mydb_test --eval 'db.addUser("travis", "test");'
+
+script:
     - npm test
