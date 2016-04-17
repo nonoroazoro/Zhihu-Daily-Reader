@@ -8,21 +8,18 @@ describe("controllers/catalog", function ()
 {
     before(function (done)
     {
-        dbhelper.start((err) =>
+        if (dbhelper.connected())
         {
-            if (dbhelper.connected())
+            dbhelper.dropAllCollections(done);
+        }
+        else
+        {
+            dbhelper.connect(function (err)
             {
+                should.not.exist(err);
                 dbhelper.dropAllCollections(done);
-            }
-            else
-            {
-                dbhelper.connect(function (err)
-                {
-                    should.not.exist(err);
-                    dbhelper.dropAllCollections(done);
-                });
-            }
-        });
+            });
+        }
     });
     
     let ids = [];
