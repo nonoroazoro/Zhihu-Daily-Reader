@@ -1,0 +1,16 @@
+﻿language: node_js
+
+node_js:
+    - "5"
+
+services:
+    - mongodb
+
+install:
+    - npm install
+
+before_script:
+    - sleep 15
+
+script:
+    - npm test
