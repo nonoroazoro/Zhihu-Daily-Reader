@@ -6,6 +6,10 @@ node_js:
 services:
     - mongodb
 
+branches:
+  only:
+    - develop
+
 install:
     - npm install
 
