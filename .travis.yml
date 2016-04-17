@@ -7,11 +7,12 @@ services:
     - mongodb
 
 branches:
-  only:
-    - develop
+    only:
+        - develop
 
-install:
-    - npm install
+cache:
+    directories:
+        node_modules
 
 script:
     - npm test
