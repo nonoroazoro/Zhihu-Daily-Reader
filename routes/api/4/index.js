@@ -1,14 +1,19 @@
-﻿const express = require("express");
+﻿/**
+ * API 路由。
+ */
+
+const express = require("express");
 const router = express.Router();
 
-const apis = [
-    "/news",
-    "/imgs",
-];
+const images = require("./images");
+const stories = require("./stories");
 
-apis.forEach((api) =>
-{
-    router.use(api, require("." + api));
-});
+// stories.
+router.get("/news/top", stories.top);
+router.get("/news/before/:date?", stories.before);
+router.get("/news/:id", stories.story);
+
+// images.
+router.get("/imgs/:url", images.image);
 
 module.exports = router;

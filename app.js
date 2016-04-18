@@ -55,13 +55,14 @@ app.use(favicon(__dirname + "/public/favicon.ico"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-// router setup.
-app.use("/", routes);
-
 // static file setup.
 app.use(express.static(__dirname + "/public/", {
     maxAge: 2592000000
 }));
+
+// router setup.
+app.use("/api/4", routes.api);
+app.use("/", routes.web);
 
 // assets map setup.
 app.locals.map = assetsMap;
