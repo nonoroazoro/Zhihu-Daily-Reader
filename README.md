@@ -1,4 +1,4 @@
-# 知乎日报 - 阅读器 [![Dependency Status](https://david-dm.org/nonoroazoro/Zhihu-Daily-Reader.svg?style=flat-square)](https://david-dm.org/nonoroazoro/Zhihu-Daily-Reader)
+# 知乎日报 - 阅读器 [![Dependency Status](https://david-dm.org/nonoroazoro/Zhihu-Daily-Reader/develop.svg?style=flat-square)](https://david-dm.org/nonoroazoro/Zhihu-Daily-Reader/develop)
 
 知乎日报官方不提供 Web 版（网页版），你妹的，那就做一个吧。
 > 离线：自动离线知乎日报（可配置），无法访问 Internet 时也能用啦。
