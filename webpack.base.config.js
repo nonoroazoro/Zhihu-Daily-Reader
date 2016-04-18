@@ -16,12 +16,12 @@ module.exports = {
             "bootstrap",
             
             // to reduce bundle file size.
-            "lodash/collection/map",
-            "lodash/lang/isDate",
-            "lodash/lang/isEmpty",
-            "lodash/lang/isFunction",
-            "lodash/lang/isString",
-            "lodash/string/trim",
+            "lodash/map",
+            "lodash/isDate",
+            "lodash/isEmpty",
+            "lodash/isFunction",
+            "lodash/isString",
+            "lodash/trim",
 
             "moment",
             "mousetrap",

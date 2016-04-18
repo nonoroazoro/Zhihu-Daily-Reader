@@ -1,6 +1,6 @@
 ﻿import moment     from "moment";
-import isDate     from "lodash/lang/isDate";
-import isString   from "lodash/lang/isString";
+import isDate     from "lodash/isDate";
+import isString   from "lodash/isString";
 
 const FormatString = "YYYYMMDD";
 

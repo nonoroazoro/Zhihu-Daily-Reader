@@ -1,8 +1,8 @@
 ﻿import "./res/Carousel.less";
 
 import $               from "jquery";
-import isFunction      from "lodash/lang/isFunction";
-import map             from "lodash/collection/map";
+import isFunction      from "lodash/isFunction";
+import map             from "lodash/map";
 import React           from "react";
 import classNames      from "classnames";
 import PureRenderMixin from "react-addons-pure-render-mixin";

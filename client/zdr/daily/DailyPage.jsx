@@ -3,7 +3,7 @@
 import $               from "jquery";
 import React           from "react";
 import Mousetrap       from "mousetrap";
-import isFunction      from "lodash/lang/isFunction";
+import isFunction      from "lodash/isFunction";
 import ReactUpdate     from "react-addons-update";
 import PureRenderMixin from "react-addons-pure-render-mixin";
 

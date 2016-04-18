@@ -1,7 +1,7 @@
 ﻿import "./res/Preloader.less";
 
-import trim            from "lodash/string/trim";
-import isEmpty         from "lodash/lang/isEmpty";
+import trim            from "lodash/trim";
+import isEmpty         from "lodash/isEmpty";
 import React           from "react";
 import ClassNames      from "classnames";
 import PureRenderMixin from "react-addons-pure-render-mixin";

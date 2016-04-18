@@ -1,6 +1,6 @@
 ﻿import "./res/ShortcutsView.less";
 
-import map             from "lodash/collection/map";
+import map             from "lodash/map";
 import React           from "react";
 import PureRenderMixin from "react-addons-pure-render-mixin";
 
