@@ -36,6 +36,16 @@
             4
         ],
         "react/no-danger": 1,
+        "react/prop-types":
+        [
+            2,
+            {
+                "ignore":
+                [
+                    "children"
+                ]
+            }
+        ],
         "no-unused-vars":
         [
             "error",
