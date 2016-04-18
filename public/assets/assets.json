@@ -1,13 +1,13 @@
 {
   "vendor": {
-    "js": "\\assets\\e19e3d59\\vendor.js"
+    "js": "/assets/7699cdcd/vendor.js"
   },
   "zdr": {
-    "js": "\\assets\\e19e3d59\\zdr.js",
-    "css": "\\assets\\e19e3d59\\res/zdr.css"
+    "js": "/assets/7699cdcd/zdr.js",
+    "css": "/assets/7699cdcd/res/zdr.css"
   },
   "error": {
-    "js": "\\assets\\e19e3d59\\error.js",
-    "css": "\\assets\\e19e3d59\\res/error.css"
+    "js": "/assets/7699cdcd/error.js",
+    "css": "/assets/7699cdcd/res/error.css"
   }
 }
