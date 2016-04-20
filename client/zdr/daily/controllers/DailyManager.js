@@ -3,16 +3,17 @@ import trim       from "lodash/trim";
 import isEmpty    from "lodash/isEmpty";
 import isFunction from "lodash/isFunction";
 
-const _stories = {};
 
 export default class DailyManager
 {
+    static _stories = {};
+
     /**
      * 获取目前已从服务端获取到的所有日报内容的缓存（以日报 id 进行检索，无序，请勿用 index 检索）。
      */
     static getFetchedStories()
     {
-        return _stories;
+        return DailyManager._stories;
     }
 
     /**
@@ -85,7 +86,7 @@ export default class DailyManager
             {
                 return $.get("/api/4/news/" + p_id, (p_data) =>
                 {
-                    _stories[p_id] = p_data;
+                    DailyManager._stories[p_id] = p_data;
                     p_callback(null, p_data);
                 }).fail(() =>
                 {
