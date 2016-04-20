@@ -46,6 +46,7 @@
                 ]
             }
         ],
+        "no-console": 1,
         "no-unused-vars":
         [
             "error",
