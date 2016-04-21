@@ -32,7 +32,7 @@ dbhelper.start((err) =>
             {
                 if (config.crawler.enabled)
                 {
-                    crawler.start();
+                    setTimeout(crawler.start, config.crawler.delay);
                 }
             }
         });
