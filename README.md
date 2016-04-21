@@ -1,9 +1,9 @@
 # 知乎日报 - 阅读器 [![Dependency Status](https://david-dm.org/nonoroazoro/Zhihu-Daily-Reader/develop.svg?style=flat-square)](https://david-dm.org/nonoroazoro/Zhihu-Daily-Reader/develop)
 
-知乎日报官方不提供 Web 版（网页版），你妹的，那就做一个吧。
+知乎日报官方不提供 Web 版（网页版），那做一个玩玩吧。
 > 离线：自动离线知乎日报（可配置），无法访问 Internet 时也能用啦。
 
-> 快捷键：类似 Google Reader，`j/k/v/o/enter` 当然还有方向键，你懂的。
+> 快捷键：类似 Google Reader，`j/k/v/o/enter` 当然还有方向键，你懂的（按下 shift+? 或 h 查看快捷键列表）。
 
 > 支持：`Firefox/Chrome/IE11`。没测 `Opera`，应该可以。
 
@@ -59,8 +59,9 @@
 
 2016年4月13日
 
-- 添加键盘快捷键帮助。
-- 嵌入的外链视频在 Firefox 中无法正常播放，原因可能是同源策略，待解决。
+- 添加键盘快捷键帮助：Shift+? 或 h 打开帮助面板。
+- 在服务启动时延迟启动爬虫，首次打开快多了吧。
+- 嵌入的外链视频在 Firefox 中无法正常播放，待解决。
 
 
 ###<a href="#v1.1.3" id="v1.1.3">1.1.3</a>
