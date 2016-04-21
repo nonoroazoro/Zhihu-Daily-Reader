@@ -56,12 +56,12 @@ export default class DailyManager
         }
         else
         {
-            return $.get("/api/4/news/before/" + p_date, (p_data) =>
+            return $.get(`/api/4/news/before/${p_date}`, (p_data) =>
             {
                 p_callback(null, p_data);
             }).fail(() =>
             {
-                p_callback("/api/4/news/before/" + p_date + " error");
+                p_callback(`/api/4/news/before/${p_date} error`);
             });
         }
     }
@@ -84,7 +84,7 @@ export default class DailyManager
             }
             else
             {
-                return $.get("/api/4/news/" + p_id, (p_data) =>
+                return $.get(`/api/4/news/${p_id}`, (p_data) =>
                 {
                     DailyManager._stories[p_id] = p_data;
                     p_callback(null, p_data);
