@@ -43,7 +43,7 @@ class ArticleHeader extends React.Component
                 }
             );
 
-            const titleRow =
+            const titleRow = (
                 <div className="article-header-title" key="article-header">
                     <button type="button" className="close" data-dismiss="modal">
                         <span>&times;</span>
@@ -53,14 +53,18 @@ class ArticleHeader extends React.Component
                             <a href={this.props.story.shareURL} target="_blank">
                                 <h3>{this.props.story.title}</h3>
                             </a>
-                            <a classNames={classesImageSource} href={"https://www.google.com/search?q=" + this.props.story.imageSource}
-                               target="_blank">
+                            <a
+                                classNames={classesImageSource}
+                                href={"https://www.google.com/search?q=" + this.props.story.imageSource}
+                                target="_blank"
+                            >
                                 <span className="glyphicon glyphicon-copyright-mark" />
                                 {this.props.story.imageSource}
                             </a>
                         </div>
                     </div>
-                </div>;
+                </div>
+            );
             rows.push(titleRow);
     
             if (hasBackgrounds)
@@ -68,10 +72,12 @@ class ArticleHeader extends React.Component
                 const backgroundRows = map(this.props.story.backgrounds, (value, index) =>
                 {
                     return (
-                        <a className="article-backgrounds-content"
+                        <a
+                            className="article-backgrounds-content"
                             href={value.href}
                             target="_blank"
-                            key={"background" + index}>
+                            key={"background" + index}
+                        >
                             <h4>{value.title + "：" + value.text}</h4>
                         </a>
                     );
