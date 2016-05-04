@@ -51,11 +51,13 @@
     <Compile Include="webpack.production.config.js" />
     <Content Include=".babelrc" />
     <Content Include=".eslintrc" />
+    <Content Include=".gitignore" />
     <Content Include=".travis.yml" />
     <Content Include="client\zdr\daily\components\res\ShortcutsView.less" />
     <Content Include="config\default.json" />
     <Content Include="config\development.json" />
     <Content Include="config\production.json" />
+    <Content Include="LICENSE" />
     <Content Include="package.json" />
     <Content Include="client\zdr\common\res\errors.less" />
     <Content Include="client\zdr\common\res\global.less" />
