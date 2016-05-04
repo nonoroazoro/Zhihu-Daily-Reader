@@ -26,16 +26,6 @@ export default class DailyPage extends React.Component
         this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
     }
     
-    _currentLoadedDate = null;
-    _currentIndex = -1;
-    _isLoading = false;
-    _isArticleViewVisible = false;
-    _openShortcutsViewFlag = false;
-
-    _$ArticleView = null;
-    _$ArticleViewContent = null;
-    _$ShortcutsView = null;
-
     state = {
         topStoryIDs: [],
         storyIDs: [],
@@ -65,6 +55,17 @@ export default class DailyPage extends React.Component
         // 1、事件处理。
         this._removeEventHandler();
     }
+
+    _currentLoadedDate = null;
+    _currentIndex = -1;
+
+    _isLoading = false;
+    _isArticleViewVisible = false;
+    _openShortcutsViewFlag = false;
+
+    _$ArticleView = null;
+    _$ArticleViewContent = null;
+    _$ShortcutsView = null;
 
     /**
     * 加载热门日报（Carousel）。
@@ -518,7 +519,8 @@ export default class DailyPage extends React.Component
                 <FlexView
                     onTileClick={this._tileClickHandler.bind(this)}
                     contents={this.state.storyIDs}
-                    loading={this.state.loading} />
+                    loading={this.state.loading}
+                />
                 <ArticleView story={this.state.currentStory} />
                 <ShortcutsView />
             </div>
