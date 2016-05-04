@@ -11,12 +11,6 @@ import DailyManager    from "../controllers/DailyManager";
 
 class FlexTile extends React.Component
 {
-    constructor(p_props)
-    {
-        super(p_props);
-        this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
-    }
-
     static propTypes = {
         storyID: React.PropTypes.number,
         onClick: React.PropTypes.func
@@ -27,9 +21,14 @@ class FlexTile extends React.Component
         onClick: null
     };
 
+    constructor(p_props)
+    {
+        super(p_props);
+        this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
+    }
+
     state = { story: null };
 
-    _request = null;
     componentDidMount()
     {
         if (this.props.storyID)
@@ -60,6 +59,8 @@ class FlexTile extends React.Component
         }
     }
 
+    _request = null;
+
     handleClick(e)
     {
         if (isFunction(this.props.onClick))
@@ -78,21 +79,24 @@ class FlexTile extends React.Component
         if (story)
         {
             // 如果没有 img 要处理，否则不好看。
-            item =
+            item = (
                 <div
                     id={"story" + story.id}
                     className="flex-tile"
-                    ref="self">
+                    ref="self"
+                >
                     <div className="flex-tile-content">
                         <div
                             className="flex-tile-picture"
                             style={{backgroundImage: "url(" + story.image + ")"}}
-                            onClick={this.handleClick.bind(this)} />
+                            onClick={this.handleClick.bind(this)}
+                        />
                         <div className="flex-tile-title">
                             <a
                                 className="flex-tile-link"
                                 href="javascript:;"
-                                onClick={this.handleClick.bind(this)}>
+                                onClick={this.handleClick.bind(this)}
+                            >
                                 {story.title}
                             </a>
                         </div>
@@ -108,7 +112,8 @@ class FlexTile extends React.Component
                             </a>
                         </div>
                     </div>
-                </div>;
+                </div>
+            );
         }
         return item;
     }
@@ -116,12 +121,6 @@ class FlexTile extends React.Component
 
 export default class FlexView extends React.Component
 {
-    constructor(p_props)
-    {
-        super(p_props);
-        this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
-    }
-
     static propTypes = {
         contents: React.PropTypes.array,
         loading: React.PropTypes.bool,
@@ -138,6 +137,12 @@ export default class FlexView extends React.Component
         // 点击事件。
         onTileClick: null
     };
+
+    constructor(p_props)
+    {
+        super(p_props);
+        this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
+    }
 
     render()
     {
