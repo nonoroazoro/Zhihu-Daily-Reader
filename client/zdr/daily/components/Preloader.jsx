@@ -8,15 +8,14 @@ import PureRenderMixin from "react-addons-pure-render-mixin";
 
 export default class Preloader extends React.Component
 {
+    static propTypes = { className: React.PropTypes.string };
+    static defaultProps = { className: null };
+
     constructor(p_props)
     {
         super(p_props);
         this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
     }
-
-    static propTypes = { className: React.PropTypes.string };
-
-    static defaultProps = { className: null };
 
     render()
     {
@@ -30,11 +29,11 @@ export default class Preloader extends React.Component
 
         return (
             <div className={classes}>
-                <span className="wave1"/>
-                <span className="wave2"/>
-                <span className="wave3"/>
-                <span className="wave4"/>
-                <span className="wave5"/>
+                <span className="wave1" />
+                <span className="wave2" />
+                <span className="wave3" />
+                <span className="wave4" />
+                <span className="wave5" />
             </div>
         );
     }
