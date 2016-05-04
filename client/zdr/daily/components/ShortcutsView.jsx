@@ -6,19 +6,14 @@ import PureRenderMixin from "react-addons-pure-render-mixin";
 
 class ShortcutsBody extends React.Component
 {
+    static propTypes = { keys: React.PropTypes.object };
+    static defaultProps = { keys: {} };
+    
     constructor(p_props)
     {
         super(p_props);
         this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
     }
-
-    static propTypes = {
-        keys: React.PropTypes.object
-    };
-
-    static defaultProps = {
-        keys: {}
-    };
 
     render()
     {
@@ -33,7 +28,7 @@ class ShortcutsBody extends React.Component
             );
         });
 
-        const table =
+        const table = (
             <table className="table table-striped">
                 <thead>
                     <tr>
@@ -45,7 +40,8 @@ class ShortcutsBody extends React.Component
                 <tbody>
                    {rows}
                 </tbody>
-            </table>;
+            </table>
+        );
 
         return (
             <div className="ShortcutsBody modal-body">
@@ -60,12 +56,6 @@ class ShortcutsBody extends React.Component
  */
 export default class ShortcutsView extends React.Component
 {
-    constructor(p_props)
-    {
-        super(p_props);
-        this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
-    }
-
     static propTypes = {
         id: React.PropTypes.string,
         keys: React.PropTypes.object
@@ -85,6 +75,12 @@ export default class ShortcutsView extends React.Component
             "v": "查看知乎讨论"
         }
     };
+
+    constructor(p_props)
+    {
+        super(p_props);
+        this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
+    }
 
     render()
     {
