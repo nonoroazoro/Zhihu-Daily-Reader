@@ -3,7 +3,7 @@
 import React           from "react";
 import isFunction      from "lodash/isFunction";
 import map             from "lodash/map";
-import ClassNames      from "classnames";
+import cs              from "classnames";
 import PureRenderMixin from "react-addons-pure-render-mixin";
 
 import Preloader       from "./Preloader";
@@ -81,14 +81,14 @@ class FlexTile extends React.Component
             // 如果没有 img 要处理，否则不好看。
             item = (
                 <div
-                    id={"story" + story.id}
+                    id={`story${story.id}`}
                     className="flex-tile"
                     ref="self"
                 >
                     <div className="flex-tile-content">
                         <div
                             className="flex-tile-picture"
-                            style={{backgroundImage: "url(" + story.image + ")"}}
+                            style={{ backgroundImage: `url(${story.image})` }}
                             onClick={this.handleClick.bind(this)}
                         />
                         <div className="flex-tile-title">
@@ -128,7 +128,7 @@ export default class FlexView extends React.Component
     };
 
     static defaultProps = {
-        // 日报 ID 列表。 
+        // 日报 ID 列表。
         contents: [],
 
         // 加载状态。
@@ -157,7 +157,7 @@ export default class FlexView extends React.Component
             );
         });
 
-        const classes = ClassNames(
+        const classes = cs(
             "flex-preloader",
             {
                 "loading": this.props.loading

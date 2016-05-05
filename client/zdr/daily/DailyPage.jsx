@@ -4,13 +4,13 @@ import $               from "jquery";
 import React           from "react";
 import Mousetrap       from "mousetrap";
 import isFunction      from "lodash/isFunction";
-import ReactUpdate     from "react-addons-update";
+import reactUpdate     from "react-addons-update";
 import PureRenderMixin from "react-addons-pure-render-mixin";
 
 import Utils           from "./controllers/Utils";
 import DailyManager    from "./controllers/DailyManager";
 
-//import Carousel        from "./components/Carousel";
+// import Carousel        from "./components/Carousel";
 import FlexView        from "./components/FlexView";
 import ArticleView     from "./components/ArticleView";
 import ShortcutsView   from "./components/ShortcutsView";
@@ -25,7 +25,7 @@ export default class DailyPage extends React.Component
         super(p_props);
         this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
     }
-    
+
     state = {
         topStoryIDs: [],
         storyIDs: [],
@@ -41,7 +41,7 @@ export default class DailyPage extends React.Component
         this._$ShortcutsView = $("#ShortcutsView");
 
         // 2、加载热门日报（不好看。。。匿了吧-_-）。
-        //this._loadTopStories();
+        // this._loadTopStories();
 
         // 3、加载最新日报。
         this._loadOtherStories();
@@ -221,7 +221,7 @@ export default class DailyPage extends React.Component
         {
             if (this._isArticleViewVisible)
             {
-                $(".view-more a").map((index, value) =>
+                $(".view-more a").each((index, value) =>
                 {
                     value.click();
                 });
@@ -300,7 +300,7 @@ export default class DailyPage extends React.Component
         if (index >= 0)
         {
             const story = DailyManager.getFetchedStories()[this.state.storyIDs[index]];
-            if(this._isArticleViewVisible)
+            if (this._isArticleViewVisible)
             {
                 this._updateArticle(story, () =>
                 {
@@ -321,7 +321,7 @@ export default class DailyPage extends React.Component
     _scrollHandler(e)
     {
         // 185 是 FlexTile 的一半高度。
-        if (!this._isLoading && ($(document).scrollTop() >= $(document).height()-$(window).height() - 185))
+        if (!this._isLoading && ($(document).scrollTop() >= $(document).height() - $(window).height() - 185))
         {
             this._isLoading = true;
             this._loadPrevStories(() =>
@@ -346,7 +346,7 @@ export default class DailyPage extends React.Component
     {
         this.setState(
             {
-                storyIDs: ReactUpdate(this.state.storyIDs,
+                storyIDs: reactUpdate(this.state.storyIDs,
                     {
                         $push: p_storyIDs
                     }
@@ -462,7 +462,7 @@ export default class DailyPage extends React.Component
     _setCurrentIndex(p_nextIndex, p_ensureTileVisible)
     {
         const prevIndex = this._currentIndex;
-        if (p_nextIndex != prevIndex)
+        if (p_nextIndex !== prevIndex)
         {
             this._currentIndex = p_nextIndex;
             this._updateTileStyle(prevIndex, p_nextIndex, p_ensureTileVisible);
@@ -477,10 +477,10 @@ export default class DailyPage extends React.Component
     {
         if (p_prevIndex >= 0)
         {
-            $("#story" + this.state.storyIDs[p_prevIndex]).removeClass("current");
+            $(`#story${this.state.storyIDs[p_prevIndex]}`).removeClass("current");
         }
 
-        const $newTile = $("#story" + this.state.storyIDs[p_nextIndex]);
+        const $newTile = $(`#story${this.state.storyIDs[p_nextIndex]}`);
         $newTile.addClass("current");
 
         // 仅当明确指定不自动调整时，才不执行。未指定，或指定为 true 时都会自动调整。
@@ -510,9 +510,9 @@ export default class DailyPage extends React.Component
     render()
     {
         // 幻灯片（不好看。。。隐藏了吧-_-）。
-        //<div className="CarouselContainer container-fluid">
-        //    <Carousel onClick={this._carouselClickHandler.bind(this)} storyIDs={this.state.topStoryIDs} />
-        //</div>
+        // <div className="CarouselContainer container-fluid">
+        //     <Carousel onClick={this._carouselClickHandler.bind(this)} storyIDs={this.state.topStoryIDs} />
+        // </div>
 
         return (
             <div className="DailyPage container-fluid">

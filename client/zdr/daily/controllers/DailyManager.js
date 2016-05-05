@@ -3,7 +3,6 @@ import trim       from "lodash/trim";
 import isEmpty    from "lodash/isEmpty";
 import isFunction from "lodash/isFunction";
 
-
 export default class DailyManager
 {
     static _stories = {};
@@ -38,30 +37,32 @@ export default class DailyManager
      */
     static getStoryIDs(p_date, p_callback)
     {
-        if (isFunction(p_date))
+        let date = p_date;
+        let callback = p_callback;
+        if (isFunction(date))
         {
-            p_callback = p_date;
-            p_date = null;
+            callback = date;
+            date = null;
         }
-    
-        if (isEmpty(trim(p_date)))
+
+        if (isEmpty(trim(date)))
         {
             return $.get("/api/4/news/before", (p_data) =>
             {
-                p_callback(null, p_data);
+                callback(null, p_data);
             }).fail(() =>
             {
-                p_callback("/api/4/news/before error");
+                callback("/api/4/news/before error");
             });
         }
         else
         {
-            return $.get(`/api/4/news/before/${p_date}`, (p_data) =>
+            return $.get(`/api/4/news/before/${date}`, (p_data) =>
             {
-                p_callback(null, p_data);
+                callback(null, p_data);
             }).fail(() =>
             {
-                p_callback(`/api/4/news/before/${p_date} error`);
+                callback(`/api/4/news/before/${date} error`);
             });
         }
     }
@@ -94,5 +95,7 @@ export default class DailyManager
                 });
             }
         }
+
+        return null;
     }
 }

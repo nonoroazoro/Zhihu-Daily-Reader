@@ -31,7 +31,7 @@ export default class Utils
                 m = moment(new Date(p_date));
             }
         }
-    
+
         if (m)
         {
             return m.isValid() ? m.format(FormatString) : null;

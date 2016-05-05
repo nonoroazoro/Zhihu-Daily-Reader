@@ -3,7 +3,7 @@
 import map        from "lodash/map";
 import isEmpty    from "lodash/isEmpty";
 import React      from "react";
-import classNames from "classnames";
+import cs         from "classnames";
 
 class ArticleHeader extends React.Component
 {
@@ -21,7 +21,7 @@ class ArticleHeader extends React.Component
         if (this.props.story)
         {
             const hasBackgrounds = this.props.story.backgrounds.length > 0;
-            const classesHeaderPicture = classNames(
+            const classesHeaderPicture = cs(
                 "article-header-picture",
                 {
                     "radius-all": !hasBackgrounds,
@@ -29,15 +29,15 @@ class ArticleHeader extends React.Component
                 }
             );
 
-            const classesHeaderCaption = classNames(
+            const classesHeaderCaption = cs(
                 "article-header-caption",
                 {
                     "radius-bottom": !hasBackgrounds
                 }
             );
-        
+
             // 没有图片版权信息时隐藏。
-            const classesImageSource = classNames(
+            const classesImageSource = cs(
                 {
                     "hide": !this.props.story.imageSource
                 }
@@ -48,37 +48,37 @@ class ArticleHeader extends React.Component
                     <button type="button" className="close" data-dismiss="modal">
                         <span>&times;</span>
                     </button>
-                    <div className={classesHeaderPicture} style={{backgroundImage: "url(" + this.props.story.image + ")"}}>
+                    <div className={classesHeaderPicture} style={{ backgroundImage: `url(${this.props.story.image})` }}>
                         <div className={classesHeaderCaption}>
                             <a href={this.props.story.shareURL} target="_blank">
                                 <h3>{this.props.story.title}</h3>
                             </a>
                             <a
-                                classNames={classesImageSource}
-                                href={"https://www.google.com/search?q=" + this.props.story.imageSource}
+                                className={classesImageSource}
+                                href={`https://www.google.com/search?q=${this.props.story.imageSource}`}
                                 target="_blank"
                             >
                                 <span className="glyphicon glyphicon-copyright-mark" />
-                                {this.props.story.imageSource}
+                                    {this.props.story.imageSource}
                             </a>
                         </div>
                     </div>
                 </div>
             );
             rows.push(titleRow);
-    
+
             if (hasBackgrounds)
-            {
+                                    {
                 const backgroundRows = map(this.props.story.backgrounds, (value, index) =>
-                {
+                                    {
                     return (
                         <a
                             className="article-backgrounds-content"
                             href={value.href}
                             target="_blank"
-                            key={"background" + index}
+                            key={`background-${index}`}
                         >
-                            <h4>{value.title + "：" + value.text}</h4>
+                            <h4>{`${value.title}：${value.text}`}</h4>
                         </a>
                     );
                 });
@@ -124,14 +124,14 @@ class ArticleBody extends React.Component
             // 1、标题。
             if (!isEmpty(item.title))
             {
-                innerRows.push(<h3 className="question-title" key={"question-title"+i}>{item.title}</h3>);
+                innerRows.push(<h3 className="question-title" key={`question-title-${i}`}>{item.title}</h3>);
             }
 
             // 2、答案。
             const answers = map(item.answers, (value, index) =>
             {
                 // 没有作者图片时隐藏。
-                const classesAvatar = classNames(
+                const classesAvatar = cs(
                     "avatar",
                     {
                         "hide": isEmpty(value.avatar)
@@ -139,28 +139,28 @@ class ArticleBody extends React.Component
                 );
 
                 return (
-                    <div className="question-answer" key={"question-answer-" + i + "-" + index}>
+                    <div className="question-answer" key={`question-answer-${i}-${index}`}>
                         <div className="question-answer-meta">
                             <img className={classesAvatar} src={value.avatar} />
                             <span className="author">{value.name}</span>
                             <span className="bio">{value.bio}</span>
                         </div>
-                        <div className="question-answer-content" dangerouslySetInnerHTML={{__html: value.content}} />
+                        <div className="question-answer-content" dangerouslySetInnerHTML={{ __html: value.content }} />
                     </div>
                 );
             });
             innerRows.push(...answers);
 
             questions.push(
-                <div className="question" key={"question"+i}>
+                <div className="question" key={`question-${i}`}>
                     {innerRows}
                 </div>
             );
 
             // 分隔符。
-            if (i < length -1)
+            if (i < length - 1)
             {
-                questions.push(<hr className="question-separator" key={"question-separator"+i} />);
+                questions.push(<hr className="question-separator" key={`question-separator-${i}`} />);
             }
         }
 

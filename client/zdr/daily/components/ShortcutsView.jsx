@@ -8,7 +8,7 @@ class ShortcutsBody extends React.Component
 {
     static propTypes = { keys: React.PropTypes.object };
     static defaultProps = { keys: {} };
-    
+
     constructor(p_props)
     {
         super(p_props);
@@ -21,7 +21,7 @@ class ShortcutsBody extends React.Component
         {
             return (
                 <tr key={index}>
-                    <th scope="row">{index+1}</th>
+                    <th scope="row">{index + 1}</th>
                     <td>{key}</td>
                     <td>{this.props.keys[key]}</td>
                 </tr>
@@ -71,7 +71,7 @@ export default class ShortcutsView extends React.Component
             "k": "打开或切换至下一篇",
             "←": "选中或切换上一篇",
             "→": "选中或切换下一篇",
-            "o/enter": "打开当前所选日报", 
+            "o/enter": "打开当前所选日报",
             "v": "查看知乎讨论"
         }
     };
