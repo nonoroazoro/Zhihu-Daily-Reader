@@ -163,15 +163,32 @@ module.exports.fetchStory = function (p_id, p_callback)
                         };
                     }).get();
 
+                    let src;
+                    let links;
+                    let avatar;
+                    let question;
                     story.contents = $(".content-inner>.question").map((i, e) =>
                     {
-                        const question = {};
+                        question = {};
                         question.title = $(e).children(".question-title").text();
+
+                        links = $(e).find(".view-more>a");
+                        if (links.length > 0)
+                        {
+                            question.link = {
+                                href: links.attr("href"),
+                                text: links.text(),
+                            };
+
+                            // 删除多余的外链。
+                            $(e).find(".view-more").remove();
+                        }
+
                         question.answers = $(e).children(".answer").map((i, e) =>
                         {
                             $(e).find(".content img").each((i, e) =>
                             {
-                                let src = $(e).attr("src");
+                                src = $(e).attr("src");
                                 if (!_.isEmpty(src))
                                 {
                                     images.push(src);
@@ -179,7 +196,7 @@ module.exports.fetchStory = function (p_id, p_callback)
                                 }
                             });
 
-                            let avatar = $(e).find(".meta>.avatar").attr("src");
+                            avatar = $(e).find(".meta>.avatar").attr("src");
                             if (_.isEmpty(avatar))
                             {
                                 avatar = "";
