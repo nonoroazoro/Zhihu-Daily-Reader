@@ -320,8 +320,8 @@ export default class DailyPage extends React.Component
     */
     _scrollHandler(e)
     {
-        // 185 是 FlexTile 的一半高度。
-        if (!this._isLoading && ($(document).scrollTop() >= $(document).height() - $(window).height() - 185))
+        // 370 是 FlexTile 的高度。
+        if (!this._isLoading && ($(document).scrollTop() >= $(document).height() - $(window).height() - 370))
         {
             this._isLoading = true;
             this._loadPrevStories(() =>
