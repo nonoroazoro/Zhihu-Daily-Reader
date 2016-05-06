@@ -14,11 +14,11 @@
 
 ## 都用了啥？
 
-- **FRONT **：[react](http://facebook.github.io/react/)
-- **BACK  **：[node](https://nodejs.org)、[express](http://expressjs.com/)、[mongodb](https://www.mongodb.org/)
+- **FRONT** ：[react](http://facebook.github.io/react/)
+- **BACK**  ：[node](https://nodejs.org)、[express](http://expressjs.com/)、[mongodb](https://www.mongodb.org/)
 - **LINTER**：[eslint](http://eslint.org/)、[eslint-config-zoro](https://github.com/nonoroazoro/eslint-config-zoro)
 - **BUNDLE**：[webpack](https://webpack.github.io/)
-- **CI    **：[travis](https://travis-ci.org/)、[mocha](https://mochajs.org/)、[should](https://github.com/shouldjs/should.js)
+- **CI**    ：[travis](https://travis-ci.org/)、[mocha](https://mochajs.org/)、[should](https://github.com/shouldjs/should.js)
 
 ## 用法
 
