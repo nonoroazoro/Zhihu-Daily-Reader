@@ -3,8 +3,9 @@
 const path = require("path");
 const config = require("config");
 const express = require("express");
-const bodyParser = require("body-parser");
 const favicon = require("serve-favicon");
+const bodyParser = require("body-parser");
+const compression = require("compression");
 
 const routes = require("./routes");
 const crawler = require("./controllers/crawler");
@@ -31,7 +32,7 @@ dbhelper.start((err) =>
             {
                 if (config.crawler.enabled)
                 {
-                    crawler.start();
+                    setTimeout(crawler.start, config.crawler.delay);
                 }
             }
         });
@@ -45,19 +46,23 @@ const app = express();
 app.set("views", __dirname + "/views/");
 app.set("view engine", "jade");
 
+// compression.
+app.use(compression());
+
 // favicon setup.
 app.use(favicon(__dirname + "/public/favicon.ico"));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-// router setup.
-app.use("/", routes);
-
 // static file setup.
 app.use(express.static(__dirname + "/public/", {
     maxAge: 2592000000
 }));
+
+// router setup.
+app.use("/api/4", routes.api);
+app.use("/", routes.web);
 
 // assets map setup.
 app.locals.map = assetsMap;

@@ -1,7 +1,8 @@
 ﻿import "./res/Carousel.less";
 
 import $               from "jquery";
-import _               from "lodash";
+import isFunction      from "lodash/isFunction";
+import map             from "lodash/map";
 import React           from "react";
 import classNames      from "classnames";
 import PureRenderMixin from "react-addons-pure-render-mixin";
@@ -11,6 +12,12 @@ import PureRenderMixin from "react-addons-pure-render-mixin";
  */
 class CarouselIndicator extends React.Component
 {
+    static propTypes =
+    {
+        length: React.PropTypes.number,
+        target: React.PropTypes.string
+    };
+
     static defaultProps =
     {
         length: 0,
@@ -52,15 +59,21 @@ class CarouselIndicator extends React.Component
  */
 class CarouselInner extends React.Component
 {
+    static propTypes =
+    {
+        storyIDs: React.PropTypes.array,
+        onClick: React.PropTypes.func
+    };
+
     static defaultProps =
     {
-        indexes: [],
+        storyIDs: [],
         onClick: null
     };
 
     handleClick(p_storyID, e)
     {
-        if (_.isFunction(this.props.onClick))
+        if (isFunction(this.props.onClick))
         {
             this.props.onClick(
             {
@@ -71,10 +84,12 @@ class CarouselInner extends React.Component
 
     render()
     {
-        const rows = _.map(this.props.indexes, (value, index) =>
+        const rows = map(this.props.storyIDs, (value, index) =>
         {
             return (
-                <div className={index == 0 ? "item active" : "item"} key={"slide" + index}>
+                <div
+                    className={index == 0 ? "item active" : "item"}
+                    key={index}>
                     <div
                         className="carousel-picture"
                         onClick={this.handleClick.bind(this, value.id)}
@@ -87,7 +102,9 @@ class CarouselInner extends React.Component
         });
 
         return (
-            <div className="CarouselInner carousel-inner" role="listbox">
+            <div
+                className="CarouselInner carousel-inner"
+                role="listbox">
                 {rows}
             </div>
         );
@@ -99,6 +116,12 @@ class CarouselInner extends React.Component
  */
 class CarouselControls extends React.Component
 {
+    static propTypes =
+    {
+        length: React.PropTypes.number,
+        target: React.PropTypes.string
+    };
+
     static defaultProps =
     {
         length: 0,
@@ -149,17 +172,24 @@ export default class Carousel extends React.Component
         this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
     }
 
+    static propTypes =
+    {
+        id: React.PropTypes.string,
+        storyIDs: React.PropTypes.array,
+        onClick: React.PropTypes.func
+    };
+
     static defaultProps =
     {
         id: "Carousel",
-        indexes: [],
+        storyIDs: [],
         onClick: null
     };
 
     render()
     {
-        const indexes = this.props.indexes || [];
-        const length = indexes.length;
+        const storyIDs = this.props.storyIDs || [];
+        const length = storyIDs.length;
         const target = "#" + this.props.id;
 
         // 无内容时隐藏。
@@ -182,7 +212,7 @@ export default class Carousel extends React.Component
         return (
             <div id={this.props.id} className={carouselClassNames} data-ride="carousel">
                 <CarouselIndicator target={target} length={length} />
-                <CarouselInner onClick={this.props.onClick} indexes={indexes} />
+                <CarouselInner onClick={this.props.onClick} storyIDs={storyIDs} />
                 <CarouselControls className={controlsClassNames} target={target} length={length} />
             </div>
         );

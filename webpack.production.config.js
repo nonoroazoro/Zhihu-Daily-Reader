@@ -2,9 +2,9 @@
 var webpack = require("webpack");
 var config = require("./webpack.base.config");
 
-var hash = "/[hash:8]/";
+var hash = "[hash:8]/";
 config.output.path = path.join(config.output.path, hash);
-config.output.publicPath = path.join(config.output.publicPath, hash);
+config.output.publicPath = config.output.publicPath + hash;
 
 config.plugins.push(
     new webpack.DefinePlugin(

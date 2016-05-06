@@ -175,7 +175,7 @@ function _cacheStoryIDsTask(p_res, p_callback)
             p_callback(null, p_res);
         });
     }
-};
+}
 
 /**
  * 对中间结果进行预处理：移除已离线的日报。
@@ -205,7 +205,7 @@ function _preprocessTask(p_res, p_callback)
         }
         p_callback(null, p_res);
     });
-};
+}
 
 /**
  * 离线知乎日报。
@@ -234,4 +234,4 @@ function _cacheStoriesTask(p_res, p_callback)
             p_callback(null, result);
         }
     );
-};
+}

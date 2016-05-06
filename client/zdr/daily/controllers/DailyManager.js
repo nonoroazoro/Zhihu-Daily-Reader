@@ -1,16 +1,18 @@
-﻿import _ from "lodash";
-import $ from "jquery";
-
-const _stories = {};
+﻿import $          from "jquery";
+import trim       from "lodash/trim";
+import isEmpty    from "lodash/isEmpty";
+import isFunction from "lodash/isFunction";
 
 export default class DailyManager
 {
+    static _stories = {};
+
     /**
      * 获取目前已从服务端获取到的所有日报内容的缓存（以日报 id 进行检索，无序，请勿用 index 检索）。
      */
     static getFetchedStories()
     {
-        return _stories;
+        return DailyManager._stories;
     }
 
     /**
@@ -35,30 +37,32 @@ export default class DailyManager
      */
     static getStoryIDs(p_date, p_callback)
     {
-        if (_.isFunction(p_date))
+        let date = p_date;
+        let callback = p_callback;
+        if (isFunction(date))
         {
-            p_callback = p_date;
-            p_date = null;
+            callback = date;
+            date = null;
         }
-    
-        if (_.isEmpty(_.trim(p_date)))
+
+        if (isEmpty(trim(date)))
         {
             return $.get("/api/4/news/before", (p_data) =>
             {
-                p_callback(null, p_data);
+                callback(null, p_data);
             }).fail(() =>
             {
-                p_callback("/api/4/news/before error");
+                callback("/api/4/news/before error");
             });
         }
         else
         {
-            return $.get("/api/4/news/before/" + p_date, (p_data) =>
+            return $.get(`/api/4/news/before/${date}`, (p_data) =>
             {
-                p_callback(null, p_data);
+                callback(null, p_data);
             }).fail(() =>
             {
-                p_callback("/api/4/news/before/" + p_date + " error");
+                callback(`/api/4/news/before/${date} error`);
             });
         }
     }
@@ -70,20 +74,20 @@ export default class DailyManager
      */
     static getStory(p_id, p_callback)
     {
-        if (_.isFunction(p_callback))
+        if (isFunction(p_callback))
         {
-            if (_.isEmpty(_.trim(p_id)))
+            if (isEmpty(trim(p_id)))
             {
-                if (_.isFunction(p_callback))
+                if (isFunction(p_callback))
                 {
                     p_callback("p_id must not be null");
                 }
             }
             else
             {
-                return $.get("/api/4/news/" + p_id, (p_data) =>
+                return $.get(`/api/4/news/${p_id}`, (p_data) =>
                 {
-                    _stories[p_id] = p_data;
+                    DailyManager._stories[p_id] = p_data;
                     p_callback(null, p_data);
                 }).fail(() =>
                 {
@@ -91,5 +95,7 @@ export default class DailyManager
                 });
             }
         }
+
+        return null;
     }
 }

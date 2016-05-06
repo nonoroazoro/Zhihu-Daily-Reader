@@ -1,0 +1,15 @@
+﻿language: node_js
+
+node_js:
+    - "5"
+
+services:
+    - mongodb
+
+branches:
+    only:
+        - develop
+
+cache:
+    directories:
+        node_modules

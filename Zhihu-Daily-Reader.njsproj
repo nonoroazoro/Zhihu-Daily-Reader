@@ -18,6 +18,7 @@
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
   <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
   <ItemGroup>
+    <Compile Include="client\zdr\daily\components\ShortcutsView.jsx" />
     <Compile Include="client\zdr\daily\controllers\DailyManager.js" />
     <Compile Include="client\zdr\daily\controllers\Utils.js" />
     <Compile Include="controllers\catalog.js" />
@@ -33,6 +34,11 @@
     <Compile Include="models\status.js" />
     <Compile Include="models\story.js" />
     <Compile Include="models\catalog.js" />
+    <Compile Include="routes\api\4\images.js" />
+    <Compile Include="routes\api\4\stories.js" />
+    <Compile Include="routes\api\4\index.js" />
+    <Compile Include="routes\web\index.js" />
+    <Compile Include="routes\web\site.js" />
     <Compile Include="test\controllers\catalog.test.js" />
     <Compile Include="test\controllers\crawler\daily.test.js" />
     <Compile Include="test\controllers\daily.test.js" />
@@ -44,9 +50,14 @@
     <Compile Include="webpack.config.js" />
     <Compile Include="webpack.production.config.js" />
     <Content Include=".babelrc" />
+    <Content Include=".eslintrc" />
+    <Content Include=".gitignore" />
+    <Content Include=".travis.yml" />
+    <Content Include="client\zdr\daily\components\res\ShortcutsView.less" />
     <Content Include="config\default.json" />
     <Content Include="config\development.json" />
     <Content Include="config\production.json" />
+    <Content Include="LICENSE" />
     <Content Include="package.json" />
     <Content Include="client\zdr\common\res\errors.less" />
     <Content Include="client\zdr\common\res\global.less" />
@@ -86,15 +97,10 @@
     <Compile Include="controllers\proxy\daily.js" />
     <Compile Include="client\zdr\common\error_404.jsx" />
     <Compile Include="client\zdr\index.jsx" />
-    <Compile Include="routes\api\4\news\before.js" />
-    <Compile Include="routes\api\4\news\index.js" />
-    <Compile Include="routes\api\4\news\top.js" />
-    <Compile Include="routes\api\4\imgs.js" />
     <Compile Include="routes\index.js" />
     <Content Include="views\index.jade" />
     <Content Include="public\favicon.ico" />
     <Content Include="client\zdr\res\index.less" />
-    <Compile Include="routes\api\4\index.js" />
     <Content Include="views\templates\layout.jade" />
   </ItemGroup>
   <ItemGroup>
@@ -110,6 +116,7 @@
     <Folder Include="public\vendors\bootstrap\" />
     <Folder Include="public\vendors\bootstrap\css\" />
     <Folder Include="public\vendors\bootstrap\fonts\" />
+    <Folder Include="routes\web\" />
     <Folder Include="screenshots\" />
     <Folder Include="public" />
     <Folder Include="client\zdr\common\res\img\" />
@@ -127,7 +134,6 @@
     <Folder Include="routes" />
     <Folder Include="routes\api" />
     <Folder Include="routes\api\4\" />
-    <Folder Include="routes\api\4\news\" />
     <Folder Include="test\" />
     <Folder Include="test\controllers\" />
     <Folder Include="test\controllers\crawler\" />

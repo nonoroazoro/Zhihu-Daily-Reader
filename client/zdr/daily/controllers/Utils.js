@@ -1,5 +1,6 @@
-﻿import _      from "lodash";
-import moment from "moment";
+﻿import moment     from "moment";
+import isDate     from "lodash/isDate";
+import isString   from "lodash/isString";
 
 const FormatString = "YYYYMMDD";
 
@@ -18,11 +19,11 @@ export default class Utils
     static convertToZhihuDate(p_date)
     {
         let m = null;
-        if (_.isDate(p_date))
+        if (isDate(p_date))
         {
             m = moment(p_date);
         }
-        else if (_.isString(p_date))
+        else if (isString(p_date))
         {
             m = Utils.convertZhihuDateToMoment(p_date);
             if (!m.isValid())
@@ -30,7 +31,7 @@ export default class Utils
                 m = moment(new Date(p_date));
             }
         }
-    
+
         if (m)
         {
             return m.isValid() ? m.format(FormatString) : null;

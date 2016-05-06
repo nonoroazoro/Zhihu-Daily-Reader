@@ -12,10 +12,12 @@ class NavbarHeader extends React.Component
     {
         return (
             <div className="navbar-header">
-                <button type="button"
-                        className="navbar-toggle collapsed"
-                        data-toggle="collapse"
-                        data-target="#NavbarContent">
+                <button
+                    type="button"
+                    className="navbar-toggle collapsed"
+                    data-toggle="collapse"
+                    data-target="#NavbarContent"
+                >
                     <span className="sr-only">导航</span>
                     <span className="icon-bar" />
                     <span className="icon-bar" />
@@ -39,7 +41,8 @@ class NavbarContent extends React.Component
         return (
             <div
                 id="NavbarContent"
-                className="navbar-collapse collapse">
+                className="navbar-collapse collapse"
+            >
                 <ul className="nav navbar-nav navbar-right">
                     <li className="active"><a href="#">日报</a></li>
                     <li className="disabled"><a href="#">专栏</a></li>

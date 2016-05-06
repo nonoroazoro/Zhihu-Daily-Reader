@@ -1,6 +1,7 @@
 ﻿var path = require("path");
 var webpack = require("webpack");
 var AssetsPlugin = require("assets-webpack-plugin");
+var CleanWebpackPlugin = require("clean-webpack-plugin");
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 var mainPath = path.resolve(__dirname, "./client/");
@@ -13,17 +14,24 @@ module.exports = {
         vendor: [
             "jquery",
             "bootstrap",
-            "lodash",
+            
+            // to reduce bundle file size.
+            "lodash/map",
+            "lodash/isDate",
+            "lodash/isEmpty",
+            "lodash/isFunction",
+            "lodash/isString",
+            "lodash/trim",
+
             "moment",
             "mousetrap",
-            "classnames",
             "react",
             "react-dom",
             "react-addons-update",
             "react-addons-pure-render-mixin"
         ],
-        zdr: "./zdr",
-        error: "./zdr/common/error_404"
+        zdr: ["./zdr"],
+        error: ["./zdr/common/error_404"]
     },
     output:
     {
@@ -72,6 +80,7 @@ module.exports = {
         ]
     },
     plugins: [
+        new CleanWebpackPlugin([buildPath]),
         new AssetsPlugin(
         {
             filename: "assets.json",

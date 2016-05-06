@@ -13,3 +13,6 @@
 /db/
 /node_modules/
 /obj/
+
+/typings/
+tsd.json
