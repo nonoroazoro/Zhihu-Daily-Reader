@@ -521,7 +521,11 @@ export default class DailyPage extends React.Component
                     contents={this.state.storyIDs}
                     loading={this.state.loading}
                 />
-                <ArticleView story={this.state.currentStory} />
+                <ArticleView
+                    story={this.state.currentStory}
+                    onPrevClick={this._keydownShowPrevStory.bind(this)}
+                    onNextClick={this._keydownShowNextStory.bind(this)}
+                />
                 <ShortcutsView />
             </div>
         );
