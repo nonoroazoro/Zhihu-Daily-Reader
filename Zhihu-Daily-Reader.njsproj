@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{a045bf79-9a21-4354-8f85-5fb0d9df5c1b}</ProjectGuid>
     <ProjectHome />
-    <ProjectView>ProjectFiles</ProjectView>
+    <ProjectView>ShowAllFiles</ProjectView>
     <StartupFile>bin\www.js</StartupFile>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
@@ -86,8 +86,9 @@
     <Content Include="public\vendors\bootstrap\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="public\vendors\bootstrap\fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="README.md" />
-    <Content Include="screenshots\1.jpg" />
-    <Content Include="screenshots\2.jpg" />
+    <Content Include="screenshots\1.png" />
+    <Content Include="screenshots\2.png" />
+    <Content Include="screenshots\3.png" />
     <Content Include="start.bat" />
     <Content Include="test\mocha.opts" />
     <Content Include="views\error_404.jade" />
@@ -117,7 +118,6 @@
     <Folder Include="public\vendors\bootstrap\css\" />
     <Folder Include="public\vendors\bootstrap\fonts\" />
     <Folder Include="routes\web\" />
-    <Folder Include="screenshots\" />
     <Folder Include="public" />
     <Folder Include="client\zdr\common\res\img\" />
     <Folder Include="client\zdr\common\res\" />
@@ -134,6 +134,7 @@
     <Folder Include="routes" />
     <Folder Include="routes\api" />
     <Folder Include="routes\api\4\" />
+    <Folder Include="screenshots\" />
     <Folder Include="test\" />
     <Folder Include="test\controllers\" />
     <Folder Include="test\controllers\crawler\" />
