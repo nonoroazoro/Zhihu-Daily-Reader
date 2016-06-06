@@ -1,6 +1,5 @@
 ﻿import "./res/Carousel.less";
 
-import $               from "jquery";
 import isFunction      from "lodash/isFunction";
 import map             from "lodash/map";
 import React           from "react";
@@ -12,14 +11,12 @@ import PureRenderMixin from "react-addons-pure-render-mixin";
  */
 class CarouselIndicator extends React.Component
 {
-    static propTypes =
-    {
+    static propTypes = {
         length: React.PropTypes.number,
         target: React.PropTypes.string
     };
 
-    static defaultProps =
-    {
+    static defaultProps = {
         length: 0,
         target: null
     };
@@ -33,7 +30,7 @@ class CarouselIndicator extends React.Component
             indicators.push(<li className="active" key="indicator0" data-target={this.props.target} data-slide-to={0} />);
             for (let i = 1; i < length; i++)
             {
-                indicators.push(<li key={"indicator" + i} data-target={this.props.target} data-slide-to={i} />);
+                indicators.push(<li key={`indicator${i}`} data-target={this.props.target} data-slide-to={i} />);
             }
         }
 
@@ -59,14 +56,12 @@ class CarouselIndicator extends React.Component
  */
 class CarouselInner extends React.Component
 {
-    static propTypes =
-    {
+    static propTypes = {
         storyIDs: React.PropTypes.array,
         onClick: React.PropTypes.func
     };
 
-    static defaultProps =
-    {
+    static defaultProps = {
         storyIDs: [],
         onClick: null
     };
@@ -76,9 +71,10 @@ class CarouselInner extends React.Component
         if (isFunction(this.props.onClick))
         {
             this.props.onClick(
-            {
-                id: p_storyID
-            });
+                {
+                    id: p_storyID
+                }
+            );
         }
     }
 
@@ -88,12 +84,14 @@ class CarouselInner extends React.Component
         {
             return (
                 <div
-                    className={index == 0 ? "item active" : "item"}
-                    key={index}>
+                    className={index === 0 ? "item active" : "item"}
+                    key={index}
+                >
                     <div
                         className="carousel-picture"
                         onClick={this.handleClick.bind(this, value.id)}
-                        style={{backgroundImage: "url(" + value.image + ")"}} />
+                        style={{ backgroundImage: `url(${value.image})` }}
+                    />
                     <div className="carousel-caption">
                         <h3>{value.title}</h3>
                     </div>
@@ -104,7 +102,8 @@ class CarouselInner extends React.Component
         return (
             <div
                 className="CarouselInner carousel-inner"
-                role="listbox">
+                role="listbox"
+            >
                 {rows}
             </div>
         );
@@ -116,14 +115,12 @@ class CarouselInner extends React.Component
  */
 class CarouselControls extends React.Component
 {
-    static propTypes =
-    {
+    static propTypes = {
         length: React.PropTypes.number,
         target: React.PropTypes.string
     };
 
-    static defaultProps =
-    {
+    static defaultProps = {
         length: 0,
         target: null
     };
@@ -144,7 +141,8 @@ class CarouselControls extends React.Component
                     className="left carousel-control"
                     href={this.props.target}
                     role="button"
-                    data-slide="prev">
+                    data-slide="prev"
+                >
                     <span className="glyphicon glyphicon-chevron-left" />
                     <span className="sr-only">上一页</span>
                 </a>
@@ -152,7 +150,8 @@ class CarouselControls extends React.Component
                     className="right carousel-control"
                     href={this.props.target}
                     role="button"
-                    data-slide="next">
+                    data-slide="next"
+                >
                     <span className="glyphicon glyphicon-chevron-right" />
                     <span className="sr-only">下一页</span>
                 </a>
@@ -166,31 +165,29 @@ class CarouselControls extends React.Component
  */
 export default class Carousel extends React.Component
 {
+    static propTypes = {
+        id: React.PropTypes.string,
+        storyIDs: React.PropTypes.array,
+        onClick: React.PropTypes.func
+    };
+
+    static defaultProps = {
+        id: "Carousel",
+        storyIDs: [],
+        onClick: null
+    };
+
     constructor(p_props)
     {
         super(p_props);
         this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
     }
 
-    static propTypes =
-    {
-        id: React.PropTypes.string,
-        storyIDs: React.PropTypes.array,
-        onClick: React.PropTypes.func
-    };
-
-    static defaultProps =
-    {
-        id: "Carousel",
-        storyIDs: [],
-        onClick: null
-    };
-
     render()
     {
         const storyIDs = this.props.storyIDs || [];
         const length = storyIDs.length;
-        const target = "#" + this.props.id;
+        const target = `#${this.props.id}`;
 
         // 无内容时隐藏。
         const carouselClassNames = classNames(
@@ -198,7 +195,7 @@ export default class Carousel extends React.Component
             "carousel",
             "slide",
             {
-                "hide": (length == 0)
+                "hide": (length === 0)
             }
         );
 

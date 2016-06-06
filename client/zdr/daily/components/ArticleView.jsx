@@ -182,16 +182,62 @@ class ArticleBody extends React.Component
     }
 }
 
+/**
+ * 两侧控制器。
+ */
+class ArticleControl extends React.Component
+{
+    static propTypes = {
+        onPrevClick: React.PropTypes.func,
+        onNextClick: React.PropTypes.func
+    };
+
+    static defaultProps = {
+        onPrevClick: null,
+        onNextClick: null
+    };
+
+    render()
+    {
+        return (
+            <div className="ArticleControl">
+                <a
+                    className="left carousel-control"
+                    href="javascript:;"
+                    onClick={this.props.onPrevClick}
+                    role="button"
+                >
+                    <span className="glyphicon glyphicon-chevron-left" />
+                    <span className="sr-only">上一篇</span>
+                </a>
+                <a
+                    className="right carousel-control"
+                    href="javascript:;"
+                    onClick={this.props.onNextClick}
+                    role="button"
+                >
+                    <span className="glyphicon glyphicon-chevron-right" />
+                    <span className="sr-only">下一篇</span>
+                </a>
+            </div>
+        );
+    }
+}
+
 export default class ArticleView extends React.Component
 {
     static propTypes = {
         id: React.PropTypes.string,
-        story: React.PropTypes.object
+        story: React.PropTypes.object,
+        onPrevClick: React.PropTypes.func,
+        onNextClick: React.PropTypes.func
     };
 
     static defaultProps = {
         id: "ArticleView",
-        story: null
+        story: null,
+        onPrevClick: null,
+        onNextClick: null
     };
 
     render()
@@ -211,6 +257,10 @@ export default class ArticleView extends React.Component
                         {header}
                         {body}
                     </div>
+                    <ArticleControl
+                        onPrevClick={this.props.onPrevClick}
+                        onNextClick={this.props.onNextClick}
+                    />
                 </div>
             </div>
         );

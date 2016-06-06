@@ -187,7 +187,7 @@ export default class DailyPage extends React.Component
     */
     _addKeyboardShortcuts()
     {
-        Mousetrap.bind(["esc", "escape"], () =>
+        Mousetrap.bind(["esc"], () =>
         {
             this._closeArticleView();
             this._closeShortcutsView();
@@ -419,7 +419,10 @@ export default class DailyPage extends React.Component
      */
     _openShortcutsView()
     {
-        this._$ShortcutsView.modal();
+        if (!this._$ShortcutsView.is(":visible"))
+        {
+            this._$ShortcutsView.modal();
+        }
     }
 
     /**
@@ -427,7 +430,10 @@ export default class DailyPage extends React.Component
      */
     _closeShortcutsView()
     {
-        this._$ShortcutsView.modal("hide");
+        if (this._$ShortcutsView.is(":visible"))
+        {
+            this._$ShortcutsView.modal("hide");
+        }
     }
 
     /**
@@ -521,7 +527,11 @@ export default class DailyPage extends React.Component
                     contents={this.state.storyIDs}
                     loading={this.state.loading}
                 />
-                <ArticleView story={this.state.currentStory} />
+                <ArticleView
+                    story={this.state.currentStory}
+                    onPrevClick={this._keydownShowPrevStory.bind(this)}
+                    onNextClick={this._keydownShowNextStory.bind(this)}
+                />
                 <ShortcutsView />
             </div>
         );

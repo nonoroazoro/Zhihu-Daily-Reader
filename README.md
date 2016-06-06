@@ -54,14 +54,12 @@
 
     - for **Windows**:
 
-        方法 1:
-
         ```
         $ npm start
         浏览器访问: http://localhost:8888 或 http://127.0.0.1:8888
         ```
 
-        方法 2:
+        or:
 
         ```
         $ start.bat
@@ -75,6 +73,16 @@
         ```
 
 ## 更新记录
+
+### <a href="#v1.1.5" id="v1.1.5">1.1.5</a>
+
+2016 年 6 月 6 日
+
+- 调整主界面样式。
+- 增加阅读界面的“上/下一篇”功能。
+- 更新截图。
+- 修正几处潜在错误。
+
 
 ### <a href="#v1.1.4" id="v1.1.4">1.1.4</a>
 
@@ -123,7 +131,10 @@
 ## 截图
 
 - **主界面**：
-  ![主界面](./screenshots/1.jpg?raw=true "主界面")
+  ![主界面](./screenshots/1.png?raw=true "主界面")
 
 - **阅读界面**：
-    ![阅读界面](./screenshots/2.jpg?raw=true "阅读界面")
+    ![阅读界面](./screenshots/2.png?raw=true "阅读界面")
+
+- **快捷键**：
+    ![阅读界面](./screenshots/3.png?raw=true "快捷键")
