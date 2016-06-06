@@ -54,14 +54,12 @@
 
     - for **Windows**:
 
-        方法 1:
-
         ```
         $ npm start
         浏览器访问: http://localhost:8888 或 http://127.0.0.1:8888
         ```
 
-        方法 2:
+        or:
 
         ```
         $ start.bat
