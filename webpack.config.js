@@ -1,5 +1,5 @@
-﻿var webpack = require("webpack");
-var config = require("./webpack.base.config");
+﻿const webpack = require("webpack");
+const config = require("./webpack.base.config");
 
 config.module.preLoaders =
 [
