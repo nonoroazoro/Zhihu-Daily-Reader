@@ -8,11 +8,12 @@ export default class DailyManager
     static _stories = {};
 
     /**
-     * 获取目前已从服务端获取到的所有日报内容的缓存（以日报 id 进行检索，无序，请勿用 index 检索）。
+     * 获取已缓存的指定日报内容（以日报 ID 进行检索）。
+     * @param {String} p_id 日报 ID。
      */
-    static getFetchedStories()
+    static getFetchedStory(p_id)
     {
-        return DailyManager._stories;
+        return DailyManager._stories[p_id];
     }
 
     /**

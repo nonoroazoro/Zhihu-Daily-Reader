@@ -200,7 +200,7 @@ export default class DailyPage extends React.Component
         {
             if (!this._isArticleViewVisible && this._currentIndex >= 0)
             {
-                this._showArticle(DailyManager.getFetchedStories()[this.state.storyIDs[this._currentIndex]], false);
+                this._showArticle(DailyManager.getFetchedStory([this.state.storyIDs[this._currentIndex]]), false);
             }
         });
 
@@ -262,7 +262,7 @@ export default class DailyPage extends React.Component
         {
             if (!this._isLoading)
             {
-                const story = DailyManager.getFetchedStories()[this.state.storyIDs[index]];
+                const story = DailyManager.getFetchedStory([this.state.storyIDs[index]]);
                 if (this._isArticleViewVisible)
                 {
                     this._updateArticle(story, () =>
@@ -299,7 +299,7 @@ export default class DailyPage extends React.Component
         const index = this._currentIndex - 1;
         if (index >= 0)
         {
-            const story = DailyManager.getFetchedStories()[this.state.storyIDs[index]];
+            const story = DailyManager.getFetchedStory([this.state.storyIDs[index]]);
             if (this._isArticleViewVisible)
             {
                 this._updateArticle(story, () =>
@@ -357,7 +357,7 @@ export default class DailyPage extends React.Component
 
     _carouselClickHandler(e)
     {
-        this._showArticle(DailyManager.getFetchedStories()[e.id], false);
+        this._showArticle(DailyManager.getFetchedStory([e.id]), false);
     }
 
     _tileClickHandler(e)
