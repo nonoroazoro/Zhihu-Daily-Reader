@@ -169,7 +169,7 @@ export default class DailyPage extends React.Component
         });
 
         this._addKeyboardShortcuts();
-        $(document).on("scroll", this._scrollHandler.bind(this));
+        $(document).on("scroll", this._scrollHandler);
     }
 
     /**
@@ -193,8 +193,8 @@ export default class DailyPage extends React.Component
             this._closeShortcutsView();
         });
 
-        Mousetrap.bind("j", this._keydownShowNextStory.bind(this));
-        Mousetrap.bind("k", this._keydownShowPrevStory.bind(this));
+        Mousetrap.bind("j", this._keydownShowNextStory);
+        Mousetrap.bind("k", this._keydownShowPrevStory);
 
         Mousetrap.bind(["o", "enter"], () =>
         {
@@ -255,7 +255,7 @@ export default class DailyPage extends React.Component
     /**
     * ArticleView 显示下一个日报（如果当前未显示 ArticleView 则自动显示）。
     */
-    _keydownShowNextStory()
+    _keydownShowNextStory = () =>
     {
         const index = this._currentIndex + 1;
         if (index < this.state.storyIDs.length)
@@ -294,7 +294,7 @@ export default class DailyPage extends React.Component
     /**
     * ArticleView 显示上一个日报（如果当前未显示 ArticleView 则自动显示）。
     */
-    _keydownShowPrevStory()
+    _keydownShowPrevStory = () =>
     {
         const index = this._currentIndex - 1;
         if (index >= 0)
@@ -318,7 +318,7 @@ export default class DailyPage extends React.Component
     /**
     * 监控垂直滚动条位置，动态加载内容。
     */
-    _scrollHandler(e)
+    _scrollHandler = (e) =>
     {
         // 370 是 FlexTile 的高度。
         if (!this._isLoading && ($(document).scrollTop() >= $(document).height() - $(window).height() - 370))
@@ -355,12 +355,12 @@ export default class DailyPage extends React.Component
         );
     }
 
-    _carouselClickHandler(e)
+    _carouselOnClickHandler = (e) =>
     {
         this._showArticle(DailyManager.getFetchedStory([e.id]), false);
     }
 
-    _tileClickHandler(e)
+    _onTileClickHandler = (e) =>
     {
         this._showArticle(e.story, false);
     }
@@ -517,20 +517,20 @@ export default class DailyPage extends React.Component
     {
         // 幻灯片（不好看。。。隐藏了吧-_-）。
         // <div className="CarouselContainer container-fluid">
-        //     <Carousel onClick={this._carouselClickHandler.bind(this)} storyIDs={this.state.topStoryIDs} />
+        //     <Carousel onClick={this._carouselOnClickHandler} storyIDs={this.state.topStoryIDs} />
         // </div>
 
         return (
             <div className="DailyPage container-fluid">
                 <FlexView
-                    onTileClick={this._tileClickHandler.bind(this)}
+                    onTileClick={this._onTileClickHandler}
                     contents={this.state.storyIDs}
                     loading={this.state.loading}
                 />
                 <ArticleView
                     story={this.state.currentStory}
-                    onPrevClick={this._keydownShowPrevStory.bind(this)}
-                    onNextClick={this._keydownShowNextStory.bind(this)}
+                    onPrevClick={this._keydownShowPrevStory}
+                    onNextClick={this._keydownShowNextStory}
                 />
                 <ShortcutsView />
             </div>
