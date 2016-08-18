@@ -61,13 +61,12 @@ class FlexTile extends React.Component
 
     _request = null;
 
-    handleClick(e)
+    handleClick = (e) =>
     {
         if (isFunction(this.props.onClick))
         {
             this.props.onClick({
-                story: this.state.story,
-                target: this.refs.self
+                story: this.state.story
             });
         }
     }
@@ -83,19 +82,18 @@ class FlexTile extends React.Component
                 <div
                     id={`story${story.id}`}
                     className="flex-tile"
-                    ref="self"
                 >
                     <div className="flex-tile-content">
                         <div
                             className="flex-tile-picture"
                             style={{ backgroundImage: `url(${story.image})` }}
-                            onClick={this.handleClick.bind(this)}
+                            onClick={this.handleClick}
                         />
                         <div className="flex-tile-title">
                             <a
                                 className="flex-tile-link"
                                 href="javascript:;"
-                                onClick={this.handleClick.bind(this)}
+                                onClick={this.handleClick}
                             >
                                 {story.title}
                             </a>
@@ -104,7 +102,7 @@ class FlexTile extends React.Component
                     <div className="flex-tile-stripe" />
                     <div className="flex-tile-footer">
                         <div className="flex-tile-footer-right-buttons">
-                            <a href={story.shareURL} target="_blank">
+                            <a href={story.shareURL} target="_blank" rel="noopener noreferrer">
                                 <span
                                     className="glyphicon glyphicon-new-window"
                                     title="在新标签页中打开原文"
