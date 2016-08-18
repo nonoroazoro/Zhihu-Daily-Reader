@@ -28,7 +28,7 @@
     "test": "mocha"
   },
   "dependencies": {
-    "async": "^1.5.2",
+    "async": "^2.0.1",
     "body-parser": "^1.15.2",
     "cheerio": "^0.20.0",
     "compression": "^1.6.1",
