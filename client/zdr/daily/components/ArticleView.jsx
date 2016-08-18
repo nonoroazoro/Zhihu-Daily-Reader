@@ -50,13 +50,14 @@ class ArticleHeader extends React.Component
                     </button>
                     <div className={classesHeaderPicture} style={{ backgroundImage: `url(${this.props.story.image})` }}>
                         <div className={classesHeaderCaption}>
-                            <a href={this.props.story.shareURL} target="_blank">
+                            <a href={this.props.story.shareURL} target="_blank" rel="noopener noreferrer">
                                 <h3>{this.props.story.title}</h3>
                             </a>
                             <a
                                 className={classesImageSource}
                                 href={`https://www.google.com/search?q=${this.props.story.imageSource}`}
                                 target="_blank"
+                                rel="noopener noreferrer"
                             >
                                 <span className="glyphicon glyphicon-copyright-mark" />
                                     {this.props.story.imageSource}
@@ -76,6 +77,7 @@ class ArticleHeader extends React.Component
                             className="article-backgrounds-content"
                             href={value.href}
                             target="_blank"
+                            rel="noopener noreferrer"
                             key={`background-${index}`}
                         >
                             <h4>{`${value.title}：${value.text}`}</h4>
@@ -156,7 +158,7 @@ class ArticleBody extends React.Component
             {
                 innerRows.push(
                     <div className="view-more" key={`view-more-${i}`}>
-                        <a href={item.link.href} target="_blank"><b>{item.link.text}</b></a>
+                        <a href={item.link.href} target="_blank" rel="noopener noreferrer"><b>{item.link.text}</b></a>
                     </div>
                 );
             }
