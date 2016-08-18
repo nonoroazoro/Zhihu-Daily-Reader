@@ -55,7 +55,7 @@
     "clean-webpack-plugin": "^0.1.10",
     "css-loader": "^0.23.1",
     "eslint": "^2.13.1",
-    "eslint-config-zoro": "^1.0.2",
+    "eslint-config-zoro": "^1.1.1",
     "eslint-loader": "^1.5.0",
     "eslint-plugin-react": "^6.1.2",
     "extract-text-webpack-plugin": "^1.0.1",
@@ -73,6 +73,6 @@
     "should": "^9.0.2",
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
-    "webpack": "^1.13.0"
+    "webpack": "^1.13.2"
   }
 }
