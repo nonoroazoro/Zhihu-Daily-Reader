@@ -13,29 +13,42 @@ const dbhelper = require("./controllers/dbhelper");
 const assetsMap = require("./public/assets/assets.json");
 
 // init db.
-dbhelper.start((err) =>
+dbhelper.connect((err) =>
 {
-    let msg = "\nDatabase Server not started, some features will be shut down.";
     if (err)
     {
-        console.error(err.message + msg);
-    }
-    else
-    {
-        dbhelper.connect((err) =>
+        dbhelper.start((err) =>
         {
+            let msg = "\nDatabase Server not started, some features will be shut down.";
             if (err)
             {
-                console.error(msg);
+                console.error(msg + "\n" + err.message);
             }
             else
             {
-                if (config.crawler.enabled)
+                dbhelper.connect((err) =>
                 {
-                    setTimeout(crawler.start, config.crawler.delay);
-                }
+                    if (err)
+                    {
+                        console.error(msg + "\n" + err.message);
+                    }
+                    else
+                    {
+                        if (config.crawler.enabled)
+                        {
+                            setTimeout(crawler.start, config.crawler.delay);
+                        }
+                    }
+                });
             }
         });
+    }
+    else
+    {
+        if (config.crawler.enabled)
+        {
+            setTimeout(crawler.start, config.crawler.delay);
+        }
     }
 });
 
