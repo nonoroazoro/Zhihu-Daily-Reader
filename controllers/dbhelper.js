@@ -22,16 +22,19 @@ module.exports.start = function (p_callback)
 
     if (fs.existsSync(dbpath))
     {
-        let timer;
-        cp.execFile("mongod", ["--dbpath", dbpath], (error) =>
+        _repairMongoDB(dbpath, () =>
         {
-            if (timer)
+            let timer;
+            cp.execFile("mongod", ["--dbpath", dbpath], (error) =>
             {
-                clearTimeout(timer);
-            }
-            p_callback(new Error("Can not find mongodb in your system."));
+                if (timer)
+                {
+                    clearTimeout(timer);
+                }
+                p_callback(new Error("Can not start mongodb."));
+            });
+            timer = setTimeout(p_callback, 1000);
         });
-        timer = setTimeout(p_callback, 1000);
     }
     else
     {
@@ -84,20 +87,20 @@ module.exports.dropAllCollections = function (p_callback)
     {
         collection.drop(done);
     },
-        (err) =>
+    (err) =>
+    {
+        if (_.isFunction(p_callback))
         {
-            if (_.isFunction(p_callback))
+            if (!err || err.message == "ns not found")
             {
-                if (!err || err.message == "ns not found")
-                {
-                    p_callback();
-                }
-                else
-                {
-                    p_callback(err);
-                }
+                p_callback();
             }
-        });
+            else
+            {
+                p_callback(err);
+            }
+        }
+    });
 };
 
 /**
@@ -120,4 +123,42 @@ function _monitor()
     {
         _connected = false;
     });
-};
+}
+
+/**
+ * 修复未正常关闭的数据库。
+ */
+function _repairMongoDB(p_dbpath, p_callback)
+{
+    const lockPath = path.resolve(p_dbpath, "mongod.lock");
+    fs.stat(lockPath, (err, stats) =>
+    {
+        if (err || stats.size === 0)
+        {
+            p_callback();
+        }
+        else
+        {
+            fs.unlink(lockPath, (err) =>
+            {
+                if (err)
+                {
+                    p_callback();
+                }
+                else
+                {
+                    let timer;
+                    cp.execFile("mongod", ["--dbpath", p_dbpath, "--repair"], () =>
+                    {
+                        if (timer)
+                        {
+                            clearTimeout(timer);
+                        }
+                        p_callback();
+                    });
+                    timer = setTimeout(p_callback, 1000);
+                }
+            });
+        }
+    });
+}
