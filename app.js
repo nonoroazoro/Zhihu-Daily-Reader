@@ -74,8 +74,7 @@ app.use(express.static(__dirname + "/public/", {
 }));
 
 // router setup.
-app.use("/api/4", routes.api);
-app.use("/", routes.web);
+app.use("/", routes);
 
 // assets map setup.
 app.locals.map = assetsMap;
