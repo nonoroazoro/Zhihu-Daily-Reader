@@ -7,18 +7,29 @@ append body
     #main.container
         #login.auth-form
             form(method="post", action="/session")
-                .auth-form-message
-                    .message
+                if error
+                    .auth-form-message
+                        .message #{error.message}
                 .auth-form-body
                     label(for="login_field") Username
-                    input#login_field.form-control(
-                        type="text",
-                        name="login",
-                        autocapitalize="off",
-                        autocorrect="off",
-                        autofocus="autofocus",
-                        tabindex="1"
-                    )
+                    if error
+                        input#login_field.form-control(
+                            value="#{error.username}"
+                            type="text",
+                            name="login",
+                            autocapitalize="off",
+                            autocorrect="off",
+                            tabindex="1"
+                        )
+                    else
+                        input#login_field.form-control(
+                            type="text",
+                            name="login",
+                            autocapitalize="off",
+                            autocorrect="off",
+                            autofocus="autofocus",
+                            tabindex="1"
+                        )
                     label(for="password_field") Password
                     input#password_field.form-control(
                         type="password",
