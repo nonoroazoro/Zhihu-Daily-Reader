@@ -15,22 +15,18 @@ router.post(
     (req, res, next) =>
     {
         // Handle success.
-        if (req.body.remember)
-        {
-            // Cookie expires after 30 days.
-            req.session.cookie.maxAge = 30 * 24 * 60 * 60 * 1000;
-        }
-        else
-        {
-            // Cookie expires at end of session.
-            req.session.cookie.expires = false;
-        }
         return res.redirect("/");
     },
     (err, req, res, next) =>
     {
-        // Handle error. TODO: add error infomation.
-        return res.render("login");
+        // Handle error.
+        return res.render("login", {
+            error:
+            {
+                username: req.body.login,
+                message: "Incorrect username or password."
+            }
+        });
     }
 );
 
