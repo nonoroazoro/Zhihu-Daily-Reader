@@ -50,7 +50,7 @@ module.exports = {
             {
                 test: /\.jsx?$/,
                 exclude: /node_modules/,
-                loader: "babel"
+                loaders: ["babel"]
             },
             {
                 test: /\.css$/,
@@ -81,27 +81,19 @@ module.exports = {
     },
     plugins: [
         new CleanWebpackPlugin([buildPath]),
-        new AssetsPlugin(
-            {
-                filename: "assets.json",
-                path: buildPath,
-                prettyPrint: true
-            }
-        ),
-        new webpack.optimize.CommonsChunkPlugin(
-            {
-                name: "vendor",
-                filename: "vendor.js",
-                minChunks: Infinity
-            }
-        ),
+        new AssetsPlugin({
+            filename: "assets.json",
+            path: buildPath,
+            prettyPrint: true
+        }),
+        new webpack.optimize.CommonsChunkPlugin({
+            name: "vendor",
+            filename: "vendor.js",
+            minChunks: Infinity
+        }),
         new webpack.optimize.DedupePlugin(),
         new ExtractTextPlugin("res/[name].css"),
         new webpack.optimize.OccurenceOrderPlugin(),
-        new webpack.ProvidePlugin(
-            {
-                "jQuery": "jquery",
-            }
-        )
+        new webpack.ProvidePlugin({ "jQuery": "jquery" })
     ]
 };
