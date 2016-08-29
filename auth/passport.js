@@ -18,20 +18,13 @@ passport.use(
         {
             User.findOne({ username: username }, (err, user) =>
             {
-                if (err)
+                if (user && user.validPassword(password))
                 {
-                    return done(err);
+                    return done(null, user);
                 }
                 else
                 {
-                    if (user && user.validPassword(password))
-                    {
-                        return done(null, user);
-                    }
-                    else
-                    {
-                        return done(null, false, { message: "Incorrect username or password" });
-                    }
+                    return done(null, false);
                 }
             });
         }
