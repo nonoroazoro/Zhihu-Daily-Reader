@@ -1,19 +1,24 @@
 ﻿extends ./templates/layout
 
 append res
-    link(href=map.zdr.css, rel="stylesheet")
+    link(href=map.auth.css, rel="stylesheet")
 
 append body
     #main.container
         #login.auth-form
             form(method="post", action="/session")
+                .auth-form-header
+                    h3.title Sign in to Zhihu Daily Reader
+
                 if error
                     .auth-form-message
-                        .message #{error.message}
+                        .message-error #{error.message}
                 .auth-form-body
                     label(for="login_field") Username
                     if error
-                        input#login_field.form-control(
+                        input(
+                            id="login_field",
+                            class="form-control input-block",
                             value="#{error.username}"
                             type="text",
                             name="login",
@@ -22,7 +27,9 @@ append body
                             tabindex="1"
                         )
                     else
-                        input#login_field.form-control(
+                        input(
+                            id="login_field",
+                            class="form-control input-block",
                             type="text",
                             name="login",
                             autocapitalize="off",
@@ -30,14 +37,18 @@ append body
                             autofocus="autofocus",
                             tabindex="1"
                         )
+
                     label(for="password_field") Password
-                    input#password_field.form-control(
+                    input(
+                        id="password_field",
+                        class="form-control input-block",
                         type="password",
                         name="password",
                         autofocus="autofocus",
                         tabindex="2"
                     )
                     input(
+                        class="btn btn-primary btn-block"
                         type="submit",
                         name="submit",
                         value="Sign in",
