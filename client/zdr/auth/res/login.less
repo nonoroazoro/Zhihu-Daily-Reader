@@ -5,6 +5,18 @@ body
     background-color: #f9f9f9;
     font-size: 1.4rem;
 
+    header
+    {
+        padding-top: 40px;
+        padding-bottom: 20px;
+
+        .header-logo
+        {
+            display: block;
+            text-align: center;
+        }
+    }
+
     .auth-form
     {
         width: 340px;
@@ -14,13 +26,15 @@ body
 
         .auth-form-header
         {
-            color: #333;
             margin-bottom: 15px;
             text-align: center;
 
             .title
             {
+                color: gray;
                 font-size: 2rem;
+                line-height: 2rem;
+                margin-top: 10px;
             }
         }
 
@@ -43,7 +57,6 @@ body
 
         .auth-form-body
         {
-            margin-bottom: 40px;
             padding: 20px;
             background-color: #fff;
             border: 1px solid #d8dee2;
@@ -74,5 +87,10 @@ body
                 }
             }
         }
+    }
+
+    footer
+    {
+        margin-top: 40px;
     }
 }
