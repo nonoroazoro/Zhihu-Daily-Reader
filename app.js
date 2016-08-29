@@ -69,9 +69,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // static file setup.
-app.use(express.static(__dirname + "/public/", {
-    maxAge: 2592000000
-}));
+app.use(express.static(__dirname + "/public/"));
 
 // router setup.
 app.use("/", routes);
