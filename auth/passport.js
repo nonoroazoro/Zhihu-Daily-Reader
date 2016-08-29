@@ -11,10 +11,9 @@ passport.use(
     new LocalStrategy(
         {
             usernameField: USERNAME_FIELD,
-            passwordField: PASSWORD_FIELD,
-            passReqToCallback: true
+            passwordField: PASSWORD_FIELD
         },
-        (req, username, password, done) =>
+        (username, password, done) =>
         {
             User.findOne({ username: username }, (err, user) =>
             {
