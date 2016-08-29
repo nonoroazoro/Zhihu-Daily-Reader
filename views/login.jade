@@ -1,0 +1,34 @@
+﻿extends ./templates/layout
+
+append res
+    link(href=map.zdr.css, rel="stylesheet")
+
+append body
+    #main.container
+        #login.auth-form
+            form(method="post", action="/session")
+                .auth-form-message
+                    .message
+                .auth-form-body
+                    label(for="login_field") Username
+                    input#login_field.form-control(
+                        type="text",
+                        name="login",
+                        autocapitalize="off",
+                        autocorrect="off",
+                        autofocus="autofocus",
+                        tabindex="1"
+                    )
+                    label(for="password_field") Password
+                    input#password_field.form-control(
+                        type="password",
+                        name="password",
+                        autofocus="autofocus",
+                        tabindex="2"
+                    )
+                    input(
+                        type="submit",
+                        name="submit",
+                        value="Sign in",
+                        tabindex="3"
+                    )

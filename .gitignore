@@ -10,6 +10,7 @@
 *.user
  
 /.vs/
+/.sessions/
 /db/
 /node_modules/
 /obj/

@@ -32,6 +32,9 @@
         "daily_retry": 3
     },
 
+    // 启用用户认证（需要登录）。
+    "enable_auth": false,
+
     // 用户名（随便填咯）。
-    "username": "Zoro"
+    "username": "zoro"
 }

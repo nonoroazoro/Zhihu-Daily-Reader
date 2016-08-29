@@ -31,6 +31,7 @@ module.exports = {
             "react-addons-pure-render-mixin"
         ],
         zdr: ["./zdr"],
+        auth: ["./zdr/auth/res/login.less"],
         error: ["./zdr/common/error_404"]
     },
     output:
