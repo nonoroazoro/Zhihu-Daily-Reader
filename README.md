@@ -6,21 +6,23 @@
 
 > 快捷键：类似 Google Reader 的 `j/k/v/o/enter` 当然还有 `方向键`，你懂的（按下 `shift+?` 或 `h` 可查看快捷键列表）。
 
+> 用户认证：可配置为需帐号登录（默认关闭）。
+
 > 支持：`Firefox/Chrome/IE11`。没测 `Opera`，应该可以。
 
 ## 声明
 
 > 本应用使用了知乎日报非正式公开 API，使用与共享之行为或有侵犯知乎权益的嫌疑，因此**请自行部署**使用，请您暸解相关情况，并遵守知乎协议。
 
-## 都用了啥？
+## 技术栈
 
 - **front-end**: [react](http://facebook.github.io/react/)
-- **back-end**: [node](https://nodejs.org)、[express](http://expressjs.com/)、[mongodb](https://www.mongodb.org/)
+- **back-end**: [node](https://nodejs.org)、[express](http://expressjs.com/)、[passport](https://github.com/jaredhanson/passport)、[mongodb](https://www.mongodb.org/)
 - **linter**: [eslint](http://eslint.org/)、[eslint-config-zoro](https://github.com/nonoroazoro/eslint-config-zoro)
 - **bundle**: [webpack](https://webpack.github.io/)
 - **ci**: [travis](https://travis-ci.org/)、[mocha](https://mochajs.org/)、[should](https://github.com/shouldjs/should.js)
 
-## 用法
+## 使用方法
 
 *注：端口默认为 `8888`，如果发生端口冲突，请在 `./config/default.json` 中修改并重启。*
 
@@ -34,45 +36,53 @@
 
     1. install node.js
 
-        ```
-        https://nodejs.org
-        ```
+     ```
+     https://nodejs.org
+     ```
 
     2. install npm packages
 
-        ```
-        cd Zhihu-Daily-Reader && npm install --production
-        ```
+    ```
+    cd Zhihu-Daily-Reader && npm install --production
+    ```
 
     3. install mongodb (*可选。不装的话会自动关闭数据库相关功能*)
 
-        ```
-        https://www.mongodb.org/downloads
-        ```
+    ```
+    https://www.mongodb.org/downloads
+    ```
 
 3. **start app**
 
     - for **Windows**:
 
-        ```
-        $ npm start
-        浏览器访问: http://localhost:8888 或 http://127.0.0.1:8888
-        ```
+       ```
+       $ npm start
+       浏览器访问: http://localhost:8888
+       ```
 
-        or:
+       or:
 
-        ```
-        $ start.bat
-        ```
+       ```
+       $ start.bat
+       ```
 
     - for **Linux&Mac**:
 
-        ```
-        $ npm start
-        浏览器访问: http://localhost:8888 或 http://127.0.0.1:8888
-        ```
+       ```
+       $ npm start
+       浏览器访问: http://localhost:8888
+       ```
 
 ## 更新记录
+
+### <a href="#v1.2" id="v1.2">1.2</a>
+
+2016 年 8 月 30 日
+
+- 修正 mongodb 启动问题。
+- 增加用户登录认证（默认关闭）。
+
 
 ### <a href="#v1.1.5" id="v1.1.5">1.1.5</a>
 
@@ -134,7 +144,7 @@
   ![主界面](./screenshots/1.png?raw=true "主界面")
 
 - **阅读界面**：
-    ![阅读界面](./screenshots/2.png?raw=true "阅读界面")
+  ![阅读界面](./screenshots/2.png?raw=true "阅读界面")
 
 - **快捷键**：
-    ![阅读界面](./screenshots/3.png?raw=true "快捷键")
+  ![阅读界面](./screenshots/3.png?raw=true "快捷键")
