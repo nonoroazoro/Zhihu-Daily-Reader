@@ -8,6 +8,8 @@ const bodyParser = require("body-parser");
 const compression = require("compression");
 
 const routes = require("./routes");
+const session = require("./auth/session");
+const passport = require("./auth/passport");
 const crawler = require("./controllers/crawler");
 const dbhelper = require("./controllers/dbhelper");
 const assetsMap = require("./public/assets/assets.json");
@@ -56,7 +58,7 @@ dbhelper.connect((err) =>
 const app = express();
 
 // view engine setup.
-app.set("views", __dirname + "/views/");
+app.set("views", path.resolve(__dirname, "./views"));
 app.set("view engine", "jade");
 
 // compression.
@@ -67,11 +69,12 @@ app.use(favicon(__dirname + "/public/favicon.ico"));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(session);
+app.use(passport.initialize());
+app.use(passport.session());
 
 // static file setup.
-app.use(express.static(__dirname + "/public/", {
-    maxAge: 2592000000
-}));
+app.use(express.static(path.resolve(__dirname, "./public")));
 
 // router setup.
 app.use("/", routes);

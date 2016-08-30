@@ -7,22 +7,18 @@ config.output.path = path.join(config.output.path, hash);
 config.output.publicPath = config.output.publicPath + hash;
 
 config.plugins.push(
-    new webpack.DefinePlugin(
+    new webpack.DefinePlugin({
+        "process.env":
         {
-            "process.env":
-            {
-                NODE_ENV: JSON.stringify("production")
-            }
+            NODE_ENV: JSON.stringify("production")
         }
-    ),
-    new webpack.optimize.UglifyJsPlugin(
+    }),
+    new webpack.optimize.UglifyJsPlugin({
+        compress:
         {
-            compress:
-            {
-                warnings: false
-            }
+            warnings: false
         }
-    )
+    })
 );
 
 module.exports = config;
