@@ -15,31 +15,29 @@ const mongoose = require("mongoose");
 module.exports.start = function (p_callback)
 {
     const dbpath = path.resolve(__dirname, "../db");
-    if (!fs.existsSync(dbpath))
+    fs.mkdir(dbpath, () =>
     {
-        fs.mkdirSync(dbpath);
-    }
-
-    if (fs.existsSync(dbpath))
-    {
-        _repairMongoDB(dbpath, () =>
+        fs.stat(dbpath, (err) =>
         {
-            let timer;
-            cp.execFile("mongod", ["--dbpath", dbpath], (error) =>
+            if (err)
             {
-                if (timer)
+                p_callback(new Error(`Can not find/create database dir: ${dbpath}`));
+            }
+            else
+            {
+                _repairMongoDB(dbpath);
+                const timer = setTimeout(p_callback, 2000);
+                cp.exec(`mongod --dbpath "${dbpath}"`, (err) =>
                 {
-                    clearTimeout(timer);
-                }
-                p_callback(error);
-            });
-            timer = setTimeout(p_callback, 1000);
+                    if (err)
+                    {
+                        clearTimeout(timer);
+                        p_callback(err);
+                    }
+                });
+            }
         });
-    }
-    else
-    {
-        p_callback(new Error("Can not find/create database dir: '" + dbpath + "'."));
-    }
+    });
 };
 
 /**
@@ -83,24 +81,27 @@ module.exports.connected = function ()
  */
 module.exports.dropAllCollections = function (p_callback)
 {
-    async.each(mongoose.connection.collections, (collection, done) =>
-    {
-        collection.drop(done);
-    },
-    (err) =>
-    {
-        if (_.isFunction(p_callback))
+    async.each(
+        mongoose.connection.collections,
+        (collection, done) =>
         {
-            if (!err || err.message == "ns not found")
+            collection.drop(done);
+        },
+        (err) =>
+        {
+            if (_.isFunction(p_callback))
             {
-                p_callback();
-            }
-            else
-            {
-                p_callback(err);
+                if (!err || err.message == "ns not found")
+                {
+                    p_callback();
+                }
+                else
+                {
+                    p_callback(err);
+                }
             }
         }
-    });
+    );
 };
 
 /**
@@ -128,37 +129,12 @@ function _monitor()
 /**
  * 修复未正常关闭的数据库。
  */
-function _repairMongoDB(p_dbpath, p_callback)
+function _repairMongoDB(p_dbpath)
 {
-    const lockPath = path.resolve(p_dbpath, "mongod.lock");
-    fs.stat(lockPath, (err, stats) =>
+    try
     {
-        if (err || stats.size === 0)
-        {
-            p_callback();
-        }
-        else
-        {
-            fs.unlink(lockPath, (err) =>
-            {
-                if (err)
-                {
-                    p_callback();
-                }
-                else
-                {
-                    let timer;
-                    cp.execFile("mongod", ["--dbpath", p_dbpath, "--repair"], () =>
-                    {
-                        if (timer)
-                        {
-                            clearTimeout(timer);
-                        }
-                        p_callback();
-                    });
-                    timer = setTimeout(p_callback, 1000);
-                }
-            });
-        }
-    });
+        fs.unlinkSync(path.resolve(p_dbpath, "mongod.lock"));
+    } catch (e)
+    {
+    }
 }
