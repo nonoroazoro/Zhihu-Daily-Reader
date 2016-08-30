@@ -31,7 +31,7 @@ module.exports.start = function (p_callback)
                 {
                     clearTimeout(timer);
                 }
-                p_callback(new Error("Can not start mongodb."));
+                p_callback(error);
             });
             timer = setTimeout(p_callback, 1000);
         });

@@ -69,7 +69,7 @@ append scripts
     script(type="text/javascript").
         var elem = document.getElementById("auth-submit");
         elem.removeAttribute("disabled");
-        document.getElementById("auth-submit").addEventListener("click", function ()
+        elem.addEventListener("click", function ()
         {
             this.setAttribute("disabled", "");
         }, true);
