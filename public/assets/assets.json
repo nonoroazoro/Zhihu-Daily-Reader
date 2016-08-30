@@ -1,13 +1,17 @@
 {
   "vendor": {
-    "js": "/assets/4a14ee3f/vendor.js"
+    "js": "/assets/75b3ee9b/vendor.js"
   },
   "zdr": {
-    "js": "/assets/4a14ee3f/zdr.js",
-    "css": "/assets/4a14ee3f/res/zdr.css"
+    "js": "/assets/75b3ee9b/zdr.js",
+    "css": "/assets/75b3ee9b/res/zdr.css"
   },
   "error": {
-    "js": "/assets/4a14ee3f/error.js",
-    "css": "/assets/4a14ee3f/res/error.css"
+    "js": "/assets/75b3ee9b/error.js",
+    "css": "/assets/75b3ee9b/res/error.css"
+  },
+  "auth": {
+    "js": "/assets/75b3ee9b/auth.js",
+    "css": "/assets/75b3ee9b/res/auth.css"
   }
 }

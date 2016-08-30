@@ -1,18 +1,17 @@
-﻿var webpack = require("webpack");
-var config = require("./webpack.base.config");
+﻿const webpack = require("webpack");
+const config = require("./webpack.base.config");
 
 config.module.preLoaders =
-[
-    {
-        test: /\.jsx?$/,
-        exclude: /node_modules/,
-        loader: "eslint"
-    }
-];
+    [
+        {
+            test: /\.jsx?$/,
+            exclude: /node_modules/,
+            loader: "eslint"
+        }
+    ];
 
 config.plugins.push(
-    new webpack.SourceMapDevToolPlugin(
-    {
+    new webpack.SourceMapDevToolPlugin({
         filename: "[file].map",
         exclude: ["vendor.js"],
         columns: false,

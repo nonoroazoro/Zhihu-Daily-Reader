@@ -15,28 +15,29 @@ const mongoose = require("mongoose");
 module.exports.start = function (p_callback)
 {
     const dbpath = path.resolve(__dirname, "../db");
-    if (!fs.existsSync(dbpath))
+    fs.mkdir(dbpath, () =>
     {
-        fs.mkdirSync(dbpath);
-    }
-
-    if (fs.existsSync(dbpath))
-    {
-        let timer;
-        cp.execFile("mongod", ["--dbpath", dbpath], (error) =>
+        fs.stat(dbpath, (err) =>
         {
-            if (timer)
+            if (err)
             {
-                clearTimeout(timer);
+                p_callback(new Error(`Can not find/create database dir: ${dbpath}`));
             }
-            p_callback(new Error("Can not find mongodb in your system."));
+            else
+            {
+                _repairMongoDB(dbpath);
+                const timer = setTimeout(p_callback, 2000);
+                cp.exec(`mongod --dbpath "${dbpath}"`, (err) =>
+                {
+                    if (err)
+                    {
+                        clearTimeout(timer);
+                        p_callback(err);
+                    }
+                });
+            }
         });
-        timer = setTimeout(p_callback, 1000);
-    }
-    else
-    {
-        p_callback(new Error("Can not find/create database dir: '" + dbpath + "'."));
-    }
+    });
 };
 
 /**
@@ -80,10 +81,12 @@ module.exports.connected = function ()
  */
 module.exports.dropAllCollections = function (p_callback)
 {
-    async.each(mongoose.connection.collections, (collection, done) =>
-    {
-        collection.drop(done);
-    },
+    async.each(
+        mongoose.connection.collections,
+        (collection, done) =>
+        {
+            collection.drop(done);
+        },
         (err) =>
         {
             if (_.isFunction(p_callback))
@@ -97,7 +100,8 @@ module.exports.dropAllCollections = function (p_callback)
                     p_callback(err);
                 }
             }
-        });
+        }
+    );
 };
 
 /**
@@ -120,4 +124,17 @@ function _monitor()
     {
         _connected = false;
     });
-};
+}
+
+/**
+ * 修复未正常关闭的数据库。
+ */
+function _repairMongoDB(p_dbpath)
+{
+    try
+    {
+        fs.unlinkSync(path.resolve(p_dbpath, "mongod.lock"));
+    } catch (e)
+    {
+    }
+}

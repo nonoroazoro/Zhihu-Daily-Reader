@@ -18,6 +18,8 @@
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
   <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
   <ItemGroup>
+    <Compile Include="auth\passport.js" />
+    <Compile Include="auth\session.js" />
     <Compile Include="client\zdr\daily\components\ShortcutsView.jsx" />
     <Compile Include="client\zdr\daily\controllers\DailyManager.js" />
     <Compile Include="client\zdr\daily\controllers\Utils.js" />
@@ -34,9 +36,11 @@
     <Compile Include="models\status.js" />
     <Compile Include="models\story.js" />
     <Compile Include="models\catalog.js" />
+    <Compile Include="models\user.js" />
     <Compile Include="routes\api\4\images.js" />
     <Compile Include="routes\api\4\stories.js" />
     <Compile Include="routes\api\4\index.js" />
+    <Compile Include="routes\auth\index.js" />
     <Compile Include="routes\web\index.js" />
     <Compile Include="routes\web\site.js" />
     <Compile Include="test\controllers\catalog.test.js" />
@@ -53,6 +57,7 @@
     <Content Include=".eslintrc" />
     <Content Include=".gitignore" />
     <Content Include=".travis.yml" />
+    <Content Include="client\zdr\auth\res\login.less" />
     <Content Include="client\zdr\daily\components\res\ShortcutsView.less" />
     <Content Include="config\default.json" />
     <Content Include="config\development.json" />
@@ -92,6 +97,7 @@
     <Content Include="start.bat" />
     <Content Include="test\mocha.opts" />
     <Content Include="views\error_404.jade" />
+    <Content Include="views\login.jade" />
     <Content Include="Zhihu-Daily-API.md" />
     <Compile Include="app.js" />
     <Compile Include="bin\www.js" />
@@ -106,17 +112,21 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="bin" />
+    <Folder Include="client\zdr\auth\" />
+    <Folder Include="client\zdr\auth\res\" />
     <Folder Include="controllers\" />
     <Folder Include="config\" />
     <Folder Include="controllers\crawler\" />
     <Folder Include="controllers\proxy\" />
     <Folder Include="models\" />
     <Folder Include="client\" />
+    <Folder Include="auth\" />
     <Folder Include="public\assets\" />
     <Folder Include="public\vendors\" />
     <Folder Include="public\vendors\bootstrap\" />
     <Folder Include="public\vendors\bootstrap\css\" />
     <Folder Include="public\vendors\bootstrap\fonts\" />
+    <Folder Include="routes\auth\" />
     <Folder Include="routes\web\" />
     <Folder Include="public" />
     <Folder Include="client\zdr\common\res\img\" />

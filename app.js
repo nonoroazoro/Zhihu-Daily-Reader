@@ -2,40 +2,56 @@
 
 const path = require("path");
 const config = require("config");
+const helmet = require("helmet");
 const express = require("express");
 const favicon = require("serve-favicon");
 const bodyParser = require("body-parser");
 const compression = require("compression");
 
 const routes = require("./routes");
+const session = require("./auth/session");
+const passport = require("./auth/passport");
 const crawler = require("./controllers/crawler");
 const dbhelper = require("./controllers/dbhelper");
 const assetsMap = require("./public/assets/assets.json");
 
 // init db.
-dbhelper.start((err) =>
+dbhelper.connect((err) =>
 {
-    let msg = "\nDatabase Server not started, some features will be shut down.";
     if (err)
     {
-        console.error(err.message + msg);
-    }
-    else
-    {
-        dbhelper.connect((err) =>
+        dbhelper.start((err) =>
         {
+            let msg = "\nDatabase Server not started, some features will be shut down.";
             if (err)
             {
-                console.error(msg);
+                console.error(msg + "\n" + err.message);
             }
             else
             {
-                if (config.crawler.enabled)
+                dbhelper.connect((err) =>
                 {
-                    setTimeout(crawler.start, config.crawler.delay);
-                }
+                    if (err)
+                    {
+                        console.error(msg + "\n" + err.message);
+                    }
+                    else
+                    {
+                        if (config.crawler.enabled)
+                        {
+                            setTimeout(crawler.start, config.crawler.delay);
+                        }
+                    }
+                });
             }
         });
+    }
+    else
+    {
+        if (config.crawler.enabled)
+        {
+            setTimeout(crawler.start, config.crawler.delay);
+        }
     }
 });
 
@@ -43,8 +59,11 @@ dbhelper.start((err) =>
 const app = express();
 
 // view engine setup.
-app.set("views", __dirname + "/views/");
+app.set("views", path.resolve(__dirname, "./views"));
 app.set("view engine", "jade");
+
+// security.
+app.use(helmet());
 
 // compression.
 app.use(compression());
@@ -54,15 +73,15 @@ app.use(favicon(__dirname + "/public/favicon.ico"));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(session);
+app.use(passport.initialize());
+app.use(passport.session());
 
 // static file setup.
-app.use(express.static(__dirname + "/public/", {
-    maxAge: 2592000000
-}));
+app.use(express.static(path.resolve(__dirname, "./public")));
 
 // router setup.
-app.use("/api/4", routes.api);
-app.use("/", routes.web);
+app.use("/", routes);
 
 // assets map setup.
 app.locals.map = assetsMap;

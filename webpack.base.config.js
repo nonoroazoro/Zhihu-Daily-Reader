@@ -1,11 +1,11 @@
-﻿var path = require("path");
-var webpack = require("webpack");
-var AssetsPlugin = require("assets-webpack-plugin");
-var CleanWebpackPlugin = require("clean-webpack-plugin");
-var ExtractTextPlugin = require("extract-text-webpack-plugin");
+﻿const path = require("path");
+const webpack = require("webpack");
+const AssetsPlugin = require("assets-webpack-plugin");
+const CleanWebpackPlugin = require("clean-webpack-plugin");
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
-var mainPath = path.resolve(__dirname, "./client/");
-var buildPath = path.resolve(__dirname, "./public/assets/");
+const mainPath = path.resolve(__dirname, "./client/");
+const buildPath = path.resolve(__dirname, "./public/assets/");
 
 module.exports = {
     context: mainPath,
@@ -14,7 +14,7 @@ module.exports = {
         vendor: [
             "jquery",
             "bootstrap",
-            
+
             // to reduce bundle file size.
             "lodash/map",
             "lodash/isDate",
@@ -31,6 +31,7 @@ module.exports = {
             "react-addons-pure-render-mixin"
         ],
         zdr: ["./zdr"],
+        auth: ["./zdr/auth/res/login.less"],
         error: ["./zdr/common/error_404"]
     },
     output:
@@ -50,7 +51,7 @@ module.exports = {
             {
                 test: /\.jsx?$/,
                 exclude: /node_modules/,
-                loader: "babel"
+                loaders: ["babel"]
             },
             {
                 test: /\.css$/,
@@ -81,14 +82,12 @@ module.exports = {
     },
     plugins: [
         new CleanWebpackPlugin([buildPath]),
-        new AssetsPlugin(
-        {
+        new AssetsPlugin({
             filename: "assets.json",
             path: buildPath,
             prettyPrint: true
         }),
-        new webpack.optimize.CommonsChunkPlugin(
-        {
+        new webpack.optimize.CommonsChunkPlugin({
             name: "vendor",
             filename: "vendor.js",
             minChunks: Infinity
@@ -96,9 +95,6 @@ module.exports = {
         new webpack.optimize.DedupePlugin(),
         new ExtractTextPlugin("res/[name].css"),
         new webpack.optimize.OccurenceOrderPlugin(),
-        new webpack.ProvidePlugin(
-        {
-            "jQuery": "jquery",
-        })
+        new webpack.ProvidePlugin({ "jQuery": "jquery" })
     ]
 };
