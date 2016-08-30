@@ -2,6 +2,7 @@
 
 const path = require("path");
 const config = require("config");
+const helmet = require("helmet");
 const express = require("express");
 const favicon = require("serve-favicon");
 const bodyParser = require("body-parser");
@@ -60,6 +61,9 @@ const app = express();
 // view engine setup.
 app.set("views", path.resolve(__dirname, "./views"));
 app.set("view engine", "jade");
+
+// security.
+app.use(helmet());
 
 // compression.
 app.use(compression());
