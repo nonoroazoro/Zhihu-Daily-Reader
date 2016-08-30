@@ -31,7 +31,7 @@ module.exports.start = function (p_callback)
                 {
                     clearTimeout(timer);
                 }
-                p_callback(error);
+                p_callback();
             });
             timer = setTimeout(p_callback, 1000);
         });
