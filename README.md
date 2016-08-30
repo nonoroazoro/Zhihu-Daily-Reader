@@ -36,21 +36,21 @@
 
     1. install node.js
 
-    ```
-    https://nodejs.org
-    ```
+       ```
+       https://nodejs.org
+       ```
 
     2. install npm packages
 
-    ```
-    cd Zhihu-Daily-Reader && npm install --production
-    ```
+       ```
+       cd Zhihu-Daily-Reader && npm install --production
+       ```
 
     3. install mongodb (*可选。不装的话会自动关闭数据库相关功能*)
 
-    ```
-    https://www.mongodb.org/downloads
-    ```
+       ```
+       https://www.mongodb.org/downloads
+       ```
 
 3. **start app**
 
