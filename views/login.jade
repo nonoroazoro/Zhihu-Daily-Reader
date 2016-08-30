@@ -69,7 +69,7 @@ append scripts
     script(type="text/javascript").
         var elem = document.getElementById("auth-submit");
         elem.removeAttribute("disabled");
-        elem.addEventListener("click", function ()
+        document.querySelector("#login > form").addEventListener("submit", function ()
         {
-            this.setAttribute("disabled", "");
+            elem.setAttribute("disabled", true);
         }, true);
