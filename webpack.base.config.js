@@ -11,25 +11,7 @@ module.exports = {
     context: mainPath,
     entry:
     {
-        vendor: [
-            "jquery",
-            "bootstrap",
-
-            // to reduce bundle file size.
-            "lodash/map",
-            "lodash/isDate",
-            "lodash/isEmpty",
-            "lodash/isFunction",
-            "lodash/isString",
-            "lodash/trim",
-
-            "moment",
-            "mousetrap",
-            "react",
-            "react-dom",
-            "react-addons-update",
-            "react-addons-pure-render-mixin"
-        ],
+        vendor: ["./zdr/common/vendor"],
         zdr: ["./zdr"],
         auth: ["./zdr/auth/res/login.less"],
         error: ["./zdr/common/error_404"]
@@ -60,23 +42,7 @@ module.exports = {
             },
             {
                 test: /\.less$/,
-                exclude: /node_modules/,
                 loader: ExtractTextPlugin.extract("style", "css!less")
-            },
-            {
-                test: /\.(png|jpg)$/,
-                exclude: /node_modules/,
-                loader: "url?limit=10240"
-            },
-            {
-                test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-                exclude: /node_modules/,
-                loader: "url?limit=100000&mimetype=application/font-woff"
-            },
-            {
-                test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-                exclude: /node_modules/,
-                loader: "file"
             }
         ]
     },
@@ -87,13 +53,7 @@ module.exports = {
             path: buildPath,
             prettyPrint: true
         }),
-        new webpack.optimize.CommonsChunkPlugin({
-            name: "vendor",
-            filename: "vendor.js",
-            minChunks: Infinity
-        }),
         new webpack.optimize.DedupePlugin(),
-        new ExtractTextPlugin("res/[name].css"),
         new webpack.optimize.OccurenceOrderPlugin(),
         new webpack.ProvidePlugin({ "jQuery": "jquery" })
     ]

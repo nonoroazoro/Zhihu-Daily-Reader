@@ -20,6 +20,7 @@
   <ItemGroup>
     <Compile Include="auth\passport.js" />
     <Compile Include="auth\session.js" />
+    <Compile Include="client\zdr\common\vendor.js" />
     <Compile Include="client\zdr\daily\components\ShortcutsView.jsx" />
     <Compile Include="client\zdr\daily\controllers\DailyManager.js" />
     <Compile Include="client\zdr\daily\controllers\Utils.js" />
@@ -81,7 +82,6 @@
     <Content Include="client\zdr\daily\res\DailyPage.less" />
     <Content Include="client\zdr\daily\components\res\FlexView.less" />
     <Content Include="client\zdr\components\res\Navbar.less" />
-    <Content Include="public\vendors\bootstrap\css\bootstrap.css" />
     <Content Include="public\vendors\bootstrap\css\bootstrap.css.map" />
     <Content Include="public\vendors\bootstrap\css\bootstrap.min.css" />
     <Content Include="public\vendors\bootstrap\css\bootstrap.min.css.map" />
@@ -122,9 +122,6 @@
     <Folder Include="client\" />
     <Folder Include="auth\" />
     <Folder Include="public\assets\" />
-    <Folder Include="public\vendors\" />
-    <Folder Include="public\vendors\bootstrap\" />
-    <Folder Include="public\vendors\bootstrap\css\" />
     <Folder Include="public\vendors\bootstrap\fonts\" />
     <Folder Include="routes\auth\" />
     <Folder Include="routes\web\" />
