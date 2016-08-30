@@ -36,9 +36,9 @@
 
     1. install node.js
 
-     ```
-     https://nodejs.org
-     ```
+    ```
+    https://nodejs.org
+    ```
 
     2. install npm packages
 
