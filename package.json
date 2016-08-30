@@ -1,15 +1,12 @@
 {
   "name": "zhihu-daily-reader",
   "description": "Reader for Zhihu-Daily.",
-  "version": "1.1.5",
+  "version": "1.2",
   "author": {
     "name": "nonoroazoro",
     "email": "xiaochao.k@gmail.com"
   },
   "license": "MIT",
-  "engines": {
-    "node": "5.5.0"
-  },
   "main": "app.js",
   "repository": {
     "type": "git",
