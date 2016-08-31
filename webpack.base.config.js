@@ -14,7 +14,7 @@ module.exports = {
         vendor: ["./zdr/common/vendor"],
         zdr: ["./zdr"],
         auth: ["./zdr/auth/res/login.less"],
-        error: ["./zdr/common/error_404"]
+        error: ["./zdr/common/res/errors.less"]
     },
     output:
     {

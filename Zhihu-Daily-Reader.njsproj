@@ -94,7 +94,6 @@
     <Compile Include="app.js" />
     <Compile Include="bin\www.js" />
     <Compile Include="controllers\proxy\daily.js" />
-    <Compile Include="client\zdr\common\error_404.jsx" />
     <Compile Include="client\zdr\index.jsx" />
     <Compile Include="routes\index.js" />
     <Content Include="views\index.jade" />

@@ -2,14 +2,12 @@
 
 append res
     link(href=map.error.css, rel="stylesheet")
-    script(src=map.vendor.js)
 
 append body
     .container
         .error
             h1.header
-                a(href="/")
-                    img#logo(alt="知乎日报")
+                a#logo(href="/")
             .content.text-center
                 p: strong 你似乎来到了没有知识存在的荒原...
                 p 请确认来源链接是否正确？日报是否存在？
@@ -17,7 +15,4 @@ append body
                 p
                     a(href="/") 返回首页
                     span  或者
-                    a#history-back(href="javascript:;") 返回上页
-
-append scripts
-    script(src=map.error.js)
+                    a(href="javascript:;", onclick="history.go(-1)") 返回上页
