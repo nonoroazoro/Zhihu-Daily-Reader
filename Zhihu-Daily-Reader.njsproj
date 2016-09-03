@@ -33,6 +33,7 @@
     <Compile Include="controllers\story.js" />
     <Compile Include="controllers\crawler\index.js" />
     <Compile Include="controllers\utils.js" />
+    <Compile Include="Dockerfile" />
     <Compile Include="models\resource.js" />
     <Compile Include="models\status.js" />
     <Compile Include="models\story.js" />
@@ -55,6 +56,7 @@
     <Compile Include="webpack.config.js" />
     <Compile Include="webpack.production.config.js" />
     <Content Include=".babelrc" />
+    <Content Include=".dockerignore" />
     <Content Include=".eslintrc" />
     <Content Include=".gitignore" />
     <Content Include=".travis.yml" />
