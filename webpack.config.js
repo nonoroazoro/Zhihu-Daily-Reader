@@ -10,22 +10,6 @@ config.module.preLoaders = [
     }
 ];
 
-config.module.loaders.push(
-    {
-        test: /\.(png|jpg)$/,
-        exclude: /node_modules/,
-        loader: "url?limit=10000&name=res/[name].[ext]"
-    },
-    {
-        test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        loader: "url?limit=10000&mimetype=application/font-woff&name=res/[name].[ext]"
-    },
-    {
-        test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        loader: "file?limit=10000&name=res/[name].[ext]"
-    }
-);
-
 config.plugins.push(
     new ExtractTextPlugin("res/[name].css"),
     new webpack.optimize.CommonsChunkPlugin({

@@ -43,6 +43,19 @@ module.exports = {
             {
                 test: /\.less$/,
                 loader: ExtractTextPlugin.extract("style", "css!less")
+            },
+            {
+                test: /\.(png|jpg)$/,
+                exclude: /node_modules/,
+                loader: "url?limit=10000&name=res/[name].[ext]"
+            },
+            {
+                test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+                loader: "url?limit=10000&mimetype=application/font-woff&name=res/[name].[ext]"
+            },
+            {
+                test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+                loader: "file?limit=10000&name=res/[name].[ext]"
             }
         ]
     },
