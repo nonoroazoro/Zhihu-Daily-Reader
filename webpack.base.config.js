@@ -21,7 +21,7 @@ module.exports = {
         path: buildPath,
         publicPath: "/assets/",
         filename: "[name].js",
-        chunkFilename: "[id].js",
+        chunkFilename: "[id].js"
     },
     resolve:
     {
