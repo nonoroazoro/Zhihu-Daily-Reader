@@ -4,6 +4,7 @@
 *.njsproj
 *.sln
 .vs
+typings
 
 # Compiled source
 *.dat
