@@ -8,12 +8,9 @@
 *.suo
 *.tmp
 *.user
- 
+
 /.vs/
 /.sessions/
 /db/
 /node_modules/
 /obj/
-
-/typings/
-tsd.json
