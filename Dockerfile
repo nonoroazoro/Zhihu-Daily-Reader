@@ -1,13 +1,13 @@
-﻿FROM hypriot/rpi-node:latest
+﻿FROM hypriot/rpi-node
 
 WORKDIR /zhihu-daily-reader
 
-ENV NODE_ENV production
-
-COPY ./package.json /zhihu-daily-reader/
+ADD ./package.json /zhihu-daily-reader
 RUN npm install --production
 
-COPY . /zhihu-daily-reader/
+ADD . /zhihu-daily-reader
+
+VOLUME /zhihu-daily-reader
 
 EXPOSE 8888
 
