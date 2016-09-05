@@ -3,7 +3,8 @@
     "port": 8888,
 
     // 数据库。
-    "db": "mongodb://localhost/zhihu",
+    // "db": "mongodb://localhost/zhihu",
+    "db": "mongodb://db/zhihu",
     "poolSize": 10,
     "auto_reconnect": true,
 
