@@ -15,28 +15,24 @@ const mongoose = require("mongoose");
 module.exports.start = function (p_callback)
 {
     const dbpath = path.resolve(__dirname, "../db");
-    fs.mkdir(dbpath, () =>
+    _prepareMongoDB(dbpath, (err) =>
     {
-        fs.stat(dbpath, (err) =>
+        if (err)
         {
-            if (err)
+            p_callback(err);
+        }
+        else
+        {
+            const timer = setTimeout(p_callback, 2000);
+            cp.exec(`mongod --dbpath "${dbpath}"`, (err) =>
             {
-                p_callback(new Error(`Can not find/create database dir: ${dbpath}`));
-            }
-            else
-            {
-                _repairMongoDB(dbpath);
-                const timer = setTimeout(p_callback, 2000);
-                cp.exec(`mongod --dbpath "${dbpath}"`, (err) =>
+                if (err)
                 {
-                    if (err)
-                    {
-                        clearTimeout(timer);
-                        p_callback(err);
-                    }
-                });
-            }
-        });
+                    clearTimeout(timer);
+                    p_callback(err);
+                }
+            });
+        }
     });
 };
 
@@ -123,6 +119,25 @@ function _monitor()
     db.on("error", () =>
     {
         _connected = false;
+    });
+}
+
+function _prepareMongoDB(p_dbpath, p_callback)
+{
+    fs.mkdir(p_dbpath, () =>
+    {
+        fs.stat(p_dbpath, (err) =>
+        {
+            if (err)
+            {
+                p_callback(new Error(`Can not create database dir: ${p_dbpath}`));
+            }
+            else
+            {
+                _repairMongoDB(p_dbpath);
+                p_callback();
+            }
+        });
     });
 }
 
