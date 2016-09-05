@@ -65,6 +65,8 @@
     <Content Include="config\default.json" />
     <Content Include="config\development.json" />
     <Content Include="config\production.json" />
+    <Content Include="docker-compose.yml" />
+    <Content Include="jsconfig.json" />
     <Content Include="LICENSE" />
     <Content Include="package.json" />
     <Content Include="client\zdr\common\res\errors.less" />
@@ -90,6 +92,7 @@
     <Content Include="screenshots\3.png" />
     <Content Include="start.bat" />
     <Content Include="test\mocha.opts" />
+    <Content Include="typings.json" />
     <Content Include="views\error_404.jade" />
     <Content Include="views\login.jade" />
     <Content Include="Zhihu-Daily-API.md" />

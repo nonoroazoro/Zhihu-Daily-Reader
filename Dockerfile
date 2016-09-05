@@ -2,10 +2,11 @@ FROM hypriot/rpi-node:latest
 
 WORKDIR /zhihu-daily-reader
 
-ADD ./package.json /zhihu-daily-reader
-RUN npm install --production
+COPY . /zhihu-daily-reader
 
-ADD . /zhihu-daily-reader
+RUN npm config set registry "https://registry.npm.taobao.org/" \
+    && npm install --production \
+    && npm config delete registry
 
 VOLUME /zhihu-daily-reader
 
