@@ -1,4 +1,4 @@
-﻿FROM hypriot/rpi-node
+FROM hypriot/rpi-node:latest
 
 WORKDIR /zhihu-daily-reader
 
