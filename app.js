@@ -15,36 +15,13 @@ const crawler = require("./controllers/crawler");
 const dbhelper = require("./controllers/dbhelper");
 const assetsMap = require("./public/assets/assets.json");
 
-// init db.
+// connect mongodb.
 dbhelper.connect((err) =>
 {
+    let msg = "\nDatabase Server not started, some features will be shut down.";
     if (err)
     {
-        dbhelper.start((err) =>
-        {
-            let msg = "\nDatabase Server not started, some features will be shut down.";
-            if (err)
-            {
-                console.error(msg + "\n" + err.message);
-            }
-            else
-            {
-                dbhelper.connect((err) =>
-                {
-                    if (err)
-                    {
-                        console.error(msg + "\n" + err.message);
-                    }
-                    else
-                    {
-                        if (config.crawler.enabled)
-                        {
-                            setTimeout(crawler.start, config.crawler.delay);
-                        }
-                    }
-                });
-            }
-        });
+        console.error(msg + "\n" + err.message);
     }
     else
     {
