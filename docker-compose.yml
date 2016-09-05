@@ -1,17 +1,17 @@
 version: "2"
 services:
-    web:
-        build: .
-        image: nonoroazoro/zhihu-daily-reader
-        depends_on:
-            - db
-        ports:
-            - "8888:8888"
-        environment:
-            - NODE_ENV=production
-        restart: unless-stopped
-    db:
-        image: nonoroazoro/rpi-mongo
-        volumes:
-            - ./db:/data/db
-        restart: unless-stopped
+  web:
+    build: .
+    image: nonoroazoro/zhihu-daily-reader
+    depends_on:
+      - db
+    ports:
+      - "8888:8888"
+    environment:
+      - NODE_ENV=production
+    restart: unless-stopped
+  db:
+    image: nonoroazoro/rpi-mongo
+    volumes:
+      - ./db:/data/db
+    restart: unless-stopped
