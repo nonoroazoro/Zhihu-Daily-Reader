@@ -10,9 +10,11 @@
 
 > 支持：`Firefox/Chrome/IE11`。没测 `Opera`，应该可以。
 
+
 ## 声明
 
 > 本应用使用了知乎日报非正式公开 API，使用与共享之行为或有侵犯知乎权益的嫌疑，因此**请自行部署**使用，请您暸解相关情况，并遵守知乎协议。
+
 
 ## 技术栈
 
@@ -21,60 +23,56 @@
 - **linter**: [eslint](http://eslint.org/)、[eslint-config-zoro](https://github.com/nonoroazoro/eslint-config-zoro)
 - **bundle**: [webpack](https://webpack.github.io/)
 - **ci**: [travis](https://travis-ci.org/)、[mocha](https://mochajs.org/)、[should](https://github.com/shouldjs/should.js)
+- **deploy**: [docker](https://www.docker.com/)
+
 
 ## 使用方法
 
-*注：端口默认为 `8888`，如果发生端口冲突，请在 `./config/default.json` 中修改并重启。*
+1. **install dependencies**
 
-1. **clone from git**
+    1. install [docker-engine](https://docs.docker.com/engine/installation/).
 
+    2. install [docker-compose](https://docs.docker.com/compose/install/).
+
+2. **clone from git**
+
+    ```bash
+    $ git clone https://github.com/nonoroazoro/Zhihu-Daily-Reader.git`
     ```
-    $ git clone https://github.com/nonoroazoro/Zhihu-Daily-Reader.git
+
+3. **configuration**
+
+    1. 端口默认为 `8888`，可在 `docker-compose.yml` 中修改，例如：
+
+        ```yaml
+        ports:
+            - "9999:8888"
+        ```
+
+    2. *（可选）* 离线数据目录默认为当前目录下的 `db`，可在 `docker-compose.yml` 中修改，例如：
+
+        ```yaml
+        volumes:
+            - ./myDataFolder:/data/db
+        ```
+
+4. **run**
+
+    ```bash
+    $ docker-compose up -d
     ```
 
-2. **install dependencies**
+5. **browse http://localhost:8888**
 
-    1. install node.js
-
-       ```
-       https://nodejs.org
-       ```
-
-    2. install npm packages
-
-       ```
-       cd Zhihu-Daily-Reader && npm install --production
-       ```
-
-    3. install mongodb (*可选。不装的话会自动关闭数据库相关功能*)
-
-       ```
-       https://www.mongodb.org/downloads
-       ```
-
-3. **start app**
-
-    - for **Windows**:
-
-       ```
-       $ npm start
-       浏览器访问: http://localhost:8888
-       ```
-
-       or:
-
-       ```
-       $ start.bat
-       ```
-
-    - for **Linux&Mac**:
-
-       ```
-       $ npm start
-       浏览器访问: http://localhost:8888
-       ```
 
 ## 更新记录
+
+### <a href="#v1.3.0" id="v1.3.0">1.3.0</a>
+
+2016 年 9 月 7 日
+
+- Docker 化。
+
 
 ### <a href="#v1.2.0" id="v1.2.0">1.2.0</a>
 
@@ -137,6 +135,7 @@
 2015 年 8 月 14 日
 
 - 初版，包含知乎日报基本阅读功能。
+
 
 ## 截图
 
