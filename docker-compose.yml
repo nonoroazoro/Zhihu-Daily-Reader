@@ -1,5 +1,5 @@
 # running version 2 file will automatically build a network
-# between all of the containers defined in the file,
+# between all of the containers defined in this file,
 # so we don't need links anymore.
 
 version: "2"
