@@ -23,7 +23,7 @@
     "babel-core": "registry:dt/babel-core#6.7.0+20160423062108",
     "bootstrap": "registry:dt/bootstrap#3.3.5+20160619023404",
     "classnames": "registry:dt/classnames#0.0.0+20160316155526",
-    "jquery": "registry:dt/jquery#1.10.0+20160704162008",
+    "jquery": "registry:dt/jquery#1.10.0+20160908203239",
     "less": "registry:dt/less#0.0.0+20160608105036",
     "mocha": "registry:dt/mocha#2.2.5+20160720003353",
     "mousetrap": "registry:dt/mousetrap#1.5.0+20160501152135",
