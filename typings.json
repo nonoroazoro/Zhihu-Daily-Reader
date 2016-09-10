@@ -7,6 +7,7 @@
     "compression": "registry:dt/compression#0.0.0+20160501162003",
     "config": "registry:dt/config#0.0.0+20160317120654",
     "express": "registry:dt/express#4.0.0+20160708185218",
+    "express-serve-static-core": "registry:dt/express-serve-static-core#4.0.0+20160829034835",
     "express-session": "registry:dt/express-session#0.0.0+20160819134112",
     "helmet": "registry:dt/helmet#0.0.0+20160512043842",
     "jade": "registry:dt/jade#0.0.0+20160316155526",
@@ -17,7 +18,8 @@
     "passport": "registry:dt/passport#0.2.0+20160720063208",
     "passport-local": "registry:dt/passport-local#0.0.0+20160316155526",
     "request": "registry:dt/request#0.0.0+20160726020908",
-    "serve-favicon": "registry:dt/serve-favicon#0.0.0+20160316155526"
+    "serve-favicon": "registry:dt/serve-favicon#0.0.0+20160316155526",
+    "serve-static": "registry:dt/serve-static#0.0.0+20160606155157"
   },
   "globalDevDependencies": {
     "babel-core": "registry:dt/babel-core#6.7.0+20160423062108",
