@@ -1,5 +1,4 @@
-﻿const path = require("path");
-const express = require("express");
+﻿const express = require("express");
 const router = express.Router();
 
 const passport = require("../../auth/passport");
