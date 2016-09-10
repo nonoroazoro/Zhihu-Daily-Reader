@@ -18,10 +18,10 @@ const assetsMap = require("./public/assets/assets.json");
 // connect mongodb.
 dbhelper.connect((err) =>
 {
-    let msg = "\nDatabase Server not started, some features will be shut down.";
+    const msg = "\nDatabase Server not started, some features will be shut down.";
     if (err)
     {
-        console.error(msg + "\n" + err.message);
+        console.error(`${msg}\n${err.message}`);
     }
     else
     {
@@ -46,7 +46,7 @@ app.use(helmet());
 app.use(compression());
 
 // favicon setup.
-app.use(favicon(__dirname + "/public/favicon.ico"));
+app.use(favicon(path.resolve(__dirname, "./public/favicon.ico")));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
