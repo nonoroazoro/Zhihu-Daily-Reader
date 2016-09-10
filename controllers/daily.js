@@ -22,11 +22,14 @@ const PREFIX = "/api/4/imgs/";
  */
 module.exports.fetchLatestStoryIDs = function (p_callback)
 {
-    if (!_.isFunction(p_callback)) return;
+    if (!_.isFunction(p_callback))
+    {
+        return;
+    }
 
     dailyRequest.get({ url: "/news/latest", json: true }, (err, res, body) =>
     {
-        if (!err && res.statusCode == 200)
+        if (!err && res.statusCode === 200)
         {
             // 因知乎日报的 API 返回的图片太小，这里直接丢弃，后面再通过其他途径获取图片。
             p_callback(null, {
@@ -49,7 +52,7 @@ module.exports.fetchTopStoryIDs = function (p_callback)
 {
     dailyRequest.get({ url: "/news/latest", json: true }, (err, res, body) =>
     {
-        if (!err && res.statusCode == 200)
+        if (!err && res.statusCode === 200)
         {
             const images = [];
             const stories = { date: body.date };
@@ -81,7 +84,10 @@ module.exports.fetchTopStoryIDs = function (p_callback)
  */
 module.exports.fetchStoryIDs = function (p_date, p_callback)
 {
-    if (!_.isFunction(p_callback)) return;
+    if (!_.isFunction(p_callback))
+    {
+        return;
+    }
 
     // 因知乎日报 API 返回的是指定日期的前一天的日报，
     // 所以要加一天才能获取指定日期的日报。
@@ -95,9 +101,9 @@ module.exports.fetchStoryIDs = function (p_date, p_callback)
         }
         else
         {
-            dailyRequest.get({ url: "/news/before/" + date, json: true }, (err, res, body) =>
+            dailyRequest.get({ url: `/news/before/${date}`, json: true }, (err, res, body) =>
             {
-                if (!err && res.statusCode == 200)
+                if (!err && res.statusCode === 200)
                 {
                     p_callback(null, {
                         date: body.date,
@@ -124,14 +130,17 @@ module.exports.fetchStoryIDs = function (p_date, p_callback)
  */
 module.exports.fetchStory = function (p_id, p_callback)
 {
-    if (!_.isFunction(p_callback)) return;
+    if (!_.isFunction(p_callback))
+    {
+        return;
+    }
 
     // 检查 ID 是否为纯数字。
     if (/^\d+$/.test(p_id))
     {
-        dailyRequest.get({ url: "/news/" + p_id, json: true }, (err, res, body) =>
+        dailyRequest.get({ url: `/news/${p_id}`, json: true }, (err, res, body) =>
         {
-            if (!err && res.statusCode == 200)
+            if (!err && res.statusCode === 200)
             {
                 const images = [];
                 const story = {};
@@ -177,43 +186,46 @@ module.exports.fetchStory = function (p_id, p_callback)
                         {
                             question.link = {
                                 href: links.attr("href"),
-                                text: links.text(),
+                                text: links.text()
                             };
 
                             // 删除多余的外链。
                             $(e).find(".view-more").remove();
                         }
 
-                        question.answers = $(e).children(".answer").map((i, e) =>
-                        {
-                            $(e).find(".content img").each((i, e) =>
+                        question.answers = $(e)
+                            .children(".answer")
+                            .map((j, answer) =>
                             {
-                                src = $(e).attr("src");
-                                if (!_.isEmpty(src))
+                                $(answer).find(".content img").each((k, img) =>
                                 {
-                                    images.push(src);
-                                    $(e).attr("src", PREFIX + querystring.escape(src));
+                                    src = $(img).attr("src");
+                                    if (!_.isEmpty(src))
+                                    {
+                                        images.push(src);
+                                        $(img).attr("src", PREFIX + querystring.escape(src));
+                                    }
+                                });
+
+                                avatar = $(answer).find(".meta>.avatar").attr("src");
+                                if (_.isEmpty(avatar))
+                                {
+                                    avatar = "";
                                 }
-                            });
+                                else
+                                {
+                                    images.push(avatar);
+                                    avatar = PREFIX + querystring.escape(avatar);
+                                }
 
-                            avatar = $(e).find(".meta>.avatar").attr("src");
-                            if (_.isEmpty(avatar))
-                            {
-                                avatar = "";
-                            }
-                            else
-                            {
-                                images.push(avatar);
-                                avatar = PREFIX + querystring.escape(avatar);
-                            }
-
-                            return {
-                                avatar: avatar,
-                                name: $(e).find(".meta>.author").text(),
-                                bio: $(e).find(".meta>.bio").text(),
-                                content: $(e).children(".content").html()
-                            };
-                        }).get();
+                                return {
+                                    avatar: avatar,
+                                    name: $(answer).find(".meta>.author").text(),
+                                    bio: $(answer).find(".meta>.bio").text(),
+                                    content: $(answer).children(".content").html()
+                                };
+                            })
+                            .get();
 
                         return question;
                     }).get();
@@ -243,7 +255,10 @@ module.exports.fetchStory = function (p_id, p_callback)
  */
 module.exports.fetchImage = function (p_url, p_callback)
 {
-    if (!_.isFunction(p_callback)) return;
+    if (!_.isFunction(p_callback))
+    {
+        return;
+    }
 
     if (_.isEmpty(p_url))
     {
@@ -253,7 +268,7 @@ module.exports.fetchImage = function (p_url, p_callback)
     {
         imageRequest({ url: p_url, encoding: null }, (err, res, body) =>
         {
-            if (!err && res.statusCode == 200)
+            if (!err && res.statusCode === 200)
             {
                 p_callback(null, {
                     id: p_url,

@@ -1,2 +1,3 @@
 ﻿{
+    "db": "mongodb://localhost/zhihu"
 }

@@ -8,6 +8,8 @@ const config = require("config");
 const cp = require("child_process");
 const mongoose = require("mongoose");
 
+let _connected = false;
+
 /**
  * 启动数据库 Server。
  * @param {Function(err)} [p_callback]
@@ -48,7 +50,7 @@ module.exports.connect = function (p_callback)
             server: {
                 auto_reconnect: config.auto_reconnect,
                 poolSize: config.poolSize
-            },
+            }
         },
         (err) =>
         {
@@ -62,7 +64,6 @@ module.exports.connect = function (p_callback)
     );
 };
 
-let _connected = false;
 /**
  * 检查数据库是否已连接。
  */
@@ -87,7 +88,7 @@ module.exports.dropAllCollections = function (p_callback)
         {
             if (_.isFunction(p_callback))
             {
-                if (!err || err.message == "ns not found")
+                if (!err || err.message === "ns not found")
                 {
                     p_callback();
                 }
@@ -149,7 +150,8 @@ function _repairMongoDB(p_dbpath)
     try
     {
         fs.unlinkSync(path.resolve(p_dbpath, "mongod.lock"));
-    } catch (e)
+    }
+    catch (e)
     {
     }
 }
