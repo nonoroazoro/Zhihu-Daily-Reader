@@ -14,7 +14,7 @@
     "lodash": "registry:dt/lodash#4.14.0+20160830145422",
     "moment": "registry:dt/moment#2.11.1+20160829143156",
     "mongoose": "registry:dt/mongoose#4.5.9+20160826204928",
-    "node": "registry:dt/node#6.0.0+20160831021119",
+    "node": "registry:dt/node#6.0.0+20160909174046",
     "passport": "registry:dt/passport#0.2.0+20160720063208",
     "passport-local": "registry:dt/passport-local#0.0.0+20160316155526",
     "request": "registry:dt/request#0.0.0+20160726020908",
