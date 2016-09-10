@@ -1,3 +1,14 @@
 ﻿{
-    "extends": "zoro"
+    "extends": "zoro",
+    "rules": {
+        "new-cap": [
+            2,
+            {
+                "newIsCap": true,
+                "capIsNewExceptions": [
+                    "Router"
+                ]
+            }
+        ]
+    }
 }
