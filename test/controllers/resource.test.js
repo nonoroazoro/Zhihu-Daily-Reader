@@ -1,8 +1,8 @@
 ﻿import should from "should";
 
-import daily from "../../controllers/daily";
-import dbhelper from "../../controllers/dbhelper";
-import ResourceController from "../../controllers/resource";
+import daily from "../../server/controllers/daily";
+import dbhelper from "../../server/controllers/dbhelper";
+import ResourceController from "../../server/controllers/resource";
 
 describe("controllers/resource", function ()
 {
@@ -21,7 +21,7 @@ describe("controllers/resource", function ()
             });
         }
     });
-    
+
     const url = "http://pic4.zhimg.com/70/6974e23d1270203c2a14fc6d410dd9e7_b.jpg";
     describe("1.saveResource", function ()
     {
@@ -34,7 +34,7 @@ describe("controllers/resource", function ()
             });
         });
     });
-    
+
     describe("2.findResourceByID", function ()
     {
         it("should find the resource of ID:\n\t" + url, function (done)

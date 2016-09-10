@@ -1,8 +1,8 @@
 ﻿import should from "should";
 
-import Story from "../../models/story";
-import StoryController from "../../controllers/story";
-import dbhelper from "../../controllers/dbhelper";
+import Story from "../../server/models/story";
+import StoryController from "../../server/controllers/story";
+import dbhelper from "../../server/controllers/dbhelper";
 
 describe("controllers/story", function ()
 {
@@ -21,7 +21,7 @@ describe("controllers/story", function ()
             });
         }
     });
-    
+
     describe("1.init", function ()
     {
         it("should create new stories: id[0~9], date[20140909, 20150910]", function (done)
@@ -30,25 +30,25 @@ describe("controllers/story", function ()
             for (let i = 0; i < 5; i++)
             {
                 stories.push({
-                    id : i,
-                    date : "20150909",
-                    read : (i <= 2),
-                    content : "神经科学/生物学" + i,
+                    id: i,
+                    date: "20150909",
+                    read: (i <= 2),
+                    content: "神经科学/生物学" + i,
                     cached: (i <= 2)
                 });
             }
-            
+
             for (let i = 5; i < 10; i++)
             {
                 stories.push({
-                    id : i,
-                    date : "20150910",
-                    read : (i >= 7),
-                    content : "神经科学/生物学" + i,
+                    id: i,
+                    date: "20150910",
+                    read: (i >= 7),
+                    content: "神经科学/生物学" + i,
                     cached: (i >= 7)
                 });
             }
-            
+
             Story.create(stories, function (err, res)
             {
                 should.not.exist(err);
@@ -56,7 +56,7 @@ describe("controllers/story", function ()
             });
         });
     });
-    
+
     describe("2.findStoryByID", function ()
     {
         const id = 3;
@@ -71,7 +71,7 @@ describe("controllers/story", function ()
             });
         });
     });
-    
+
     describe("3.findStoriesByDate", function ()
     {
         const date = "20150910";
@@ -90,7 +90,7 @@ describe("controllers/story", function ()
             });
         });
     });
-    
+
     describe("4.findUnreadStories", function ()
     {
         const date = "20150910";
@@ -109,7 +109,7 @@ describe("controllers/story", function ()
                 done();
             });
         });
-        
+
         it("should find all of the unread stories", function (done)
         {
             StoryController.findUnreadStories(function (err, docs)
@@ -125,7 +125,7 @@ describe("controllers/story", function ()
             });
         });
     });
-    
+
     describe("5.findUncachedIDs", function ()
     {
         it("should find all uncached id", function (done)
@@ -139,23 +139,23 @@ describe("controllers/story", function ()
             });
         });
     });
-    
+
     describe("6.saveStory", function ()
     {
         it("should save story", function (done)
         {
             const zhihuStory = {
-                id : 401,
+                id: 401,
                 date: "20150911",
                 title: "学英语才是正经事儿",
-                imageSource : "人民教育出版社",
-                contents : [
+                imageSource: "人民教育出版社",
+                contents: [
                     {
                         title: "神经科学/生物学3 - 修改"
                     }
                 ]
             };
-            
+
             StoryController.saveStory(zhihuStory, function (err, doc)
             {
                 should.not.exist(err);
@@ -164,7 +164,7 @@ describe("controllers/story", function ()
                 done();
             });
         });
-        
+
         it("should not save null story", function (done)
         {
             StoryController.saveStory(null, function (err, doc)
@@ -175,7 +175,7 @@ describe("controllers/story", function ()
             });
         });
     });
-    
+
     describe("7.removeOldStories", function ()
     {
         const date = "20150910";

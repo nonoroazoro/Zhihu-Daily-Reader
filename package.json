@@ -7,7 +7,7 @@
     "email": "xiaochao.k@gmail.com"
   },
   "license": "MIT",
-  "main": "app.js",
+  "main": "index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/nonoroazoro/Zhihu-Daily-Reader"

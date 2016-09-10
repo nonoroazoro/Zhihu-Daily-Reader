@@ -1,7 +1,7 @@
 ﻿import moment from "moment";
 import should from "should";
 
-import utils from "../../controllers/utils";
+import utils from "../../server/controllers/utils";
 
 describe("controllers/utils", function ()
 {
@@ -16,19 +16,19 @@ describe("controllers/utils", function ()
             utils.convertToZhihuDate(date1).should.equal(target);
             done();
         });
-        
+
         it("should convert '" + date2 + "' to: '" + target + "'", function (done)
         {
             utils.convertToZhihuDate(date2).should.equal(target);
             done();
         });
-        
+
         it("should convert '" + date3 + "' to: '" + target + "'", function (done)
         {
             utils.convertToZhihuDate(date3).should.equal(target);
             done();
         });
-        
+
         const wrongDate = "2015-30-30";
         it("should convert '" + wrongDate + "' to: 'null'", function (done)
         {
@@ -36,7 +36,7 @@ describe("controllers/utils", function ()
             done();
         });
     });
-    
+
     describe("2.nextZhihuDay", function ()
     {
         const date = "20150915";
@@ -46,7 +46,7 @@ describe("controllers/utils", function ()
             utils.nextZhihuDay(date).should.equal(target);
             done();
         });
-        
+
         const wrongDate = "20153030";
         it("should convert '" + wrongDate + "' to: 'null'", function (done)
         {
@@ -54,7 +54,7 @@ describe("controllers/utils", function ()
             done();
         });
     });
-    
+
     describe("3.prevZhihuDay", function ()
     {
         const date = "20150915";
@@ -64,7 +64,7 @@ describe("controllers/utils", function ()
             utils.prevZhihuDay(date).should.equal(target);
             done();
         });
-        
+
         const wrongDate = "20153030";
         it("should convert '" + wrongDate + "' to: 'null'", function (done)
         {
@@ -72,7 +72,7 @@ describe("controllers/utils", function ()
             done();
         });
     });
-    
+
     describe("4.subZhihuDate", function ()
     {
         const delta = 2;
@@ -84,7 +84,7 @@ describe("controllers/utils", function ()
             done();
         });
     });
-    
+
     describe("5.isValidZhihuDate", function ()
     {
         const date = "20150915";
@@ -93,7 +93,7 @@ describe("controllers/utils", function ()
             utils.isValidZhihuDate(date).should.be.true();
             done();
         });
-        
+
         const wrongDate = "20153030";
         it("'" + wrongDate + "' should be: invalid", function (done)
         {
@@ -101,7 +101,7 @@ describe("controllers/utils", function ()
             done();
         });
     });
-    
+
     describe("6.md5", function ()
     {
         const dataCN = "逗逗";
@@ -111,7 +111,7 @@ describe("controllers/utils", function ()
             utils.md5(dataCN).should.equal(targetCN);
             done();
         });
-        
+
         const dataEN = "abc";
         const targetEN = "900150983cd24fb0d6963f7d28e17f72";
         it("md5 of '" + dataEN + "' should be: " + targetEN, function (done)

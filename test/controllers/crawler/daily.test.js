@@ -1,8 +1,8 @@
 ﻿import should from "should";
 
-import daily from "../../../controllers/crawler/daily";
-import resource from "../../../controllers/resource";
-import dbhelper from "../../../controllers/dbhelper";
+import daily from "../../../server/controllers/crawler/daily";
+import resource from "../../../server/controllers/resource";
+import dbhelper from "../../../server/controllers/dbhelper";
 
 describe("controllers/crawler/daily", function ()
 {
@@ -21,7 +21,7 @@ describe("controllers/crawler/daily", function ()
             });
         }
     });
-    
+
     describe("1.cacheStory", function ()
     {
         this.timeout(5000);
@@ -39,7 +39,7 @@ describe("controllers/crawler/daily", function ()
             });
         });
     });
-    
+
     describe("2.cacheLatestStories", function ()
     {
         this.timeout(50000);
@@ -52,7 +52,7 @@ describe("controllers/crawler/daily", function ()
             });
         });
     });
-    
+
     describe("3.cacheStories", function ()
     {
         this.timeout(50000);
@@ -64,7 +64,7 @@ describe("controllers/crawler/daily", function ()
                 done();
             });
         });
-        
+
         const ids = [418, 417, 414, 413, 410, 409, 408, 407, 404];
         it("should cache the stories of date: 20130520" + " and IDs:\n\t" + ids, function (done)
         {
@@ -75,7 +75,7 @@ describe("controllers/crawler/daily", function ()
             });
         });
     });
-    
+
     describe("4.cacheImages", function ()
     {
         this.timeout(10000);
@@ -93,7 +93,7 @@ describe("controllers/crawler/daily", function ()
                 });
             });
         });
-        
+
         const urls = [
             "http://pic3.zhimg.com/997f4ed30d3c663acde396b2d3dd528e.jpg",
             "http://pic3.zhimg.com/b18702a3f6951e5b1382a753eb0b7a6e_is.jpg",
@@ -106,7 +106,7 @@ describe("controllers/crawler/daily", function ()
             daily.cacheImages(urls, function (err, res)
             {
                 should.not.exist(err);
-                resource.query({ id: { $in : urls } }, { id: 1, _id: 0 }, function (err, docs)
+                resource.query({ id: { $in: urls } }, { id: 1, _id: 0 }, function (err, docs)
                 {
                     should.not.exist(err);
                     docs.length.should.equal(5);

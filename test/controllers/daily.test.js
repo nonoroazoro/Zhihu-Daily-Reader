@@ -1,7 +1,7 @@
 ﻿import should from "should";
 
-import daily from "../../controllers/daily";
-import utils from "../../controllers/utils";
+import daily from "../../server/controllers/daily";
+import utils from "../../server/controllers/utils";
 
 describe("controllers/daily", function ()
 {
@@ -17,7 +17,7 @@ describe("controllers/daily", function ()
             });
         });
     });
-    
+
     describe("2.fetchStoryIDs", function ()
     {
         it("should fetch the story IDs of date: 20130519", function (done)
@@ -35,7 +35,7 @@ describe("controllers/daily", function ()
                 done();
             });
         });
-        
+
         it("should not fetch the story IDs of date: 20130518", function (done)
         {
             const date = "20130518";
@@ -47,7 +47,7 @@ describe("controllers/daily", function ()
                 done();
             });
         });
-        
+
         it("should not fetch the story IDs of date: 20133030", function (done)
         {
             const date = "20133030";
@@ -58,7 +58,7 @@ describe("controllers/daily", function ()
             });
         });
     });
-    
+
     describe("3.fetchStory", function ()
     {
         it("should fetch the story of ID: 401", function (done)

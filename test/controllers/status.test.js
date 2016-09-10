@@ -1,8 +1,8 @@
 ﻿import should from "should";
 
-import Status from "../../models/status";
-import StatusController from "../../controllers/status";
-import dbhelper from "../../controllers/dbhelper";
+import Status from "../../server/models/status";
+import StatusController from "../../server/controllers/status";
+import dbhelper from "../../server/controllers/dbhelper";
 
 describe("controllers/status", function ()
 {
@@ -21,19 +21,19 @@ describe("controllers/status", function ()
             });
         }
     });
-    
+
     describe("1.init", function ()
     {
         it("should create a new status: Zoro, 20150915, 20150910", function (done)
         {
             new Status({
-                username : "Zoro",
-                startDate : "20150909",
-                endDate : "20150910"
+                username: "Zoro",
+                startDate: "20150909",
+                endDate: "20150910"
             }).save(done);
         });
     });
-    
+
     describe("2.findStatusByUsername", function ()
     {
         const username = "Zoro";
@@ -47,7 +47,7 @@ describe("controllers/status", function ()
                 done();
             });
         });
-        
+
         const wrongUsername = " ";
         it("should not find the status of user: '" + wrongUsername + "'", function (done)
         {
@@ -58,7 +58,7 @@ describe("controllers/status", function ()
             });
         });
     });
-    
+
     describe("3.saveStatus", function ()
     {
         it("should save the status of: Zoro, , 20150910", function (done)
@@ -67,7 +67,7 @@ describe("controllers/status", function ()
                 username: "Zoro",
                 endDate: "20150910"
             };
-            
+
             StatusController.saveStatus(status, function (err, doc)
             {
                 should.not.exist(err);

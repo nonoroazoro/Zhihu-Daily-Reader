@@ -1,8 +1,8 @@
 ﻿import should from "should";
 
-import daily from "../../controllers/daily";
-import dbhelper from "../../controllers/dbhelper";
-import CatalogController from "../../controllers/catalog";
+import daily from "../../server/controllers/daily";
+import dbhelper from "../../server/controllers/dbhelper";
+import CatalogController from "../../server/controllers/catalog";
 
 describe("controllers/catalog", function ()
 {
@@ -21,7 +21,7 @@ describe("controllers/catalog", function ()
             });
         }
     });
-    
+
     let ids = [];
     const date = "20151214";
     describe("1.saveCatalog", function ()
@@ -42,7 +42,7 @@ describe("controllers/catalog", function ()
             });
         });
     });
-    
+
     describe("2.findCatalogByDate", function ()
     {
         it("should find the catalog of date: " + date, function (done)
