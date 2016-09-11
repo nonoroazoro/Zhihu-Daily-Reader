@@ -10,7 +10,6 @@
     "express-serve-static-core": "registry:dt/express-serve-static-core#4.0.0+20160829034835",
     "express-session": "registry:dt/express-session#0.0.0+20160819134112",
     "helmet": "registry:dt/helmet#0.0.0+20160512043842",
-    "jade": "registry:dt/jade#0.0.0+20160316155526",
     "lodash": "registry:dt/lodash#4.14.0+20160830145422",
     "moment": "registry:dt/moment#2.11.1+20160829143156",
     "mongoose": "registry:dt/mongoose#4.5.9+20160826204928",
