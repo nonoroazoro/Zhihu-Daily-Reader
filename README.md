@@ -140,10 +140,10 @@
 ## 截图
 
 - **主界面**：
-  ![主界面](./screenshots/1.png?raw=true "主界面")
+  ![主界面](./screenshots/1.jpg?raw=true "主界面")
 
 - **阅读界面**：
-  ![阅读界面](./screenshots/2.png?raw=true "阅读界面")
+  ![阅读界面](./screenshots/2.jpg?raw=true "阅读界面")
 
 - **快捷键**：
-  ![阅读界面](./screenshots/3.png?raw=true "快捷键")
+  ![阅读界面](./screenshots/3.jpg?raw=true "快捷键")
