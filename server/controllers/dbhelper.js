@@ -17,21 +17,21 @@ let _connected = false;
 module.exports.start = function (p_callback)
 {
     const dbpath = path.resolve(__dirname, "../db");
-    _prepareMongoDB(dbpath, (err) =>
+    _prepareMongoDB(dbpath, (err1) =>
     {
-        if (err)
+        if (err1)
         {
-            p_callback(err);
+            p_callback(err1);
         }
         else
         {
             const timer = setTimeout(p_callback, 2000);
-            cp.exec(`mongod --dbpath "${dbpath}"`, (err) =>
+            cp.exec(`mongod --dbpath "${dbpath}"`, (err2) =>
             {
-                if (err)
+                if (err2)
                 {
                     clearTimeout(timer);
-                    p_callback(err);
+                    p_callback(err2);
                 }
             });
         }
