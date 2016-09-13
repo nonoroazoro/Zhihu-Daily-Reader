@@ -5,7 +5,14 @@ const passport = require("../../auth/passport");
 
 router.get("/login", (req, res) =>
 {
-    res.render("login");
+    if (req.isAuthenticated())
+    {
+        res.redirect("/");
+    }
+    else
+    {
+        res.render("login");
+    }
 });
 
 router.post(
