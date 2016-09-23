@@ -1,27 +1,27 @@
-﻿const path = require("path");
+const path = require("path");
 const webpack = require("webpack");
 const AssetsPlugin = require("assets-webpack-plugin");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
-const mainPath = path.resolve(__dirname, "./client/");
-const buildPath = path.resolve(__dirname, "./public/assets/");
+const srcPath = path.resolve(__dirname, "./client/zdr/");
+const distPath = path.resolve(__dirname, "./public/assets/");
 
 module.exports = {
-    context: mainPath,
+    context: srcPath,
     entry:
     {
-        vendor: ["./zdr/common/vendor"],
-        zdr: ["./zdr"],
-        auth: ["./zdr/auth/res/login.less"],
-        error: ["./zdr/common/res/errors.less"]
+        vendor: ["./common/vendor"],
+        zdr: ["./index"],
+        auth: ["./auth/res/login.less"],
+        error: ["./common/res/errors.less"]
     },
     output:
     {
-        path: buildPath,
+        path: distPath,
         publicPath: "/assets/",
         filename: "[name].js",
-        chunkFilename: "[id].js"
+        chunkFilename: "[id].chunk.js"
     },
     resolve:
     {
@@ -60,14 +60,16 @@ module.exports = {
         ]
     },
     plugins: [
-        new CleanWebpackPlugin([buildPath]),
+        new CleanWebpackPlugin([distPath]),
+        new webpack.optimize.CommonsChunkPlugin({
+            name: "vendor",
+            minChunks: Infinity
+        }),
         new AssetsPlugin({
             filename: "assets.json",
-            path: buildPath,
+            path: distPath,
             prettyPrint: true
         }),
-        new webpack.optimize.DedupePlugin(),
-        new webpack.optimize.OccurenceOrderPlugin(),
         new webpack.ProvidePlugin({ "jQuery": "jquery" })
     ]
 };
