@@ -20,8 +20,8 @@
   "scripts": {
     "start": "node ./bin/www",
     "startdb": "mkdir db | mongod --dbpath ./db",
-    "watch": "webpack --watch",
-    "build": "webpack -p --config webpack.production.config.js --progress",
+    "dev": "webpack --config webpack.dev.config.js --watch",
+    "build": "webpack --config webpack.prod.config.js --progress",
     "test": "mocha"
   },
   "dependencies": {
@@ -76,6 +76,7 @@
     "should": "^11.1.0",
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
-    "webpack": "^1.13.2"
+    "webpack": "^1.13.2",
+    "webpack-md5-hash": "0.0.5"
   }
 }
