@@ -18,10 +18,10 @@
     "reader"
   ],
   "scripts": {
-    "start": "node ./bin/www",
+    "start": "cross-env NODE_ENV=production node ./bin/www",
     "startdb": "mkdir db | mongod --dbpath ./db",
-    "dev": "webpack --config webpack.dev.config.js --watch",
-    "build": "webpack --config webpack.prod.config.js --progress",
+    "dev": "cross-env NODE_ENV=development webpack --config webpack.dev.config.js --watch",
+    "build": "cross-env NODE_ENV=production webpack --config webpack.prod.config.js --progress",
     "test": "mocha"
   },
   "dependencies": {
@@ -31,6 +31,7 @@
     "cheerio": "^0.22.0",
     "compression": "^1.6.2",
     "config": "^1.21.0",
+    "cross-env": "^3.0.0",
     "express": "^4.14.0",
     "express-session": "^1.14.1",
     "helmet": "^2.1.2",
