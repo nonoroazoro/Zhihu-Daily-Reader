@@ -1,10 +1,5 @@
 ﻿# Editor files
-*.sublime-project
-*.sublime-workspace
-*.njsproj
-*.sln
-.vs
-typings
+.vscode
 
 # Compiled source
 *.dat
@@ -26,11 +21,11 @@ Icon?
 ehthumbs.db
 Thumbs.db
 
-# Git
-.git
-
-# Node
+# Node files
 node_modules
+
+# Git files
+.git
 
 # Project specific stuff
 db
