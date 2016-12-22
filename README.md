@@ -23,7 +23,7 @@
 - **linter**: [eslint](http://eslint.org/)、[eslint-config-zoro](https://github.com/nonoroazoro/eslint-config-zoro)
 - **bundle**: [webpack](https://webpack.github.io/)
 - **ci**: [travis](https://travis-ci.org/)、[mocha](https://mochajs.org/)、[should](https://github.com/shouldjs/should.js)
-- **deploy**: [docker](https://www.docker.com/)
+- **deploy**: [docker](https://www.docker.com/)、[docker-compose](https://docs.docker.com/compose/)
 
 
 ## 使用方法
@@ -32,15 +32,15 @@
 
     1. install [docker-engine](https://docs.docker.com/engine/installation/).
 
-    2. install [docker-compose](https://docs.docker.com/compose/install/).
+    1. install [docker-compose](https://docs.docker.com/compose/install/).
 
-2. **clone from git**
+1. **clone from git**
 
     ```bash
-    $ git clone https://github.com/nonoroazoro/Zhihu-Daily-Reader.git`
+    git clone https://github.com/nonoroazoro/Zhihu-Daily-Reader.git`
     ```
 
-3. **configuration**
+1. **configuration**
 
     1. 端口默认为 `8888`，可在 `docker-compose.yml` 中修改，例如：
 
@@ -49,20 +49,20 @@
             - "9999:8888"
         ```
 
-    2. *（可选）* 离线数据目录默认为当前目录下的 `db`，可在 `docker-compose.yml` 中修改，例如：
+    1. *（可选）* 离线数据目录默认为当前目录下的 `db`，可在 `docker-compose.yml` 中修改，例如：
 
         ```yaml
         volumes:
             - ./myDataFolder:/data/db
         ```
 
-4. **run**
+1. **run**
 
     ```bash
-    $ docker-compose up -d
+    docker-compose up -d
     ```
 
-5. **browse http://localhost:8888**
+1. **browse http://localhost:8888**
 
 
 ## 更新记录
@@ -140,10 +140,13 @@
 ## 截图
 
 - **主界面**：
-  ![主界面](./screenshots/1.jpg?raw=true "主界面")
+
+  ![主界面](./screenshots/1.jpg?raw=true)
 
 - **阅读界面**：
-  ![阅读界面](./screenshots/2.jpg?raw=true "阅读界面")
+
+  ![阅读界面](./screenshots/2.jpg?raw=true)
 
 - **快捷键**：
-  ![阅读界面](./screenshots/3.jpg?raw=true "快捷键")
+
+  ![阅读界面](./screenshots/3.jpg?raw=true)
