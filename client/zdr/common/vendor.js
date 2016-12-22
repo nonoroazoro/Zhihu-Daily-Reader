@@ -19,4 +19,3 @@ import "mousetrap";
 import "react";
 import "react-dom";
 import "react-addons-update";
-import "react-addons-pure-render-mixin";
