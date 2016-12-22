@@ -1,7 +1,7 @@
 {
   "name": "zhihu-daily-reader",
   "description": "Reader for Zhihu-Daily.",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "author": {
     "name": "nonoroazoro",
     "email": "xiaochao.k@gmail.com"
@@ -19,6 +19,7 @@
   ],
   "scripts": {
     "start": "cross-env NODE_ENV=production node ./bin/www",
+    "start:dev": "cross-env NODE_ENV=development node ./bin/www",
     "startdb": "mkdir db | mongod --dbpath ./db",
     "dev": "cross-env NODE_ENV=development webpack --config webpack.dev.config.js --watch",
     "build": "cross-env NODE_ENV=production webpack --config webpack.prod.config.js --progress",
@@ -59,7 +60,7 @@
     "clean-webpack-plugin": "^0.1.14",
     "css-loader": "^0.26.1",
     "eslint": "^3.12.2",
-    "eslint-config-zoro": "^1.2.4",
+    "eslint-config-zoro": "^1.2.7",
     "eslint-loader": "^1.6.1",
     "eslint-plugin-react": "^6.8.0",
     "extract-text-webpack-plugin": "^1.0.1",
