@@ -1,11 +1,10 @@
 ﻿import "./res/DailyPage.less";
 
 import $ from "jquery";
-import React from "react";
+import React, { PureComponent } from "react";
 import Mousetrap from "mousetrap";
 import isFunction from "lodash/isFunction";
 import reactUpdate from "react-addons-update";
-import PureRenderMixin from "react-addons-pure-render-mixin";
 
 import Utils from "./controllers/Utils";
 import DailyManager from "./controllers/DailyManager";
@@ -18,14 +17,8 @@ import ShortcutsView from "./components/ShortcutsView";
 /**
  * 知乎日报页面。
  */
-export default class DailyPage extends React.Component
+export default class DailyPage extends PureComponent
 {
-    constructor(p_props)
-    {
-        super(p_props);
-        this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
-    }
-
     state = {
         topStoryIDs: [],
         storyIDs: [],
@@ -348,15 +341,14 @@ export default class DailyPage extends React.Component
      */
     _addStoryIDs(p_storyIDs)
     {
-        this.setState(
-            {
-                storyIDs: reactUpdate(this.state.storyIDs,
-                    {
-                        $push: p_storyIDs
-                    }
-                )
-            }
-        );
+        this.setState({
+            storyIDs: reactUpdate(
+                this.state.storyIDs,
+                {
+                    $push: p_storyIDs
+                }
+            )
+        });
     }
 
     _carouselOnClickHandler = (e) =>
