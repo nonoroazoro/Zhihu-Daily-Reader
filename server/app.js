@@ -55,7 +55,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // static file setup.
-app.use(express.static(path.resolve(__dirname, "../public")));
+app.use(express.static(path.resolve(__dirname, "../public"), { maxAge: "1y" }));
 
 // router setup.
 app.use("/", routes);
