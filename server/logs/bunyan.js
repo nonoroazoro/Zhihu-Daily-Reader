@@ -19,12 +19,15 @@ const log = bunyan.createLogger({
     streams: [
         {
             level: "debug",
-            stream: process.stdout
+            type: "rotating-file",
+            path: path.join(logsFolder, "debug.json"),
+            period: "1d",
+            count: 2
         },
         {
             level: "warn",
             type: "rotating-file",
-            path: path.join(logsFolder, "warn.log.json"),
+            path: path.join(logsFolder, "warn.json"),
             period: "1d",
             count: 7
         }

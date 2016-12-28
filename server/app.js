@@ -8,6 +8,7 @@ const favicon = require("serve-favicon");
 const bodyParser = require("body-parser");
 const compression = require("compression");
 
+const log = require("./logs/bunyan");
 const routes = require("./routes");
 const session = require("./auth/session");
 const passport = require("./auth/passport");
@@ -22,6 +23,7 @@ dbhelper.connect((err) =>
     if (err)
     {
         console.error(`${msg}\n${err.message}`);
+        log.warn(`${msg}\n${err.message}`);
     }
     else
     {
