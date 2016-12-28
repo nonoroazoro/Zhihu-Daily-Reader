@@ -3,7 +3,7 @@ import should from "should";
 
 import utils from "../../server/controllers/utils";
 
-describe.only("controllers/utils", () =>
+describe("controllers/utils", () =>
 {
     describe("1.convertToZhihuDate", () =>
     {
