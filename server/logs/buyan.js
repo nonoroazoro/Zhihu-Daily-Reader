@@ -3,7 +3,7 @@ const path = require("path");
 const config = require("config");
 const bunyan = require("bunyan");
 
-const logsFolder = config.logs || "./logs";
+const logsFolder = config.logs || "./.logs";
 try
 {
     fs.ensureDirSync(logsFolder);

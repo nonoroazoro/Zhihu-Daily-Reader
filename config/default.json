@@ -32,7 +32,7 @@
     },
 
     // 日志路径，可以为绝对路径。
-    "logs": "./logs",
+    "logs": "./.logs",
 
     // 启用用户认证（需要登录）。
     "enable_auth": false,
