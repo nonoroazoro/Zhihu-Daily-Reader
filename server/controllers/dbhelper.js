@@ -1,7 +1,7 @@
 ﻿"use strict";
 
-const fs = require("fs");
 const _ = require("lodash");
+const fs = require("fs-extra");
 const path = require("path");
 const async = require("async");
 const config = require("config");
@@ -125,33 +125,33 @@ function _monitor()
 
 function _prepareMongoDB(p_dbpath, p_callback)
 {
-    fs.mkdir(p_dbpath, () =>
+    fs.mkdirs(p_dbpath, (err1) =>
     {
-        fs.stat(p_dbpath, (err) =>
+        if (err1)
         {
-            if (err)
+            p_callback(new Error(`Can not find or create database dir: ${p_dbpath}`));
+        }
+        else
+        {
+            _repairMongoDB(p_dbpath, (err2) =>
             {
-                p_callback(new Error(`Can not create database dir: ${p_dbpath}`));
-            }
-            else
-            {
-                _repairMongoDB(p_dbpath);
-                p_callback();
-            }
-        });
+                if (err2)
+                {
+                    p_callback(new Error("Database is broken, can not auto-repair"));
+                }
+                else
+                {
+                    p_callback();
+                }
+            });
+        }
     });
 }
 
 /**
  * 修复未正常关闭的数据库。
  */
-function _repairMongoDB(p_dbpath)
+function _repairMongoDB(p_dbpath, p_callback)
 {
-    try
-    {
-        fs.unlinkSync(path.resolve(p_dbpath, "mongod.lock"));
-    }
-    catch (e)
-    {
-    }
+    fs.remove(path.resolve(p_dbpath, "mongod.lock"), p_callback);
 }
