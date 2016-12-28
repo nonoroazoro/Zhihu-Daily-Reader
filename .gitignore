@@ -29,4 +29,5 @@ node_modules
 
 # Project specific stuff
 db
+.logs
 .sessions
