@@ -21,6 +21,7 @@
 - **front-end**: [react](http://facebook.github.io/react/)
 - **back-end**: [node](https://nodejs.org)、[express](http://expressjs.com/)、[passport](https://github.com/jaredhanson/passport)、[mongodb](https://www.mongodb.org/)
 - **linter**: [eslint](http://eslint.org/)、[eslint-config-zoro](https://github.com/nonoroazoro/eslint-config-zoro)
+- **logging**: [bunyan](https://github.com/trentm/node-bunyan)
 - **bundle**: [webpack](https://webpack.github.io/)
 - **ci**: [travis](https://travis-ci.org/)、[mocha](https://mochajs.org/)、[should](https://github.com/shouldjs/should.js)
 - **deploy**: [docker](https://www.docker.com/)、[docker-compose](https://docs.docker.com/compose/)
