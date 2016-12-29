@@ -1,5 +1,5 @@
-const fs = require("fs-extra");
 const path = require("path");
+const fs = require("fs-extra");
 const config = require("config");
 const bunyan = require("bunyan");
 
@@ -21,7 +21,7 @@ const log = bunyan.createLogger({
             level: "debug",
             type: "rotating-file",
             path: path.join(logsFolder, "debug.json"),
-            period: "1d",
+            period: "7d",
             count: 2
         },
         {
