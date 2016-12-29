@@ -1,7 +1,6 @@
 ﻿"use strict";
 
 const path = require("path");
-const config = require("config");
 const helmet = require("helmet");
 const express = require("express");
 const favicon = require("serve-favicon");
@@ -12,27 +11,7 @@ const log = require("./logs/bunyan");
 const routes = require("./routes");
 const session = require("./auth/session");
 const passport = require("./auth/passport");
-const crawler = require("./controllers/crawler");
-const dbhelper = require("./controllers/dbhelper");
 const assetsMap = require("../public/assets/assets.json");
-
-// connect mongodb.
-dbhelper.connect((err) =>
-{
-    const msg = "\nDatabase Server not started, some features will be shut down.";
-    if (err)
-    {
-        console.error(`${msg}\n${err.message}`);
-        log.warn(`${msg}\n${err.message}`);
-    }
-    else
-    {
-        if (config.crawler.enabled)
-        {
-            setTimeout(crawler.start, config.crawler.delay);
-        }
-    }
-});
 
 // init express.
 const app = express();
@@ -40,6 +19,13 @@ const app = express();
 // view engine setup.
 app.set("views", path.resolve(__dirname, "./views"));
 app.set("view engine", "pug");
+
+// logs.
+app.use((req, res, next) =>
+{
+    req.log = log;
+    next();
+});
 
 // security.
 app.use(helmet());

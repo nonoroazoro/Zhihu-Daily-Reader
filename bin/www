@@ -3,6 +3,28 @@
 const app = require("../index");
 const config = require("config");
 
+const log = require("../server/logs/bunyan");
+const crawler = require("../server/controllers/crawler");
+const dbhelper = require("../server/controllers/dbhelper");
+
+// connect mongodb.
+dbhelper.connect((err) =>
+{
+    const msg = "\nDatabase Server not started, some features will be shut down.";
+    if (err)
+    {
+        console.error(`${msg}\n${err.message}`);
+        log.info(`${msg}\n${err.message}`);
+    }
+    else
+    {
+        if (config.crawler.enabled)
+        {
+            setTimeout(crawler.start, config.crawler.delay);
+        }
+    }
+});
+
 app.set("port", config.port);
 app.listen(config.port);
 
