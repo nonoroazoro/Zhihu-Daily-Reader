@@ -7,15 +7,14 @@ const log = require("../server/logs/bunyan");
 const crawler = require("../server/controllers/crawler");
 const dbhelper = require("../server/controllers/dbhelper");
 
-process.on("uncaughtException", (err) =>
+// fatal error.
+function processErrorHandler(err, param)
 {
-    log.fatal(err);
-});
+    log.fatal(err, param);
+}
 
-process.on("unhandledRejection", (err, p) =>
-{
-    log.fatal(err, p);
-});
+process.on("uncaughtException", processErrorHandler);
+process.on("unhandledRejection", processErrorHandler);
 
 // connect mongodb.
 dbhelper.connect((err) =>
