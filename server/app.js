@@ -63,6 +63,7 @@ app.use((req, res, next) =>
 app.use((err, req, res, next) =>
 {
     res.status(err.status || 500).render("error_404", { map: app.locals.map });
+    req.log.error({ req });
 });
 
 module.exports = app;
