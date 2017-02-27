@@ -7,7 +7,6 @@ services:
     web:
         build: .
         image: nonoroazoro/zhihu-daily-reader:1.2.0
-        dockerfile: Dockerfile.daocloud
         depends_on:
             - db
         ports:
