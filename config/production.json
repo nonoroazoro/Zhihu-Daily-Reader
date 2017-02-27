@@ -1,3 +1,4 @@
 ﻿{
-    "db": "mongodb://db/zhihu"
+    "db": "mongodb://db/zhihu",
+    "enable_auth": true
 }
