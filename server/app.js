@@ -110,7 +110,7 @@ app.use((err, req, res, next) =>
     // TODO: why 304 comes here???
     if (res.statusCode !== 304)
     {
-        res.status(500).render("error_404", { map: app.locals.map });
+        res.status(err.status || 500).render("error_404", { map: app.locals.map });
     }
     req.log.error({ req });
 });
