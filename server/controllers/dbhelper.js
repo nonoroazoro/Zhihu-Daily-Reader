@@ -44,7 +44,7 @@ module.exports.start = function (p_callback)
  */
 module.exports.connect = function (p_callback)
 {
-    const connection = process.env.MONGODB_CONNECTION ? process.env.MONGODB_CONNECTION : config.db;
+    const connection = process.env.MONGODB_CONNECTION ? `mongodb://${process.env.MONGODB_CONNECTION}` : config.db;
     mongoose.connect(
         connection,
         {
