@@ -2,7 +2,6 @@ const path = require("path");
 const webpack = require("webpack");
 const AssetsPlugin = require("assets-webpack-plugin");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 const srcPath = path.resolve(__dirname, "./client/zdr/");
 const distPath = path.resolve(__dirname, "./public/assets/");
@@ -25,37 +24,59 @@ module.exports = {
     },
     resolve:
     {
-        extensions: ["", ".js", ".jsx"]
+        extensions: [".js", ".jsx"],
+        modules: [srcPath, "node_modules"]
     },
     module:
     {
-        loaders: [
+        rules: [
             {
                 test: /\.jsx?$/,
-                exclude: /node_modules/,
-                loaders: ["babel"]
-            },
-            {
-                test: /\.css$/,
-                exclude: /node_modules/,
-                loader: ExtractTextPlugin.extract("style", "css")
-            },
-            {
-                test: /\.less$/,
-                loader: ExtractTextPlugin.extract("style", "css!less")
+                use: [
+                    {
+                        loader: "babel-loader",
+                        options: { cacheDirectory: true }
+                    }
+                ],
+                exclude: /node_modules/
             },
             {
                 test: /\.(png|jpg)$/,
-                exclude: /node_modules/,
-                loader: "url?limit=10000&name=res/[name].[ext]"
+                use: [
+                    {
+                        loader: "url-loader",
+                        options: {
+                            limit: 8192,
+                            name: "res/[name].[ext]"
+                        }
+                    }
+                ]
             },
             {
                 test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-                loader: "url?limit=10000&mimetype=application/font-woff&name=res/[name].[ext]"
+                use: [
+                    {
+                        loader: "url-loader",
+                        options: {
+                            limit: 8192,
+                            mimetype: "application/font-woff",
+                            name: "res/[name].[ext]"
+                        }
+                    }
+                ]
             },
             {
                 test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-                loader: "file?limit=10000&name=res/[name].[ext]"
+                use: [
+                    {
+                        loader: "file-loader",
+                        options: {
+                            limit: 8192,
+                            mimetype: "application/font-woff",
+                            name: "res/[name].[ext]"
+                        }
+                    }
+                ]
             }
         ]
     },
@@ -70,6 +91,9 @@ module.exports = {
             path: distPath,
             prettyPrint: true
         }),
-        new webpack.ProvidePlugin({ "jQuery": "jquery" })
+        new webpack.ProvidePlugin({
+            $: "jquery",
+            jQuery: "jquery"
+        })
     ]
 };

@@ -1,5 +1,4 @@
 const webpack = require("webpack");
-const WebpackMd5Hash = require("webpack-md5-hash");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 const config = require("./webpack.base.config");
@@ -9,19 +8,38 @@ config.output.chunkFilename = "[id].[chunkhash:8].chunk.js";
 
 // config.devtool = "cheap-module-source-map";
 
+config.module.rules.push(
+    {
+        test: /\.css$/,
+        use: ExtractTextPlugin.extract({
+            use: ["css-loader"],
+            fallback: "style-loader"
+        })
+    },
+    {
+        test: /\.less$/,
+        use: ExtractTextPlugin.extract({
+            use: ["css-loader", "less-loader"],
+            fallback: "style-loader"
+        })
+    }
+);
+
 config.plugins.push(
-    new WebpackMd5Hash(),
-    new ExtractTextPlugin("res/[name].[contenthash:8].css"),
+    new webpack.LoaderOptionsPlugin({
+        minimize: true
+    }),
+    new ExtractTextPlugin({
+        filename: "res/[name].[contenthash:8].css",
+        allChunks: true
+    }),
     new webpack.DefinePlugin({
-        "process.env":
-        {
+        "process.env": {
             NODE_ENV: JSON.stringify("production")
         }
     }),
-    new webpack.optimize.DedupePlugin(),
     new webpack.optimize.UglifyJsPlugin({
-        compress:
-        {
+        compress: {
             warnings: false
         }
     })

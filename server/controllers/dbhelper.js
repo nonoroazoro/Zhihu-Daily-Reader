@@ -44,26 +44,50 @@ module.exports.start = function (p_callback)
  */
 module.exports.connect = function (p_callback)
 {
-    const connection = process.env.MONGODB_CONNECTION ? `mongodb://${process.env.MONGODB_CONNECTION}` : config.db;
-    var db = mongoose.createConnection();
-    db.openSet(
-        connection,
-        {
-            server: {
-                auto_reconnect: config.auto_reconnect,
-                poolSize: config.poolSize
-            }
-        },
-        (err) =>
-        {
-            _connected = !err;
-            _monitor();
-            if (_.isFunction(p_callback))
+    // TODO: check if correct.
+    if (process.env.MONGODB_CONNECTION)
+    {
+        const db = mongoose.createConnection();
+        db.openSet(
+            `mongodb://${process.env.MONGODB_CONNECTION}`,
             {
-                p_callback(err);
+                server: {
+                    auto_reconnect: config.auto_reconnect,
+                    poolSize: config.poolSize
+                }
+            },
+            (err) =>
+            {
+                _connected = !err;
+                _monitor();
+                if (_.isFunction(p_callback))
+                {
+                    p_callback(err);
+                }
             }
-        }
-    );
+        );
+    }
+    else
+    {
+        mongoose.connect(
+            config.db,
+            {
+                server: {
+                    auto_reconnect: config.auto_reconnect,
+                    poolSize: config.poolSize
+                }
+            },
+            (err) =>
+            {
+                _connected = !err;
+                _monitor();
+                if (_.isFunction(p_callback))
+                {
+                    p_callback(err);
+                }
+            }
+        );
+    }
 };
 
 /**
@@ -109,20 +133,23 @@ module.exports.dropAllCollections = function (p_callback)
 function _monitor()
 {
     const db = mongoose.connection.db;
-    db.on("reconnect", () =>
+    if (db)
     {
-        _connected = true;
-    });
+        db.on("reconnect", () =>
+        {
+            _connected = true;
+        });
 
-    db.on("close", () =>
-    {
-        _connected = false;
-    });
+        db.on("close", () =>
+        {
+            _connected = false;
+        });
 
-    db.on("error", () =>
-    {
-        _connected = false;
-    });
+        db.on("error", () =>
+        {
+            _connected = false;
+        });
+    }
 }
 
 function _prepareMongoDB(p_dbpath, p_callback)
