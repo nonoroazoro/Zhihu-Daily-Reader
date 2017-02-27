@@ -1,4 +1,4 @@
 ﻿{
-    "db": "admin:v3ZuXqMXT0H@db2.daocloudinternal.io:60225/temp_db",
+    "db": "mongodb://db/zhihu",
     "enable_auth": true
 }
