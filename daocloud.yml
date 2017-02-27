@@ -2,20 +2,19 @@
 # between all of the containers defined in this file,
 # so we don't need links anymore.
 
-version: "2"
+version: "2.0"
 services:
-  web:
-    build: .
-    image: nonoroazoro/zhihu-daily-reader:1.2.0
-    depends_on:
-      - db
-    ports:
-      - "8888:8888"
-    environment:
-      - NODE_ENV=production
-    restart: unless-stopped
-  db:
-    image: mongo:latest
-    volumes:
-      - ./db:/data/db
-    restart: unless-stopped
+    web:
+        image: nonoroazoro/zhihu-daily-reader:latest
+        depends_on:
+            - db
+        ports:
+            - "8888:8888"
+        environment:
+            - NODE_ENV=production
+        restart: unless-stopped
+    db:
+        image: mongo:latest
+        volumes:
+            - ./db:/data/db
+        restart: unless-stopped
