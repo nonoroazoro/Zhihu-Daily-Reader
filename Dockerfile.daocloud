@@ -4,9 +4,7 @@ WORKDIR /zhihu-daily-reader
 
 COPY . /zhihu-daily-reader
 
-RUN npm config set registry "https://registry.npm.taobao.org/" \
-    && npm install --production \
-    && npm config delete registry
+RUN npm install --production
 
 VOLUME /zhihu-daily-reader
 
