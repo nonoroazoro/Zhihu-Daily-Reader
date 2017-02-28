@@ -45,6 +45,7 @@ module.exports.start = function (p_callback)
 module.exports.connect = function (p_callback)
 {
     // TODO: check if correct.
+    console.log(`Connecting database: ${process.env.MONGODB_CONNECTION || config.db}`);
     if (process.env.MONGODB_CONNECTION)
     {
         const db = mongoose.createConnection();
