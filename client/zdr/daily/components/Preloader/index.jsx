@@ -1,7 +1,7 @@
-﻿import "./res/index.less";
-
-import classNames from "classnames";
+﻿import classNames from "classnames";
 import React, { PropTypes } from "react";
+
+import "./res/index.less";
 
 const Preloader = ({ className }) =>
 {

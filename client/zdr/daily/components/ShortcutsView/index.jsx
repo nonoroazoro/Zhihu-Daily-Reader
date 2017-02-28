@@ -1,7 +1,8 @@
-﻿import "./res/index.less";
+﻿import React, { PropTypes, PureComponent } from "react";
 
-import React, { PropTypes, PureComponent } from "react";
 import ShortcutsBody from "./ShortcutsBody";
+
+import "./res/index.less";
 
 /**
  * 快捷键帮助对话框。

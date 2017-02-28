@@ -1,11 +1,11 @@
-﻿import "./res/index.less";
-
-import cs from "classnames";
+﻿import cs from "classnames";
 import map from "lodash/map";
 import React, { PropTypes } from "react";
 
 import FlexTile from "./FlexTile";
 import Preloader from "../Preloader";
+
+import "./res/index.less";
 
 const FlexView = ({ storyIDs, loading, onTileClick }) =>
 {

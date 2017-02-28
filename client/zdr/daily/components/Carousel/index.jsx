@@ -1,11 +1,11 @@
-﻿import "./res/index.less";
-
-import React, { PropTypes, PureComponent } from "react";
+﻿import React, { PropTypes, PureComponent } from "react";
 import classNames from "classnames";
 
 import CarouselInner from "./CarouselInner";
 import CarouselControls from "./CarouselControls";
 import CarouselIndicator from "./CarouselIndicator";
+
+import "./res/index.less";
 
 /**
  * 知乎日报：热门消息栏。
