@@ -1,12 +1,12 @@
-import "./res/index.less";
-
 import React from "react";
 import logo from "../../common/res/img/zhihu_daily_logo_blue.png";
+
+import "./res/index.less";
 
 /**
  * 头部。
  */
-export default () =>
+const NavbarHeader = () =>
 {
     return (
         <div className="navbar-header">
@@ -27,3 +27,5 @@ export default () =>
         </div>
     );
 };
+
+export default NavbarHeader;
