@@ -14,7 +14,7 @@ let _connected = false;
  * 启动数据库 Server。
  * @param {Function(err)} [p_callback]
  */
-module.exports.start = function (p_callback)
+module.exports.start = (p_callback) =>
 {
     const dbpath = path.resolve(__dirname, "../db");
     _prepareMongoDB(dbpath, (err1) =>
@@ -42,10 +42,9 @@ module.exports.start = function (p_callback)
  * 连接数据库。
  * @param {Function(err)} [p_callback]
  */
-module.exports.connect = function (p_callback)
+module.exports.connect = (p_callback) =>
 {
     // TODO: check if correct.
-    console.log(`Connecting database: ${process.env.MONGODB_CONNECTION || config.db}`);
     if (process.env.MONGODB_CONNECTION)
     {
         const db = mongoose.createConnection();
@@ -94,7 +93,7 @@ module.exports.connect = function (p_callback)
 /**
  * 检查数据库是否已连接。
  */
-module.exports.connected = function ()
+module.exports.connected = () =>
 {
     return _connected;
 };
@@ -103,7 +102,7 @@ module.exports.connected = function ()
  * 删除所有集合。
  * @param {Function(err)} [p_callback]
  */
-module.exports.dropAllCollections = function (p_callback)
+module.exports.dropAllCollections = (p_callback) =>
 {
     async.each(
         mongoose.connection.collections,
