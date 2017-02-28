@@ -10,7 +10,7 @@ const CatalogSchema = new Schema({
      * @type {String}
      */
     date: String,
-    
+
     /**
      * 知乎日报 ID 列表。
      * @type {Array}
