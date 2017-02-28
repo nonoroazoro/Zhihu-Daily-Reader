@@ -13,20 +13,20 @@ const dbhelper = require("../dbhelper");
  * @param {Object} p_res 服务端响应。
  * @param {Object} p_next
  */
-module.exports.getLatestStoryIDs = function (p_res, p_next)
+module.exports.getLatestStoryIDs = (p_res, p_next) =>
 {
     // 注意：最新日报列表优先从知乎服务器获取（不断更新）。
-    daily.fetchLatestStoryIDs((err, res) =>
+    daily.fetchLatestStoryIDs((err1, res) =>
     {
-        if (err)
+        if (err1)
         {
             if (dbhelper.connected())
             {
-                catalog.findLatestCatalog((err, doc) =>
+                catalog.findLatestCatalog((err2, doc) =>
                 {
-                    if (err || !doc)
+                    if (err2 || !doc)
                     {
-                        p_next(err);
+                        p_next(err2);
                     }
                     else
                     {
@@ -36,7 +36,7 @@ module.exports.getLatestStoryIDs = function (p_res, p_next)
             }
             else
             {
-                p_next(err);
+                p_next(err1);
             }
         }
         else
@@ -51,7 +51,7 @@ module.exports.getLatestStoryIDs = function (p_res, p_next)
  * @param {Object} p_res 服务端响应。
  * @param {Object} p_next
  */
-module.exports.getTopStoryIDs = function (p_res, p_next)
+module.exports.getTopStoryIDs = (p_res, p_next) =>
 {
     daily.fetchTopStoryIDs((err, res) =>
     {
@@ -72,7 +72,7 @@ module.exports.getTopStoryIDs = function (p_res, p_next)
  * @param {Object} p_res 服务端响应。
  * @param {Object} p_next
  */
-module.exports.getStoryIDs = function (p_date, p_res, p_next)
+module.exports.getStoryIDs = (p_date, p_res, p_next) =>
 {
     // 注意：非最新日报列表优先从数据库获取，注意区别。
     if (dbhelper.connected())
@@ -101,7 +101,7 @@ module.exports.getStoryIDs = function (p_date, p_res, p_next)
  * @param {Object} p_res 服务端响应。
  * @param {Object} p_next
  */
-module.exports.getStory = function (p_id, p_res, p_next)
+module.exports.getStory = (p_id, p_res, p_next) =>
 {
     if (dbhelper.connected())
     {
@@ -129,7 +129,7 @@ module.exports.getStory = function (p_id, p_res, p_next)
  * @param {Object} p_res 服务端响应。
  * @param {Object} p_next
  */
-module.exports.getImage = function (p_url, p_res, p_next)
+module.exports.getImage = (p_url, p_res, p_next) =>
 {
     if (dbhelper.connected())
     {
