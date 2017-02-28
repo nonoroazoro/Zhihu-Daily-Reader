@@ -8,6 +8,7 @@ const distPath = path.resolve(__dirname, "./public/assets/");
 
 module.exports = {
     context: srcPath,
+    stats: { children: false },
     entry:
     {
         vendor: ["./common/vendor"],
@@ -83,13 +84,14 @@ module.exports = {
     plugins: [
         new CleanWebpackPlugin([distPath]),
         new webpack.optimize.CommonsChunkPlugin({
-            name: "vendor",
+            names: ["vendor", "manifest"],
             minChunks: Infinity
         }),
         new AssetsPlugin({
             filename: "assets.json",
             path: distPath,
-            prettyPrint: true
+            prettyPrint: true,
+            includeManifest: "manifest"
         }),
         new webpack.ProvidePlugin({
             $: "jquery",
