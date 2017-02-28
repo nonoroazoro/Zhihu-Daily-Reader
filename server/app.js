@@ -107,12 +107,15 @@ app.use((req, res, next) =>
 // global error handler.
 app.use((err, req, res, next) =>
 {
-    // TODO: why 304 comes here???
-    if (res.statusCode !== 304)
+    // weird Windows shit.
+    if (err.code !== "EPERM")
     {
-        res.status(err.status || 500).render("error_404", { map: app.locals.map });
+        if (res.statusCode !== 304)
+        {
+            res.status(err.status || 500).render("error_404", { map: app.locals.map });
+        }
+        req.log.error({ req });
     }
-    req.log.error({ req });
 });
 
 module.exports = app;
