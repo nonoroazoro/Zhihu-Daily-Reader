@@ -17,46 +17,48 @@ const resource = require("../resource");
  * @param {String} p_date 日期。
  * @param {Function(err, doc)} [p_callback]
  */
-module.exports.cacheStory = function (p_id, p_date, p_callback)
+module.exports.cacheStory = (p_id, p_date, p_callback) =>
 {
     const self = this;
-    async.retry({
-        times: config.daily_retry,
-        interval: config.daily_interval * 1000
-    },
-    (done, results) =>
-    {
-        daily.fetchStory(p_id, done);
-    },
-    (err, res) =>
-    {
-        // 不管抓取失败与否，都将 ID 记录下来（完备）。
-        if (err)
+    async.retry(
         {
-            story.logUncachedStory(p_id, p_date, () =>
-            {
-                p_callback(err);
-            });
-        }
-        else
+            times: config.daily_retry,
+            interval: config.daily_interval * 1000
+        },
+        (done, results) =>
         {
-            res.story.date = p_date;
-            story.saveStory(res.story, (err, doc) =>
+            daily.fetchStory(p_id, done);
+        },
+        (err1, res) =>
+        {
+            // 不管抓取失败与否，都将 ID 记录下来（完备）。
+            if (err1)
             {
-                self.cacheImages(res.images, () =>
+                story.logUncachedStory(p_id, p_date, () =>
                 {
-                    p_callback(err, doc);
+                    p_callback(err1);
                 });
-            });
+            }
+            else
+            {
+                res.story.date = p_date;
+                story.saveStory(res.story, (err2, doc) =>
+                {
+                    self.cacheImages(res.images, () =>
+                    {
+                        p_callback(err2, doc);
+                    });
+                });
+            }
         }
-    });
+    );
 };
 
 /**
  * 离线最新的知乎日报。
  * @param {Function(err, res)} [p_callback]
  */
-module.exports.cacheLatestStories = function (p_callback)
+module.exports.cacheLatestStories = (p_callback) =>
 {
     async.waterfall(
         [
@@ -75,7 +77,7 @@ module.exports.cacheLatestStories = function (p_callback)
  * @param {Array} [p_ids] ID 列表。
  * @param {Function(err, res)} [p_callback]
  */
-module.exports.cacheStories = function (p_date, p_ids, p_callback)
+module.exports.cacheStories = (p_date, p_ids, p_callback) =>
 {
     const self = this;
     if (_.isFunction(p_date))
@@ -84,10 +86,11 @@ module.exports.cacheStories = function (p_date, p_ids, p_callback)
     }
     else
     {
+        let callback = p_callback;
         const tasks = [_cacheStoriesTask.bind(self)];
         if (_.isFunction(p_ids))
         {
-            p_callback = p_ids;
+            callback = p_ids;
             tasks.unshift(
                 daily.fetchStoryIDs.bind(self, p_date),
                 _cacheStoryIDsTask,
@@ -102,7 +105,7 @@ module.exports.cacheStories = function (p_date, p_ids, p_callback)
                 _preprocessTask
             );
         }
-        async.waterfall(tasks, p_callback);
+        async.waterfall(tasks, callback);
     }
 };
 
@@ -111,7 +114,7 @@ module.exports.cacheStories = function (p_date, p_ids, p_callback)
  * @param {String|Array} p_urls 单个或多个图片地址。
  * @param {Function(err, res)} [p_callback]
  */
-module.exports.cacheImages = function (p_urls, p_callback)
+module.exports.cacheImages = (p_urls, p_callback) =>
 {
     if (_.isFunction(p_urls))
     {
@@ -119,35 +122,40 @@ module.exports.cacheImages = function (p_urls, p_callback)
     }
     else
     {
+        let urls = p_urls;
         if (_.isString(p_urls) && !_.isEmpty(p_urls))
         {
-            p_urls = [p_urls];
+            urls = [p_urls];
         }
 
-        if (_.isArray(p_urls))
+        if (_.isArray(urls))
         {
             const errors = [];
-            async.eachSeries(p_urls, (url, done) =>
-            {
-                daily.fetchImage(url, (err, res) =>
+            async.eachSeries(
+                urls,
+                (url, done) =>
                 {
-                    if (err)
+                    daily.fetchImage(url, (err, res) =>
                     {
-                        errors.push(err);
-                        done();
-                    }
-                    else
-                    {
-                        resource.saveResource(res, () =>
+                        if (err)
                         {
+                            errors.push(err);
                             done();
-                        });
-                    }
-                });
-            }, () =>
-            {
-                p_callback(errors.length > 0 ? errors : null);
-            });
+                        }
+                        else
+                        {
+                            resource.saveResource(res, () =>
+                            {
+                                done();
+                            });
+                        }
+                    });
+                },
+                () =>
+                {
+                    p_callback(errors.length > 0 ? errors : null);
+                }
+            );
         }
         else
         {
@@ -184,27 +192,25 @@ function _cacheStoryIDsTask(p_res, p_callback)
  */
 function _preprocessTask(p_res, p_callback)
 {
-    story.query({
-        date: p_res.date,
-        cached: true
-    }, {
-        id: 1,
-        _id: 0
-    }, (err, docs) =>
-    {
-        if (!err && docs)
+    story.query(
+        { date: p_res.date, cached: true },
+        { id: 1, _id: 0 },
+        (err, docs) =>
         {
-            const cachedIDs = _.map(docs, (value) =>
+            if (!err && docs)
             {
-                return value.id;
-            });
-            _.remove(p_res.ids, (id) =>
-            {
-                return _.indexOf(cachedIDs, id) != -1;
-            });
+                const cachedIDs = _.map(docs, (value) =>
+                {
+                    return value.id;
+                });
+                _.remove(p_res.ids, (id) =>
+                {
+                    return _.indexOf(cachedIDs, id) !== -1;
+                });
+            }
+            p_callback(null, p_res);
         }
-        p_callback(null, p_res);
-    });
+    );
 }
 
 /**

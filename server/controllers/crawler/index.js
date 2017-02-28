@@ -12,31 +12,31 @@ let stop = false;
 /**
  * 开始爬虫。
  */
-module.exports.start = function ()
+module.exports.start = () =>
 {
     stop = false;
     async.waterfall([
         _cacheLatestTask,
-        _cleanCacheTask,
+        _cleanCacheTask
     ],
-    (err, res) =>
-    {
-        if (res)
+        (err, res) =>
         {
-            console.log(res);
-        }
+            if (res)
+            {
+                console.log(res);
+            }
 
-        if (!err)
-        {
-            _cachePrev(res.date, res.max_age);
-        }
-    });
+            if (!err)
+            {
+                _cachePrev(res.date, res.max_age);
+            }
+        });
 };
 
 /**
  * 停止爬虫。
  */
-module.exports.stop = function ()
+module.exports.stop = () =>
 {
     stop = true;
 };
@@ -74,7 +74,7 @@ function _cleanCacheTask(p_res, p_callback)
  */
 function _cachePrev(p_date, p_maxDate)
 {
-    let prevDate = utils.prevZhihuDay(p_date);
+    const prevDate = utils.prevZhihuDay(p_date);
     if (prevDate >= p_maxDate)
     {
         daily.cacheStories(prevDate, (err, res) =>
@@ -91,6 +91,6 @@ function _cachePrev(p_date, p_maxDate)
     }
     else
     {
-        console.log("Cached to max age(" + p_maxDate + "), crawler stopped.");
+        console.log(`Cached to max age(${p_maxDate}), crawler stopped.`);
     }
 }
