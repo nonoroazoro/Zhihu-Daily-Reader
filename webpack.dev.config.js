@@ -1,5 +1,4 @@
 const webpack = require("webpack");
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 const config = require("./webpack.base.config");
 
@@ -14,25 +13,15 @@ config.module.rules.push(
     },
     {
         test: /\.css$/,
-        use: ExtractTextPlugin.extract({
-            use: ["css-loader"],
-            fallback: "style-loader"
-        })
+        use: ["style-loader", "css-loader"]
     },
     {
         test: /\.less$/,
-        use: ExtractTextPlugin.extract({
-            use: ["css-loader", "less-loader"],
-            fallback: "style-loader"
-        })
+        use: ["style-loader", "css-loader", "less-loader"]
     }
 );
 
 config.plugins.push(
-    new ExtractTextPlugin({
-        filename: "res/[name].css",
-        allChunks: true
-    }),
     new webpack.SourceMapDevToolPlugin({
         filename: "[file].map",
         exclude: ["vendor.js"]
