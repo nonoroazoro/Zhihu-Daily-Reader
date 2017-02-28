@@ -142,6 +142,7 @@ module.exports.getImage = function (p_url, p_res, p_next)
             else
             {
                 p_res.contentType(doc.contentType);
+                p_res.setHeader("Cache-Control", "max-age=31536000");
                 p_res.send(doc.data);
             }
         });
@@ -165,7 +166,7 @@ function _fetchStoryIDs(p_date, p_res, p_next)
             p_res.json(res);
         }
     });
-};
+}
 
 function _fetchStory(p_id, p_res, p_next)
 {
@@ -180,7 +181,7 @@ function _fetchStory(p_id, p_res, p_next)
             p_res.json(res.story);
         }
     });
-};
+}
 
 function _fetchImage(p_url, p_res, p_next)
 {
@@ -193,7 +194,8 @@ function _fetchImage(p_url, p_res, p_next)
         else
         {
             p_res.contentType(res.contentType);
+            p_res.setHeader("Cache-Control", "max-age=31536000");
             p_res.send(res.data);
         }
     });
-};
+}
