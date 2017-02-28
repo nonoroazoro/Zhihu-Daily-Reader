@@ -1,6 +1,4 @@
-﻿import "./res/DailyPage.less";
-
-import $ from "jquery";
+﻿import $ from "jquery";
 import React, { PureComponent } from "react";
 import Mousetrap from "mousetrap";
 import isFunction from "lodash/isFunction";
@@ -13,6 +11,8 @@ import DailyManager from "./controllers/DailyManager";
 import FlexView from "./components/FlexView";
 import ArticleView from "./components/ArticleView";
 import ShortcutsView from "./components/ShortcutsView";
+
+import "./res/DailyPage.less";
 
 /**
  * 知乎日报页面。

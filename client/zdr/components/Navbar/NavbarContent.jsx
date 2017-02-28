@@ -1,11 +1,11 @@
-import "./res/index.less";
-
 import React from "react";
+
+import "./res/index.less";
 
 /**
  * 菜单。
  */
-export default () =>
+const NavbarContent = () =>
 {
     return (
         <div id="NavbarContent" className="navbar-collapse collapse">
@@ -17,3 +17,5 @@ export default () =>
         </div>
     );
 };
+
+export default NavbarContent;

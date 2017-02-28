@@ -1,14 +1,14 @@
-﻿import "./res/index.less";
-
-import React from "react";
+﻿import React from "react";
 
 import NavbarHeader from "./NavbarHeader";
 import NavbarContent from "./NavbarContent";
 
+import "./res/index.less";
+
 /**
  * 导航栏。
  */
-export default () =>
+const Navbar = () =>
 {
     return (
         <nav className="Navbar navbar navbar-default navbar-fixed-top">
@@ -19,3 +19,5 @@ export default () =>
         </nav>
     );
 };
+
+export default Navbar;
