@@ -19,17 +19,18 @@ process.on("unhandledRejection", processErrorHandler);
 // connect mongodb.
 dbhelper.connect((err) =>
 {
-    const msg = "\nDatabase Server not started, some features will be shut down.";
+    const msg = "\nFailed to connect to database, the offline mode is disabled.";
     if (err)
     {
-        console.error(`${msg}\n${err.message}`);
-        log.info(`${msg}\n${err.message}`);
+        log.info(`${msg}\nError: ${err.message}`);
+        console.log(msg);
     }
     else
     {
         if (config.crawler.enabled)
         {
             setTimeout(crawler.start, config.crawler.delay);
+            console.log("\nConnected to database, the offline mode is enabled.");
         }
     }
 });
