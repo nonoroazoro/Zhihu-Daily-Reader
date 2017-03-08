@@ -1,12 +1,12 @@
 ﻿import should from "should";
 
-import daily from "../../controllers/daily";
-import dbhelper from "../../controllers/dbhelper";
-import CatalogController from "../../controllers/catalog";
+import daily from "../../server/controllers/daily";
+import dbhelper from "../../server/controllers/dbhelper";
+import CatalogController from "../../server/controllers/catalog";
 
-describe("controllers/catalog", function ()
+describe("controllers/catalog", () =>
 {
-    before(function (done)
+    before((done) =>
     {
         if (dbhelper.connected())
         {
@@ -14,27 +14,27 @@ describe("controllers/catalog", function ()
         }
         else
         {
-            dbhelper.connect(function (err)
+            dbhelper.connect((err) =>
             {
                 should.not.exist(err);
                 dbhelper.dropAllCollections(done);
             });
         }
     });
-    
+
     let ids = [];
     const date = "20151214";
-    describe("1.saveCatalog", function ()
+    describe("1.saveCatalog", () =>
     {
-        it("should save the catalog of date: " + date, function (done)
+        it(`should save the catalog of date: ${date}`, (done) =>
         {
-            daily.fetchStoryIDs(date, function (err, res)
+            daily.fetchStoryIDs(date, (err1, res1) =>
             {
-                should.not.exist(err);
-                ids = res.ids;
-                CatalogController.saveCatalog(res, function (err, doc)
+                should.not.exist(err1);
+                ids = res1.ids;
+                CatalogController.saveCatalog(res1, (err2, doc) =>
                 {
-                    should.not.exist(err);
+                    should.not.exist(err2);
                     doc.date.should.equal(date);
                     doc.ids.join("").should.equal(ids.join(""));
                     done();
@@ -42,12 +42,12 @@ describe("controllers/catalog", function ()
             });
         });
     });
-    
-    describe("2.findCatalogByDate", function ()
+
+    describe("2.findCatalogByDate", () =>
     {
-        it("should find the catalog of date: " + date, function (done)
+        it(`should find the catalog of date: ${date}`, (done) =>
         {
-            CatalogController.findCatalogByDate(date, function (err, doc)
+            CatalogController.findCatalogByDate(date, (err, doc) =>
             {
                 should.not.exist(err);
                 doc.date.should.equal(date);

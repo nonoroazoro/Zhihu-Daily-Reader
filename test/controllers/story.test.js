@@ -1,12 +1,12 @@
 ﻿import should from "should";
 
-import Story from "../../models/story";
-import StoryController from "../../controllers/story";
-import dbhelper from "../../controllers/dbhelper";
+import Story from "../../server/models/story";
+import StoryController from "../../server/controllers/story";
+import dbhelper from "../../server/controllers/dbhelper";
 
-describe("controllers/story", function ()
+describe("controllers/story", () =>
 {
-    before(function (done)
+    before((done) =>
     {
         if (dbhelper.connected())
         {
@@ -14,55 +14,55 @@ describe("controllers/story", function ()
         }
         else
         {
-            dbhelper.connect(function (err)
+            dbhelper.connect((err) =>
             {
                 should.not.exist(err);
                 dbhelper.dropAllCollections(done);
             });
         }
     });
-    
-    describe("1.init", function ()
+
+    describe("1.init", () =>
     {
-        it("should create new stories: id[0~9], date[20140909, 20150910]", function (done)
+        it("should create new stories: id[0~9], date[20140909, 20150910]", (done) =>
         {
-            let stories = [];
+            const stories = [];
             for (let i = 0; i < 5; i++)
             {
                 stories.push({
-                    id : i,
-                    date : "20150909",
-                    read : (i <= 2),
-                    content : "神经科学/生物学" + i,
+                    id: i,
+                    date: "20150909",
+                    read: (i <= 2),
+                    content: `神经科学/生物学${i}`,
                     cached: (i <= 2)
                 });
             }
-            
+
             for (let i = 5; i < 10; i++)
             {
                 stories.push({
-                    id : i,
-                    date : "20150910",
-                    read : (i >= 7),
-                    content : "神经科学/生物学" + i,
+                    id: i,
+                    date: "20150910",
+                    read: (i >= 7),
+                    content: `神经科学/生物学${i}`,
                     cached: (i >= 7)
                 });
             }
-            
-            Story.create(stories, function (err, res)
+
+            Story.create(stories, (err, res) =>
             {
                 should.not.exist(err);
                 done();
             });
         });
     });
-    
-    describe("2.findStoryByID", function ()
+
+    describe("2.findStoryByID", () =>
     {
         const id = 3;
-        it("should find the story of ID: " + id, function (done)
+        it(`should find the story of ID: ${id}`, (done) =>
         {
-            StoryController.findStoryByID(id, function (err, doc)
+            StoryController.findStoryByID(id, (err, doc) =>
             {
                 should.not.exist(err);
                 should.exist(doc);
@@ -71,18 +71,18 @@ describe("controllers/story", function ()
             });
         });
     });
-    
-    describe("3.findStoriesByDate", function ()
+
+    describe("3.findStoriesByDate", () =>
     {
         const date = "20150910";
-        it("should find the stories of date: " + date, function (done)
+        it(`should find the stories of date: ${date}`, (done) =>
         {
-            StoryController.findStoriesByDate(date, function (err, docs)
+            StoryController.findStoriesByDate(date, (err, docs) =>
             {
                 should.not.exist(err);
                 should.exist(docs);
                 docs.length.should.equal(5);
-                docs.forEach(function (value, index)
+                docs.forEach((value, index) =>
                 {
                     value.date.should.equal(date);
                 });
@@ -90,18 +90,18 @@ describe("controllers/story", function ()
             });
         });
     });
-    
-    describe("4.findUnreadStories", function ()
+
+    describe("4.findUnreadStories", () =>
     {
         const date = "20150910";
-        it("should find the unread stories of date: " + date, function (done)
+        it(`should find the unread stories of date: ${date}`, (done) =>
         {
-            StoryController.findUnreadStories(date, function (err, docs)
+            StoryController.findUnreadStories(date, (err, docs) =>
             {
                 should.not.exist(err);
                 should.exist(docs);
                 docs.length.should.equal(2);
-                docs.forEach(function (value, index)
+                docs.forEach((value, index) =>
                 {
                     value.date.should.equal(date);
                     value.read.should.be.false();
@@ -109,15 +109,15 @@ describe("controllers/story", function ()
                 done();
             });
         });
-        
-        it("should find all of the unread stories", function (done)
+
+        it("should find all of the unread stories", (done) =>
         {
-            StoryController.findUnreadStories(function (err, docs)
+            StoryController.findUnreadStories((err, docs) =>
             {
                 should.not.exist(err);
                 should.exist(docs);
                 docs.length.should.equal(4);
-                docs.forEach(function (value, index)
+                docs.forEach((value, index) =>
                 {
                     value.read.should.be.false();
                 });
@@ -125,12 +125,12 @@ describe("controllers/story", function ()
             });
         });
     });
-    
-    describe("5.findUncachedIDs", function ()
+
+    describe("5.findUncachedIDs", () =>
     {
-        it("should find all uncached id", function (done)
+        it("should find all uncached id", (done) =>
         {
-            StoryController.findUncachedIDs(function (err, docs)
+            StoryController.findUncachedIDs((err, docs) =>
             {
                 should.not.exist(err);
                 should.exist(docs);
@@ -139,24 +139,20 @@ describe("controllers/story", function ()
             });
         });
     });
-    
-    describe("6.saveStory", function ()
+
+    describe("6.saveStory", () =>
     {
-        it("should save story", function (done)
+        it("should save story", (done) =>
         {
             const zhihuStory = {
-                id : 401,
+                id: 401,
                 date: "20150911",
                 title: "学英语才是正经事儿",
-                imageSource : "人民教育出版社",
-                contents : [
-                    {
-                        title: "神经科学/生物学3 - 修改"
-                    }
-                ]
+                imageSource: "人民教育出版社",
+                contents: [{ title: "神经科学/生物学3 - 修改" }]
             };
-            
-            StoryController.saveStory(zhihuStory, function (err, doc)
+
+            StoryController.saveStory(zhihuStory, (err, doc) =>
             {
                 should.not.exist(err);
                 should.exist(doc);
@@ -164,10 +160,10 @@ describe("controllers/story", function ()
                 done();
             });
         });
-        
-        it("should not save null story", function (done)
+
+        it("should not save null story", (done) =>
         {
-            StoryController.saveStory(null, function (err, doc)
+            StoryController.saveStory(null, (err, doc) =>
             {
                 should.exist(err);
                 should.not.exist(doc);
@@ -175,13 +171,13 @@ describe("controllers/story", function ()
             });
         });
     });
-    
-    describe("7.removeOldStories", function ()
+
+    describe("7.removeOldStories", () =>
     {
         const date = "20150910";
-        it("should remove stories older than: " + date, function (done)
+        it(`should remove stories older than: ${date}`, (done) =>
         {
-            StoryController.removeOldStories(date, function (err, res)
+            StoryController.removeOldStories(date, (err, res) =>
             {
                 should.not.exist(err);
                 should.exist(res);

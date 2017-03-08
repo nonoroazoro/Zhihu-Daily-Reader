@@ -1,14 +1,25 @@
-﻿import "./res/index.less";
+﻿import React from "react";
+import ReactDOM from "react-dom";
+import { AppContainer } from "react-hot-loader";
 
-import React     from "react";
-import ReactDOM  from "react-dom";
-import Navbar    from "./components/Navbar";
-import DailyPage from "./daily/DailyPage";
+import App from "./App";
 
-ReactDOM.render(
-    <div>
-        <Navbar />
-        <DailyPage />
-    </div>,
-    document.getElementById("MainContainer")
-);
+import "./res/index.less";
+
+function renderRoot()
+{
+    ReactDOM.render(
+        <AppContainer>
+            <App />
+        </AppContainer>,
+        document.getElementById("MainContainer")
+    );
+}
+
+renderRoot();
+
+// HMR to preserve React's state.
+if (module.hot)
+{
+    module.hot.accept("./App", renderRoot);
+}

@@ -1,0 +1,71 @@
+﻿.Preloader
+{
+    position: relative;
+    width: 53px;
+    height: 40px;
+
+    span
+    {
+        animation: wave 1.5s infinite ease-in-out;
+        background: #9b59b6;
+        display: block;
+        width: 9px;
+        height: 5px;
+        position: absolute;
+        bottom: 18px;
+
+        &.wave2
+        {
+            left: 11px;
+            animation-delay: .2s;
+        }
+
+        &.wave3
+        {
+            left: 22px;
+            animation-delay: .4s;
+        }
+
+        &.wave4
+        {
+            left: 33px;
+            animation-delay: .6s;
+        }
+
+        &.wave5
+        {
+            left: 44px;
+            animation-delay: .8s;
+        }
+    }
+    @keyframes wave
+    {
+        0%
+        {
+            height: 5px;
+            transform: translateY(0px);
+            background: #9b59b6;
+        }
+
+        25%
+        {
+            height: 30px;
+            transform: translateY(15px);
+            background: #3498db;
+        }
+
+        50%
+        {
+            height: 5px;
+            transform: translateY(0px);
+            background: #9b59b6;
+        }
+
+        100%
+        {
+            height: 5px;
+            transform: translateY(0px);
+            background: #9b59b6;
+        }
+    }
+}
