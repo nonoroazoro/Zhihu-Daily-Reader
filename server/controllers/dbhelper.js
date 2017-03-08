@@ -47,28 +47,24 @@ module.exports.connect = (p_callback) =>
     const database = process.env.MONGODB_CONNECTION
         ? `mongodb://${process.env.MONGODB_CONNECTION}`
         : config.db;
-    const options = {
-        server: {
-            auto_reconnect: config.auto_reconnect,
-            poolSize: config.poolSize
-        }
-    };
-    const callback = (err) =>
-    {
-        if (err)
+    mongoose.connect(
+        database,
         {
-            console.log(err);
-        }
-        _connected = !err;
-        _monitor();
-        if (_.isFunction(p_callback))
+            server: {
+                auto_reconnect: config.auto_reconnect,
+                poolSize: config.poolSize
+            }
+        },
+        (err) =>
         {
-            p_callback(err);
+            _connected = !err;
+            _monitor();
+            if (_.isFunction(p_callback))
+            {
+                p_callback(err);
+            }
         }
-    };
-
-    console.log(`connnected to:${database}`);
-    mongoose.connect(database, options, callback);
+    );
 };
 
 /**
