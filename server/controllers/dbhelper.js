@@ -45,48 +45,33 @@ module.exports.start = (p_callback) =>
 module.exports.connect = (p_callback) =>
 {
     // TODO: check if correct.
+    const database = process.env.MONGODB_CONNECTION
+        ? `mongodb://${process.env.MONGODB_CONNECTION}`
+        : config.db;
+    const options = {
+        server: {
+            auto_reconnect: config.auto_reconnect,
+            poolSize: config.poolSize
+        }
+    };
+    const callback = (err) =>
+    {
+        _connected = !err;
+        _monitor();
+        if (_.isFunction(p_callback))
+        {
+            p_callback(err);
+        }
+    };
+
     if (process.env.MONGODB_CONNECTION)
     {
-        const db = mongoose.createConnection();
-        db.openSet(
-            `mongodb://${process.env.MONGODB_CONNECTION}`,
-            {
-                server: {
-                    auto_reconnect: config.auto_reconnect,
-                    poolSize: config.poolSize
-                }
-            },
-            (err) =>
-            {
-                _connected = !err;
-                _monitor();
-                if (_.isFunction(p_callback))
-                {
-                    p_callback(err);
-                }
-            }
-        );
+        const connection = mongoose.createConnection();
+        connection.openSet(database, options, callback);
     }
     else
     {
-        mongoose.connect(
-            config.db,
-            {
-                server: {
-                    auto_reconnect: config.auto_reconnect,
-                    poolSize: config.poolSize
-                }
-            },
-            (err) =>
-            {
-                _connected = !err;
-                _monitor();
-                if (_.isFunction(p_callback))
-                {
-                    p_callback(err);
-                }
-            }
-        );
+        mongoose.connect(database, options, callback);
     }
 };
 
