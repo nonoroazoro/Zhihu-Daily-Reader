@@ -3,9 +3,9 @@
     "port": 8888,
 
     // 数据库。
+    "auto_reconnect": true,
     "db": "mongodb://localhost/zhihu",
     "poolSize": 10,
-    "auto_reconnect": true,
 
     // 知乎日报官方 API。
     "zhihu_daily_api": "http://news-at.zhihu.com/api/4/",
@@ -31,6 +31,9 @@
         // 抓取日报时的重试次数。
         "daily_retry": 3
     },
+
+    // 日志路径，可以为绝对路径。
+    "logs": "./.logs",
 
     // 启用用户认证（需要登录）。
     "enable_auth": false,

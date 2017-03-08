@@ -1,15 +1,15 @@
 ﻿import should from "should";
 
-import daily from "../../controllers/daily";
-import utils from "../../controllers/utils";
+import daily from "../../server/controllers/daily";
+import utils from "../../server/controllers/utils";
 
-describe("controllers/daily", function ()
+describe("controllers/daily", () =>
 {
-    describe("1.fetchLatestStoryIDs", function ()
+    describe("1.fetchLatestStoryIDs", () =>
     {
-        it("should fetch the latest story IDs", function (done)
+        it("should fetch the latest story IDs", (done) =>
         {
-            daily.fetchLatestStoryIDs(function (err, res)
+            daily.fetchLatestStoryIDs((err, res) =>
             {
                 should.not.exist(err);
                 res.date.should.equal(utils.convertToZhihuDate(new Date()));
@@ -17,17 +17,17 @@ describe("controllers/daily", function ()
             });
         });
     });
-    
-    describe("2.fetchStoryIDs", function ()
+
+    describe("2.fetchStoryIDs", () =>
     {
-        it("should fetch the story IDs of date: 20130519", function (done)
+        it("should fetch the story IDs of date: 20130519", (done) =>
         {
             const date = "20130519";
             const target = {
                 date: "20130519",
                 ids: [401, 396, 395, 394, 390, 388]
             };
-            daily.fetchStoryIDs(date, function (err, res)
+            daily.fetchStoryIDs(date, (err, res) =>
             {
                 should.not.exist(err);
                 res.date.should.equal(date);
@@ -35,39 +35,39 @@ describe("controllers/daily", function ()
                 done();
             });
         });
-        
-        it("should not fetch the story IDs of date: 20130518", function (done)
+
+        it("should not fetch the story IDs of date: 20130518", (done) =>
         {
             const date = "20130518";
             const target = {};
-            daily.fetchStoryIDs(date, function (err, res)
+            daily.fetchStoryIDs(date, (err, res) =>
             {
                 should.not.exist(err);
                 res.should.deepEqual(target);
                 done();
             });
         });
-        
-        it("should not fetch the story IDs of date: 20133030", function (done)
+
+        it("should not fetch the story IDs of date: 20133030", (done) =>
         {
             const date = "20133030";
-            daily.fetchStoryIDs(date, function (err, res)
+            daily.fetchStoryIDs(date, (err, res) =>
             {
                 should.exist(err);
                 done();
             });
         });
     });
-    
-    describe("3.fetchStory", function ()
+
+    describe("3.fetchStory", () =>
     {
-        it("should fetch the story of ID: 401", function (done)
+        it("should fetch the story of ID: 401", (done) =>
         {
             const id = 401;
             const title = "学英语才是正经事儿";
             const imageSource = "人民教育出版社";
             const shareURL = "http://daily.zhihu.com/story/401";
-            daily.fetchStory(id, function (err, res)
+            daily.fetchStory(id, (err, res) =>
             {
                 should.not.exist(err);
                 res.story.id.should.equal(id);

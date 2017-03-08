@@ -1,0 +1,41 @@
+﻿#!/usr/bin/env node
+
+const app = require("../index");
+const config = require("config");
+
+const log = require("../server/logs/bunyan");
+const crawler = require("../server/controllers/crawler");
+const dbhelper = require("../server/controllers/dbhelper");
+
+// fatal error.
+function processErrorHandler(err, param)
+{
+    log.fatal(err, param);
+}
+
+process.on("uncaughtException", processErrorHandler);
+process.on("unhandledRejection", processErrorHandler);
+
+// connect mongodb.
+dbhelper.connect((err) =>
+{
+    const msg = "\nFailed to connect to database, the offline mode is disabled.";
+    if (err)
+    {
+        log.info(`${msg}\nError: ${err.message}`);
+        console.log(msg);
+    }
+    else
+    {
+        if (config.crawler.enabled)
+        {
+            setTimeout(crawler.start, config.crawler.delay);
+            console.log("Connected to database, the offline mode is enabled.");
+        }
+    }
+});
+
+app.set("port", config.port);
+app.listen(config.port);
+
+console.log(`\nApplication Server started on port: ${config.port}.`);

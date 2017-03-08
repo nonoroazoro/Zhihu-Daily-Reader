@@ -1,31 +1,24 @@
-﻿import "./res/DailyPage.less";
+﻿import $ from "jquery";
+import React, { PureComponent } from "react";
+import Mousetrap from "mousetrap";
+import isFunction from "lodash/isFunction";
+import reactUpdate from "react-addons-update";
 
-import $               from "jquery";
-import React           from "react";
-import Mousetrap       from "mousetrap";
-import isFunction      from "lodash/isFunction";
-import reactUpdate     from "react-addons-update";
-import PureRenderMixin from "react-addons-pure-render-mixin";
-
-import Utils           from "./controllers/Utils";
-import DailyManager    from "./controllers/DailyManager";
+import Utils from "./controllers/Utils";
+import DailyManager from "./controllers/DailyManager";
 
 // import Carousel        from "./components/Carousel";
-import FlexView        from "./components/FlexView";
-import ArticleView     from "./components/ArticleView";
-import ShortcutsView   from "./components/ShortcutsView";
+import FlexView from "./components/FlexView";
+import ArticleView from "./components/ArticleView";
+import ShortcutsView from "./components/ShortcutsView";
+
+import "./res/DailyPage.less";
 
 /**
  * 知乎日报页面。
  */
-export default class DailyPage extends React.Component
+export default class DailyPage extends PureComponent
 {
-    constructor(p_props)
-    {
-        super(p_props);
-        this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
-    }
-
     state = {
         topStoryIDs: [],
         storyIDs: [],
@@ -88,9 +81,7 @@ export default class DailyPage extends React.Component
     */
     _loadOtherStories()
     {
-        this.setState({
-            loading: true
-        }, () =>
+        this.setState({ loading: true }, () =>
         {
             DailyManager.getStoryIDs((err, res) =>
             {
@@ -101,9 +92,7 @@ export default class DailyPage extends React.Component
                     this._loadPrevStories();
                 }
 
-                this.setState({
-                    loading: false
-                });
+                this.setState({ loading: false });
             });
         });
     }
@@ -113,9 +102,7 @@ export default class DailyPage extends React.Component
     */
     _loadPrevStories(p_callback)
     {
-        this.setState({
-            loading: true
-        }, () =>
+        this.setState({ loading: true }, () =>
         {
             DailyManager.getStoryIDs(
                 Utils.prevZhihuDay(this._currentLoadedDate),
@@ -206,15 +193,25 @@ export default class DailyPage extends React.Component
 
         Mousetrap.bind("left", () =>
         {
-            this._isArticleViewVisible
-                ? this._keydownShowPrevStory()
-                : this._decreaseCurrentIndex();
+            if (this._isArticleViewVisible)
+            {
+                this._keydownShowPrevStory();
+            }
+            else
+            {
+                this._decreaseCurrentIndex();
+            }
         });
         Mousetrap.bind("right", () =>
         {
-            this._isArticleViewVisible
-                ? this._keydownShowNextStory()
-                : this._increaseCurrentIndex();
+            if (this._isArticleViewVisible)
+            {
+                this._keydownShowNextStory();
+            }
+            else
+            {
+                this._increaseCurrentIndex();
+            }
         });
 
         Mousetrap.bind("v", () =>
@@ -344,15 +341,14 @@ export default class DailyPage extends React.Component
      */
     _addStoryIDs(p_storyIDs)
     {
-        this.setState(
-            {
-                storyIDs: reactUpdate(this.state.storyIDs,
-                    {
-                        $push: p_storyIDs
-                    }
-                )
-            }
-        );
+        this.setState({
+            storyIDs: reactUpdate(
+                this.state.storyIDs,
+                {
+                    $push: p_storyIDs
+                }
+            )
+        });
     }
 
     _carouselOnClickHandler = (e) =>
@@ -524,7 +520,7 @@ export default class DailyPage extends React.Component
             <div className="DailyPage container-fluid">
                 <FlexView
                     onTileClick={this._onTileClickHandler}
-                    contents={this.state.storyIDs}
+                    storyIDs={this.state.storyIDs}
                     loading={this.state.loading}
                 />
                 <ArticleView

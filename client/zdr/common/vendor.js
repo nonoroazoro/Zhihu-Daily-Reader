@@ -16,7 +16,7 @@ import "lodash/trim";
 
 import "moment";
 import "mousetrap";
+import "classnames";
 import "react";
 import "react-dom";
 import "react-addons-update";
-import "react-addons-pure-render-mixin";

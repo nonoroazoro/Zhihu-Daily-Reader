@@ -1,12 +1,12 @@
 ﻿import should from "should";
 
-import Status from "../../models/status";
-import StatusController from "../../controllers/status";
-import dbhelper from "../../controllers/dbhelper";
+import Status from "../../server/models/status";
+import StatusController from "../../server/controllers/status";
+import dbhelper from "../../server/controllers/dbhelper";
 
-describe("controllers/status", function ()
+describe("controllers/status", () =>
 {
-    before(function (done)
+    before((done) =>
     {
         if (dbhelper.connected())
         {
@@ -14,32 +14,32 @@ describe("controllers/status", function ()
         }
         else
         {
-            dbhelper.connect(function (err)
+            dbhelper.connect((err) =>
             {
                 should.not.exist(err);
                 dbhelper.dropAllCollections(done);
             });
         }
     });
-    
-    describe("1.init", function ()
+
+    describe("1.init", () =>
     {
-        it("should create a new status: Zoro, 20150915, 20150910", function (done)
+        it("should create a new status: Zoro, 20150915, 20150910", (done) =>
         {
             new Status({
-                username : "Zoro",
-                startDate : "20150909",
-                endDate : "20150910"
+                username: "Zoro",
+                startDate: "20150909",
+                endDate: "20150910"
             }).save(done);
         });
     });
-    
-    describe("2.findStatusByUsername", function ()
+
+    describe("2.findStatusByUsername", () =>
     {
         const username = "Zoro";
-        it("should find the status of user: '" + username + "'", function (done)
+        it(`should find the status of user: '${username}'`, (done) =>
         {
-            StatusController.findStatusByUsername(username, function (err, doc)
+            StatusController.findStatusByUsername(username, (err, doc) =>
             {
                 should.not.exist(err);
                 should.exist(doc);
@@ -47,28 +47,28 @@ describe("controllers/status", function ()
                 done();
             });
         });
-        
+
         const wrongUsername = " ";
-        it("should not find the status of user: '" + wrongUsername + "'", function (done)
+        it(`should not find the status of user: '${wrongUsername}'`, (done) =>
         {
-            StatusController.findStatusByUsername(wrongUsername, function (err, doc)
+            StatusController.findStatusByUsername(wrongUsername, (err, doc) =>
             {
                 should.not.exist(doc);
                 done();
             });
         });
     });
-    
-    describe("3.saveStatus", function ()
+
+    describe("3.saveStatus", () =>
     {
-        it("should save the status of: Zoro, , 20150910", function (done)
+        it("should save the status of: Zoro, , 20150910", (done) =>
         {
             const status = {
                 username: "Zoro",
                 endDate: "20150910"
             };
-            
-            StatusController.saveStatus(status, function (err, doc)
+
+            StatusController.saveStatus(status, (err, doc) =>
             {
                 should.not.exist(err);
                 should.exist(doc);
