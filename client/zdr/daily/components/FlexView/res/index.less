@@ -102,18 +102,25 @@
                 }
             }
         }
-        @media (min-width: 1441px)
+        @media screen and (min-width: 1441px)
         {
             .flex-tile
             {
                 width: 280px;
             }
         }
-        @media (max-width: 1440px)
+        @media (min-width: 1025px) and (max-width: 1440px)
         {
             .flex-tile
             {
                 width: 260px;
+            }
+        }
+        @media (max-width: 1024px)
+        {
+            .flex-tile
+            {
+                width: 230px;
             }
         }
     }
