@@ -49,7 +49,7 @@
 
 1. **config**
 
-    1. Standard
+    1. **Standard**
 
         1. install dependencies
 
@@ -71,7 +71,7 @@
 
         1. browse: http://localhost:8888
 
-    1. Docker
+    1. **Docker**
 
         1. install dependencies
 
