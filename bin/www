@@ -30,7 +30,7 @@ dbhelper.connect((err) =>
         if (config.crawler.enabled)
         {
             setTimeout(crawler.start, config.crawler.delay);
-            console.log("\nConnected to database, the offline mode is enabled.");
+            console.log("Connected to database, the offline mode is enabled.");
         }
     }
 });
@@ -38,4 +38,4 @@ dbhelper.connect((err) =>
 app.set("port", config.port);
 app.listen(config.port);
 
-console.log(`\nApplication Server started on port: ${config.port}\n`);
+console.log(`\nApplication Server started on port: ${config.port}.`);
