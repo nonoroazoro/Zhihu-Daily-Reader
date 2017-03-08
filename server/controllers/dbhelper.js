@@ -44,7 +44,6 @@ module.exports.start = (p_callback) =>
  */
 module.exports.connect = (p_callback) =>
 {
-    // TODO: check if correct.
     const database = process.env.MONGODB_CONNECTION
         ? `mongodb://${process.env.MONGODB_CONNECTION}`
         : config.db;
