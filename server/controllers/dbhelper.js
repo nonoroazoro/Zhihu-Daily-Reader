@@ -55,6 +55,10 @@ module.exports.connect = (p_callback) =>
     };
     const callback = (err) =>
     {
+        if (err)
+        {
+            console.log(err);
+        }
         _connected = !err;
         _monitor();
         if (_.isFunction(p_callback))
@@ -66,6 +70,7 @@ module.exports.connect = (p_callback) =>
     if (process.env.MONGODB_CONNECTION)
     {
         const connection = mongoose.createConnection();
+        console.log(`connnected to:${database}`);
         connection.openSet(database, options, callback);
     }
     else
