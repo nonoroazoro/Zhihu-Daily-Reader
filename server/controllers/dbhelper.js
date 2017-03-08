@@ -67,16 +67,8 @@ module.exports.connect = (p_callback) =>
         }
     };
 
-    if (process.env.MONGODB_CONNECTION)
-    {
-        const connection = mongoose.createConnection();
-        console.log(`connnected to:${database}`);
-        connection.openSet(database, options, callback);
-    }
-    else
-    {
-        mongoose.connect(database, options, callback);
-    }
+    console.log(`connnected to:${database}`);
+    mongoose.connect(database, options, callback);
 };
 
 /**
