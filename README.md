@@ -61,7 +61,7 @@
                 cd Zhihu-Daily-Reader && npm install --production
                 ```
 
-            1. install mongodb (*可选。不装的话会自动关闭数据库相关功能*)：[https://www.mongodb.org/downloads](https://www.mongodb.org/downloads)
+            1. install mongodb (*可选。不装的话会自动关闭数据库相关功能*)：[https://www.mongodb.com/download-center](https://www.mongodb.com/download-center)
 
         1. start app
 
@@ -73,13 +73,13 @@
 
     1. Docker
 
-        1. **install dependencies**
+        1. install dependencies
 
             1. install [docker-engine](https://docs.docker.com/engine/installation/).
 
             1. install [docker-compose](https://docs.docker.com/compose/install/).
 
-        1. 部署到 Raspberry Pi
+        1. **部署到 Raspberry Pi**
 
             1. 端口默认为 `8888`，可在 `docker-compose.rpi.yml` 中修改，例如：
 
@@ -103,7 +103,7 @@
 
             1. browse: http://localhost:8888
 
-        1. 部署到 DaoCloud
+        1. **部署到 DaoCloud**
 
             1. 创建新项目（使用之前 clone 的代码）
 
@@ -185,7 +185,7 @@
 
 2015 年 12 月 15 日
 
-- 增加离线功能，无法访问 Internet 时也能用啦（需安装[Mongodb](https://www.mongodb.org/downloads)）。
+- 增加离线功能，无法访问 Internet 时也能用啦（需安装[Mongodb](https://www.mongodb.com/download-center)）。
 - 离线功能可选，无需进行特殊设置（全自动）。
 - 其他细节优化，不想列出来了。
 
