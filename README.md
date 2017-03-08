@@ -1,6 +1,6 @@
 # 知乎日报 - 阅读器 [![Dependency Status](https://david-dm.org/nonoroazoro/Zhihu-Daily-Reader/develop.svg?style=flat-square)](https://david-dm.org/nonoroazoro/Zhihu-Daily-Reader/develop)
 
-知乎日报官方不提供 Web 版（网页版），只能自己动手了。
+知乎日报官方不提供 Web 版，只能自己动手了。
 
 > 离线：自动离线知乎日报（可配置），无法访问 Internet 时也能用咯。
 
@@ -9,6 +9,8 @@
 > 用户认证：可配置为需帐号登录（默认关闭）。
 
 > 支持：`Firefox/Chrome/IE11`。没测 `Opera`，应该可以。
+
+> 不支持：移动端（请用知乎官方客户端）。
 
 
 ## 声明
@@ -29,7 +31,7 @@
 
 ## 使用方法
 
-1. **install dependencies**
+1. **install docker**
 
     1. install [docker-engine](https://docs.docker.com/engine/installation/).
 
@@ -41,32 +43,89 @@
     git clone https://github.com/nonoroazoro/Zhihu-Daily-Reader.git`
     ```
 
-1. **configuration**
+1. **disable auth**
 
-    1. 端口默认为 `8888`，可在 `docker-compose.yml` 中修改，例如：
+    默认开启了用户认证（导致你们无法登录），请务必修改 `./config/production.json` 为：
 
-        ```yaml
-        ports:
-            - "9999:8888"
-        ```
-
-    1. *（可选）* 离线数据目录默认为当前目录下的 `db`，可在 `docker-compose.yml` 中修改，例如：
-
-        ```yaml
-        volumes:
-            - ./myDataFolder:/data/db
-        ```
-
-1. **run**
-
-    ```bash
-    docker-compose up -d
+    ```json
+    {
+        "enable_auth": false
+    }
     ```
 
-1. **browse http://localhost:8888**
+1. **config**
+
+    1. Standard
+
+        1. **install dependencies**
+
+            1. install node.js: [https://nodejs.org](https://nodejs.org)
+
+            1. install npm packages
+
+                ```bash
+                cd Zhihu-Daily-Reader && npm install --production
+                ```
+
+            1. install mongodb (*可选。不装的话会自动关闭数据库相关功能*)：[https://www.mongodb.org/downloads](https://www.mongodb.org/downloads)
+
+        1. **start app**
+
+            ```bash
+            npm start
+            ```
+
+        1. browse: http://localhost:8888
+
+    1. Docker
+
+        1. 部署到 Raspberry Pi
+
+            1. 端口默认为 `8888`，可在 `docker-compose.rpi.yml` 中修改，例如：
+
+                ```yaml
+                ports:
+                    - "9999:8888"
+                ```
+
+            1. *（可选）* 离线数据目录默认为当前目录下的 `db`，可在 `docker-compose.rpi.yml` 中修改，例如：
+
+                ```yaml
+                volumes:
+                    - ./myDataFolder:/data/db
+                ```
+
+            1. start app
+
+                ```bash
+                docker-compose up -f docker-compose.rpi.yml -d
+                ```
+
+            1. browse: http://localhost:8888
+
+        1. 部署到 DaoCloud
+
+            1. 创建新项目（使用之前 clone 的代码）
+
+            1. 在项目的`流程定义`中指定 `Dockerfile` 为 `Dockerfile.daocloud`，并构建镜像
+
+            1. *（可选）* 在`服务集成`中申请 `MongoDB` 服务
+
+            1. 创建应用（可在此绑定之前申请的 `MongoDB` 服务）
+
+            1. browse: DaoCloud 为您提供的地址
 
 
 ## 更新记录
+
+### <a href="#v1.3.1" id="v1.3.1">1.3.1</a>
+
+2017 年 3 月 8 日
+
+- 支持部署到 Raspberry Pi。
+- 支持部署到 DaoCloud（支持其 mongodb 服务集成）。
+- 调整在不用分辨率设备下的表现。
+
 
 ### <a href="#v1.3.0" id="v1.3.0">1.3.0</a>
 
