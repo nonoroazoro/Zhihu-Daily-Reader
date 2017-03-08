@@ -31,12 +31,6 @@
 
 ## 使用方法
 
-1. **install docker**
-
-    1. install [docker-engine](https://docs.docker.com/engine/installation/).
-
-    1. install [docker-compose](https://docs.docker.com/compose/install/).
-
 1. **clone from git**
 
     ```bash
@@ -57,7 +51,7 @@
 
     1. Standard
 
-        1. **install dependencies**
+        1. install dependencies
 
             1. install node.js: [https://nodejs.org](https://nodejs.org)
 
@@ -69,7 +63,7 @@
 
             1. install mongodb (*可选。不装的话会自动关闭数据库相关功能*)：[https://www.mongodb.org/downloads](https://www.mongodb.org/downloads)
 
-        1. **start app**
+        1. start app
 
             ```bash
             npm start
@@ -78,6 +72,12 @@
         1. browse: http://localhost:8888
 
     1. Docker
+
+        1. **install dependencies**
+
+            1. install [docker-engine](https://docs.docker.com/engine/installation/).
+
+            1. install [docker-compose](https://docs.docker.com/compose/install/).
 
         1. 部署到 Raspberry Pi
 
