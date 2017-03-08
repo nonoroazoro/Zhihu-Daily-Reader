@@ -11,7 +11,7 @@
             "program": "${workspaceRoot}/bin/www",
             "cwd": "${workspaceRoot}",
             "env": {
-                "NODE_ENV": "production"
+                "NODE_ENV": "development"
             }
         },
         {
@@ -21,7 +21,7 @@
             "program": "${workspaceRoot}/bin/www",
             "cwd": "${workspaceRoot}",
             "env": {
-                "NODE_ENV": "development"
+                "NODE_ENV": "production"
             }
         },
         {
