@@ -47,7 +47,7 @@
     }
     ```
 
-1. **config**
+1. **deploy**
 
     1. **Standard**
 
