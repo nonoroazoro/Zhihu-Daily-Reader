@@ -101,7 +101,7 @@
                 docker-compose up -f docker-compose.rpi.yml -d
                 ```
 
-            1. browse: http://localhost:8888
+            1. 访问: http://localhost:8888
 
         1. **部署到 DaoCloud**
 
@@ -113,7 +113,7 @@
 
             1. 创建应用（可在此绑定之前申请的 `MongoDB` 服务）
 
-            1. browse: DaoCloud 为您提供的地址
+            1. 访问: DaoCloud 为您提供的地址
 
 
 ## 更新记录
