@@ -22,7 +22,7 @@ const NavbarHeader = () =>
                 <span className="icon-bar" />
             </button>
             <a className="navbar-brand" href="/">
-                <img alt="知乎日报" src={logo} />
+                <img alt="知乎日报" src={logo} width={123} height={38} />
             </a>
         </div>
     );
