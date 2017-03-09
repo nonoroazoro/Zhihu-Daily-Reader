@@ -317,8 +317,8 @@ export default class DailyPage extends PureComponent
     */
     _scrollHandler = (e) =>
     {
-        // 370 是 FlexTile 的高度。
-        if (!this._isLoading && ($(document).scrollTop() >= $(document).height() - $(window).height() - 370))
+        // 370 * 2 是 2 个 FlexTile 的高度。
+        if (!this._isLoading && ($(document).scrollTop() >= $(document).height() - $(window).height() - 640))
         {
             this._isLoading = true;
             this._loadPrevStories(() =>
