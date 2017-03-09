@@ -61,7 +61,7 @@
                 cd Zhihu-Daily-Reader && npm install --production
                 ```
 
-            1. install [mongodb](https://www.mongodb.com/download-center) (*可选。不装的话会自动关闭数据库相关功能*)
+            1. install [mongodb](https://www.mongodb.com/download-center) (*可选。不装的话会自动关闭离线功能*)
 
         1. start app
 
