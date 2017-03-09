@@ -73,13 +73,13 @@
 
     1. **Docker**
 
-        1. install dependencies
-
-            1. install [docker-engine](https://docs.docker.com/engine/installation/).
-
-            1. install [docker-compose](https://docs.docker.com/compose/install/).
-
         1. **部署到 Raspberry Pi**
+
+            1. install dependencies
+
+                1. install [docker-engine](https://docs.docker.com/engine/installation/).
+
+                1. install [docker-compose](https://docs.docker.com/compose/install/).
 
             1. 端口默认为 `8888`，可在 `docker-compose.rpi.yml` 中修改，例如：
 
