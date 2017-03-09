@@ -53,7 +53,7 @@
 
         1. install dependencies
 
-            1. install node.js: [https://nodejs.org](https://nodejs.org)
+            1. install [node.js](https://nodejs.org)
 
             1. install npm packages
 
@@ -61,7 +61,7 @@
                 cd Zhihu-Daily-Reader && npm install --production
                 ```
 
-            1. install mongodb (*可选。不装的话会自动关闭数据库相关功能*)：[https://www.mongodb.com/download-center](https://www.mongodb.com/download-center)
+            1. install [mongodb](https://www.mongodb.com/download-center) (*可选。不装的话会自动关闭数据库相关功能*)
 
         1. start app
 
@@ -122,7 +122,7 @@
 
 2017 年 3 月 8 日
 
-- 支持部署到 Raspberry Pi。
+- 支持部署到 Raspberry Pi（Docker）。
 - 支持部署到 DaoCloud（支持其 mongodb 服务集成）。
 - 调整在不用分辨率设备下的表现。
 
