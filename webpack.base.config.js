@@ -61,7 +61,7 @@ module.exports = {
                         options: {
                             limit: 8192,
                             mimetype: "application/font-woff",
-                            name: "res/[name].[ext]"
+                            name: "res/fonts/[name].[ext]"
                         }
                     }
                 ]
@@ -74,7 +74,7 @@ module.exports = {
                         options: {
                             limit: 8192,
                             mimetype: "application/font-woff",
-                            name: "res/[name].[ext]"
+                            name: "res/fonts/[name].[ext]"
                         }
                     }
                 ]
