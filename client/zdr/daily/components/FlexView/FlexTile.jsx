@@ -12,7 +12,7 @@ export default class FlexTile extends PureComponent
 
     static defaultProps = {
         storyID: null,
-        onClick: () => { }
+        onClick: null
     };
 
     state = { story: null };
@@ -21,16 +21,14 @@ export default class FlexTile extends PureComponent
     {
         if (this.props.storyID)
         {
-            this._request = DailyManager.getStory(
-                this.props.storyID,
-                (err, res) =>
+            // TODO: check
+            this._request = DailyManager
+                .getStory(this.props.storyID)
+                .then((story) =>
                 {
-                    if (!err && res)
-                    {
-                        this.setState({ story: res });
-                    }
-                }
-            );
+                    this.setState({ story });
+                });
+            console.log(this._request.abort);
         }
     }
 

@@ -1,45 +1,40 @@
-﻿import cs from "classnames";
-import map from "lodash/map";
-import React, { PropTypes } from "react";
+﻿import map from "lodash/map";
+import React, { PureComponent, PropTypes } from "react";
 
 import FlexTile from "./FlexTile";
-import Preloader from "../Preloader";
 
 import "./res/index.less";
 
-const FlexView = ({ storyIDs, loading, onTileClick }) =>
+export default class FlexView extends PureComponent
 {
-    const classes = cs("flex-preloader", { "loading": loading });
-    const items = map(storyIDs, (value) =>
+    static propTypes = {
+        storyIDs: PropTypes.arrayOf(PropTypes.number),
+        onTileClick: PropTypes.func
+    };
+
+    /**
+     * storyIDs: 日报 ID 列表。
+     * onTileClick: 点击事件。
+     */
+    static defaultProps = {
+        storyIDs: [],
+        onTileClick: null
+    };
+
+    render()
     {
-        return <FlexTile key={value} storyID={value} onClick={onTileClick} />;
-    });
+        const { storyIDs, onTileClick } = this.props;
+        const items = map(storyIDs, (id) =>
+        {
+            return <FlexTile key={id} storyID={id} onClick={onTileClick} />;
+        });
 
-    return (
-        <div className="FlexView">
-            <div className="flex-content">
-                {items}
+        return (
+            <div className="FlexView">
+                <div className="flex-content">
+                    {items}
+                </div>
             </div>
-            <Preloader className={classes} />
-        </div>
-    );
-};
-
-FlexView.propTypes = {
-    storyIDs: PropTypes.arrayOf(PropTypes.number),
-    loading: PropTypes.bool,
-    onTileClick: PropTypes.func
-};
-
-FlexView.defaultProps = {
-    // 日报 ID 列表。
-    storyIDs: [],
-
-    // 加载状态。
-    loading: false,
-
-    // 点击事件。
-    onTileClick: () => { }
-};
-
-export default FlexView;
+        );
+    }
+}

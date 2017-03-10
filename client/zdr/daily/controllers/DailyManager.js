@@ -1,6 +1,6 @@
-﻿import $          from "jquery";
-import trim       from "lodash/trim";
-import isEmpty    from "lodash/isEmpty";
+﻿import $ from "jquery";
+import trim from "lodash/trim";
+import isEmpty from "lodash/isEmpty";
 import isFunction from "lodash/isFunction";
 
 export default class DailyManager
@@ -70,33 +70,45 @@ export default class DailyManager
 
     /**
      * 获取指定唯一标识的日报。
-     * @param String p_id 指定的唯一标识。
-     * @param {Function(err, res)} [p_callback]
+     *
+     * @param {String} p_id 指定的唯一标识。
+     * @returns {Promise}
      */
-    static getStory(p_id, p_callback)
+    static getStory(p_id)
     {
-        if (isFunction(p_callback))
-        {
-            if (isEmpty(trim(p_id)))
-            {
-                if (isFunction(p_callback))
-                {
-                    p_callback("p_id must not be null");
-                }
-            }
-            else
-            {
-                return $.get(`/api/4/news/${p_id}`, (p_data) =>
-                {
-                    DailyManager._stories[p_id] = p_data;
-                    p_callback(null, p_data);
-                }).fail(() =>
-                {
-                    p_callback("/api/4/news/ error");
-                });
-            }
-        }
+        // if (isFunction(p_callback))
+        // {
+        //     if (isEmpty(trim(p_id)))
+        //     {
+        //         if (isFunction(p_callback))
+        //         {
+        //             p_callback("p_id must not be null");
+        //         }
+        //     }
+        //     else
+        //     {
+        //         return $.get(`/api/4/news/${p_id}`, (p_data) =>
+        //         {
+        //             DailyManager._stories[p_id] = p_data;
+        //             p_callback(null, p_data);
+        //         }).fail(() =>
+        //         {
+        //             p_callback("/api/4/news/ error");
+        //         });
+        //     }
+        // }
 
-        return null;
+        if (p_id)
+        {
+            return fetch(`/api/4/news/${p_id}`).then((res) =>
+            {
+                return res.status === 200 ? res.json() : null;
+            }).then((story) =>
+            {
+                DailyManager._stories[p_id] = story;
+                return story;
+            });
+        }
+        return Promise.resolve(null);
     }
 }

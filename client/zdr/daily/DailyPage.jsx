@@ -1,4 +1,5 @@
 ﻿import $ from "jquery";
+import cs from "classnames";
 import Mousetrap from "mousetrap";
 import isFunction from "lodash/isFunction";
 import React, { PureComponent } from "react";
@@ -9,6 +10,7 @@ import DailyManager from "./controllers/DailyManager";
 
 // import Carousel        from "./components/Carousel";
 import FlexView from "./components/FlexView";
+import Preloader from "./components/Preloader";
 import ArticleView from "./components/ArticleView";
 import ShortcutsView from "./components/ShortcutsView";
 
@@ -516,8 +518,8 @@ export default class DailyPage extends PureComponent
                 <FlexView
                     onTileClick={this._onTileClickHandler}
                     storyIDs={this.state.storyIDs}
-                    loading={this.state.loading}
                 />
+                <Preloader className={cs({ "loading": this.state.loading })} />
                 <ArticleView
                     story={this.state.currentStory}
                     onPrevClick={this._keydownShowPrevStory}
