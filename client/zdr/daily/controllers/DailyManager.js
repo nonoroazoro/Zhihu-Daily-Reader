@@ -14,10 +14,7 @@ export default class DailyManager
     {
         return new Promise((p_resolve) =>
         {
-            $.get("/api/4/news/top", p_resolve).fail(() =>
-            {
-                p_resolve(null);
-            });
+            $.get("/api/4/news/top", p_resolve).fail(() => p_resolve(null));
         });
     }
 
@@ -31,10 +28,7 @@ export default class DailyManager
     {
         return new Promise((p_resolve) =>
         {
-            $.get(`/api/4/news/before/${trim(p_date)}`, p_resolve).fail(() =>
-            {
-                p_resolve(null);
-            });
+            $.get(`/api/4/news/before/${trim(p_date)}`, p_resolve).fail(() => p_resolve(null));
         });
     }
 
@@ -61,10 +55,7 @@ export default class DailyManager
                     {
                         stories[p_id] = story;
                         p_resolve(story);
-                    }).fail(() =>
-                    {
-                        p_resolve(null);
-                    });
+                    }).fail(() => p_resolve(null));
                 });
             }
         }
