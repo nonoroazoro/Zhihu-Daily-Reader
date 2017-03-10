@@ -6,7 +6,6 @@ import "bootstrap/less/bootstrap.less";
 
 import "jquery";
 import "bootstrap";
-import "isomorphic-fetch";
 
 // Lodash. Import sub-modules to reduce bundle file size.
 import "lodash/map";
