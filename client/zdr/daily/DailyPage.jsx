@@ -8,7 +8,7 @@ import update from "immutability-helper";
 import Utils from "./controllers/Utils";
 import DailyManager from "./controllers/DailyManager";
 
-// import Carousel        from "./components/Carousel";
+// import Carousel from "./components/Carousel";
 import FlexView from "./components/FlexView";
 import Preloader from "./components/Preloader";
 import ArticleView from "./components/ArticleView";
@@ -67,13 +67,13 @@ export default class DailyPage extends PureComponent
     */
     _loadTopStories()
     {
-        DailyManager.getTopStoryIDs((err, res) =>
+        this.setState({ loading: true }, async () =>
         {
-            if (!err && res)
+            const res = await DailyManager.getTopStoryIDs();
+            this.setState({ loading: false });
+            if (res)
             {
-                this.setState({
-                    topStoryIDs: res.ids
-                });
+                this.setState({ topStoryIDs: res.ids });
             }
         });
     }
@@ -83,19 +83,16 @@ export default class DailyPage extends PureComponent
     */
     _loadOtherStories()
     {
-        this.setState({ loading: true }, () =>
+        this.setState({ loading: true }, async () =>
         {
-            DailyManager.getStoryIDs((err, res) =>
+            const res = await DailyManager.getStoryIDs();
+            this.setState({ loading: false });
+            if (res)
             {
-                if (!err && res)
-                {
-                    this._currentLoadedDate = res.date;
-                    this._addStoryIDs(res.ids);
-                    this._loadPrevStories();
-                }
-
-                this.setState({ loading: false });
-            });
+                this._currentLoadedDate = res.date;
+                this._addStoryIDs(res.ids);
+                this._loadPrevStories();
+            }
         });
     }
 
@@ -104,28 +101,20 @@ export default class DailyPage extends PureComponent
     */
     _loadPrevStories(p_callback)
     {
-        this.setState({ loading: true }, () =>
+        this.setState({ loading: true }, async () =>
         {
-            DailyManager.getStoryIDs(
-                Utils.prevZhihuDay(this._currentLoadedDate),
-                (err, res) =>
-                {
-                    if (!err && res)
-                    {
-                        this._currentLoadedDate = res.date;
-                        this._addStoryIDs(res.ids);
-                    }
+            const res = await DailyManager.getStoryIDs(Utils.prevZhihuDay(this._currentLoadedDate));
+            this.setState({ loading: false });
+            if (res)
+            {
+                this._currentLoadedDate = res.date;
+                this._addStoryIDs(res.ids);
+            }
 
-                    this.setState({
-                        loading: false
-                    });
-
-                    if (isFunction(p_callback))
-                    {
-                        p_callback();
-                    }
-                }
-            );
+            if (isFunction(p_callback))
+            {
+                p_callback();
+            }
         });
     }
 
@@ -185,11 +174,11 @@ export default class DailyPage extends PureComponent
         Mousetrap.bind("j", this._keydownShowNextStory);
         Mousetrap.bind("k", this._keydownShowPrevStory);
 
-        Mousetrap.bind(["o", "enter"], () =>
+        Mousetrap.bind(["o", "enter"], async () =>
         {
             if (!this._isArticleViewVisible && this._currentIndex >= 0)
             {
-                this._showArticle(DailyManager.getFetchedStory([this.state.storyIDs[this._currentIndex]]), false);
+                this._showArticle(await DailyManager.getStory(this.state.storyIDs[this._currentIndex]), false);
             }
         });
 
@@ -261,19 +250,21 @@ export default class DailyPage extends PureComponent
         {
             if (!this._isLoading)
             {
-                const story = DailyManager.getFetchedStory([this.state.storyIDs[index]]);
-                if (this._isArticleViewVisible)
+                DailyManager.getStory(this.state.storyIDs[index]).then((story) =>
                 {
-                    this._updateArticle(story, () =>
+                    if (this._isArticleViewVisible)
                     {
-                        this._increaseCurrentIndex();
-                        this._resetArticleViewScroll();
-                    });
-                }
-                else
-                {
-                    this._showArticle(story);
-                }
+                        this._updateArticle(story, () =>
+                        {
+                            this._increaseCurrentIndex();
+                            this._resetArticleViewScroll();
+                        });
+                    }
+                    else
+                    {
+                        this._showArticle(story);
+                    }
+                });
             }
         }
         else
@@ -298,19 +289,21 @@ export default class DailyPage extends PureComponent
         const index = this._currentIndex - 1;
         if (index >= 0)
         {
-            const story = DailyManager.getFetchedStory([this.state.storyIDs[index]]);
-            if (this._isArticleViewVisible)
+            DailyManager.getStory(this.state.storyIDs[index]).then((story) =>
             {
-                this._updateArticle(story, () =>
+                if (this._isArticleViewVisible)
                 {
-                    this._decreaseCurrentIndex();
-                    this._resetArticleViewScroll();
-                });
-            }
-            else
-            {
-                this._showArticle(story);
-            }
+                    this._updateArticle(story, () =>
+                    {
+                        this._decreaseCurrentIndex();
+                        this._resetArticleViewScroll();
+                    });
+                }
+                else
+                {
+                    this._showArticle(story);
+                }
+            });
         }
     }
 
@@ -350,7 +343,10 @@ export default class DailyPage extends PureComponent
 
     _carouselOnClickHandler = (e) =>
     {
-        this._showArticle(DailyManager.getFetchedStory([e.id]), false);
+        DailyManager.getStory(e.id).then((story) =>
+        {
+            this._showArticle(story, false);
+        });
     }
 
     _onTileClickHandler = (e) =>
