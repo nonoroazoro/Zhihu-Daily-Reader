@@ -4,6 +4,12 @@
         "mocha": true
     },
     "rules": {
-        "react/no-did-mount-set-state": "off"
+        "react/no-did-mount-set-state": "off",
+        "newline-per-chained-call": [
+            "error",
+            {
+                "ignoreChainWithDepth": 5
+            }
+        ]
     }
 }
