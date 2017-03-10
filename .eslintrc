@@ -2,5 +2,8 @@
     "extends": "eslint-config-zoro",
     "env": {
         "mocha": true
+    },
+    "rules": {
+        "react/no-did-mount-set-state": "off"
     }
 }
