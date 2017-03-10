@@ -1,4 +1,5 @@
-﻿import trim from "lodash/trim";
+﻿import $ from "jquery";
+import trim from "lodash/trim";
 
 // 缓存日报内容。
 const stories = {};
@@ -11,10 +12,13 @@ export default class DailyManager
      */
     static getTopStoryIDs()
     {
-        return fetch("/api/4/news/top").then((res) =>
+        return new Promise((p_resolve) =>
         {
-            return res.status === 200 ? res.json() : null;
-        }).catch(() => null);
+            $.get("/api/4/news/top", p_resolve).fail(() =>
+            {
+                p_resolve(null);
+            });
+        });
     }
 
     /**
@@ -25,10 +29,13 @@ export default class DailyManager
      */
     static getStoryIDs(p_date)
     {
-        return fetch(`/api/4/news/before/${trim(p_date)}`).then((res) =>
+        return new Promise((p_resolve) =>
         {
-            return res.status === 200 ? res.json() : null;
-        }).catch(() => null);
+            $.get(`/api/4/news/before/${trim(p_date)}`, p_resolve).fail(() =>
+            {
+                p_resolve(null);
+            });
+        });
     }
 
     /**
@@ -48,14 +55,17 @@ export default class DailyManager
             }
             else
             {
-                return fetch(`/api/4/news/${p_id}`).then((res) =>
+                return new Promise((p_resolve) =>
                 {
-                    return res.status === 200 ? res.json() : null;
-                }).then((story) =>
-                {
-                    stories[p_id] = story;
-                    return story;
-                }).catch(() => null);
+                    $.get(`/api/4/news/${p_id}`, (story) =>
+                    {
+                        stories[p_id] = story;
+                        p_resolve(story);
+                    }).fail(() =>
+                    {
+                        p_resolve(null);
+                    });
+                });
             }
         }
         return Promise.resolve();
