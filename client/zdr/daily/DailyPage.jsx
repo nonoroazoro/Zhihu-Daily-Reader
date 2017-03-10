@@ -1,8 +1,8 @@
 ﻿import $ from "jquery";
-import React, { PureComponent } from "react";
 import Mousetrap from "mousetrap";
 import isFunction from "lodash/isFunction";
-import reactUpdate from "react-addons-update";
+import React, { PureComponent } from "react";
+import update from "immutability-helper";
 
 import Utils from "./controllers/Utils";
 import DailyManager from "./controllers/DailyManager";
@@ -342,12 +342,7 @@ export default class DailyPage extends PureComponent
     _addStoryIDs(p_storyIDs)
     {
         this.setState({
-            storyIDs: reactUpdate(
-                this.state.storyIDs,
-                {
-                    $push: p_storyIDs
-                }
-            )
+            storyIDs: update(this.state.storyIDs, { $push: p_storyIDs })
         });
     }
 
