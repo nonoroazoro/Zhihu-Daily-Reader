@@ -1,27 +1,29 @@
-﻿import classNames from "classnames";
-import React, { PropTypes } from "react";
+﻿import cs from "classnames";
+import React, { PureComponent, PropTypes } from "react";
 
 import "./res/index.less";
 
-const Preloader = ({ className }) =>
+export default class Preloader extends PureComponent
 {
-    return (
-        <div className={classNames("Preloader", className)}>
-            <span className="wave1" />
-            <span className="wave2" />
-            <span className="wave3" />
-            <span className="wave4" />
-            <span className="wave5" />
-        </div>
-    );
-};
+    static propTypes = {
+        className: PropTypes.string
+    };
 
-Preloader.propTypes = {
-    className: PropTypes.string
-};
+    static defaultProps =
+    {
+        className: undefined
+    };
 
-Preloader.defaultProps = {
-    className: null
-};
-
-export default Preloader;
+    render()
+    {
+        return (
+            <div className={cs("Preloader", this.props.className)}>
+                <span className="wave1" />
+                <span className="wave2" />
+                <span className="wave3" />
+                <span className="wave4" />
+                <span className="wave5" />
+            </div>
+        );
+    }
+}
