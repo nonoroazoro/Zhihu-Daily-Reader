@@ -1,114 +1,63 @@
-﻿import $ from "jquery";
-import trim from "lodash/trim";
-import isEmpty from "lodash/isEmpty";
-import isFunction from "lodash/isFunction";
+﻿import trim from "lodash/trim";
+
+// 缓存日报内容。
+const stories = {};
 
 export default class DailyManager
 {
-    static _stories = {};
-
-    /**
-     * 获取已缓存的指定日报内容（以日报 ID 进行检索）。
-     * @param {String} p_id 日报 ID。
-     */
-    static getFetchedStory(p_id)
-    {
-        return DailyManager._stories[p_id];
-    }
-
     /**
      * 获取最新热门日报的 ID 列表。
-     * @param {Function(err, res)} [p_callback]
+     * @returns {Promise} `{date, ids}` or `null`
      */
-    static getTopStoryIDs(p_callback)
+    static getTopStoryIDs()
     {
-        return $.get("/api/4/news/top", (p_data) =>
+        return fetch("/api/4/news/top").then((res) =>
         {
-            p_callback(null, p_data);
-        }).fail(() =>
-        {
-            p_callback("/api/4/news/top error");
-        });
+            return res.status === 200 ? res.json() : null;
+        }).catch(() => null);
     }
 
     /**
      * 获取指定日期的日报的 ID 列表。
-     * @param String p_date 指定的日期。如果未指定，则返回最新日报的索引；如果小于 20130519，则返回 {}。
-     * @param {Function(err, res)} [p_callback]
+     *
+     * @param {String} [p_date] 指定的日期。如果未指定，则返回最新日报的索引；如果小于 20130519，则返回 {}。
+     * @returns {Promise} `{date, ids}` or `null`
      */
-    static getStoryIDs(p_date, p_callback)
+    static getStoryIDs(p_date)
     {
-        let date = p_date;
-        let callback = p_callback;
-        if (isFunction(date))
+        return fetch(`/api/4/news/before/${trim(p_date)}`).then((res) =>
         {
-            callback = date;
-            date = null;
-        }
-
-        if (isEmpty(trim(date)))
-        {
-            return $.get("/api/4/news/before", (p_data) =>
-            {
-                callback(null, p_data);
-            }).fail(() =>
-            {
-                callback("/api/4/news/before error");
-            });
-        }
-        else
-        {
-            return $.get(`/api/4/news/before/${date}`, (p_data) =>
-            {
-                callback(null, p_data);
-            }).fail(() =>
-            {
-                callback(`/api/4/news/before/${date} error`);
-            });
-        }
+            return res.status === 200 ? res.json() : null;
+        }).catch(() => null);
     }
 
     /**
      * 获取指定唯一标识的日报。
      *
      * @param {String} p_id 指定的唯一标识。
-     * @returns {Promise}
+     * @returns {Promise} `story` or `null`
      */
     static getStory(p_id)
     {
-        // if (isFunction(p_callback))
-        // {
-        //     if (isEmpty(trim(p_id)))
-        //     {
-        //         if (isFunction(p_callback))
-        //         {
-        //             p_callback("p_id must not be null");
-        //         }
-        //     }
-        //     else
-        //     {
-        //         return $.get(`/api/4/news/${p_id}`, (p_data) =>
-        //         {
-        //             DailyManager._stories[p_id] = p_data;
-        //             p_callback(null, p_data);
-        //         }).fail(() =>
-        //         {
-        //             p_callback("/api/4/news/ error");
-        //         });
-        //     }
-        // }
-
         if (p_id)
         {
-            return fetch(`/api/4/news/${p_id}`).then((res) =>
+            const cache = stories[p_id];
+            if (cache)
             {
-                return res.status === 200 ? res.json() : null;
-            }).then((story) =>
+                return Promise.resolve(cache);
+            }
+            else
             {
-                DailyManager._stories[p_id] = story;
-                return story;
-            });
+                return fetch(`/api/4/news/${p_id}`).then((res) =>
+                {
+                    return res.status === 200 ? res.json() : null;
+                }).then((story) =>
+                {
+                    stories[p_id] = story;
+                    return story;
+                }).catch(() => null);
+            }
         }
-        return Promise.resolve(null);
+        return Promise.resolve();
     }
 }
