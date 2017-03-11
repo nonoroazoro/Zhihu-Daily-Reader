@@ -19,6 +19,5 @@ import "moment";
 import "mousetrap";
 import "react";
 import "react-dom";
-import "react-router";
 import "classnames";
 import "immutability-helper";
