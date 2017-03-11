@@ -1,7 +1,7 @@
 ﻿import cs from "classnames";
 import React, { PureComponent, PropTypes } from "react";
 
-import "./res/index.less";
+import "./index.less";
 
 export default class Preloader extends PureComponent
 {

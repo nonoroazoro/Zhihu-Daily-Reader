@@ -3,7 +3,7 @@
 import NavbarHeader from "./NavbarHeader";
 import NavbarContent from "./NavbarContent";
 
-import "./res/index.less";
+import "./index.less";
 
 /**
  * 导航栏。

@@ -1,7 +1,7 @@
 import React from "react";
 
 import Navbar from "./components/Navbar";
-import DailyPage from "./daily/DailyPage";
+import DailyPage from "./daily/components/DailyPage";
 
 const App = () =>
 {

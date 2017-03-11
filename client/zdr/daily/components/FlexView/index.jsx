@@ -3,7 +3,7 @@ import React, { PureComponent, PropTypes } from "react";
 
 import FlexTile from "./FlexTile";
 
-import "./res/index.less";
+import "./index.less";
 
 export default class FlexView extends PureComponent
 {

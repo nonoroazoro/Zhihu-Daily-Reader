@@ -4,7 +4,7 @@ import ArticleBody from "./ArticleBody";
 import ArticleHeader from "./ArticleHeader";
 import ArticleControl from "./ArticleControl";
 
-import "./res/index.less";
+import "./index.less";
 
 const ArticleView = ({ id, story, onPrevClick, onNextClick }) =>
 {
