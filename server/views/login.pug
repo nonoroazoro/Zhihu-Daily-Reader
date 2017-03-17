@@ -23,7 +23,7 @@ append content
                         input(
                             id="login_field",
                             class="form-control input-block",
-                            value=error.username
+                            value= error.username
                             type="text",
                             name="login",
                             autocapitalize="off",
@@ -51,6 +51,13 @@ append content
                         autofocus="autofocus",
                         tabindex="2"
                     )
+
+                    input(
+                        type="hidden",
+                        name="_csrf",
+                        value= csrfToken
+                    )
+
                     input(
                         id="auth-submit",
                         class="btn btn-primary btn-block"
