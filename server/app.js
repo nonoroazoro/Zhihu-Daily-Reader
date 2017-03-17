@@ -32,8 +32,8 @@ app.use((req, res, next) =>
     next();
 });
 
-// gzip setup.
-app.use(compression());
+// gzip setup (force gzip).
+app.use(compression({ threshold: 0 }));
 
 // favicon setup.
 app.use(favicon(faviconPath));
