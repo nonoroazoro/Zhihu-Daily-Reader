@@ -32,9 +32,6 @@ app.use((req, res, next) =>
     next();
 });
 
-// security setup.
-app.use(helmet());
-
 // gzip setup.
 app.use(compression());
 
@@ -44,6 +41,9 @@ app.use(favicon(faviconPath));
 // body parser setup.
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+
+// security setup.
+app.use(helmet());
 
 // passport setup.
 app.use(session);

@@ -12,38 +12,16 @@ export default class FlexTile extends PureComponent
 
     static defaultProps = {
         storyID: null,
-        onClick: () => { }
+        onClick: null
     };
 
     state = { story: null };
 
-    componentDidMount()
+    async componentDidMount()
     {
-        if (this.props.storyID)
-        {
-            this._request = DailyManager.getStory(
-                this.props.storyID,
-                (err, res) =>
-                {
-                    if (!err && res)
-                    {
-                        this.setState({ story: res });
-                    }
-                }
-            );
-        }
+        const story = await DailyManager.getStory(this.props.storyID);
+        this.setState({ story });
     }
-
-    componentWillUnmount()
-    {
-        if (this._request)
-        {
-            this._request.abort();
-            this._request = null;
-        }
-    }
-
-    _request = null;
 
     handleClick = (e) =>
     {
@@ -55,12 +33,11 @@ export default class FlexTile extends PureComponent
 
     render()
     {
-        let item = null;
         const { story } = this.state;
         if (story)
         {
             // 如果没有 img 要处理，否则不好看。
-            item = (
+            return (
                 <div id={`story${story.id}`} className="flex-tile">
                     <div className="flex-tile-content">
                         <div
@@ -92,6 +69,6 @@ export default class FlexTile extends PureComponent
                 </div>
             );
         }
-        return item;
+        return null;
     }
 }

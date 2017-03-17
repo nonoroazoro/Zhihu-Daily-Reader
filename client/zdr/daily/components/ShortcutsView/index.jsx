@@ -2,7 +2,7 @@
 
 import ShortcutsBody from "./ShortcutsBody";
 
-import "./res/index.less";
+import "./index.less";
 
 /**
  * 快捷键帮助对话框。

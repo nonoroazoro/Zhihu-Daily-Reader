@@ -5,7 +5,7 @@ import CarouselInner from "./CarouselInner";
 import CarouselControls from "./CarouselControls";
 import CarouselIndicator from "./CarouselIndicator";
 
-import "./res/index.less";
+import "./index.less";
 
 /**
  * 知乎日报：热门消息栏。

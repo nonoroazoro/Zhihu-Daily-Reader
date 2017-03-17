@@ -33,7 +33,7 @@ for (const key of Object.keys(config.entry))
 {
     config.entry[key].unshift(
         "react-hot-loader/patch",
-        "webpack-hot-middleware/client"
+        "webpack-hot-middleware/client?quiet=true"
     );
 }
 config.plugins.push(

@@ -8,10 +8,10 @@ html
         meta(name="format-detection" content="telephone=no")
         meta(name="viewport", content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no")
         title 知乎日报 - 阅读器
-        link(href=map.vendor.css, rel="stylesheet")
-        block links
         script(type="text/javascript").
             !{map.manifest.text}
+        link(href=map.vendor.css, rel="stylesheet")
+        block links
         script(src=map.vendor.js)
     body
         block content

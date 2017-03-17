@@ -1,7 +1,5 @@
 import React from "react";
 
-import "./res/index.less";
-
 /**
  * 菜单。
  */

@@ -2,5 +2,14 @@
     "extends": "eslint-config-zoro",
     "env": {
         "mocha": true
+    },
+    "rules": {
+        "react/no-did-mount-set-state": "off",
+        "newline-per-chained-call": [
+            "error",
+            {
+                "ignoreChainWithDepth": 5
+            }
+        ]
     }
 }

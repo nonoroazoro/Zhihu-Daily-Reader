@@ -1,102 +1,67 @@
-﻿import $          from "jquery";
-import trim       from "lodash/trim";
-import isEmpty    from "lodash/isEmpty";
-import isFunction from "lodash/isFunction";
+﻿import $ from "jquery";
+import trim from "lodash/trim";
 
-export default class DailyManager
+// 缓存日报内容。
+const stories = {};
+
+/**
+ * 获取最新热门日报的 ID 列表。
+ * @returns {Promise} `{date, ids}` or `null`
+ */
+function getTopStoryIDs()
 {
-    static _stories = {};
-
-    /**
-     * 获取已缓存的指定日报内容（以日报 ID 进行检索）。
-     * @param {String} p_id 日报 ID。
-     */
-    static getFetchedStory(p_id)
+    return new Promise((p_resolve) =>
     {
-        return DailyManager._stories[p_id];
-    }
+        $.get("/api/4/news/top", p_resolve).fail(() => p_resolve(null));
+    });
+}
 
-    /**
-     * 获取最新热门日报的 ID 列表。
-     * @param {Function(err, res)} [p_callback]
-     */
-    static getTopStoryIDs(p_callback)
+/**
+ * 获取指定日期的日报的 ID 列表。
+ *
+ * @param {String} [p_date] 指定的日期。如果未指定，则返回最新日报的索引；如果小于 20130519，则返回 {}。
+ * @returns {Promise} `{date, ids}` or `null`
+ */
+function getStoryIDs(p_date)
+{
+    return new Promise((p_resolve) =>
     {
-        return $.get("/api/4/news/top", (p_data) =>
-        {
-            p_callback(null, p_data);
-        }).fail(() =>
-        {
-            p_callback("/api/4/news/top error");
-        });
-    }
+        $.get(`/api/4/news/before/${trim(p_date)}`, p_resolve).fail(() => p_resolve(null));
+    });
+}
 
-    /**
-     * 获取指定日期的日报的 ID 列表。
-     * @param String p_date 指定的日期。如果未指定，则返回最新日报的索引；如果小于 20130519，则返回 {}。
-     * @param {Function(err, res)} [p_callback]
-     */
-    static getStoryIDs(p_date, p_callback)
+/**
+ * 获取指定唯一标识的日报。
+ *
+ * @param {String} p_id 指定的唯一标识。
+ * @returns {Promise} `story` or `null`
+ */
+function getStory(p_id)
+{
+    if (p_id)
     {
-        let date = p_date;
-        let callback = p_callback;
-        if (isFunction(date))
+        const cache = stories[p_id];
+        if (cache)
         {
-            callback = date;
-            date = null;
-        }
-
-        if (isEmpty(trim(date)))
-        {
-            return $.get("/api/4/news/before", (p_data) =>
-            {
-                callback(null, p_data);
-            }).fail(() =>
-            {
-                callback("/api/4/news/before error");
-            });
+            return Promise.resolve(cache);
         }
         else
         {
-            return $.get(`/api/4/news/before/${date}`, (p_data) =>
+            return new Promise((p_resolve) =>
             {
-                callback(null, p_data);
-            }).fail(() =>
-            {
-                callback(`/api/4/news/before/${date} error`);
+                $.get(`/api/4/news/${p_id}`, (story) =>
+                {
+                    stories[p_id] = story;
+                    p_resolve(story);
+                }).fail(() => p_resolve(null));
             });
         }
     }
-
-    /**
-     * 获取指定唯一标识的日报。
-     * @param String p_id 指定的唯一标识。
-     * @param {Function(err, res)} [p_callback]
-     */
-    static getStory(p_id, p_callback)
-    {
-        if (isFunction(p_callback))
-        {
-            if (isEmpty(trim(p_id)))
-            {
-                if (isFunction(p_callback))
-                {
-                    p_callback("p_id must not be null");
-                }
-            }
-            else
-            {
-                return $.get(`/api/4/news/${p_id}`, (p_data) =>
-                {
-                    DailyManager._stories[p_id] = p_data;
-                    p_callback(null, p_data);
-                }).fail(() =>
-                {
-                    p_callback("/api/4/news/ error");
-                });
-            }
-        }
-
-        return null;
-    }
+    return Promise.resolve();
 }
+
+export default {
+    getTopStoryIDs,
+    getStoryIDs,
+    getStory
+};

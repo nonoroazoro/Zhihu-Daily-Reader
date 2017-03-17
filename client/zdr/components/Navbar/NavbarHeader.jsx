@@ -1,7 +1,5 @@
 import React from "react";
-import logo from "../../common/res/img/zhihu_daily_logo_blue.png";
-
-import "./res/index.less";
+import logo from "../../common/img/zhihu_daily_logo_blue.png";
 
 /**
  * 头部。

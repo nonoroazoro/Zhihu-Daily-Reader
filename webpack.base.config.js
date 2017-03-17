@@ -13,8 +13,8 @@ module.exports = {
     {
         vendor: ["./common/vendor"],
         zdr: ["./index"],
-        auth: ["./auth/res/login.less"],
-        error: ["./common/res/errors.less"]
+        auth: ["./auth"],
+        error: ["./common/errors.less"]
     },
     output:
     {
