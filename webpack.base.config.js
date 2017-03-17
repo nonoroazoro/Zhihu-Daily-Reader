@@ -13,7 +13,7 @@ module.exports = {
     {
         vendor: ["./common/vendor"],
         zdr: ["./index"],
-        auth: ["./auth/login.less"],
+        auth: ["./auth"],
         error: ["./common/errors.less"]
     },
     output:
