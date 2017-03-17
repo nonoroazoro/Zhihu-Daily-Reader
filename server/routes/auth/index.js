@@ -13,7 +13,7 @@ router.get("/login", csrf, (req, res) =>
     }
     else
     {
-        res.render("login", { csrfToken: req.csrfToken() });
+        _render(req, res);
     }
 });
 
@@ -24,27 +24,20 @@ router.post(
     passport.authenticate("local", { failWithError: true }),
     (req, res, next) =>
     {
-        // Handle success.
+        // handle success.
         res.redirect("/");
     },
     (err, req, res, next) =>
     {
         if (err.code === "EBADCSRFTOKEN")
         {
-            // Handle CSRF error.
+            // handle CSRF error.
             res.status(403).send("Don't be evil.");
         }
         else
         {
-            // Handle auth error.
-            res.render("login", {
-                error:
-                {
-                    username: req.body.login,
-                    message: "Incorrect username or password."
-                },
-                csrfToken: req.csrfToken()
-            });
+            // handle auth error.
+            _render(req, res, true);
         }
     }
 );
@@ -64,5 +57,26 @@ router.use((req, res, next) =>
         res.redirect("/login");
     }
 });
+
+/**
+ * Render login page.
+ *
+ * @param {any} req
+ * @param {any} res
+ * @param {boolean} [hasError] default is `false`, doesn't render auth error.
+ */
+function _render(req, res, hasError = false)
+{
+    const message = { csrfToken: req.csrfToken() };
+    if (hasError)
+    {
+        // add auth error.
+        message.error = {
+            username: req.body.login,
+            message: "Incorrect username or password."
+        };
+    }
+    res.render("login", message);
+}
 
 module.exports = router;
