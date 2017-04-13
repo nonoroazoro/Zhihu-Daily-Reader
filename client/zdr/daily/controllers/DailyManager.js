@@ -36,14 +36,14 @@ function getStoryIDs(p_date)
  * @param {String} p_id 指定的唯一标识。
  * @returns {Promise} `story` or `null`
  */
-function getStory(p_id)
+async function getStory(p_id)
 {
     if (p_id)
     {
         const cache = stories[p_id];
         if (cache)
         {
-            return Promise.resolve(cache);
+            return cache;
         }
         else
         {
@@ -57,7 +57,7 @@ function getStory(p_id)
             });
         }
     }
-    return Promise.resolve();
+    return null;
 }
 
 export default {
