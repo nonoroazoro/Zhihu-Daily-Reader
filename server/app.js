@@ -7,8 +7,8 @@ const favicon = require("serve-favicon");
 const bodyParser = require("body-parser");
 const compression = require("compression");
 
-const log = require("./logs/bunyan");
 const routes = require("./routes");
+const log = require("./logs/bunyan");
 const session = require("./auth/session");
 const passport = require("./auth/passport");
 
@@ -54,35 +54,8 @@ app.use(passport.session());
 if (isDevMode)
 {
     // development: logger & HMR setup.
-    const { blue } = require("chalk");
-    console.log(blue("Current Environment:", "development"));
-
-    const logger = require("morgan");
-    app.use(logger("dev"));
-
-    const webpack = require("webpack");
-    const webpackDevMiddleware = require("webpack-dev-middleware");
-    const webpackHotMiddleware = require("webpack-hot-middleware");
-    const webpackDevConfig = require("../webpack.dev.config");
-    const compiler = webpack(webpackDevConfig);
-    const webpackDevMiddlewareInstance = webpackDevMiddleware(
-        compiler,
-        {
-            stats:
-            {
-                chunks: false,
-                colors: true
-            },
-            publicPath: webpackDevConfig.output.publicPath
-        }
-    );
-    webpackDevMiddlewareInstance.waitUntilValid(() =>
-    {
-        // assets map setup.
-        app.locals.map = require(assetsPath);
-    });
-    app.use(webpackDevMiddlewareInstance);
-    app.use(webpackHotMiddleware(compiler));
+    const { inject } = require("./dev/index");
+    inject(app, { assetsPath });
 }
 else
 {
