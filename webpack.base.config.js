@@ -25,8 +25,7 @@ module.exports = {
     },
     resolve:
     {
-        extensions: [".js", ".jsx"],
-        modules: [srcPath, "node_modules"]
+        extensions: [".js", ".jsx"]
     },
     module:
     {
@@ -82,7 +81,7 @@ module.exports = {
         ]
     },
     plugins: [
-        new CleanWebpackPlugin([distPath]),
+        new CleanWebpackPlugin([distPath], { verbose: false }),
         new webpack.optimize.CommonsChunkPlugin({
             names: ["vendor", "manifest"],
             minChunks: Infinity
