@@ -29,7 +29,7 @@ export default class FlexTile extends PureComponent
         {
             this.props.onClick({ story: this.state.story });
         }
-    }
+    };
 
     render()
     {
