@@ -10,13 +10,13 @@ const ResourceSchema = new Schema({
      * @type {String}
      */
     id: String,
-    
+
     /**
      * MIME。
      * @type {String}
      */
     contentType: String,
-    
+
     /**
      * 内容。
      * @type {Buffer}
