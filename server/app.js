@@ -13,7 +13,7 @@ const session = require("./auth/session");
 const passport = require("./auth/passport");
 
 const viewsPath = path.resolve(__dirname, "./views");
-const faviconPath = path.join(viewsPath, "./res/favicon.ico");
+const faviconPath = path.join(viewsPath, "./img/favicon.ico");
 const publicPath = path.resolve(__dirname, "../public");
 const assetsPath = path.join(publicPath, "assets", "assets.json");
 
