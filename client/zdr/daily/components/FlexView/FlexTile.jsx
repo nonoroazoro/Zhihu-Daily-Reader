@@ -23,6 +23,11 @@ export default class FlexTile extends PureComponent
         this.setState({ story });
     }
 
+    shouldComponentUpdate(p_nextProps, p_nextState)
+    {
+        return p_nextProps.storyID !== this.props.storyID || p_nextState.story !== this.state.story;
+    }
+
     handleClick = (e) =>
     {
         if (isFunction(this.props.onClick))

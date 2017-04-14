@@ -30,7 +30,8 @@ module.exports.start = () =>
             {
                 _cachePrev(res.date, res.max_age);
             }
-        });
+        }
+    );
 };
 
 /**
