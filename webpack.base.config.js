@@ -8,7 +8,6 @@ const distPath = path.resolve(__dirname, "./public/assets/");
 
 module.exports = {
     context: srcPath,
-    stats: { children: false },
     entry:
     {
         vendor: ["./common/vendor"],
@@ -29,10 +28,12 @@ module.exports = {
     },
     module:
     {
-        rules: [
+        rules:
+        [
             {
                 test: /\.jsx?$/,
-                use: [
+                use:
+                [
                     {
                         loader: "babel-loader",
                         options: { cacheDirectory: true }
@@ -42,10 +43,12 @@ module.exports = {
             },
             {
                 test: /\.(png|jpg)$/,
-                use: [
+                use:
+                [
                     {
                         loader: "url-loader",
-                        options: {
+                        options:
+                        {
                             limit: 8192,
                             name: "res/[name].[ext]"
                         }
@@ -54,10 +57,12 @@ module.exports = {
             },
             {
                 test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-                use: [
+                use:
+                [
                     {
                         loader: "url-loader",
-                        options: {
+                        options:
+                        {
                             limit: 8192,
                             mimetype: "application/font-woff",
                             name: "res/fonts/[name].[ext]"
@@ -67,10 +72,12 @@ module.exports = {
             },
             {
                 test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-                use: [
+                use:
+                [
                     {
                         loader: "file-loader",
-                        options: {
+                        options:
+                        {
                             limit: 8192,
                             mimetype: "application/font-woff",
                             name: "res/fonts/[name].[ext]"
@@ -80,21 +87,33 @@ module.exports = {
             }
         ]
     },
-    plugins: [
+    plugins:
+    [
         new CleanWebpackPlugin([distPath], { verbose: false }),
-        new webpack.optimize.CommonsChunkPlugin({
-            names: ["vendor", "manifest"],
-            minChunks: Infinity
-        }),
-        new AssetsPlugin({
-            filename: "assets.json",
-            path: distPath,
-            prettyPrint: true,
-            includeManifest: "manifest"
-        }),
-        new webpack.ProvidePlugin({
-            $: "jquery",
-            jQuery: "jquery"
-        })
-    ]
+        new webpack.optimize.CommonsChunkPlugin(
+            {
+                names: ["vendor", "manifest"],
+                minChunks: Infinity
+            }
+        ),
+        new AssetsPlugin(
+            {
+                filename: "assets.json",
+                path: distPath,
+                prettyPrint: true,
+                includeManifest: "manifest"
+            }
+        ),
+        new webpack.ProvidePlugin(
+            {
+                $: "jquery",
+                jQuery: "jquery"
+            }
+        )
+    ],
+    stats:
+    {
+        children: false,
+        maxModules: 0
+    }
 };
