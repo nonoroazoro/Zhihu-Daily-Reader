@@ -12,5 +12,16 @@
     "plugins": [
         "react-hot-loader/babel",
         "transform-runtime"
-    ]
+    ],
+    "env": {
+        // Mocha requires CommonJS modules, thus you have to configure Babel to transpile
+        // ES modules to CommonJS modules in the test environment.
+        "test": {
+            "presets": [
+                "es2015",
+                "stage-2",
+                "react"
+            ]
+        }
+    }
 }

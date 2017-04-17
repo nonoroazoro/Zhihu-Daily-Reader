@@ -27,7 +27,7 @@
     "startdb": "mkdir db | mongod --dbpath ./db",
     "build:dev": "cross-env NODE_ENV=development webpack --config webpack.dev.config.js --progress",
     "build:prod": "cross-env NODE_ENV=production webpack --config webpack.prod.config.js --progress",
-    "test": "mocha"
+    "test": "cross-env NODE_ENV=test mocha"
   },
   "dependencies": {
     "async": "^2.3.0",
