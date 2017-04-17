@@ -7,7 +7,7 @@ import "bootstrap/less/bootstrap.less";
 import "jquery";
 import "bootstrap";
 
-// Lodash. Import sub-modules to reduce bundle file size.
+// Import Lodash sub-modules to reduce bundle file size.
 import "lodash/map";
 import "lodash/isDate";
 import "lodash/isEmpty";
