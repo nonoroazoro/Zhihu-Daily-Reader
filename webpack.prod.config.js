@@ -11,38 +11,42 @@ config.output.chunkFilename = "[id].[chunkhash:8].chunk.js";
 config.module.rules.push(
     {
         test: /\.css$/,
-        use: ExtractTextPlugin.extract({
-            use: ["css-loader"],
-            fallback: "style-loader"
-        })
+        use: ExtractTextPlugin.extract(
+            {
+                use: ["css-loader"],
+                fallback: "style-loader"
+            }
+        )
     },
     {
         test: /\.less$/,
-        use: ExtractTextPlugin.extract({
-            use: ["css-loader", "less-loader"],
-            fallback: "style-loader"
-        })
+        use: ExtractTextPlugin.extract(
+            {
+                use: ["css-loader", "less-loader"],
+                fallback: "style-loader"
+            }
+        )
     }
 );
 
 config.plugins.push(
-    new webpack.LoaderOptionsPlugin({
-        minimize: true
-    }),
-    new ExtractTextPlugin({
-        filename: "res/[name].[contenthash:8].css",
-        allChunks: true
-    }),
-    new webpack.DefinePlugin({
-        "process.env": {
-            NODE_ENV: JSON.stringify("production")
+    new webpack.LoaderOptionsPlugin({ minimize: true }),
+    new ExtractTextPlugin(
+        {
+            filename: "res/[name].[contenthash:8].css",
+            allChunks: true
         }
-    }),
-    new webpack.optimize.UglifyJsPlugin({
-        compress: {
-            warnings: false
+    ),
+    new webpack.DefinePlugin(
+        {
+            "process.env": { NODE_ENV: JSON.stringify("production") }
         }
-    })
+    ),
+    new webpack.optimize.UglifyJsPlugin(
+        {
+            compress: { warnings: false }
+        }
+    )
 );
 
 module.exports = config;
