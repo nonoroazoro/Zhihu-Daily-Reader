@@ -45,7 +45,7 @@
     "helmet": "^3.5.0",
     "lodash": "^4.17.4",
     "moment": "^2.18.1",
-    "mongoose": "^4.9.4",
+    "mongoose": "^4.9.5",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
     "pug": "^2.0.0-beta6",
