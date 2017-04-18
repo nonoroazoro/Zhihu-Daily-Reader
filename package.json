@@ -81,6 +81,7 @@
     "morgan": "^1.8.1",
     "mousetrap": "^1.6.1",
     "react": "^15.5.4",
+    "react-addons-perf": "^15.4.2",
     "react-dom": "^15.5.4",
     "react-hot-loader": "^3.0.0-beta.6",
     "should": "^11.2.1",

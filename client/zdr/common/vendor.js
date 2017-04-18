@@ -7,7 +7,7 @@ import "bootstrap/less/bootstrap.less";
 import "jquery";
 import "bootstrap";
 
-// Import Lodash sub-modules to reduce bundle file size.
+// Import sub-modules to reduce bundle size.
 import "lodash/map";
 import "lodash/isDate";
 import "lodash/isEmpty";
@@ -21,3 +21,9 @@ import "react";
 import "react-dom";
 import "classnames";
 import "immutability-helper";
+
+// Debug: Performance Tool.
+if (process.env.NODE_ENV !== "production")
+{
+    window.Perf = require("react-addons-perf");
+}
