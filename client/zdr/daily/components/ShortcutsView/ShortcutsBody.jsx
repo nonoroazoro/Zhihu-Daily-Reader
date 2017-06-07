@@ -1,5 +1,6 @@
 import map from "lodash/map";
-import React, { PropTypes, PureComponent } from "react";
+import PropTypes from "prop-types";
+import React, { PureComponent } from "react";
 
 export default class ShortcutsBody extends PureComponent
 {

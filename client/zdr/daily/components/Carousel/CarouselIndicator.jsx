@@ -1,5 +1,6 @@
 import classNames from "classnames";
-import React, { PropTypes, PureComponent } from "react";
+import PropTypes from "prop-types";
+import React, { PureComponent } from "react";
 
 /**
  * 幻灯片指示器。

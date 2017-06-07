@@ -1,6 +1,7 @@
 import cs from "classnames";
 import map from "lodash/map";
-import React, { PropTypes } from "react";
+import PropTypes from "prop-types";
+import React from "react";
 
 const ArticleHeader = ({ story }) =>
 {

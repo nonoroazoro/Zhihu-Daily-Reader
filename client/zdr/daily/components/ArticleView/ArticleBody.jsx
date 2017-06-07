@@ -1,7 +1,8 @@
 import cs from "classnames";
-import map from "lodash/map";
 import isEmpty from "lodash/isEmpty";
-import React, { PropTypes } from "react";
+import map from "lodash/map";
+import PropTypes from "prop-types";
+import React from "react";
 
 const ArticleBody = ({ contents }) =>
 {
