@@ -12,7 +12,7 @@ export default class FlexTile extends PureComponent
 
     static defaultProps = {
         storyID: null,
-        onClick: null
+        onClick: noop
     };
 
     state = { story: null };
@@ -77,3 +77,5 @@ export default class FlexTile extends PureComponent
         return null;
     }
 }
+
+function noop() { }

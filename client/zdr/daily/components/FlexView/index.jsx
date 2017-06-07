@@ -18,7 +18,7 @@ export default class FlexView extends PureComponent
      */
     static defaultProps = {
         storyIDs: [],
-        onTileClick: null
+        onTileClick: noop
     };
 
     render()
@@ -38,3 +38,5 @@ export default class FlexView extends PureComponent
         );
     }
 }
+
+function noop() { }

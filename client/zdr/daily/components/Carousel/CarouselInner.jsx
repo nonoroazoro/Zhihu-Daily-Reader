@@ -20,7 +20,7 @@ export default class CarouselInner extends PureComponent
 
     static defaultProps = {
         storyIDs: [],
-        onClick: () => { }
+        onClick: noop
     };
 
     handleClick(p_storyID)
@@ -56,3 +56,5 @@ export default class CarouselInner extends PureComponent
         );
     }
 }
+
+function noop() { }

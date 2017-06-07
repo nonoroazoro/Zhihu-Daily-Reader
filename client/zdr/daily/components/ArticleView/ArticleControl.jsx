@@ -11,8 +11,8 @@ export default class ArticleControl extends Component
     };
 
     static defaultProps = {
-        onPrevClick: () => { },
-        onNextClick: () => { }
+        onPrevClick: noop,
+        onNextClick: noop
     };
 
     shouldComponentUpdate(p_nextProps, p_nextState)
@@ -47,3 +47,5 @@ export default class ArticleControl extends Component
         );
     }
 }
+
+function noop() { }
